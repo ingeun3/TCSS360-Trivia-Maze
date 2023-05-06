@@ -11,7 +11,7 @@ public class Maze {
     private static final File MAZE_MAP =  new File ("maze_map1.txt");
 
     // the final Radom.
-    private static final Random RANDOM_POINTS = new Random();
+    private static Random RANDOM_POINTS = new Random();
 
     // initializing the 2D maze.
     private char[][] myMaze;
