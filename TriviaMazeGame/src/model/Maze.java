@@ -151,7 +151,7 @@ public class Maze {
                 }
             }
         }
-        System.out.println(intersectionsPoint);
+//        System.out.println(intersectionsPoint);
         return intersectionsPoint;
 
     }
