@@ -24,11 +24,6 @@ public enum Terrain {
     ROAD('+'),
 
     /**
-     * Light.
-     */
-    LIGHT('+'),
-
-    /**
      * Player.
      */
     PLAYER('M'),

@@ -6,15 +6,12 @@ public class Player {
 	
 	private static final ImageIcon myImage = new ImageIcon("playerIcon.jpg");
 	
-	private static int myX;
-	private static int myY;
+
 	private static int myMove;
 	private static boolean myAlive = true;
 	
 	
-	public Player(final int theX, final int theY, final int theMove) {
-		myX = theX;
-		myY = theY;
+	public Player(final int theMove) {
 		myMove = theMove;
 	}
 
@@ -37,16 +34,6 @@ public class Player {
 			myAlive = false;
 		}
 	}
-	
-	public void setX(final int theX) {
-        myX = theX;
-
-    }
-    
-    public void setY(final int theY) {
-        myY = theY;
-
-    }
     
 	public ImageIcon getIcon() {
 		return myImage;
