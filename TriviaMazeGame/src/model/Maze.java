@@ -35,7 +35,7 @@ public class Maze {
     public Maze(String mapName) throws FileNotFoundException {
         // For Program running purpose.
         myMaze = createMaze(mapName);
-        // Assign the instance variable myIntersections to the create Maze.
+        // Assign the instance variable myIntersections to the creates Maze.
         myIntersections = intersections(myMaze);
         myQuestionPoints = questionPointgenerator();
         myPlayerLocation = playerLocation();
