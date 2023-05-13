@@ -17,24 +17,25 @@ public class NorthPanel extends JPanel{
 
     private JLabel myMoves;
 
-
     public NorthPanel(String theLevel, String theMoves) {
         myButtonPanel = new JPanel(new FlowLayout());
         myHelpButton = new JButton("Help");
         mySaveButton     = new JButton("Save");
         myLevelButton = new JButton("Level");
-        myLevel = new JLabel(theLevel);
-        myMoves = new JLabel(theMoves);
+        myLevel = new JLabel(theLevel,  SwingConstants.CENTER);
+        myMoves = new JLabel(theMoves,  SwingConstants.CENTER);
         start();
     }
     private void start() {
         myButtonPanel.add(myHelpButton);
         myButtonPanel.add(mySaveButton);
         myButtonPanel.add(myLevelButton);
+        myButtonPanel.setLayout(new GridLayout(1,3));
 
         this.add(myButtonPanel);
         this.add(myLevel);
         this.add(myMoves);
+        this.setLayout(new GridLayout(1, 3));
     }
 
     public void setLevel(String theLevel) {
