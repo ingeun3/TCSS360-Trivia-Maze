@@ -5,6 +5,7 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import view.GamePanel;
 
 public class NorthPanel extends JPanel{
     private final JPanel myButtonPanel;
@@ -19,7 +20,10 @@ public class NorthPanel extends JPanel{
 
     private JLabel myMoves;
 
-    public NorthPanel(String theLevel, String theMoves) {
+    private GamePanel gp;
+
+    public NorthPanel(GamePanel gp, String theLevel, String theMoves) {
+        this.gp = gp;
         myButtonPanel = new JPanel(new FlowLayout());
         myHelpButton = new JButton("Help");
         mySaveButton     = new JButton("Save");
