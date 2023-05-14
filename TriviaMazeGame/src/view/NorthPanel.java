@@ -3,6 +3,8 @@ package view;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class NorthPanel extends JPanel{
     private final JPanel myButtonPanel;
@@ -31,6 +33,12 @@ public class NorthPanel extends JPanel{
         myButtonPanel.add(mySaveButton);
         myButtonPanel.add(myLevelButton);
         myButtonPanel.setLayout(new GridLayout(1,3));
+
+        myHelpButton.addActionListener(new ActionListener() {
+            public void actionPerformed(final ActionEvent theEvent) {
+                TutorialFrame tutorial = new TutorialFrame();
+            }
+        });
 
         this.add(myButtonPanel);
         this.add(myLevel);

@@ -23,24 +23,33 @@ public class GameInterface {
 
     private final JFrame myGameInterface;
 
-    private final JPanel myNorthPanel;
+    private final NorthPanel myNorthPanel;
+
+    private final MazeMap mymazeMap;
+
+    private char[][] myMazeArray;
 
     /** A size of the window. */
     private final Dimension myDimension;
-    public GameInterface (int theLevel, int theMoves) {
+    public GameInterface (int theLevel, int theMoves, char[][] theMazeArray) {
         myGameInterface = new JFrame("Trivia Maze");
         myDimension = new Dimension(WIDTH,HEIGHT);
+        System.out.println(WIDTH);
+        System.out.println(HEIGHT);
+
         myLevel = LEVEL_PROMPT + theLevel;
         myMoves = MOVE_PROMPT + theMoves;
         myNorthPanel = new NorthPanel(myLevel, myMoves);
+        myMazeArray = theMazeArray;
+        mymazeMap = new MazeMap(myMazeArray);
     }
 
     public void start() {
         myGameInterface.add(myNorthPanel, BorderLayout.NORTH);
-
+        myGameInterface.add(mymazeMap, BorderLayout.CENTER);
 
         myGameInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        myGameInterface.setPreferredSize(myDimension);
+      //  myGameInterface.setPreferredSize(myDimension);
         myGameInterface.pack();
         myGameInterface.setLocationRelativeTo(null);
         myGameInterface.setVisible(true);

@@ -1,9 +1,11 @@
 package controller;
 
+import model.Maze;
 import view.GameInterface;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileNotFoundException;
 
 public class
 main {
@@ -39,12 +41,14 @@ main {
      *
      * @param theArgs command line arguments - ignored in this program
      */
-    public static void main(final String[] theArgs) {
+    public static void main(final String[] theArgs) throws FileNotFoundException {
+        Maze mazeMap = new Maze("maze_map1.txt");
+
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
                 setLookAndFeel();
-                new GameInterface(1, 10).start();
+                new GameInterface(1, 10, mazeMap.getArray()).start();
             }
         });
     }
