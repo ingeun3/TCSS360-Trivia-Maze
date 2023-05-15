@@ -1,7 +1,10 @@
 package view;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
+import javax.swing.JFrame;
 
 public class GameInterface {
 
@@ -25,7 +28,7 @@ public class GameInterface {
 
     private final NorthPanel myNorthPanel;
 
-    private final MazeMap mymazeMap;
+    private final GamePanel mymazeMap;
 
     private char[][] myMazeArray;
 
@@ -34,24 +37,27 @@ public class GameInterface {
     public GameInterface (int theLevel, int theMoves, char[][] theMazeArray) {
         myGameInterface = new JFrame("Trivia Maze");
         myDimension = new Dimension(WIDTH,HEIGHT);
-        System.out.println(WIDTH);
-        System.out.println(HEIGHT);
-
+        myMazeArray = theMazeArray;
         myLevel = LEVEL_PROMPT + theLevel;
         myMoves = MOVE_PROMPT + theMoves;
-        myNorthPanel = new NorthPanel(myLevel, myMoves);
-        myMazeArray = theMazeArray;
-        mymazeMap = new MazeMap(myMazeArray);
+        mymazeMap = new GamePanel(myLevel, myMoves, myMazeArray);
+        myNorthPanel = new NorthPanel(mymazeMap, myLevel, myMoves);
+
+
     }
 
     public void start() {
-        myGameInterface.add(myNorthPanel, BorderLayout.NORTH);
-        myGameInterface.add(mymazeMap, BorderLayout.CENTER);
 
+        myGameInterface.add(myNorthPanel, BorderLayout.NORTH);
+        myGameInterface.getContentPane().add(mymazeMap, BorderLayout.CENTER);
         myGameInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      //  myGameInterface.setPreferredSize(myDimension);
+        myGameInterface.setPreferredSize(myDimension);
         myGameInterface.pack();
         myGameInterface.setLocationRelativeTo(null);
         myGameInterface.setVisible(true);
+        myGameInterface.setSize(myDimension);
     }
+
+
+
 }

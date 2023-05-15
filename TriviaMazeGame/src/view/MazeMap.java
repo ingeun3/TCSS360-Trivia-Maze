@@ -1,68 +1,65 @@
 package view;
 
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import model.Terrain;
 
-public class MazeMap extends JPanel {
+public class MazeMap {
 
 
-	private static final long serialVersionUID = 1L;
-	
-	private static final int SQUARE_SIZE = 40;
-	
-	private char[][] myArray;
-	
-	public MazeMap(char[][] theArray) {
-		myArray = theArray;
-		start();
+    private static final long serialVersionUID = 1L;
 
-	}
-	
-	public void start(){
-        this.setPreferredSize(new Dimension(520,520));
-	}
-	
-	public void paintComponent(final Graphics theGraphics) {
-		super.paintComponent(theGraphics);
-		final Graphics2D g2 = (Graphics2D) theGraphics;
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
-        drawMap(g2);
-	}
-	
-	private void drawMap(final Graphics2D theGraphics) {
-	
-	for (int y = 0; y < myArray.length; y++) {
-        final int topy = y * SQUARE_SIZE;
+    private static final int SQUARE_SIZE = 40;
+    GamePanel gp;
 
-        for (int x = 0; x < myArray[y].length; x++) {
-            final int leftx = x * SQUARE_SIZE;
+    //public BufferedImage road, wall;
+    public ImageIcon road, wall;
+    private char[][] myArray;
 
-            switch (myArray[y][x]) {
-                case '?':
-                	theGraphics.setPaint(Color.YELLOW);
-                    theGraphics.fillRect(leftx, topy, SQUARE_SIZE, SQUARE_SIZE);
+    public MazeMap(GamePanel gp, char[][] theArray) {
+        this.gp = gp;
+        myArray = theArray;
+        start();
+        getMapImage();
+    }
 
-                case '@':
-                    theGraphics.setPaint(Color.GRAY);
-                    theGraphics.fillRect(leftx, topy, SQUARE_SIZE, SQUARE_SIZE);
-                     System.out.println(leftx + "x");
-                    System.out.println(topy + "y");
-                    break;
-                case '+':
-                	   theGraphics.setPaint(Color.CYAN);
-                       theGraphics.fillRect(leftx, topy, SQUARE_SIZE, SQUARE_SIZE);
+    public void start(){
 
-                default:
+        //this.setPreferredSize(new Dimension(520,520));
+    }
+    public void getMapImage(){
+        road = new ImageIcon("road.png");
+        wall = new ImageIcon("wall.png");
+    }
+
+
+
+    public void draw(final Graphics2D theGraphics) {
+        //BufferedImage image = null;
+        //ImageIcon  image = null;
+        int leftx = 0;;
+        int topy = 0;
+
+        for (int y = 0; y < myArray.length; y++) {
+            topy = topy + gp.tileSize;
+            for (int x = 0; x < myArray[y].length; x++) {
+                leftx = leftx + gp.tileSize;
+
+                switch (myArray[y][x]) {
+                    case '@':
+                        theGraphics.drawImage(wall.getImage(), leftx, topy, gp.tileSize, gp.tileSize , null);
+                        break;
+                    case '+':
+                        theGraphics.drawImage(road.getImage(), leftx, topy, gp.tileSize, gp.tileSize, null);
+                        break;
+                }
+
             }
-
+            leftx = 0;
         }
     }
-}
-
-	
-
 }
