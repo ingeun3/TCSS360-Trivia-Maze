@@ -38,6 +38,8 @@ class MazeTest {
 		for (int i = 0; i < expected.length; i++) {
 			for (int j = 0; j < expected[i].length; j++) {
 				expectedMap += expected[i][j];
+
+
 				actualMap += actual[i][j];
 			}
 			expectedMap += "\n";

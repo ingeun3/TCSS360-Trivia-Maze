@@ -41,11 +41,11 @@ public class MazeMap {
     public void draw(final Graphics2D theGraphics) {
         //BufferedImage image = null;
         //ImageIcon  image = null;
-        int leftx = 0;;
-        int topy = 0;
+        int topy = -48;
 
         for (int y = 0; y < myArray.length; y++) {
             topy = topy + gp.tileSize;
+            int leftx = -48;
             for (int x = 0; x < myArray[y].length; x++) {
                 leftx = leftx + gp.tileSize;
 
@@ -59,7 +59,6 @@ public class MazeMap {
                 }
 
             }
-            leftx = 0;
         }
     }
 }

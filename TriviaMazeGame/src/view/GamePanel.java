@@ -14,10 +14,12 @@ public class GamePanel extends JPanel implements Runnable {
     final int scale = 3;
     //48 * 48 tiles
     public final int tileSize = originalTileSize * scale;
-    public final int maxScreenColumn = 16; // change 18 or 14
-    public final int maxScreenRow = 12;
+    public final int maxScreenColumn = 13; // change 18 or 14
+    public final int maxScreenRow = 13;
     public final int screenWidth = tileSize * maxScreenColumn; //768 pixels
     public final int screenHeight = tileSize * maxScreenRow; //576
+
+    private final Dimension mySize;
 
     Thread gameThread;
     char[][] myMazeArray;
@@ -30,32 +32,45 @@ public class GamePanel extends JPanel implements Runnable {
    // Player player = new Player(this, keyH);
     //TileManager tileM = new TileManager(this,myMazeArray  );
     MazeMap myMazemap;
-    NorthPanel myNorthPanel;
-
-    public GamePanel(String theLevel, String theMove, char[][] theArray) {
-        this.setPreferredSize(new Dimension(screenWidth, screenHeight));
+    // Constructor for the tutorial panel.
+    public GamePanel(char[][] theArray) {
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
+
+        mySize = new Dimension(tileSize * theArray[0].length, tileSize * theArray.length);
+
         myMazeArray = theArray;
 
         myMazemap = new MazeMap(this, myMazeArray);
-        myNorthPanel = new NorthPanel(this, theLevel, theMove);
+        start();
+
+    }
+
+    public GamePanel(String theLevel, String theMove, char[][] theArray) {
+        this.setBackground(Color.black);
+        this.setDoubleBuffered(true);
+
+        mySize = new Dimension(tileSize * theArray[0].length, tileSize * theArray.length);
+
+        myMazeArray = theArray;
+
+        myMazemap = new MazeMap(this, myMazeArray);
+
         start();
 
     }
 
     public void start() {
         //this.setLayout(new GridLayout(2, 1));
-
         this.addKeyListener(keyH);
         this.setFocusable(true); //???
         this.requestFocus();
+        this.setPreferredSize(mySize);
         run();
         startGameThread();
     }
 
     public void startGameThread() {
-
         gameThread = new Thread(this);
         gameThread.start();
     }

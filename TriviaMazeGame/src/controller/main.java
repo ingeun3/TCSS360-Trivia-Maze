@@ -42,7 +42,7 @@ main {
      * @param theArgs command line arguments - ignored in this program
      */
     public static void main(final String[] theArgs) throws FileNotFoundException {
-        Maze mazeMap = new Maze("maze_map1.txt");
+        Maze mazeMap = new Maze("maze_map2.txt");
 
         EventQueue.invokeLater(new Runnable() {
             @Override

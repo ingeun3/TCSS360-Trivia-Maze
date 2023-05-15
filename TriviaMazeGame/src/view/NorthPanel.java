@@ -5,6 +5,9 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+
+import model.Maze;
 import view.GamePanel;
 
 public class NorthPanel extends JPanel{
@@ -40,7 +43,14 @@ public class NorthPanel extends JPanel{
 
         myHelpButton.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent theEvent) {
-                TutorialFrame tutorial = new TutorialFrame();
+                try {
+                    Maze mazeMap = new Maze("tutorial_map.txt");
+                    TutorialFrame tutorial = new TutorialFrame(mazeMap.getArray());
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+
+
             }
         });
 
