@@ -22,7 +22,7 @@ public class keyBoardHandler implements KeyListener{
         if (code == KeyEvent.VK_A) {
             leftPressed = true;
         }
-        if (code == KeyEvent.VK_T) {
+        if (code == KeyEvent.VK_D) {
             rightPressed = true;
         }
     }
@@ -39,7 +39,7 @@ public class keyBoardHandler implements KeyListener{
         if (code == KeyEvent.VK_A) {
             leftPressed = false;
         }
-        if (code == KeyEvent.VK_T) {
+        if (code == KeyEvent.VK_D) {
             rightPressed = false;
         }
 
