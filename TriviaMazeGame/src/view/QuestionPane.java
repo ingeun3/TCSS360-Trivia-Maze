@@ -54,6 +54,7 @@ public class QuestionPane {
         JOptionPane.showOptionDialog(null, myPrompt, QUESTION_TITLE,
                                      JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
                                      myImage, myAnswers, myAnswers[0]);
+
     }
 
 
