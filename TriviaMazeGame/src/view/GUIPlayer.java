@@ -12,7 +12,7 @@ import java.awt.*;
         public final int screenX;
         public final int screenY;
         public GUIPlayer(GamePanel gp, keyBoardHandler keyH) {
-            // TODO Auto-generated constructor stub
+
             this.gp = gp;
             this.keyH = keyH;
             setDefaultValues();
