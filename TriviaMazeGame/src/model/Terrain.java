@@ -1,16 +1,4 @@
-/*
- * TCSS 305 - Assignment 3
- */
-
 package model;
-
-/**
- * An enumeration (and associated functionality) for types of terrain that may
- * appear on the map.
- * 
- * @author TCSS 305 instructors
- * @version 1.2
- */
 
 public enum Terrain {
     /**
@@ -96,4 +84,3 @@ public enum Terrain {
     }
 }
 
-// end of class Terrain

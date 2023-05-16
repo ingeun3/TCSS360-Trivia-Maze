@@ -1,5 +1,3 @@
-package model;
-
 import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,11 +10,11 @@ public class Maze {
     // the final Random.
     private static Random RANDOM_POINTS = new Random();
 
+    // the default map file for maze.
+    private static String myMazeMap;
+
     // initializing the 2D maze.
     private char[][] myMaze;
-
-    // initializing the location of the player.
-    private Point myPlayerLocation;
 
     //initializing the intersection points
     private ArrayList<Point> myIntersections;
@@ -34,11 +32,23 @@ public class Maze {
      */
     public Maze(String mapName) throws FileNotFoundException {
         // For Program running purpose.
-        myMaze = createMaze(mapName);
-        // Assign the instance variable myIntersections to the creates Maze.
+        myMazeMap = mapName;
+        start();
+    }
+
+
+    /**
+     * This method calls all of the sub-methods that has in this class.
+     *
+     * @throws FileNotFoundException
+     */
+    private void start() throws FileNotFoundException {
+
+        // Assign the instance variable myMaze to the create Maze.
+        myMaze = createMaze(myMazeMap);
+        // Assign the instance variable myIntersections to the create Maze.
         myIntersections = intersections(myMaze);
         myQuestionPoints = questionPointgenerator();
-        myPlayerLocation = playerLocation();
     }
 
     /**
@@ -52,10 +62,10 @@ public class Maze {
 
     // everytime players move just update the map.
     public void setArray(Point thePoint) {
-        if (myMaze[thePoint.y][thePoint.x] != '@') {
-            myMaze[myPlayerLocation.y][myPlayerLocation.x] = '+';
-            myMaze[thePoint.y][thePoint.x] = 'M';
-            myPlayerLocation = new Point(thePoint.x,thePoint.y);
+        if (myMaze[thePoint.x][thePoint.y] != '@') {
+            Point player = playerLocation();
+            myMaze[player.x][player.y] = '+';
+            myMaze[thePoint.x][thePoint.y] = 'M';
         }
 
     }
@@ -64,7 +74,7 @@ public class Maze {
         for (int i = 0; i < myMaze.length; i++) {
             for (int j = 0; j < myMaze.length; j++) {
                 if (myMaze[i][j] == 'M') {
-                    return new Point(j,i);
+                    return new Point(i, j);
                 }
             }
         }
@@ -139,7 +149,7 @@ public class Maze {
                 }
             }
         }
-//        System.out.println(intersectionsPoint);
+        System.out.println(intersectionsPoint);
         return intersectionsPoint;
 
     }

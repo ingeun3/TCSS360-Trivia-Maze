@@ -1,20 +1,5 @@
-/*
- * TCSS 305 - Easy Street
- */
-
 package model;
 
-import java.util.Random;
-
-/**
- * An enumeration (and associated functionality) for directions in which a
- * vehicle may travel.
- * 
- * @author Marty Stepp
- * @author Daniel M. Zimmerman
- * @author Alan Fowler
- * @version 1.2
- */
 public enum Direction {
 
     /**
@@ -133,4 +118,3 @@ public enum Direction {
     }
 }
 
-// end of class Direction
