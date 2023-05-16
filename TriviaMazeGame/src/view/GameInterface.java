@@ -42,6 +42,8 @@ public class GameInterface {
         myGameInterface.pack();
         myGameInterface.setLocationRelativeTo(null);
         myGameInterface.setVisible(true);
+       // myGameInterface.setResizable(false);
+        myMazeMap.requestFocus();
 
     }
 

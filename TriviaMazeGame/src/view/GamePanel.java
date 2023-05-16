@@ -1,6 +1,11 @@
 package view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
@@ -14,13 +19,11 @@ public class GamePanel extends JPanel implements Runnable {
     final int scale = 3;
     //48 * 48 tiles
     public final int tileSize = originalTileSize * scale;
-    public final int maxScreenColumn = 13; // change 18 or 14
-    public final int maxScreenRow = 13;
+    public final int maxScreenColumn = 16; // change 18 or 14
+    public final int maxScreenRow = 12;
     public final int screenWidth = tileSize * maxScreenColumn; //768 pixels
     public final int screenHeight = tileSize * maxScreenRow; //576
-
-    private final Dimension mySize;
-
+    // NorthPanel mynorthPanel;
     Thread gameThread;
     char[][] myMazeArray;
     // set player default position;
@@ -29,48 +32,42 @@ public class GamePanel extends JPanel implements Runnable {
     int playerSpeed = 4; // 4pixels increased or decreased
     int FPS = 60; // FPS 60 times
     keyBoardHandler keyH = new keyBoardHandler();
-   // Player player = new Player(this, keyH);
+    GUIPlayer player = new GUIPlayer(this, keyH);
     //TileManager tileM = new TileManager(this,myMazeArray  );
     MazeMap myMazemap;
-    // Constructor for the tutorial panel.
-    public GamePanel(char[][] theArray) {
-        this.setBackground(Color.black);
-        this.setDoubleBuffered(true);
-
-        mySize = new Dimension(tileSize * theArray[0].length, tileSize * theArray.length);
-
-        myMazeArray = theArray;
-
-        myMazemap = new MazeMap(this, myMazeArray);
-        start();
-
-    }
-
+    NorthPanel myNorthPanel;
+    //world setting
+    public final int maxWorldCol = 50;
+    public final int maxWorldRow = 50;
+    public final int worldWidth = tileSize * maxWorldCol; //as you like
+    public final int worldHeight = tileSize * maxWorldRow;
     public GamePanel(String theLevel, String theMove, char[][] theArray) {
+        this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
-
-        mySize = new Dimension(tileSize * theArray[0].length, tileSize * theArray.length);
-
         myMazeArray = theArray;
+        //mynorthPanel = new NorthPanel (theLevel, theMove);
 
         myMazemap = new MazeMap(this, myMazeArray);
-
+        myNorthPanel = new NorthPanel(this, theLevel, theMove);
         start();
 
     }
 
     public void start() {
         //this.setLayout(new GridLayout(2, 1));
+        //this.add(myNorthPanel, BorderLayout.NORTH);
+        //this.add(myMazemap, FlowLayout.CENTER);
         this.addKeyListener(keyH);
         this.setFocusable(true); //???
         this.requestFocus();
-        this.setPreferredSize(mySize);
         run();
         startGameThread();
+        //this.setPreferredSize(new Dimension(520,520));
     }
 
     public void startGameThread() {
+
         gameThread = new Thread(this);
         gameThread.start();
     }
@@ -111,7 +108,7 @@ public class GamePanel extends JPanel implements Runnable {
     //code that check player can move it or not.
     // need to connect with player class.
     public void update() {
-        //player.update();
+        player.update();
     }
 
     public void paintComponent(Graphics g) {
@@ -120,7 +117,8 @@ public class GamePanel extends JPanel implements Runnable {
         //tileM.draw(g2); // make sure to type this one before player.
         //player.draw(g2);
         myMazemap.draw(g2);
-        //player.draw(g2);
+        player.draw(g2);
+        //g2.fillRect(0, 0, screenWidth, screenHeight);
         g2.dispose();
 
     }

@@ -45,7 +45,7 @@ public class NorthPanel extends JPanel{
             public void actionPerformed(final ActionEvent theEvent) {
                 try {
                     Maze mazeMap = new Maze("tutorial_map.txt");
-                    TutorialFrame tutorial = new TutorialFrame(mazeMap.getArray());
+                    TutorialFrame tutorial = new TutorialFrame();
                 } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
                 }

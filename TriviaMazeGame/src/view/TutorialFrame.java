@@ -20,26 +20,16 @@ public class TutorialFrame {
 
     private final JPanel myTutorialPanel;
 
-    private final GamePanel myMazeMap;
-
-    private final JLabel myInstruction;
-
-    private char[][] myMazeArray;
-
-    public TutorialFrame(char[][] theMazeArray) {
+    public TutorialFrame() {
         myFrame = new JFrame("Tutorial");
         myTutorialPanel = new JPanel();
         myDimension = new Dimension(WIDTH,HEIGHT);
-        myMazeArray = theMazeArray;
-        myMazeMap = new GamePanel(myMazeArray);
-        myInstruction = new JLabel("Click D to Move Left");
-        myInstruction.setFont(new Font("Serif", Font.PLAIN, 25));
         start();
     }
     private void start() {
         myFrame.add(myTutorialPanel);
-        myFrame.add(myInstruction, BorderLayout.NORTH);
-        myFrame.getContentPane().add(myMazeMap, BorderLayout.CENTER);
+        myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        myFrame.setPreferredSize(myDimension);
         myFrame.pack();
         myFrame.setLocationRelativeTo(null);
         myFrame.setVisible(true);

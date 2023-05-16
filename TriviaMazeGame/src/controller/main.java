@@ -1,6 +1,7 @@
 package controller;
 
 import model.Maze;
+import model.Player;
 import view.GameInterface;
 
 import javax.swing.*;
@@ -43,6 +44,7 @@ main {
      */
     public static void main(final String[] theArgs) throws FileNotFoundException {
         Maze mazeMap = new Maze("maze_map2.txt");
+        //Player player = new Player(10);
 
         EventQueue.invokeLater(new Runnable() {
             @Override
@@ -51,5 +53,12 @@ main {
                 new GameInterface(1, 10, mazeMap.getArray()).start();
             }
         });
+    }
+
+    public void playerMethod(){
+        Player player = new Player(10);
+//        if (player.canMove() == true){
+//
+//        }
     }
 }
