@@ -2,9 +2,12 @@ package controller;
 
 import model.Question;
 import org.sqlite.SQLiteDataSource;
+import view.QuestionPane;
+import view.QuestionPanel;
 
 import javax.sql.DataSource;
 import javax.swing.*;
+import java.awt.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,13 +21,21 @@ public class Main {
     private static SQLiteDataSource myDataSource;
     public static void main(String[] theArgs) {
         myQuestions = new ArrayList<Question>();
+        //QuestionPanel questionPanel = new QuestionPanel(myQuestions);
         myDataSource = new SQLiteDataSource();
         connect();
         retrieveData();
-        ImageIcon image = myQuestions.get(1).getImage();
-        String question = myQuestions.get(1).getQuestion();
-        JOptionPane.showMessageDialog(null, question,
-                "test", JOptionPane.PLAIN_MESSAGE, image);
+        QuestionPane question = new QuestionPane(myQuestions);
+//        EventQueue.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                new QuestionPanel(myQuestions);
+//            }
+//        });
+//        ImageIcon image = myQuestions.get(1).getImage();
+//        String question = myQuestions.get(1).getQuestion();
+//        JOptionPane.showMessageDialog(null, question,
+//                "test", JOptionPane.PLAIN_MESSAGE, image);
     }
 
     public static void connect() {

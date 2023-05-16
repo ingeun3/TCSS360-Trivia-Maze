@@ -23,6 +23,7 @@ public class Question {
     public Question(String theQuestion) {
         myQuestion = theQuestion;
         myAnswers = new ArrayList<Answer>();
+        myImage = null;
     }
 
     public Question(String theQuestion, String theImage) {
@@ -48,6 +49,18 @@ public class Question {
         return myImage;
     }
 
+    public boolean hasImage() {
+        boolean flag = true;
+        if (myImage == null) {
+            flag = false;
+        }
+        return flag;
+    }
+
+//    @Override
+//    public String toString() {
+//
+//    }
     public ArrayList<Answer> getAnswers() {
         return myAnswers;
         //should clone?
