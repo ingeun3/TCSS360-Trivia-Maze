@@ -1,41 +1,101 @@
 package controller;
 
+import model.Answer;
+import model.Maze;
 import model.Question;
 import org.sqlite.SQLiteDataSource;
+import view.GameInterface;
 import view.QuestionPane;
-import view.QuestionPanel;
+
 
 import javax.sql.DataSource;
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
 
     private static ArrayList<Question> myQuestions;
 
+    private static Map<String, String[]> myQnA;
+
     private static SQLiteDataSource myDataSource;
-    public static void main(String[] theArgs) {
+
+    private Main() {
+        // do not instantiate objects of this class
+        throw new IllegalStateException();
+    }
+
+    public static void main(String[] theArgs) throws FileNotFoundException {
         myQuestions = new ArrayList<Question>();
         //QuestionPanel questionPanel = new QuestionPanel(myQuestions);
         myDataSource = new SQLiteDataSource();
         connect();
         retrieveData();
-        QuestionPane question = new QuestionPane(myQuestions);
-//        EventQueue.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                new QuestionPanel(myQuestions);
-//            }
-//        });
-//        ImageIcon image = myQuestions.get(1).getImage();
-//        String question = myQuestions.get(1).getQuestion();
-//        JOptionPane.showMessageDialog(null, question,
-//                "test", JOptionPane.PLAIN_MESSAGE, image);
+
+        //convert myQuestions arraylist into a map of questions and answers to send to
+        //view
+        myQnA = new HashMap<String, String[]>();
+        for (Question question : myQuestions) {
+            int ansLength = question.getAnswers().size();
+            String[] ansArray = new String[ansLength];
+            for (int i = 0; i < ansLength; i++) {
+                ansArray[i] = question.getAnswers().get(i).getAnswer(); //gets string of answer
+                                                                        //at index i for each question
+            }
+            myQnA.put(question.getQuestion(), ansArray);
+        }
+        QuestionPane question = new QuestionPane(myQnA);
+        String[] qna = question.getQnA(); //gets the question that was asked and the answer that was
+                                            //chosen at index 0 and 1 respectively
+        System.out.println(qna[0] + " " + qna[1]);
+
+        //line 55 and 56 will pop up the question and then get the choice the chosen.
+
+
+        //ACTUALLY MAYBE NEED TO CHANGE OF SENDING A RANDOM QUESTION HERE IN CONTROLLER TO SEND
+        //TO QUESTIONPANE
+
+
+        //logic that will see if answer is correct
+        Question askedQuest = null;
+        for (Question quest : myQuestions) {
+            if (quest.getQuestion() == qna[0]) {
+                askedQuest = quest;
+            }
+        }
+        for (Answer ans: askedQuest.getAnswers()) {
+            if (ans.getAnswer() == qna[1]) {
+                //matching the answer with the answer object to check correctness
+                //not finished
+            }
+        }
+
+
+
+        Maze mazeMap = null;
+        try {
+            mazeMap = new Maze("maze_map2.txt");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        Maze finalMazeMap = mazeMap;
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                setLookAndFeel();
+                new GameInterface(1, 10, finalMazeMap.getArray()).start();
+            }
+
+        });
     }
 
     public static void connect() {
@@ -111,4 +171,22 @@ public class Main {
         }
         return question;
     }
+    private static void setLookAndFeel() {
+
+        try {
+
+            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+
+        } catch (final UnsupportedLookAndFeelException e) {
+            System.out.println("UnsupportedLookAndFeelException");
+        } catch (final ClassNotFoundException e) {
+            System.out.println("ClassNotFoundException");
+        } catch (final InstantiationException e) {
+            System.out.println("InstantiationException");
+        } catch (final IllegalAccessException e) {
+            System.out.println("IllegalAccessException");
+        }
+
+    }
+
 }
