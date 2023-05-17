@@ -18,6 +18,8 @@ public class Question {
 
     private String myQuestion;
 
+
+
     private ArrayList<Answer> myAnswers;
 
     public Question(String theQuestion) {

@@ -28,7 +28,7 @@ public class QuestionPane {
     public QuestionPane(Map<String, String[]> theQnA) {
         myRandom = new Random();
         myQnA = theQnA;
-        myPrompt = getRandomQuestion();
+
         myAnswers = theQnA.get(myPrompt);
         myImage = new ImageIcon("questionmark.png");
         myChosenAnswer = "";
@@ -59,9 +59,8 @@ public class QuestionPane {
     }
 
 
-    public String[] getQnA() {
-        String[] qna = {myPrompt, myChosenAnswer};
-        return qna;
+    public String getChoice() {
+        return myChosenAnswer;
     }
     private String getRandomQuestion() {
         int rand = myRandom.nextInt(myQnA.size());

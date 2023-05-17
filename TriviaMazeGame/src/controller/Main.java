@@ -19,6 +19,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class Main {
 
@@ -28,12 +29,16 @@ public class Main {
 
     private static SQLiteDataSource myDataSource;
 
+    private static Random myRandom;
+
+
     private Main() {
         // do not instantiate objects of this class
         throw new IllegalStateException();
     }
 
     public static void main(String[] theArgs) throws FileNotFoundException {
+        myRandom = new Random();
         myQuestions = new ArrayList<Question>();
         //QuestionPanel questionPanel = new QuestionPanel(myQuestions);
         myDataSource = new SQLiteDataSource();
@@ -42,20 +47,49 @@ public class Main {
 
         //convert myQuestions arraylist into a map of questions and answers to send to
         //view
-        myQnA = new HashMap<String, String[]>();
-        for (Question question : myQuestions) {
-            int ansLength = question.getAnswers().size();
-            String[] ansArray = new String[ansLength];
-            for (int i = 0; i < ansLength; i++) {
-                ansArray[i] = question.getAnswers().get(i).getAnswer(); //gets string of answer
-                                                                        //at index i for each question
-            }
-            myQnA.put(question.getQuestion(), ansArray);
+
+        Map<String, String[]> qnanswers = new HashMap<String, String[]>();
+
+        Question askedQuestion = getRandomQuestion();
+
+        int ansLength = askedQuestion.getAnswers().size();
+        String[] ansArray = new String[ansLength];
+        for (int i = 0; i < ansLength; i++) {
+            ansArray[i] = askedQuestion.getAnswers().get(i).getAnswer();
         }
-        QuestionPane question = new QuestionPane(myQnA);
-        String[] qna = question.getQnA(); //gets the question that was asked and the answer that was
-                                            //chosen at index 0 and 1 respectively
-        System.out.println(qna[0] + " " + qna[1]);
+        qnanswers.put(askedQuestion.getQuestion(), ansArray);
+
+        QuestionPane question = new QuestionPane(qnanswers);
+
+        String choice = question.getChoice();
+
+        Answer answer = null;
+        for (Answer ans : askedQuestion.getAnswers()) {
+            if (ans.getAnswer() == choice) {
+                answer = ans;
+            }
+        }
+
+        if (answer.getCorrectness() == true) {
+
+        }
+
+//        myQnA = new HashMap<String, String[]>();
+
+
+//        for (Question question : myQuestions) {
+//            int ansLength = question.getAnswers().size();
+//            String[] ansArray = new String[ansLength];
+//            for (int i = 0; i < ansLength; i++) {
+//                ansArray[i] = question.getAnswers().get(i).getAnswer(); //gets string of answer
+//                                                                        //at index i for each question
+//            }
+//            myQnA.put(question.getQuestion(), ansArray);
+//        }
+//        QuestionPane question = new QuestionPane(myQnA);
+//        String[] qna = question.getQnA(); //gets the question that was asked and the answer that was
+//                                            //chosen at index 0 and 1 respectively
+//        System.out.println(qna[0] + " " + qna[1]);
 
         //line 55 and 56 will pop up the question and then get the choice the chosen.
 
@@ -65,18 +99,18 @@ public class Main {
 
 
         //logic that will see if answer is correct
-        Question askedQuest = null;
-        for (Question quest : myQuestions) {
-            if (quest.getQuestion() == qna[0]) {
-                askedQuest = quest;
-            }
-        }
-        for (Answer ans: askedQuest.getAnswers()) {
-            if (ans.getAnswer() == qna[1]) {
-                //matching the answer with the answer object to check correctness
-                //not finished
-            }
-        }
+//        Question askedQuest = null;
+//        for (Question quest : myQuestions) {
+//            if (quest.getQuestion() == qna[0]) {
+//                askedQuest = quest;
+//            }
+//        }
+//        for (Answer ans: askedQuest.getAnswers()) {
+//            if (ans.getAnswer() == qna[1]) {
+//                //matching the answer with the answer object to check correctness
+//                //not finished
+//            }
+//        }
 
 
 
@@ -97,6 +131,14 @@ public class Main {
 
         });
     }
+
+    private static Question getRandomQuestion() {
+        int rand = myRandom.nextInt(myQnA.size());
+        Question question = myQuestions.get(rand);
+        return question;
+    }
+
+
 
     public static void connect() {
         try {
