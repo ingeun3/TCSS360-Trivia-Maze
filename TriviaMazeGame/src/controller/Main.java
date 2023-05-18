@@ -1,25 +1,25 @@
 package controller;
 
-        import model.Answer;
-        import model.Maze;
-        import model.Question;
-        import org.sqlite.SQLiteDataSource;
-        import view.GUIPlayer;
-        import view.GameInterface;
-        import view.GamePanel;
-        import view.QuestionPane;
+import model.Answer;
+import model.Maze;
+import model.Question;
+import org.sqlite.SQLiteDataSource;
+import view.GUIPlayer;
+import view.GameInterface;
+import view.GamePanel;
+import view.QuestionPane;
 
-        import javax.swing.*;
-        import java.awt.*;
-        import java.io.FileNotFoundException;
-        import java.sql.Connection;
-        import java.sql.ResultSet;
-        import java.sql.SQLException;
-        import java.sql.Statement;
-        import java.util.ArrayList;
-        import java.util.HashMap;
-        import java.util.Map;
-        import java.util.Random;
+import javax.swing.*;
+import java.awt.*;
+import java.io.FileNotFoundException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 public class Main {
     // ArrayList that stores all Question and answers.
