@@ -3,7 +3,9 @@ package controller;
 import model.Maze;
 import model.Question;
 import org.sqlite.SQLiteDataSource;
+import view.GUIPlayer;
 import view.GameInterface;
+import view.GamePanel;
 import view.QuestionPane;
 
 
@@ -17,34 +19,35 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class Main {
+public class main {
 
     private static ArrayList<Question> myQuestions;
 
     private static SQLiteDataSource myDataSource;
 
-    private Main() {
+    private static GUIPlayer myPlayerImage;
+
+    private static GamePanel myGamePanel;
+
+    private Maze myMaze;
+
+    private keyBoardHandler myKeyInput;
+
+    private main() throws FileNotFoundException {
         // do not instantiate objects of this class
-        throw new IllegalStateException();
+
+     //   throw new IllegalStateException();
+
+        myMaze = new Maze("maze_map2.txt");
+
+        myGamePanel = new GamePanel("1", "10", myMaze.getArray());
+
+        myPlayerImage = new GUIPlayer(myGamePanel);
     }
 
+
+
     public static void main(String[] theArgs) throws FileNotFoundException {
-        myQuestions = new ArrayList<Question>();
-        //QuestionPanel questionPanel = new QuestionPanel(myQuestions);
-        myDataSource = new SQLiteDataSource();
-        connect();
-        retrieveData();
-        QuestionPane question = new QuestionPane(myQuestions);
-//        EventQueue.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                new QuestionPanel(myQuestions);
-//            }
-//        });
-//        ImageIcon image = myQuestions.get(1).getImage();
-//        String question = myQuestions.get(1).getQuestion();
-//        JOptionPane.showMessageDialog(null, question,
-//                "test", JOptionPane.PLAIN_MESSAGE, image);
         Maze mazeMap = null;
         try {
             mazeMap = new Maze("maze_map2.txt");
@@ -53,14 +56,18 @@ public class Main {
         }
 
         Maze finalMazeMap = mazeMap;
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                setLookAndFeel();
-                new GameInterface(1, 10, finalMazeMap.getArray()).start();
-            }
+        EventQueue.invokeLater(() -> {
+            setLookAndFeel();
+            new GameInterface(1, 10, finalMazeMap.getArray()).start();
 
+            if(myKeyInput.getKey())
         });
+
+        myQuestions = new ArrayList<Question>();
+        myDataSource = new SQLiteDataSource();
+        connect();
+        retrieveData();
+       // QuestionPane question = new QuestionPane(myQuestions);
     }
 
     public static void connect() {
@@ -137,11 +144,8 @@ public class Main {
         return question;
     }
     private static void setLookAndFeel() {
-
         try {
-
             UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-
         } catch (final UnsupportedLookAndFeelException e) {
             System.out.println("UnsupportedLookAndFeelException");
         } catch (final ClassNotFoundException e) {

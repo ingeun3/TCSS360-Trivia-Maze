@@ -1,12 +1,11 @@
 package view;
 
-import java.awt.BorderLayout;
+import controller.keyBoardHandler;
+
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-
 import javax.swing.JPanel;
 
 
@@ -32,8 +31,7 @@ public class GamePanel extends JPanel implements Runnable {
     int playerSpeed = 4; // 4pixels increased or decreased
     int FPS = 60; // FPS 60 times
     keyBoardHandler keyH = new keyBoardHandler();
-    GUIPlayer player = new GUIPlayer(this, keyH);
-    //TileManager tileM = new TileManager(this,myMazeArray  );
+    GUIPlayer player = new GUIPlayer(this);
     MazeMap myMazemap;
     NorthPanel myNorthPanel;
     //world setting
@@ -46,7 +44,6 @@ public class GamePanel extends JPanel implements Runnable {
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         myMazeArray = theArray;
-        //mynorthPanel = new NorthPanel (theLevel, theMove);
 
         myMazemap = new MazeMap(this, myMazeArray);
         myNorthPanel = new NorthPanel(this, theLevel, theMove);
@@ -55,15 +52,11 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void start() {
-        //this.setLayout(new GridLayout(2, 1));
-        //this.add(myNorthPanel, BorderLayout.NORTH);
-        //this.add(myMazemap, FlowLayout.CENTER);
         this.addKeyListener(keyH);
         this.setFocusable(true); //???
         this.requestFocus();
         run();
         startGameThread();
-        //this.setPreferredSize(new Dimension(520,520));
     }
 
     public void startGameThread() {
