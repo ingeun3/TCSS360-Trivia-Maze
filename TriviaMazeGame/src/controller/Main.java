@@ -1,145 +1,89 @@
 package controller;
 
-import model.Answer;
-import model.Maze;
-import model.Question;
-import org.sqlite.SQLiteDataSource;
-import view.GameInterface;
-import view.QuestionPane;
+        import model.Answer;
+        import model.Maze;
+        import model.Question;
+        import org.sqlite.SQLiteDataSource;
+        import view.GUIPlayer;
+        import view.GameInterface;
+        import view.GamePanel;
+        import view.QuestionPane;
 
-
-import javax.sql.DataSource;
-import javax.swing.*;
-import java.awt.*;
-import java.io.FileNotFoundException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+        import javax.swing.*;
+        import java.awt.*;
+        import java.io.FileNotFoundException;
+        import java.sql.Connection;
+        import java.sql.ResultSet;
+        import java.sql.SQLException;
+        import java.sql.Statement;
+        import java.util.ArrayList;
+        import java.util.HashMap;
+        import java.util.Map;
+        import java.util.Random;
 
 public class Main {
-
+    // ArrayList that stores all Question and answers.
     private static ArrayList<Question> myQuestions;
-
+    // The map that stores current question in key and answers as a value.
     private static Map<String, String[]> myQnA;
-
+    // The SQL data source.
     private static SQLiteDataSource myDataSource;
-
+    // Random object to grab random question.
     private static Random myRandom;
 
 
-    private Main() {
-        // do not instantiate objects of this class
-        throw new IllegalStateException();
-    }
-
     public static void main(String[] theArgs) throws FileNotFoundException {
-        myRandom = new Random();
-        myQuestions = new ArrayList<Question>();
-        //QuestionPanel questionPanel = new QuestionPanel(myQuestions);
-        myDataSource = new SQLiteDataSource();
-        connect();
-        retrieveData();
-
-        //convert myQuestions arraylist into a map of questions and answers to send to
-        //view
-
-        Map<String, String[]> qnanswers = new HashMap<String, String[]>();
-
-        Question askedQuestion = getRandomQuestion();
-
-        int ansLength = askedQuestion.getAnswers().size();
-        String[] ansArray = new String[ansLength];
-        for (int i = 0; i < ansLength; i++) {
-            ansArray[i] = askedQuestion.getAnswers().get(i).getAnswer();
-        }
-        qnanswers.put(askedQuestion.getQuestion(), ansArray);
-
-        QuestionPane question = new QuestionPane(qnanswers);
-
-        String choice = question.getChoice();
-
-        Answer answer = null;
-        for (Answer ans : askedQuestion.getAnswers()) {
-            if (ans.getAnswer() == choice) {
-                answer = ans;
-            }
-        }
-
-        if (answer.getCorrectness() == true) {
-
-        }
-
-//        myQnA = new HashMap<String, String[]>();
-
-
-//        for (Question question : myQuestions) {
-//            int ansLength = question.getAnswers().size();
-//            String[] ansArray = new String[ansLength];
-//            for (int i = 0; i < ansLength; i++) {
-//                ansArray[i] = question.getAnswers().get(i).getAnswer(); //gets string of answer
-//                                                                        //at index i for each question
-//            }
-//            myQnA.put(question.getQuestion(), ansArray);
+//        myRandom = new Random();
+//        myQuestions = new ArrayList<Question>();
+//        //QuestionPanel questionPanel = new QuestionPanel(myQuestions);
+//        myDataSource = new SQLiteDataSource();
+//        connect();
+//        retrieveData();
+//
+//        Map<String, String[]> myQnA = new HashMap<String, String[]>();
+//
+//        Question askedQuestion = getRandomQuestion();
+//
+//        int ansLength = askedQuestion.getAnswers().size();
+//        String[] ansArray = new String[ansLength];
+//        for (int i = 0; i < ansLength; i++) {
+//            ansArray[i] = askedQuestion.getAnswers().get(i).getAnswer();
 //        }
+//        myQnA.put(askedQuestion.getQuestion(), ansArray);
+//
 //        QuestionPane question = new QuestionPane(myQnA);
-//        String[] qna = question.getQnA(); //gets the question that was asked and the answer that was
-//                                            //chosen at index 0 and 1 respectively
-//        System.out.println(qna[0] + " " + qna[1]);
 
-        //line 55 and 56 will pop up the question and then get the choice the chosen.
+        Maze mazeMap = new Maze("maze_map2.txt");
+        GameInterface gameInterface = new GameInterface(1, 10, mazeMap.getArray());
+        GamePanel gamePanel = new GamePanel(mazeMap.getArray());
+        GUIPlayer playerImage = new GUIPlayer();
 
+        Controller controller = new Controller(mazeMap, gamePanel, gameInterface, playerImage);
 
-        //ACTUALLY MAYBE NEED TO CHANGE OF SENDING A RANDOM QUESTION HERE IN CONTROLLER TO SEND
-        //TO QUESTIONPANE
-
-
-        //logic that will see if answer is correct
-//        Question askedQuest = null;
-//        for (Question quest : myQuestions) {
-//            if (quest.getQuestion() == qna[0]) {
-//                askedQuest = quest;
-//            }
-//        }
-//        for (Answer ans: askedQuest.getAnswers()) {
-//            if (ans.getAnswer() == qna[1]) {
-//                //matching the answer with the answer object to check correctness
-//                //not finished
-//            }
-//        }
-
-
-
-        Maze mazeMap = null;
-        try {
-            mazeMap = new Maze("maze_map2.txt");
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        Maze finalMazeMap = mazeMap;
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
                 setLookAndFeel();
-                new GameInterface(1, 10, finalMazeMap.getArray()).start();
+
+                controller.start();
             }
 
         });
     }
 
+    /**
+     * Returns one of question in a random order.
+     * @return random question.
+     */
     private static Question getRandomQuestion() {
         int rand = myRandom.nextInt(myQnA.size());
         Question question = myQuestions.get(rand);
         return question;
     }
 
-
-
+    /**
+     * Connects to the SQL data source.
+     */
     public static void connect() {
         try {
             myDataSource = new SQLiteDataSource();
@@ -149,6 +93,10 @@ public class Main {
             System.exit(0);
         }
     }
+
+    /**
+     * Receives data from data source.
+     */
     private static void retrieveData() {
         String query1 = "SELECT * FROM multiplechoicequestions";
         String query2 = "SELECT * FROM booleanquestions";
@@ -184,6 +132,14 @@ public class Main {
 
     }
 
+    /**
+     * Adds multiple choice question to the myQuestion.
+     * @param theQuestion the Question prompt
+     * @param theRightAnswer the Correct answer
+     * @param theWrongAnswer1 the wrong answer
+     * @param theWrongAnswer2 the wrong answer
+     * @param theImage the image of a question
+     */
     private static void addMultipleChoiceQuestion(String theQuestion, String theRightAnswer,
                                                   String theWrongAnswer1, String theWrongAnswer2,
                                                   String theImage) {
@@ -195,6 +151,13 @@ public class Main {
         myQuestions.add(question);
     }
 
+    /**
+     * Adds true or false question to myQuestion.
+     * @param theQuestion the Question prompt
+     * @param theRightAnswer the Correct answer
+     * @param theWrongAnswer the wrong answer
+     * @param theImage the image of a question
+     */
     private static void addBooleanQuestion(String theQuestion, String theRightAnswer,
                                            String theWrongAnswer, String theImage) {
 
@@ -204,6 +167,13 @@ public class Main {
         myQuestions.add(question);
     }
 
+    /**
+     * Initiating the Question.
+     *
+     * @param theQuestion the Question prompt
+     * @param theImage the image of a question
+     * @return the Question object initiated
+     */
     private static Question initializeQuestion(String theQuestion, String theImage) {
         Question question;
         if (theImage == null) {
@@ -213,6 +183,10 @@ public class Main {
         }
         return question;
     }
+
+    /**
+     * Sets Look and Feel of the GUI.
+     */
     private static void setLookAndFeel() {
 
         try {

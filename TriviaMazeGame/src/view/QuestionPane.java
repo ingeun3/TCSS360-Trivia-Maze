@@ -1,34 +1,32 @@
 package view;
 
 import javax.swing.*;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Random;
 
 public class QuestionPane {
+    // Clas Constants
 
+    // The default prompt for asking question.
     private static final String QUESTION_TITLE = "Answer the question";
+
+    //Class Fields
+
+    // The question that was asked.
     private String myPrompt;
-
+    // The Image that will be display in the question.
     private ImageIcon myImage;
-
-//    private ArrayList<Question> myQuestions;
-
-    private Map<String, String[]> myQnA;
-
+    // The list of answers to the problem.
     private String[] myAnswers;
-
-    private Random myRandom;
-
+    // The answer the player chose.
     private String myChosenAnswer;
 
-    //new mvc constructor
-    //key is question, value is array of answers
-    //construction of 1 instance of a random question and possible answers everytime
-    //joptionpane opens
+    /**
+     * Default constructor for QuestionPane.
+     * @param theQnA Map that contains the question as the key and array of answers in value.
+     */
     public QuestionPane(Map<String, String[]> theQnA) {
-        myRandom = new Random();
-        myQnA = theQnA;
-
         myAnswers = theQnA.get(myPrompt);
         myImage = new ImageIcon("questionmark.png");
         myChosenAnswer = "";
@@ -38,34 +36,24 @@ public class QuestionPane {
 
     }
 
-    //change getting image later
-//    private ImageIcon setImage(Question theQuestion) {
-//        ImageIcon icon;
-//        if (theQuestion.hasImage()) {
-//            icon = theQuestion.getImage();
-//        } else {
-//            icon = new ImageIcon("questionmark.png");
-//        }
-//        return icon;
-//    }
-
+    /**
+     * Initializing QuestionPane.
+     */
     private void start() {
         // null will change to game panel when merging code
         int ans = JOptionPane.showOptionDialog(null, myPrompt, QUESTION_TITLE,
-                                     JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
-                                     myImage, myAnswers, myAnswers[0]);
+                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
+                myImage, myAnswers, myAnswers[0]);
         myChosenAnswer = myAnswers[ans];
 
     }
 
-
+    /**
+     * Getters for myChosenAnswer.
+     * @return the Answer the player chose.
+     */
     public String getChoice() {
         return myChosenAnswer;
-    }
-    private String getRandomQuestion() {
-        int rand = myRandom.nextInt(myQnA.size());
-        Object question = myQnA.keySet().toArray()[rand];
-        return question.toString();
     }
 
 }

@@ -3,10 +3,13 @@ package model;
 import javax.swing.ImageIcon;
 
 public class Player {
+	// Class constant
 
 	// Image of a player icon.
 	private static final ImageIcon myImage = new ImageIcon("playerIcon.jpg");
-	
+
+	// Class field
+
 	// Number of available moves on a player object.
 	private static int myMove;
 	// Boolean living status of player object (true if alive, false if otherwise),
