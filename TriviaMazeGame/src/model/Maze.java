@@ -25,6 +25,11 @@ public class Maze {
     private Point myPlayerLocation;
 
     /**
+     * The terrain grid for the simulation.
+     */
+    private Terrain[][] myGrid;
+
+    /**
      * This is a default constructor for Maze class.
      *
      * @throws FileNotFoundException
@@ -94,11 +99,15 @@ public class Maze {
         int column = myScanner.nextInt();
         //initialize the array size.
         char[][] mazeMap = new char[row][column];
+
+        myGrid = new Terrain[row][column];
         // read the character from the map.
         for (int i = 0; i < row; i++) {
             String line = myScanner.next();
+            System.out.println(line);
             for (int j = 0; j < column; j++) {
                 mazeMap[i][j] = line.charAt(j);
+                myGrid[i][j] = Terrain.valueOf(line.charAt(j));
             }
         }
         return mazeMap;

@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 
 import model.Maze;
-import view.GamePanel;
 
 public class NorthPanel extends JPanel{
     // Class Constants
