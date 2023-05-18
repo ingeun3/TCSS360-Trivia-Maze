@@ -7,49 +7,55 @@ import javax.swing.*;
 import java.awt.*;
 
 
-    public class GUIPlayer  extends Entity {
-        private GamePanel gp;
+    public class GUIPlayer {
+        // Class Constants
 
-        private final int screenX;
-        private final int screenY;
+        // Tile size is set for 48x48.
+        private static final int TILE_SIZE = 48;
+        // The movement speed of the player.
+        private static final int speed = 4;
+        // The Image of a player facing up.
+        private static final ImageIcon up = new ImageIcon("up.png");
+        // The Image of a player facing down.
+        private static final ImageIcon down = new ImageIcon("down.png");
+        // The Image of a player facing left.
+        private static final ImageIcon left = new ImageIcon("left.png");
+        // The Image of a player facing right.
+        private static final ImageIcon right = new ImageIcon("right.png");
 
+        // Class Fields
+
+        // The x, and y location of the player.
         private int x, y;
-        private int speed;
-        private ImageIcon up, down, left,  right;
+        // The direction the player is facing.
         private String direction;
-
+        // The current image of a player.
         private ImageIcon myImage;
 
-        public GUIPlayer(GamePanel gp) {
-
-            this.gp = gp;
-            setDefaultValues();
-            getPlayerImage();
-            screenX = gp.screenWidth/2;
-            screenY = gp.screenHeight/2;
-        }
-
-        public void setDefaultValues() {
+        /**
+         * The default constructor of the Player GUI.
+         */
+        public GUIPlayer() {
             x = 100;
             y = 100;
-            speed = 4;
             direction = "static";
             myImage = new ImageIcon("right.png");
         }
-        public void getPlayerImage() {
-            up = new ImageIcon("up.png");
-            down = new ImageIcon("down.png");
-            left = new ImageIcon("left.png");
-            right = new ImageIcon("right.png");
+
+        /**
+         * Sets the direction of the player.
+         * @param theDirection
+         */
+        public void setDirection(String theDirection) {
+            direction = theDirection;
+            update();
 
         }
+
+        /**
+         * Updates the location of the player by the direction the player is facing.
+         */
         public void update() {
-            //we can change it, if we don't like the player body to kepp
-            // shaking even does not hit anykeys then
-            // we will do
-            // if (keyH.upPressed == true || keyH.downPressed == true \\ keyH.leftPressed == true)
-            // keyH.rightPressed == true)
-            // then we will move every thing inside this if statement.
             if (direction == "up") {
                 y = y - speed;
             }
@@ -62,21 +68,13 @@ import java.awt.*;
             else if (direction == "right") {
                 x += speed;
             }
-            //spriteCounter++; this update method call 60 times per sec.
-            //if(spriteCounter > 12) // you can change whatever you like
-            // if (spriteNum ==1){
-            //sprteNum =2;
-            // else if(spriteNum ==2)
-            //spriteNum =1;
-
-            //reset spriteCounter = 0;
         }
 
-        public void draw(Graphics2D g2) {
-
-//		g2.setColor(Color.WHITE);
-//		//rectangle
-//		g2.fillRect(x, y, gp.tileSize, gp.tileSize);
+        /**
+         * Draws the Player GUI
+         * @param theGraphics the Graphics object to draw on the JPanel.=
+         */
+        public void draw(Graphics2D theGraphics) {
 
             //ImageIcon image = null;
             switch(direction) {
@@ -96,12 +94,9 @@ import java.awt.*;
                     break;
 
             }
-            g2.drawImage(myImage.getImage(), x, y, gp.tileSize, gp.tileSize, null);
+            theGraphics.drawImage(myImage.getImage(), x, y, TILE_SIZE, TILE_SIZE, null);
 
         }
-
-
-
 
     }
 
