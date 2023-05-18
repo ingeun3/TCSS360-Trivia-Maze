@@ -1,43 +1,89 @@
 package controller;
 
-import model.Question;
-import org.sqlite.SQLiteDataSource;
-import view.QuestionPane;
-import view.QuestionPanel;
+        import model.Answer;
+        import model.Maze;
+        import model.Question;
+        import org.sqlite.SQLiteDataSource;
+        import view.GUIPlayer;
+        import view.GameInterface;
+        import view.GamePanel;
+        import view.QuestionPane;
 
-import javax.sql.DataSource;
-import javax.swing.*;
-import java.awt.*;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
+        import javax.swing.*;
+        import java.awt.*;
+        import java.io.FileNotFoundException;
+        import java.sql.Connection;
+        import java.sql.ResultSet;
+        import java.sql.SQLException;
+        import java.sql.Statement;
+        import java.util.ArrayList;
+        import java.util.HashMap;
+        import java.util.Map;
+        import java.util.Random;
 
 public class Main {
-
+    // ArrayList that stores all Question and answers.
     private static ArrayList<Question> myQuestions;
-
+    // The map that stores current question in key and answers as a value.
+    private static Map<String, String[]> myQnA;
+    // The SQL data source.
     private static SQLiteDataSource myDataSource;
-    public static void main(String[] theArgs) {
-        myQuestions = new ArrayList<Question>();
-        //QuestionPanel questionPanel = new QuestionPanel(myQuestions);
-        myDataSource = new SQLiteDataSource();
-        connect();
-        retrieveData();
-        QuestionPane question = new QuestionPane(myQuestions);
-//        EventQueue.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                new QuestionPanel(myQuestions);
-//            }
-//        });
-//        ImageIcon image = myQuestions.get(1).getImage();
-//        String question = myQuestions.get(1).getQuestion();
-//        JOptionPane.showMessageDialog(null, question,
-//                "test", JOptionPane.PLAIN_MESSAGE, image);
+    // Random object to grab random question.
+    private static Random myRandom;
+
+
+    public static void main(String[] theArgs) throws FileNotFoundException {
+//        myRandom = new Random();
+//        myQuestions = new ArrayList<Question>();
+//        //QuestionPanel questionPanel = new QuestionPanel(myQuestions);
+//        myDataSource = new SQLiteDataSource();
+//        connect();
+//        retrieveData();
+//
+//        Map<String, String[]> myQnA = new HashMap<String, String[]>();
+//
+//        Question askedQuestion = getRandomQuestion();
+//
+//        int ansLength = askedQuestion.getAnswers().size();
+//        String[] ansArray = new String[ansLength];
+//        for (int i = 0; i < ansLength; i++) {
+//            ansArray[i] = askedQuestion.getAnswers().get(i).getAnswer();
+//        }
+//        myQnA.put(askedQuestion.getQuestion(), ansArray);
+//
+//        QuestionPane question = new QuestionPane(myQnA);
+
+        Maze mazeMap = new Maze("maze_map2.txt");
+        GameInterface gameInterface = new GameInterface(1, 10, mazeMap.getArray());
+        GamePanel gamePanel = new GamePanel(mazeMap.getArray());
+        GUIPlayer playerImage = new GUIPlayer();
+
+        Controller controller = new Controller(mazeMap, gamePanel, gameInterface, playerImage);
+
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                setLookAndFeel();
+
+                controller.start();
+            }
+
+        });
     }
 
+    /**
+     * Returns one of question in a random order.
+     * @return random question.
+     */
+    private static Question getRandomQuestion() {
+        int rand = myRandom.nextInt(myQnA.size());
+        Question question = myQuestions.get(rand);
+        return question;
+    }
+
+    /**
+     * Connects to the SQL data source.
+     */
     public static void connect() {
         try {
             myDataSource = new SQLiteDataSource();
@@ -47,6 +93,10 @@ public class Main {
             System.exit(0);
         }
     }
+
+    /**
+     * Receives data from data source.
+     */
     private static void retrieveData() {
         String query1 = "SELECT * FROM multiplechoicequestions";
         String query2 = "SELECT * FROM booleanquestions";
@@ -82,6 +132,14 @@ public class Main {
 
     }
 
+    /**
+     * Adds multiple choice question to the myQuestion.
+     * @param theQuestion the Question prompt
+     * @param theRightAnswer the Correct answer
+     * @param theWrongAnswer1 the wrong answer
+     * @param theWrongAnswer2 the wrong answer
+     * @param theImage the image of a question
+     */
     private static void addMultipleChoiceQuestion(String theQuestion, String theRightAnswer,
                                                   String theWrongAnswer1, String theWrongAnswer2,
                                                   String theImage) {
@@ -93,6 +151,13 @@ public class Main {
         myQuestions.add(question);
     }
 
+    /**
+     * Adds true or false question to myQuestion.
+     * @param theQuestion the Question prompt
+     * @param theRightAnswer the Correct answer
+     * @param theWrongAnswer the wrong answer
+     * @param theImage the image of a question
+     */
     private static void addBooleanQuestion(String theQuestion, String theRightAnswer,
                                            String theWrongAnswer, String theImage) {
 
@@ -102,6 +167,13 @@ public class Main {
         myQuestions.add(question);
     }
 
+    /**
+     * Initiating the Question.
+     *
+     * @param theQuestion the Question prompt
+     * @param theImage the image of a question
+     * @return the Question object initiated
+     */
     private static Question initializeQuestion(String theQuestion, String theImage) {
         Question question;
         if (theImage == null) {
@@ -111,4 +183,26 @@ public class Main {
         }
         return question;
     }
+
+    /**
+     * Sets Look and Feel of the GUI.
+     */
+    private static void setLookAndFeel() {
+
+        try {
+
+            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+
+        } catch (final UnsupportedLookAndFeelException e) {
+            System.out.println("UnsupportedLookAndFeelException");
+        } catch (final ClassNotFoundException e) {
+            System.out.println("ClassNotFoundException");
+        } catch (final InstantiationException e) {
+            System.out.println("InstantiationException");
+        } catch (final IllegalAccessException e) {
+            System.out.println("IllegalAccessException");
+        }
+
+    }
+
 }
