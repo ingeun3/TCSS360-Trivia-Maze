@@ -1,9 +1,16 @@
 package controller;
 
+import model.Maze;
 import model.Question;
 import org.sqlite.SQLiteDataSource;
+import view.GameInterface;
+import view.GamePanel;
 import view.QuestionPane;
 
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,23 +22,44 @@ public class Main {
     private static ArrayList<Question> myQuestions;
 
     private static SQLiteDataSource myDataSource;
-    public static void main(String[] theArgs) {
+
+    keyBoardHandler keyH = new keyBoardHandler();
+
+
+
+    private Main() {
+
+        // do not instantiate objects of this class
+        throw new IllegalStateException();
+    }
+
+    public static void main(String[] theArgs) throws FileNotFoundException {
         myQuestions = new ArrayList<Question>();
         //QuestionPanel questionPanel = new QuestionPanel(myQuestions);
         myDataSource = new SQLiteDataSource();
         connect();
         retrieveData();
         QuestionPane question = new QuestionPane(myQuestions);
-//        EventQueue.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                new QuestionPanel(myQuestions);
-//            }
-//        });
-//        ImageIcon image = myQuestions.get(1).getImage();
-//        String question = myQuestions.get(1).getQuestion();
-//        JOptionPane.showMessageDialog(null, question,
-//                "test", JOptionPane.PLAIN_MESSAGE, image);
+        Maze mazeMap = null;
+        try {
+            mazeMap = new Maze("maze_map2.txt");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        Maze finalMazeMap = mazeMap;
+
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                setLookAndFeel();
+                new GameInterface(1, 10, finalMazeMap.getArray()).start();
+            }
+
+        });
+    }
+    public void update(){
+
     }
 
     public static void connect() {
@@ -107,4 +135,22 @@ public class Main {
         }
         return question;
     }
+    private static void setLookAndFeel() {
+
+        try {
+
+            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+
+        } catch (final UnsupportedLookAndFeelException e) {
+            System.out.println("UnsupportedLookAndFeelException");
+        } catch (final ClassNotFoundException e) {
+            System.out.println("ClassNotFoundException");
+        } catch (final InstantiationException e) {
+            System.out.println("InstantiationException");
+        } catch (final IllegalAccessException e) {
+            System.out.println("IllegalAccessException");
+        }
+
+    }
+
 }

@@ -9,6 +9,8 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+import view.Sound;
+import controller.keyBoardHandler;
 
 
 public class GamePanel extends JPanel implements Runnable {
@@ -24,6 +26,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenWidth = tileSize * maxScreenColumn; //768 pixels
     public final int screenHeight = tileSize * maxScreenRow; //576
     // NorthPanel mynorthPanel;
+    Sound sound = new Sound();
     Thread gameThread;
     char[][] myMazeArray;
     // set player default position;
@@ -33,14 +36,13 @@ public class GamePanel extends JPanel implements Runnable {
     int FPS = 60; // FPS 60 times
     keyBoardHandler keyH = new keyBoardHandler();
     GUIPlayer player = new GUIPlayer(this, keyH);
-    //TileManager tileM = new TileManager(this,myMazeArray  );
+
     MazeMap myMazemap;
     NorthPanel myNorthPanel;
     //world setting
     public final int maxWorldCol = 50;
     public final int maxWorldRow = 50;
-    public final int worldWidth = tileSize * maxWorldCol; //as you like
-    public final int worldHeight = tileSize * maxWorldRow;
+
     public GamePanel(String theLevel, String theMove, char[][] theArray) {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
@@ -55,19 +57,15 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void start() {
-        //this.setLayout(new GridLayout(2, 1));
-        //this.add(myNorthPanel, BorderLayout.NORTH);
-        //this.add(myMazemap, FlowLayout.CENTER);
         this.addKeyListener(keyH);
         this.setFocusable(true); //???
         this.requestFocus();
         run();
         startGameThread();
-        //this.setPreferredSize(new Dimension(520,520));
+        playMusic(0);
     }
 
     public void startGameThread() {
-
         gameThread = new Thread(this);
         gameThread.start();
     }
@@ -114,12 +112,23 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);// you need to type i this whenever you do it
         Graphics2D g2 = (Graphics2D) g; // graphics to graphics 2D
-        //tileM.draw(g2); // make sure to type this one before player.
-        //player.draw(g2);
         myMazemap.draw(g2);
         player.draw(g2);
         //g2.fillRect(0, 0, screenWidth, screenHeight);
         g2.dispose();
 
+    }
+
+    public void playMusic(int i ) {
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+    public void stopMusic() {
+        sound.stop();
+    }
+    public void playSE(int i) {
+        sound.setFile(i);
+        sound.play();
     }
 }

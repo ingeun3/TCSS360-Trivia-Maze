@@ -1,12 +1,20 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Toolkit;
+import java.awt.*;
 
 import javax.swing.JFrame;
 
 public class GameInterface {
+
+    /** A ToolKit. */
+    private static final Toolkit KIT = Toolkit.getDefaultToolkit();
+
+    /** The Dimension of the screen. */
+    private static final Dimension SCREEN_SIZE = KIT.getScreenSize();
+
+    /** The constant number. */
+    private static final int CONSTANT_NUMBER = 3;
+
     private static final String LEVEL_PROMPT = "Level ";
 
     private static final String MOVE_PROMPT = "Remaining Moves: ";
@@ -17,10 +25,9 @@ public class GameInterface {
     private final JFrame myGameInterface;
 
     private final NorthPanel myNorthPanel;
-
-    private final GamePanel myMazeMap;
-
     private char[][] myMazeArray;
+
+    private final GamePanel myPanelMap;
 
     /** A size of the window. */
    //private final Dimension myDimension;
@@ -29,23 +36,27 @@ public class GameInterface {
         myMazeArray = theMazeArray;
         myLevel = LEVEL_PROMPT + theLevel;
         myMoves = MOVE_PROMPT + theMoves;
-        myMazeMap = new GamePanel(myLevel, myMoves, myMazeArray);
-        myNorthPanel = new NorthPanel(myMazeMap, myLevel, myMoves);
+        myPanelMap = new GamePanel(myLevel, myMoves, myMazeArray);
+        myNorthPanel = new NorthPanel(myPanelMap, myLevel, myMoves);
 
 
     }
 
     public void start() {
         myGameInterface.add(myNorthPanel, BorderLayout.NORTH);
-        myGameInterface.getContentPane().add(myMazeMap, BorderLayout.CENTER);
+        myGameInterface.getContentPane().add(myPanelMap, BorderLayout.CENTER);
         myGameInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myGameInterface.pack();
         myGameInterface.setLocationRelativeTo(null);
         myGameInterface.setVisible(true);
-       // myGameInterface.setResizable(false);
-        myMazeMap.requestFocus();
+        // The Initial Window Size.
+        myGameInterface.setPreferredSize(new Dimension(SCREEN_SIZE.width / CONSTANT_NUMBER,
+                SCREEN_SIZE.height / CONSTANT_NUMBER));
+        myGameInterface.setResizable(false);
+        myPanelMap.requestFocus();
 
     }
+
 
 
 
