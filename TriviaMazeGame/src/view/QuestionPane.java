@@ -1,67 +1,59 @@
 package view;
 
-import model.Answer;
-import model.Question;
-
 import javax.swing.*;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
 import java.util.Random;
 
 public class QuestionPane {
+    // Clas Constants
 
+    // The default prompt for asking question.
     private static final String QUESTION_TITLE = "Answer the question";
+
+    //Class Fields
+
+    // The question that was asked.
     private String myPrompt;
-
+    // The Image that will be display in the question.
     private ImageIcon myImage;
-
-    private ArrayList<Question> myQuestions;
-
+    // The list of answers to the problem.
     private String[] myAnswers;
+    // The answer the player chose.
+    private String myChosenAnswer;
 
-    private Random myRandom;
-    public QuestionPane(ArrayList<Question> theQuestions) {
-        myRandom = new Random();
-        myQuestions = theQuestions;
-        Question question = getRandomQuestion();
-        myAnswers = new String[question.getAnswers().size()];
-        initialize(question);
-        myPrompt = question.getQuestion();
-        myImage = setImage(question);
-        start();
-    }
-
-    /*
-    For construction that takes more than one line.
+    /**
+     * Default constructor for QuestionPane.
+     * @param theQnA Map that contains the question as the key and array of answers in value.
      */
-    private void initialize(Question theQuestion) {
-       for (int i = 0; i < myAnswers.length; i++) {
-           myAnswers[i] = theQuestion.getAnswers().get(i).getAnswer();
-       }
+    public QuestionPane(Map<String, String[]> theQnA) {
+        myAnswers = theQnA.get(myPrompt);
+        myImage = new ImageIcon("questionmark.png");
+        myChosenAnswer = "";
+        start();
+        //answers are just string[] without boolean value because view doesn't need to know if
+        //answer is right or wrong because listener is in controller I think
+
     }
 
-    private ImageIcon setImage(Question theQuestion) {
-        ImageIcon icon;
-        if (theQuestion.hasImage()) {
-            icon = theQuestion.getImage();
-        } else {
-            icon = new ImageIcon("questionmark.png");
-        }
-        return icon;
-    }
-
+    /**
+     * Initializing QuestionPane.
+     */
     private void start() {
         // null will change to game panel when merging code
-        JOptionPane.showOptionDialog(null, myPrompt, QUESTION_TITLE,
-                                     JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
-                                     myImage, myAnswers, myAnswers[0]);
+        int ans = JOptionPane.showOptionDialog(null, myPrompt, QUESTION_TITLE,
+                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
+                myImage, myAnswers, myAnswers[0]);
+        myChosenAnswer = myAnswers[ans];
 
     }
 
-
-    private Question getRandomQuestion() {
-        int rand = myRandom.nextInt(myQuestions.size());
-        Question question = myQuestions.get(rand);
-        return question;
+    /**
+     * Getters for myChosenAnswer.
+     * @return the Answer the player chose.
+     */
+    public String getChoice() {
+        return myChosenAnswer;
     }
 
 }
