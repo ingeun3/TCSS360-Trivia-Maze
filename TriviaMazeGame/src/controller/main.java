@@ -1,141 +1,24 @@
 package controller;
 
 import model.Maze;
-import model.Question;
-import org.sqlite.SQLiteDataSource;
+import model.Player;
 import view.GameInterface;
-import view.QuestionPane;
 
-
-import javax.sql.DataSource;
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 
-public class Main {
-
-    private static ArrayList<Question> myQuestions;
-
-    private static SQLiteDataSource myDataSource;
-
-    private Main() {
+public class
+main {
+    /* private constructor to inhibit instantiation. */
+    private main() {
         // do not instantiate objects of this class
         throw new IllegalStateException();
     }
 
-    public static void main(String[] theArgs) throws FileNotFoundException {
-        myQuestions = new ArrayList<Question>();
-        //QuestionPanel questionPanel = new QuestionPanel(myQuestions);
-        myDataSource = new SQLiteDataSource();
-        connect();
-        retrieveData();
-        QuestionPane question = new QuestionPane(myQuestions);
-//        EventQueue.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                new QuestionPanel(myQuestions);
-//            }
-//        });
-//        ImageIcon image = myQuestions.get(1).getImage();
-//        String question = myQuestions.get(1).getQuestion();
-//        JOptionPane.showMessageDialog(null, question,
-//                "test", JOptionPane.PLAIN_MESSAGE, image);
-        Maze mazeMap = null;
-        try {
-            mazeMap = new Maze("maze_map2.txt");
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        Maze finalMazeMap = mazeMap;
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                setLookAndFeel();
-                new GameInterface(1, 10, finalMazeMap.getArray()).start();
-            }
-
-        });
-    }
-
-    public static void connect() {
-        try {
-            myDataSource = new SQLiteDataSource();
-            myDataSource.setUrl("jdbc:sqlite:questions.db");
-        } catch ( Exception e ) {
-            e.printStackTrace();
-            System.exit(0);
-        }
-    }
-    private static void retrieveData() {
-        String query1 = "SELECT * FROM multiplechoicequestions";
-        String query2 = "SELECT * FROM booleanquestions";
-
-        try (Connection conn = myDataSource.getConnection();
-             Statement stmt = conn.createStatement(); ) {
-            ResultSet rs1 = stmt.executeQuery(query1);
-
-
-            //walk through each 'row' of results, grab data by column/field name
-            // and print it
-            while (rs1.next()) {
-                String question = rs1.getString("question");
-                String rightAnswer = rs1.getString("rightanswer");
-                String wrongAnswer1 = rs1.getString("wronganswer1");
-                String wrongAnswer2 = rs1.getString("wronganswer2");
-                String image = rs1.getString("image");
-                addMultipleChoiceQuestion(question, rightAnswer, wrongAnswer1, wrongAnswer2, image);
-            }
-            ResultSet rs2 = stmt.executeQuery(query2);
-            while (rs2.next()) {
-                String question = rs2.getString("question");
-                String rightAnswer = rs2.getString("rightanswer");
-                String wrongAnswer = rs2.getString("wronganswer");
-                String image = rs2.getString("image");
-                addBooleanQuestion(question, rightAnswer, wrongAnswer, image);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.exit(0);
-        }
-
-
-    }
-
-    private static void addMultipleChoiceQuestion(String theQuestion, String theRightAnswer,
-                                                  String theWrongAnswer1, String theWrongAnswer2,
-                                                  String theImage) {
-
-        Question question = initializeQuestion(theQuestion, theImage);
-        question.formAnswers(theRightAnswer, true);
-        question.formAnswers(theWrongAnswer1, false);
-        question.formAnswers(theWrongAnswer2, false);
-        myQuestions.add(question);
-    }
-
-    private static void addBooleanQuestion(String theQuestion, String theRightAnswer,
-                                           String theWrongAnswer, String theImage) {
-
-        Question question = initializeQuestion(theQuestion, theImage);
-        question.formAnswers(theRightAnswer, true);
-        question.formAnswers(theWrongAnswer, false);
-        myQuestions.add(question);
-    }
-
-    private static Question initializeQuestion(String theQuestion, String theImage) {
-        Question question;
-        if (theImage == null) {
-            question = new Question(theQuestion);
-        } else {
-            question = new Question(theQuestion, theImage);
-        }
-        return question;
-    }
+    /**
+     * Set the look and feel for the GUI program.
+     */
     private static void setLookAndFeel() {
 
         try {
@@ -154,4 +37,28 @@ public class Main {
 
     }
 
+    /**
+     * The start point for the PowerPaint application.
+     *
+     * @param theArgs command line arguments - ignored in this program
+     */
+    public static void main(final String[] theArgs) throws FileNotFoundException {
+        Maze mazeMap = new Maze("maze_map2.txt");
+        //Player player = new Player(10);
+
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                setLookAndFeel();
+                new GameInterface(1, 10, mazeMap.getArray()).start();
+            }
+        });
+    }
+
+    public void playerMethod(){
+        Player player = new Player(10);
+//        if (player.canMove() == true){
+//
+//        }
+    }
 }
