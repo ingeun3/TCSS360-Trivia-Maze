@@ -1,5 +1,7 @@
 package view;
 
+import controller.keyBoardHandler;
+
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
@@ -21,6 +23,14 @@ public class GameInterface {
     // The JPanel that displays the game in the CENTER of the JFrame.
     private final GamePanel myGamePanel;
 
+
+    // The JPanel that will pop up from the JFrame.
+    private final LevelInterface myLevelInterface;
+
+    keyBoardHandler keyH = new keyBoardHandler();
+
+    private char[][] myMazeArray;
+
     /**
      * Default constructor of the GameInterface (main GUI).
      * @param theLevel the Level of the current game
@@ -29,10 +39,15 @@ public class GameInterface {
      */
     public GameInterface (int theLevel, int theMoves, char[][] theMazeArray) {
         myGameInterface = new JFrame("Trivia Maze");
+
+
         String level = LEVEL_PROMPT + theLevel;
         String moves = MOVE_PROMPT + theMoves;
-        myGamePanel = new GamePanel(theMazeArray);
-        myNorthPanel = new NorthPanel(level, moves);
+        myGamePanel = new GamePanel(level, moves, myMazeArray);
+        myNorthPanel = new NorthPanel(myGamePanel, level, moves);
+
+        myLevelInterface = new LevelInterface(theMazeArray);
+
 
 
     }
@@ -41,12 +56,16 @@ public class GameInterface {
      * Starting the GUI
      */
     public void start() {
-        myGameInterface.add(myNorthPanel, BorderLayout.NORTH);
+
+        myGameInterface.getContentPane().add(myNorthPanel, BorderLayout.NORTH);
         myGameInterface.getContentPane().add(myGamePanel, BorderLayout.CENTER);
         myGameInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myGameInterface.pack();
         myGameInterface.setLocationRelativeTo(null);
         myGameInterface.setVisible(true);
+
         myGamePanel.requestFocus();
     }
+
+
 }

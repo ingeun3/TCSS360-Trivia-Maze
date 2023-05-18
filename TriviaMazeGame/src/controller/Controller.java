@@ -32,6 +32,7 @@ public class Controller {
      */
     public Controller (Maze theMaze, GamePanel theGamePanel,
                        GameInterface theInterface, GUIPlayer thePlayerImage) throws FileNotFoundException {
+        myKeyInput = new keyBoardHandler();
         myMaze = theMaze;
 
         myGamePanel = theGamePanel;
@@ -42,7 +43,7 @@ public class Controller {
 
         myPlayer = new Player(10);
 
-        myKeyInput = new keyBoardHandler();
+
 
         start();
     }
@@ -53,7 +54,9 @@ public class Controller {
     public void start() {
         if(myPlayer.getLivingStatus()) {
             myInterface.start();
-            myGamePanel.addKeyListener(myKeyInput);
+           // myGamePanel.addKeyListener(myKeyInput);
+            System.out.println("Hi");
+
         }
     }
 

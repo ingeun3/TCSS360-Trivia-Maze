@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 
 import model.Maze;
-import view.GamePanel;
 
 public class NorthPanel extends JPanel{
     // Class Constants
@@ -28,12 +27,14 @@ public class NorthPanel extends JPanel{
     // The number of remaining moves display in the right of the NorthPanel.
     private JLabel myMoves;
 
+    GamePanel myGP;
+
     /**
      * The default constructor for NorthPanel.
      * @param theLevel the current level that will display in the center of the NorthPanel.
      * @param theMoves the number of remaining moves that will display in the right of the NorthPanel.
      */
-    public NorthPanel(String theLevel, String theMoves) {
+    public NorthPanel(GamePanel myGP, String theLevel, String theMoves) {
         myButtonPanel = new JPanel(new FlowLayout());
         myHelpButton = new JButton("Help");
         mySaveButton     = new JButton("Save");

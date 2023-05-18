@@ -17,6 +17,9 @@ public class Maze {
 
     // initializing the 2D maze.
     private final char[][] myMaze;
+    // the default map file for maze.
+    private static String myMazeMap;
+
     //initializing the intersection points
     private final ArrayList<Point> myIntersections;
     //initializing the intersection points
@@ -25,13 +28,20 @@ public class Maze {
     private Point myPlayerLocation;
 
     /**
+     * The terrain grid for the simulation.
+     */
+    private Terrain[][] myGrid;
+
+    /**
      * This is a default constructor for Maze class.
      *
      * @throws FileNotFoundException
      */
     public Maze(String mapName) throws FileNotFoundException {
         // For Program running purpose.
-        myMaze = createMaze(mapName);
+        myMazeMap = mapName;
+        // For Program running purpose.
+        myMaze = createMaze(myMazeMap);
         // Assign the instance variable myIntersections to the creates Maze.
         myIntersections = intersections(myMaze);
         myQuestionPoints = questionPointgenerator();
@@ -94,11 +104,15 @@ public class Maze {
         int column = myScanner.nextInt();
         //initialize the array size.
         char[][] mazeMap = new char[row][column];
+
+        myGrid = new Terrain[row][column];
         // read the character from the map.
         for (int i = 0; i < row; i++) {
             String line = myScanner.next();
+            System.out.println(line);
             for (int j = 0; j < column; j++) {
                 mazeMap[i][j] = line.charAt(j);
+                myGrid[i][j] = Terrain.valueOf(line.charAt(j));
             }
         }
         return mazeMap;

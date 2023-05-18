@@ -1,9 +1,13 @@
 package view;
 
+import controller.keyBoardHandler;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -26,24 +30,35 @@ public class GamePanel extends JPanel implements Runnable {
 
     // Class Fields
 
-    // The Player object that contains graphic of the player.
-    private final GUIPlayer player = new GUIPlayer();
+    char[][] myMazeArray;
+
     // The Map Object that contains the graphic of the map
     private final MazeMap myMazemap;
     // The thread.
     private Thread gameThread;
 
+    private NorthPanel myNorthPanel;
+
+    keyBoardHandler keyH = new keyBoardHandler();
+
+    // The Player object that contains graphic of the player.
+    GUIPlayer myPlayerGUI = new GUIPlayer(this, keyH);
+
     /**
      * The default constructor for GamePanel object
      * @param theArray the 2D array representation of the map that GamePanel will draw.
      */
-    public GamePanel(char[][] theArray) {
+    public GamePanel(String theLevel, String theMove, char[][] theArray) {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
+        myMazeArray = theArray;
         // The 2D Array of the map layout.
-        myMazemap = new MazeMap(theArray);
+        myMazemap = new MazeMap(this, myMazeArray);
+
+        myNorthPanel = new NorthPanel(this, theLevel, theMove);
         start();
+
 
     }
 
@@ -51,10 +66,22 @@ public class GamePanel extends JPanel implements Runnable {
      * Initializing GamePanel object.
      */
     public void start() {
+        this.addKeyListener(keyH);
         this.setFocusable(true); //???
         this.requestFocus();
         run();
         startGameThread();
+        //playMusic(0);
+        //this.setPreferredSize(new Dimension(520,520));
+
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                // Request focus when the panel is clicked
+                requestFocusInWindow();
+            }
+        });
+
     }
 
     /**
@@ -104,7 +131,8 @@ public class GamePanel extends JPanel implements Runnable {
      * Updates player position
      */
     public void update() {
-        player.update();
+
+        myPlayerGUI.update();
     }
 
     /**
@@ -115,7 +143,7 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(theGraphics);// you need to type i this whenever you do it
         Graphics2D g2 = (Graphics2D) theGraphics; // graphics to graphics 2D
         myMazemap.draw(g2);
-        player.draw(g2);
+        myPlayerGUI.draw(g2);
 
         g2.dispose();
 
