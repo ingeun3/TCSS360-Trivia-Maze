@@ -27,6 +27,7 @@ public class QuestionPane {
      * @param theQnA Map that contains the question as the key and array of answers in value.
      */
     public QuestionPane(Map<String, String[]> theQnA) {
+        myPrompt = (String) theQnA.keySet().toArray()[0];
         myAnswers = theQnA.get(myPrompt);
         myImage = new ImageIcon("questionmark.png");
         myChosenAnswer = "";
@@ -37,7 +38,8 @@ public class QuestionPane {
     }
 
     /**
-     * Initializing QuestionPane.
+     * Launching the question window to prompt the player with a question and store the answer
+     * they chose.
      */
     private void start() {
         // null will change to game panel when merging code

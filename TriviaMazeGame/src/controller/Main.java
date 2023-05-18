@@ -33,25 +33,34 @@ public class Main {
 
 
     public static void main(String[] theArgs) throws FileNotFoundException {
-//        myRandom = new Random();
-//        myQuestions = new ArrayList<Question>();
-//        //QuestionPanel questionPanel = new QuestionPanel(myQuestions);
-//        myDataSource = new SQLiteDataSource();
-//        connect();
-//        retrieveData();
-//
-//        Map<String, String[]> myQnA = new HashMap<String, String[]>();
-//
-//        Question askedQuestion = getRandomQuestion();
-//
-//        int ansLength = askedQuestion.getAnswers().size();
-//        String[] ansArray = new String[ansLength];
-//        for (int i = 0; i < ansLength; i++) {
-//            ansArray[i] = askedQuestion.getAnswers().get(i).getAnswer();
-//        }
-//        myQnA.put(askedQuestion.getQuestion(), ansArray);
-//
-//        QuestionPane question = new QuestionPane(myQnA);
+        myRandom = new Random();
+        myQuestions = new ArrayList<Question>();
+        //QuestionPanel questionPanel = new QuestionPanel(myQuestions);
+        myDataSource = new SQLiteDataSource();
+        connect();
+        retrieveData();
+
+        Map<String, String[]> myQnA = new HashMap<String, String[]>();
+
+        //gets a random question
+        Question askedQuestion = getRandomQuestion();
+
+        int ansLength = askedQuestion.getAnswers().size();
+        String[] ansArray = new String[ansLength];
+        for (int i = 0; i < ansLength; i++) {
+            ansArray[i] = askedQuestion.getAnswers().get(i).getAnswer();
+        }
+        //puts it in map to send to questionpane
+        myQnA.put(askedQuestion.getQuestion(), ansArray);
+
+        QuestionPane question = new QuestionPane(myQnA);
+
+        System.out.println(question.getChoice());
+
+        Answer chosenAnswer = null;
+        String chosenAnswerString = question.getChoice();
+
+
 
         Maze mazeMap = new Maze("maze_map2.txt");
         GameInterface gameInterface = new GameInterface(1, 10, mazeMap.getArray());
@@ -76,7 +85,7 @@ public class Main {
      * @return random question.
      */
     private static Question getRandomQuestion() {
-        int rand = myRandom.nextInt(myQnA.size());
+        int rand = myRandom.nextInt(myQuestions.size());
         Question question = myQuestions.get(rand);
         return question;
     }
