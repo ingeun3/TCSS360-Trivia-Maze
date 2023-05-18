@@ -5,46 +5,48 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 
 public class GameInterface {
+    // Class Constants
+
+    // The level prompt that will be displayed in the middle of the north panel.
     private static final String LEVEL_PROMPT = "Level ";
-
+    // The move prompt that will be displayed in the right of the north panel.
     private static final String MOVE_PROMPT = "Remaining Moves: ";
-    private final String myLevel;
 
-    private final String myMoves;
+    // Class Fields
 
+    // The JFrame that will be the base of the GUI.
     private final JFrame myGameInterface;
-
+    // The JPanel that will locate in the NORTH of the JFrame.
     private final NorthPanel myNorthPanel;
+    // The JPanel that displays the game in the CENTER of the JFrame.
+    private final GamePanel myGamePanel;
 
-    private final GamePanel myMazeMap;
-
-    private char[][] myMazeArray;
-
-    /** A size of the window. */
-   //private final Dimension myDimension;
+    /**
+     * Default constructor of the GameInterface (main GUI).
+     * @param theLevel the Level of the current game
+     * @param theMoves the number of legal moves in this level.
+     * @param theMazeArray the 2d array that contains the map structure.
+     */
     public GameInterface (int theLevel, int theMoves, char[][] theMazeArray) {
         myGameInterface = new JFrame("Trivia Maze");
-        myMazeArray = theMazeArray;
-        myLevel = LEVEL_PROMPT + theLevel;
-        myMoves = MOVE_PROMPT + theMoves;
-        myMazeMap = new GamePanel(myLevel, myMoves, myMazeArray);
-        myNorthPanel = new NorthPanel(myMazeMap, myLevel, myMoves);
+        String level = LEVEL_PROMPT + theLevel;
+        String moves = MOVE_PROMPT + theMoves;
+        myGamePanel = new GamePanel(theMazeArray);
+        myNorthPanel = new NorthPanel(level, moves);
 
 
     }
 
+    /**
+     * Starting the GUI
+     */
     public void start() {
         myGameInterface.add(myNorthPanel, BorderLayout.NORTH);
-        myGameInterface.getContentPane().add(myMazeMap, BorderLayout.CENTER);
+        myGameInterface.getContentPane().add(myGamePanel, BorderLayout.CENTER);
         myGameInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myGameInterface.pack();
         myGameInterface.setLocationRelativeTo(null);
         myGameInterface.setVisible(true);
-       // myGameInterface.setResizable(false);
-        myMazeMap.requestFocus();
-
+        myGamePanel.requestFocus();
     }
-
-
-
 }
