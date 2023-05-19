@@ -26,9 +26,6 @@ public class GameInterface {
 
     // The JPanel that will pop up from the JFrame.
     private final LevelInterface myLevelInterface;
-
-    keyBoardHandler keyH = new keyBoardHandler();
-
     private char[][] myMazeArray;
 
     /**
@@ -39,13 +36,11 @@ public class GameInterface {
      */
     public GameInterface (int theLevel, int theMoves, char[][] theMazeArray) {
         myGameInterface = new JFrame("Trivia Maze");
-
-
+        myMazeArray = theMazeArray;
         String level = LEVEL_PROMPT + theLevel;
         String moves = MOVE_PROMPT + theMoves;
         myGamePanel = new GamePanel(level, moves, myMazeArray);
         myNorthPanel = new NorthPanel(myGamePanel, level, moves);
-
         myLevelInterface = new LevelInterface(theMazeArray);
 
 
@@ -63,7 +58,6 @@ public class GameInterface {
         myGameInterface.pack();
         myGameInterface.setLocationRelativeTo(null);
         myGameInterface.setVisible(true);
-
         myGamePanel.requestFocus();
     }
 

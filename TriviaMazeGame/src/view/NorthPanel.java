@@ -27,14 +27,15 @@ public class NorthPanel extends JPanel{
     // The number of remaining moves display in the right of the NorthPanel.
     private JLabel myMoves;
 
-    GamePanel myGP;
+    GamePanel gp;
 
     /**
      * The default constructor for NorthPanel.
      * @param theLevel the current level that will display in the center of the NorthPanel.
      * @param theMoves the number of remaining moves that will display in the right of the NorthPanel.
      */
-    public NorthPanel(GamePanel myGP, String theLevel, String theMoves) {
+    public NorthPanel(GamePanel gp, String theLevel, String theMoves) {
+        this.gp = gp;
         myButtonPanel = new JPanel(new FlowLayout());
         myHelpButton = new JButton("Help");
         mySaveButton     = new JButton("Save");
