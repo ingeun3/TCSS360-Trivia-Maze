@@ -2,7 +2,6 @@ package view;
 
 
 import controller.keyBoardHandler;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -32,10 +31,17 @@ import java.awt.*;
         // The current image of a player.
         private ImageIcon myImage;
 
+        GamePanel gp;
+
+        keyBoardHandler keyH = new keyBoardHandler();
+
         /**
          * The default constructor of the Player GUI.
          */
-        public GUIPlayer() {
+        public GUIPlayer(GamePanel gp, keyBoardHandler theKey) {
+            this.gp = gp;
+            this.keyH = keyH;
+
             x = 100;
             y = 100;
             direction = "static";
@@ -48,7 +54,7 @@ import java.awt.*;
          */
         public void setDirection(String theDirection) {
             direction = theDirection;
-            update();
+
 
         }
 

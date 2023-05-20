@@ -20,15 +20,21 @@ public class MazeMap {
 
     // The 2D layout of the maze map.
     private final char[][] myArray;
+    GamePanel gp;
+
+
 
     /**
      * Default constructor for MazeMap object.
      * @param theArray the 2D layout of the map we want to make graphic out of.
      */
-    public MazeMap(char[][] theArray) {
+    public MazeMap(GamePanel gp, char[][] theArray) {
+        this.gp = gp;
         myArray = theArray;
 
     }
+
+
 
     /**
      * Draws the Map GUI

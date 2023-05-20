@@ -63,18 +63,14 @@ public class Main {
 
 
         Maze mazeMap = new Maze("maze_map2.txt");
-        GameInterface gameInterface = new GameInterface(1, 10, mazeMap.getArray());
-        GamePanel gamePanel = new GamePanel(mazeMap.getArray());
-        GUIPlayer playerImage = new GUIPlayer();
 
-        Controller controller = new Controller(mazeMap, gamePanel, gameInterface, playerImage);
 
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
                 setLookAndFeel();
 
-                controller.start();
+            new GameInterface(1, 10, mazeMap.getArray()).start();
             }
 
         });

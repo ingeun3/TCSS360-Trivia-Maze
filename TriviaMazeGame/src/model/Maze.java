@@ -17,6 +17,9 @@ public class Maze {
 
     // initializing the 2D maze.
     private final char[][] myMaze;
+    // the default map file for maze.
+    private static String myMazeMap;
+
     //initializing the intersection points
     private final ArrayList<Point> myIntersections;
     //initializing the intersection points
@@ -36,7 +39,9 @@ public class Maze {
      */
     public Maze(String mapName) throws FileNotFoundException {
         // For Program running purpose.
-        myMaze = createMaze(mapName);
+        myMazeMap = mapName;
+        // For Program running purpose.
+        myMaze = createMaze(myMazeMap);
         // Assign the instance variable myIntersections to the creates Maze.
         myIntersections = intersections(myMaze);
         myQuestionPoints = questionPointgenerator();
