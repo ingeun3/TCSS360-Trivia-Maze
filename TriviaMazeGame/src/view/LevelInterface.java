@@ -44,7 +44,7 @@ public class LevelInterface {
         public void actionPerformed(final ActionEvent theEvent) {
             System.out.println("it clicked");
         }
-    });
+        });
         myLevel2.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent theEvent) {
                 System.out.println("it clicked");

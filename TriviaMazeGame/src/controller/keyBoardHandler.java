@@ -7,7 +7,6 @@ public class keyBoardHandler implements KeyListener{
 
     private boolean upPressed, downPressed, leftPressed, rightPressed;
 
-    private String keyPressed;
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -57,8 +56,6 @@ public class keyBoardHandler implements KeyListener{
             result = "left";
         } else if (rightPressed == true){
             result = "right";
-        } else {
-            result = "static";
         }
 
         return result;

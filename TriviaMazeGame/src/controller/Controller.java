@@ -17,8 +17,6 @@ public class Controller {
     private static Maze myMaze;
     // The JFrame that will be used as a base of GUI.
     private static GameInterface myInterface;
-    // The keyboard listener.
-    private keyBoardHandler myKeyInput;
     // The player object.
     private static Player myPlayer;
 
@@ -32,7 +30,6 @@ public class Controller {
      */
     public Controller (Maze theMaze, GamePanel theGamePanel,
                        GameInterface theInterface, GUIPlayer thePlayerImage) throws FileNotFoundException {
-        myKeyInput = new keyBoardHandler();
         myMaze = theMaze;
 
         myGamePanel = theGamePanel;
@@ -54,8 +51,6 @@ public class Controller {
     public void start() {
         if(myPlayer.getLivingStatus()) {
             myInterface.start();
-           // myGamePanel.addKeyListener(myKeyInput);
-            System.out.println("Hi");
 
         }
     }

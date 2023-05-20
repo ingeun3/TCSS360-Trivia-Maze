@@ -23,6 +23,7 @@ public class GameInterface {
     // The JPanel that displays the game in the CENTER of the JFrame.
     private final GamePanel myGamePanel;
 
+    keyBoardHandler keyH = new keyBoardHandler();
 
     // The JPanel that will pop up from the JFrame.
     private final LevelInterface myLevelInterface;
@@ -39,7 +40,7 @@ public class GameInterface {
         myMazeArray = theMazeArray;
         String level = LEVEL_PROMPT + theLevel;
         String moves = MOVE_PROMPT + theMoves;
-        myGamePanel = new GamePanel(level, moves, myMazeArray);
+        myGamePanel = new GamePanel(myMazeArray);
         myNorthPanel = new NorthPanel(myGamePanel, level, moves);
         myLevelInterface = new LevelInterface(theMazeArray);
 
@@ -51,7 +52,6 @@ public class GameInterface {
      * Starting the GUI
      */
     public void start() {
-
         myGameInterface.getContentPane().add(myNorthPanel, BorderLayout.NORTH);
         myGameInterface.getContentPane().add(myGamePanel, BorderLayout.CENTER);
         myGameInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,6 +60,4 @@ public class GameInterface {
         myGameInterface.setVisible(true);
         myGamePanel.requestFocus();
     }
-
-
 }

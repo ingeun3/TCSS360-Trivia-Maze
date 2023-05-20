@@ -33,45 +33,38 @@ import java.awt.*;
 
         GamePanel gp;
 
-        keyBoardHandler keyH = new keyBoardHandler();
+        private keyBoardHandler keyH;
 
         /**
          * The default constructor of the Player GUI.
          */
         public GUIPlayer(GamePanel gp, keyBoardHandler theKey) {
             this.gp = gp;
-            this.keyH = keyH;
-
+            this.keyH = theKey;
             x = 100;
             y = 100;
-            direction = "static";
+            direction = "right";
             myImage = new ImageIcon("right.png");
-        }
-
-        /**
-         * Sets the direction of the player.
-         * @param theDirection
-         */
-        public void setDirection(String theDirection) {
-            direction = theDirection;
-
-
         }
 
         /**
          * Updates the location of the player by the direction the player is facing.
          */
         public void update() {
-            if (direction == "up") {
+            if (keyH.getKey() == "up") {
+                direction = "up";
                 y = y - speed;
             }
-            else if (direction == "down") {
+            else if (keyH.getKey() == "down") {
+                direction = "down";
                 y += speed;
             }
-            else if (direction == "left") {
+            else if (keyH.getKey() == "left") {
+                direction = "left";
                 x -= speed;
             }
-            else if (direction == "right") {
+            else if (keyH.getKey() == "right") {
+                direction = "right";
                 x += speed;
             }
         }
@@ -82,7 +75,7 @@ import java.awt.*;
          */
         public void draw(Graphics2D theGraphics) {
 
-            //ImageIcon image = null;
+            ImageIcon image = null;
             switch(direction) {
                 case "up" :
                     myImage = up;
@@ -96,8 +89,7 @@ import java.awt.*;
                 case "right" :
                     myImage = right;
                     break;
-                case "static" :
-                    break;
+
 
             }
             theGraphics.drawImage(myImage.getImage(), x, y, TILE_SIZE, TILE_SIZE, null);
