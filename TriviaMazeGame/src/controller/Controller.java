@@ -1,11 +1,14 @@
 package controller;
 
+import model.Answer;
 import model.Maze;
 import model.Player;
+import model.Terrain;
 import view.GUIPlayer;
 import view.GameInterface;
 import view.GamePanel;
 
+import java.awt.*;
 import java.io.FileNotFoundException;
 
 public class Controller {
@@ -15,10 +18,18 @@ public class Controller {
     private static GamePanel myGamePanel;
     // The Maze object that will be used for creating the map.
     private static Maze myMaze;
+
+    private Terrain[][] myTerrain;
     // The JFrame that will be used as a base of GUI.
     private static GameInterface myInterface;
     // The player object.
     private static Player myPlayer;
+
+
+    private Point myPlayerLocation;
+
+
+
 
     /**
      * Default constructor for the Controller object.
@@ -40,6 +51,7 @@ public class Controller {
 
         myPlayer = new Player(10);
 
+        myPlayerLocation = myMaze.playerLocation();
 
 
         start();
@@ -54,6 +66,4 @@ public class Controller {
 
         }
     }
-
-
 }

@@ -57,7 +57,7 @@ public enum Terrain {
      * Returns the Terrain represented by the given letter.
      * 
      * @param theLetter The letter.
-     * @return the Terrain represented by the given letter, or GRASS if no
+     * @return the Terrain represented by the given letter, or WALL if no
      *         Terrain is represented by the given letter.
      */
     public static Terrain valueOf(final char theLetter) {

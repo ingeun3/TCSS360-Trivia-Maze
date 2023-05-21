@@ -1,8 +1,9 @@
 package view;
 
 import controller.keyBoardHandler;
+import model.Player;
 
-import java.awt.BorderLayout;
+import java.awt.*;
 
 import javax.swing.JFrame;
 
@@ -23,6 +24,8 @@ public class GameInterface {
     // The JPanel that displays the game in the CENTER of the JFrame.
     private final GamePanel myGamePanel;
 
+   // GraphicsDevice mygDevice;
+
     keyBoardHandler keyH = new keyBoardHandler();
 
     // The JPanel that will pop up from the JFrame.
@@ -35,14 +38,17 @@ public class GameInterface {
      * @param theMoves the number of legal moves in this level.
      * @param theMazeArray the 2d array that contains the map structure.
      */
-    public GameInterface (int theLevel, int theMoves, char[][] theMazeArray) {
+    public GameInterface (int theLevel, int theMoves, char[][] theMazeArray, Player thePlayer) {
         myGameInterface = new JFrame("Trivia Maze");
         myMazeArray = theMazeArray;
         String level = LEVEL_PROMPT + theLevel;
         String moves = MOVE_PROMPT + theMoves;
-        myGamePanel = new GamePanel(myMazeArray);
+        myGamePanel = new GamePanel(myMazeArray, thePlayer);
         myNorthPanel = new NorthPanel(myGamePanel, level, moves);
         myLevelInterface = new LevelInterface(theMazeArray);
+        //GraphicsEnvironment gEnviroment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        //mygDevice = gEnviroment.getDefaultScreenDevice();
+
 
 
 
@@ -52,6 +58,7 @@ public class GameInterface {
      * Starting the GUI
      */
     public void start() {
+        myGameInterface.setSize(800, 600);
         myGameInterface.getContentPane().add(myNorthPanel, BorderLayout.NORTH);
         myGameInterface.getContentPane().add(myGamePanel, BorderLayout.CENTER);
         myGameInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,4 +67,7 @@ public class GameInterface {
         myGameInterface.setVisible(true);
         myGamePanel.requestFocus();
     }
+   // public void setFullScren(){
+       // mygDevice.setFullScreenWindow(myGameInterface);
+    //}
 }

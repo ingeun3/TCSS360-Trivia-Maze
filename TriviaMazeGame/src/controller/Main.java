@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import model.Player;
 
 public class Main {
     // ArrayList that stores all Question and answers.
@@ -63,6 +64,7 @@ public class Main {
 
 
         Maze mazeMap = new Maze("maze_map2.txt");
+        Player player = new Player(10);
 
 
         EventQueue.invokeLater(new Runnable() {
@@ -70,7 +72,7 @@ public class Main {
             public void run() {
                 setLookAndFeel();
 
-            new GameInterface(1, 10, mazeMap.getArray()).start();
+            new GameInterface(1, 10, mazeMap.getArray(), player).start();
             }
 
         });

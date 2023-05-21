@@ -31,7 +31,6 @@ public class MazeMap {
     public MazeMap(GamePanel gp, char[][] theArray) {
         this.gp = gp;
         myArray = theArray;
-
     }
 
 

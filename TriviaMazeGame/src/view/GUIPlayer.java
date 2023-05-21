@@ -2,6 +2,10 @@ package view;
 
 
 import controller.keyBoardHandler;
+import model.Maze;
+import model.Player;
+import model.Terrain;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -31,6 +35,10 @@ import java.awt.*;
         // The current image of a player.
         private ImageIcon myImage;
 
+        Player myPlayer;
+
+        char [][] myMaze;
+
         GamePanel gp;
 
         private keyBoardHandler keyH;
@@ -38,34 +46,36 @@ import java.awt.*;
         /**
          * The default constructor of the Player GUI.
          */
-        public GUIPlayer(GamePanel gp, keyBoardHandler theKey) {
+        public GUIPlayer(GamePanel gp, keyBoardHandler theKey, Player thePlayer, char[][] theMaze) {
             this.gp = gp;
             this.keyH = theKey;
             x = 100;
             y = 100;
             direction = "right";
             myImage = new ImageIcon("right.png");
+            myPlayer = thePlayer;
+            myMaze = theMaze;
         }
 
         /**
          * Updates the location of the player by the direction the player is facing.
          */
         public void update() {
-            if (keyH.getKey() == "up") {
-                direction = "up";
-                y = y - speed;
-            }
-            else if (keyH.getKey() == "down") {
-                direction = "down";
-                y += speed;
-            }
-            else if (keyH.getKey() == "left") {
-                direction = "left";
-                x -= speed;
-            }
-            else if (keyH.getKey() == "right") {
-                direction = "right";
-                x += speed;
+            boolean value = true;
+            if (myPlayer.canMove(Terrain.valueOf(myMaze.)) == true) {
+                if (keyH.getKey() == "up") {
+                    direction = "up";
+                    y = y - speed;
+                } else if (keyH.getKey() == "down") {
+                    direction = "down";
+                    y += speed;
+                } else if (keyH.getKey() == "left") {
+                    direction = "left";
+                    x -= speed;
+                } else if (keyH.getKey() == "right") {
+                    direction = "right";
+                    x += speed;
+                }
             }
         }
 

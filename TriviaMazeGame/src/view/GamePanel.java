@@ -1,6 +1,7 @@
 package view;
 
 import controller.keyBoardHandler;
+import model.Player;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -39,20 +40,22 @@ public class GamePanel extends JPanel implements Runnable {
 
     keyBoardHandler keyH = new keyBoardHandler();
 
+
     // The Player object that contains graphic of the player.
-    GUIPlayer myPlayerGUI = new GUIPlayer(this, keyH);
+    GUIPlayer myPlayerGUI;
 
     /**
      * The default constructor for GamePanel object
      * @param theArray the 2D array representation of the map that GamePanel will draw.
      */
-    public GamePanel(char[][] theArray) {
+    public GamePanel(char[][] theArray, Player thePlayer) {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         myMazeArray = theArray;
         // The 2D Array of the map layout.
         myMazemap = new MazeMap(this, myMazeArray);
+        myPlayerGUI = new GUIPlayer(this, keyH, thePlayer, myMazeArray);
         start();
     }
 

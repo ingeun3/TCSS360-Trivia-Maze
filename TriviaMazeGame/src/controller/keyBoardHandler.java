@@ -2,10 +2,13 @@ package controller;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import model.Player;
 
 public class keyBoardHandler implements KeyListener{
 
     private boolean upPressed, downPressed, leftPressed, rightPressed;
+
+    Player myPlayer;
 
 
     @Override

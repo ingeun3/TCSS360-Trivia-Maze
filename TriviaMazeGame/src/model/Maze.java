@@ -70,11 +70,13 @@ public class Maze {
 
     }
 
+
+
     /**
      * This method returns the location of the player in Point object.
      * @return the location of the player.
      */
-    private Point playerLocation() {
+    public Point playerLocation() {
         for (int i = 0; i < myMaze.length; i++) {
             for (int j = 0; j < myMaze.length; j++) {
                 if (myMaze[i][j] == 'M') {
@@ -84,6 +86,10 @@ public class Maze {
         }
         return null;
     }
+
+//    public Point getMyPlayerLocation() {
+//        return myPlayerLocation;
+//    }
 
     /**
      * This method reads the character from the map.
@@ -109,7 +115,6 @@ public class Maze {
         // read the character from the map.
         for (int i = 0; i < row; i++) {
             String line = myScanner.next();
-            System.out.println(line);
             for (int j = 0; j < column; j++) {
                 mazeMap[i][j] = line.charAt(j);
                 myGrid[i][j] = Terrain.valueOf(line.charAt(j));
@@ -160,6 +165,10 @@ public class Maze {
         }
         return intersectionsPoint;
 
+    }
+
+    public Terrain[][] getMyGrid() {
+        return myGrid;
     }
 
     /**
