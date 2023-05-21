@@ -39,7 +39,6 @@ public class TutorialFrame {
      */
     private void start() {
         myFrame.add(myTutorialPanel);
-        myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myFrame.setPreferredSize(myDimension);
         myFrame.pack();
         myFrame.setLocationRelativeTo(null);

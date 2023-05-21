@@ -37,8 +37,6 @@ public class GamePanel extends JPanel implements Runnable {
     // The thread.
     private Thread gameThread;
 
-    private NorthPanel myNorthPanel;
-
     keyBoardHandler keyH = new keyBoardHandler();
 
     // The Player object that contains graphic of the player.
@@ -48,15 +46,13 @@ public class GamePanel extends JPanel implements Runnable {
      * The default constructor for GamePanel object
      * @param theArray the 2D array representation of the map that GamePanel will draw.
      */
-    public GamePanel(String theLevel, String theMove, char[][] theArray) {
+    public GamePanel(char[][] theArray) {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         myMazeArray = theArray;
         // The 2D Array of the map layout.
         myMazemap = new MazeMap(this, myMazeArray);
-
-        myNorthPanel = new NorthPanel(this, theLevel, theMove);
         start();
     }
 
@@ -66,10 +62,10 @@ public class GamePanel extends JPanel implements Runnable {
     public void start() {
         this.addKeyListener(keyH);
         this.setFocusable(true); //???
-        this.requestFocus();
         run();
         startGameThread();
         //playMusic(0);
+
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
