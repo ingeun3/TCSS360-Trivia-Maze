@@ -41,7 +41,6 @@ import java.awt.*;
         public GUIPlayer(GamePanel gp, keyBoardHandler theKey) {
             this.gp = gp;
             this.keyH = keyH;
-
             x = 100;
             y = 100;
             direction = "static";
@@ -54,8 +53,6 @@ import java.awt.*;
          */
         public void setDirection(String theDirection) {
             direction = theDirection;
-
-
         }
 
         /**

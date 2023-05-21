@@ -70,8 +70,6 @@ public class GamePanel extends JPanel implements Runnable {
         run();
         startGameThread();
         //playMusic(0);
-        //this.setPreferredSize(new Dimension(520,520));
-
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -129,7 +127,6 @@ public class GamePanel extends JPanel implements Runnable {
      * Updates player position
      */
     public void update() {
-
         myPlayerGUI.update();
     }
 
