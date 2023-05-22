@@ -3,29 +3,14 @@ package view;
 import controller.keyBoardHandler;
 import model.Player;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements Runnable {
-    // Class Constants
-
     // The serial Version ID.
     private static final long serialVersionUID = 1L;
-    //Tile size is set for 48x48.
-    private static final int TILE_SIZE = 48;
-    // Number of Tiles in Width of the screen
-    private static final int SCREEN_WIDTH_TILE = 16; // change 18 or 14
-    // Number of Tiles in Height of the screen.
-    private static final int SCREEN_HEIGHT_TITLE = 12;
-    // The Width of the screen.
-    private static final int SCREEN_WIDTH = TILE_SIZE * SCREEN_WIDTH_TILE; //768 pixels
-    // The height of the screen.
-    private static final int SCREEN_HEIGHT = TILE_SIZE * SCREEN_HEIGHT_TITLE; //576
     // The FPS of the game is set 60.
     private static final int FPS = 60; // FPS 60 times
 
@@ -49,7 +34,7 @@ public class GamePanel extends JPanel implements Runnable {
      * @param theArray the 2D array representation of the map that GamePanel will draw.
      */
     public GamePanel(char[][] theArray, Player thePlayer) {
-        this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+       // this.setPreferredSize(new Dimension((int) screenSize.getWidth(), (int) screenSize.getHeight()));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         myMazeArray = theArray;

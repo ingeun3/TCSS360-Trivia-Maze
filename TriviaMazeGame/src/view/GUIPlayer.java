@@ -13,10 +13,11 @@ import java.awt.*;
     public class GUIPlayer {
         // Class Constants
 
+        private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         // Tile size is set for 48x48.
-        private static final int TILE_SIZE = 48;
+        private static final int TILE_SIZE = (int) screenSize.getWidth() / 30; // change 18 or 14
         // The movement speed of the player.
-        private static final int speed = 4;
+        private static final int speed =6;
         // The Image of a player facing up.
         private static final ImageIcon up = new ImageIcon("up.png");
         // The Image of a player facing down.
@@ -62,7 +63,7 @@ import java.awt.*;
          */
         public void update() {
             boolean value = true;
-            if (myPlayer.canMove(Terrain.valueOf(myMaze)) == true) {
+            //if (myPlayer.canMove(Terrain.valueOf(myMaze.)) == true) {
                 if (keyH.getKey() == "up") {
                     direction = "up";
                     y = y - speed;
@@ -76,7 +77,7 @@ import java.awt.*;
                     direction = "right";
                     x += speed;
                 }
-            }
+          //  }
         }
 
         /**
