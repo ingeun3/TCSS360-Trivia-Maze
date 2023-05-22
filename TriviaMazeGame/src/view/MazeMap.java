@@ -12,9 +12,10 @@ public class MazeMap {
     // Tile size is set for 48x48.
     private static final int TILE_SIZE = (int) screenSize.getWidth() / TILE_NUMBER; // change 18 or 14
 
-    private static final double gap = (screenSize.getWidth() - TILE_SIZE *  TILE_NUMBER) /2;
+    private static final int gap = ( (int) screenSize.getWidth() - TILE_SIZE *  TILE_NUMBER) /2;
     // The serial Version ID.
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID =
+            1L;
     // Image of the Road.
     private static final ImageIcon road = new ImageIcon("road.png");
     // Image of the Wall.
@@ -44,20 +45,20 @@ public class MazeMap {
      * @param theGraphics the Graphics object to draw on the JPanel.
      */
     public void draw(final Graphics2D theGraphics) {
-        double topy = -TILE_SIZE + gap;
+        int topy = -TILE_SIZE;
 
         for (int y = 0; y < myArray.length; y++) {
-            topy = topy + TILE_SIZE + gap;
-            double leftx = -TILE_SIZE + gap;
+            topy = topy + TILE_SIZE;
+            int leftx = -TILE_SIZE + gap;
             for (int x = 0; x < myArray[y].length; x++) {
                 leftx = leftx + TILE_SIZE;
 
                 switch (myArray[y][x]) {
                     case '@':
-                        theGraphics.drawImage(wall.getImage(), (int) leftx, (int) topy, TILE_SIZE, TILE_SIZE , null);
+                        theGraphics.drawImage(wall.getImage(), leftx, topy, TILE_SIZE, TILE_SIZE , null);
                         break;
                     case '+':
-                        theGraphics.drawImage(road.getImage(), (int) leftx, (int) topy, TILE_SIZE, TILE_SIZE, null);
+                        theGraphics.drawImage(road.getImage(), leftx, topy, TILE_SIZE, TILE_SIZE, null);
                         break;
                 }
 

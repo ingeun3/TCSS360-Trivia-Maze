@@ -12,6 +12,8 @@ import view.QuestionPane;
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
+
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -72,7 +74,7 @@ public class Main {
             public void run() {
                 setLookAndFeel();
 
-            new GameInterface(1, 10, mazeMap.getArray(), player).start();
+                new GameInterface(1, 10, mazeMap.getArray(), player).start();
             }
 
         });
