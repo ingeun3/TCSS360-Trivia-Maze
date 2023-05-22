@@ -1,5 +1,6 @@
 package controller;
 
+
 import model.Answer;
 import model.Maze;
 import model.Player;

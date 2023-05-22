@@ -17,6 +17,7 @@ public class GameInterface {
 
     // Class Fields
 
+
     // The JFrame that will be the base of the GUI.
     private final JFrame myGameInterface;
     // The JPanel that will locate in the NORTH of the JFrame.
@@ -44,7 +45,7 @@ public class GameInterface {
         String level = LEVEL_PROMPT + theLevel;
         String moves = MOVE_PROMPT + theMoves;
         myGamePanel = new GamePanel(myMazeArray, thePlayer);
-        myNorthPanel = new NorthPanel(myGamePanel, level, moves);
+        myNorthPanel = new NorthPanel(level, moves);
         myLevelInterface = new LevelInterface(theMazeArray);
         //GraphicsEnvironment gEnviroment = GraphicsEnvironment.getLocalGraphicsEnvironment();
         //mygDevice = gEnviroment.getDefaultScreenDevice();
@@ -62,7 +63,8 @@ public class GameInterface {
         myGameInterface.getContentPane().add(myNorthPanel, BorderLayout.NORTH);
         myGameInterface.getContentPane().add(myGamePanel, BorderLayout.CENTER);
         myGameInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        myGameInterface.pack();
+        myGameInterface.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        //myGameInterface.pack();
         myGameInterface.setLocationRelativeTo(null);
         myGameInterface.setVisible(true);
         myGamePanel.requestFocus();
