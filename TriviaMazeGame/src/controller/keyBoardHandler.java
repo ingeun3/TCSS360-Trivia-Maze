@@ -1,11 +1,16 @@
-package view;
+package controller;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import model.Player;
 
 public class keyBoardHandler implements KeyListener{
 
-    public boolean upPressed, downPressed, leftPressed, rightPressed;
+    private boolean upPressed, downPressed, leftPressed, rightPressed;
+
+    Player myPlayer;
+
+
     @Override
     public void keyTyped(KeyEvent e) {
     }
@@ -44,6 +49,18 @@ public class keyBoardHandler implements KeyListener{
         }
 
     }
+    public String getKey() {
+        String result = "";
+        if(upPressed == true) {
+            result = "up";
+        } else if (downPressed == true) {
+            result = "down";
+        } else if (leftPressed == true) {
+            result = "left";
+        } else if (rightPressed == true){
+            result = "right";
+        }
 
+        return result;
+    }
 }
-

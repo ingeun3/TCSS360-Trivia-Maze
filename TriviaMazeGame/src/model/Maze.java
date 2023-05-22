@@ -8,24 +8,29 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Maze {
+    // Class constant
 
     // the final Random.
-    private static Random RANDOM_POINTS = new Random();
+    private static final Random RANDOM_POINTS = new Random();
+
+    // Class field
 
     // initializing the 2D maze.
-    private char[][] myMaze;
+    private final char[][] myMaze;
+    // the default map file for maze.
+    private static String myMazeMap;
 
+    //initializing the intersection points
+    private final ArrayList<Point> myIntersections;
+    //initializing the intersection points
+    private final ArrayList<Point> myQuestionPoints;
     // initializing the location of the player.
     private Point myPlayerLocation;
 
-    //initializing the intersection points
-    private ArrayList<Point> myIntersections;
-
-    //initializing the intersection points
-    private ArrayList<Point> myQuestionPoints;
-
-    //initialize the scanner
-    private Scanner myScanner;
+    /**
+     * The terrain grid for the simulation.
+     */
+    private Terrain[][] myGrid;
 
     /**
      * This is a default constructor for Maze class.
@@ -34,7 +39,9 @@ public class Maze {
      */
     public Maze(String mapName) throws FileNotFoundException {
         // For Program running purpose.
-        myMaze = createMaze(mapName);
+        myMazeMap = mapName;
+        // For Program running purpose.
+        myMaze = createMaze(myMazeMap);
         // Assign the instance variable myIntersections to the creates Maze.
         myIntersections = intersections(myMaze);
         myQuestionPoints = questionPointgenerator();
@@ -42,7 +49,7 @@ public class Maze {
     }
 
     /**
-     * This method return the 2D maze List.
+     * This method return the 2D array representation of the maze.
      *
      * @return the 2D list.
      */
@@ -50,7 +57,10 @@ public class Maze {
         return myMaze;
     }
 
-    // everytime players move just update the map.
+    /**
+     * Updates the map whenever player makes a move.
+     * @param thePoint The point player wants to move.
+     */
     public void setArray(Point thePoint) {
         if (myMaze[thePoint.y][thePoint.x] != '@') {
             myMaze[myPlayerLocation.y][myPlayerLocation.x] = '+';
@@ -60,7 +70,13 @@ public class Maze {
 
     }
 
-    private Point playerLocation() {
+
+
+    /**
+     * This method returns the location of the player in Point object.
+     * @return the location of the player.
+     */
+    public Point playerLocation() {
         for (int i = 0; i < myMaze.length; i++) {
             for (int j = 0; j < myMaze.length; j++) {
                 if (myMaze[i][j] == 'M') {
@@ -71,29 +87,37 @@ public class Maze {
         return null;
     }
 
+//    public Point getMyPlayerLocation() {
+//        return myPlayerLocation;
+//    }
+
     /**
      * This method reads the character from the map.
      *
-     * @param theMapName the row length.
-     * @return the 2D maze List.
-     * @throws FileNotFoundException
+     * @param theMapName the name of the map.
+     * @return the 2D array representation of the maze.
+     * @throws FileNotFoundException when the file is not found.
      */
     public char[][] createMaze(String theMapName) throws FileNotFoundException {
 
         File mazeMapFile = new File(theMapName);
         // read the map file from scanner.
-        myScanner = new Scanner(mazeMapFile);
+        //initialize the scanner
+        Scanner myScanner = new Scanner(mazeMapFile);
         // Read the Row length from the map.
         int row = myScanner.nextInt();
         //// Read the Column length from the map.
         int column = myScanner.nextInt();
         //initialize the array size.
         char[][] mazeMap = new char[row][column];
+
+        myGrid = new Terrain[row][column];
         // read the character from the map.
         for (int i = 0; i < row; i++) {
             String line = myScanner.next();
             for (int j = 0; j < column; j++) {
                 mazeMap[i][j] = line.charAt(j);
+                myGrid[i][j] = Terrain.valueOf(line.charAt(j));
             }
         }
         return mazeMap;
@@ -101,10 +125,10 @@ public class Maze {
     }
 
     /**
-     * This method return the intersection (x, y)points.
+     * This method looks for every intersection and return the intersection (x, y)points.
      *
-     * @param theMaze the 2D List.
-     * @return the intersections point.
+     * @param theMaze the 2D array representation of the map.
+     * @return the lists of intersections.
      */
     public ArrayList<Point> intersections(char[][] theMaze) {
         ArrayList<Point> intersectionsPoint = new ArrayList<Point>();
@@ -139,12 +163,18 @@ public class Maze {
                 }
             }
         }
-//        System.out.println(intersectionsPoint);
         return intersectionsPoint;
 
     }
 
+    public Terrain[][] getMyGrid() {
+        return myGrid;
+    }
 
+    /**
+     * Randomly assigns 50 percent of the intersection points to become a question points.
+     * @return the lists of question points.
+     */
     public ArrayList<Point> questionPointgenerator() {
         // initialize how many question will have in the map.
         int number = myIntersections.size() / 2;
@@ -155,11 +185,18 @@ public class Maze {
             // Get the intersections Point from the ranPoints.
             Point randomIntersection = myIntersections.get(ranPoints);
             // assign the random question point in the maze
-            questionPoint.add(new Point(randomIntersection.y, randomIntersection.x));
+            questionPoint.add(new Point(randomIntersection.x, randomIntersection.y));
         }
         return questionPoint;
     }
 
+    /**
+     *  This method returns the lists of the question points.
+     * @return the list of the question points.
+     */
+    public ArrayList<Point> getQuestionPoints() {
+       return myQuestionPoints;
+    }
     /**
      * For testing purpose.
      */

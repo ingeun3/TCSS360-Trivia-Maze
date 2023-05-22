@@ -1,60 +1,59 @@
 package view;
 
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 
 public class MazeMap {
+    // Class Constants
 
-
+    // Tile size is set for 48x48.
+    private static final int TILE_SIZE = 48;
+    // The serial Version ID.
     private static final long serialVersionUID = 1L;
+    // Image of the Road.
+    private static final ImageIcon road = new ImageIcon("road.png");
+    // Image of the Wall.
+    private static final ImageIcon wall = new ImageIcon("wall.png");
 
-    private static final int SQUARE_SIZE = 40;
+    // Class Fields
+
+    // The 2D layout of the maze map.
+    private final char[][] myArray;
     GamePanel gp;
 
-    //public BufferedImage road, wall;
-    public ImageIcon road, wall;
-    private char[][] myArray;
 
+
+    /**
+     * Default constructor for MazeMap object.
+     * @param theArray the 2D layout of the map we want to make graphic out of.
+     */
     public MazeMap(GamePanel gp, char[][] theArray) {
         this.gp = gp;
         myArray = theArray;
-        start();
-        getMapImage();
-    }
-
-    public void start(){
-
-        //this.setPreferredSize(new Dimension(520,520));
-    }
-    public void getMapImage(){
-        road = new ImageIcon("road.png");
-        wall = new ImageIcon("wall.png");
     }
 
 
 
+    /**
+     * Draws the Map GUI
+     * @param theGraphics the Graphics object to draw on the JPanel.
+     */
     public void draw(final Graphics2D theGraphics) {
-        //BufferedImage image = null;
-        //ImageIcon  image = null;
         int topy = -48;
 
         for (int y = 0; y < myArray.length; y++) {
-            topy = topy + gp.tileSize;
+            topy = topy + TILE_SIZE;
             int leftx = -48;
             for (int x = 0; x < myArray[y].length; x++) {
-                leftx = leftx + gp.tileSize;
+                leftx = leftx + TILE_SIZE;
 
                 switch (myArray[y][x]) {
                     case '@':
-                        theGraphics.drawImage(wall.getImage(), leftx, topy, gp.tileSize, gp.tileSize , null);
+                        theGraphics.drawImage(wall.getImage(), leftx, topy, TILE_SIZE, TILE_SIZE , null);
                         break;
                     case '+':
-                        theGraphics.drawImage(road.getImage(), leftx, topy, gp.tileSize, gp.tileSize, null);
+                        theGraphics.drawImage(road.getImage(), leftx, topy, TILE_SIZE, TILE_SIZE, null);
                         break;
                 }
 

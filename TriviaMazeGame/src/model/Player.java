@@ -1,23 +1,41 @@
 package model;
 
 import javax.swing.ImageIcon;
+import java.awt.*;
 
 public class Player {
+	// Class constant
 
 	// Image of a player icon.
 	private static final ImageIcon myImage = new ImageIcon("playerIcon.jpg");
-	
+
+	// Class field
+
+	// The x, and y location of the player.
+	private int x, y;
+	// The direction the player is facing.
+	private String direction;
+	// The current image of a player.
+
 	// Number of available moves on a player object.
 	private static int myMove;
 	// Boolean living status of player object (true if alive, false if otherwise),
 	private static boolean myAlive = true;
+
+	private Answer myAnswer;
+
+	private Maze myMaze;
+
+	private Point myPlayerLocation;
 
 	/**
 	 * Default constructor of a player object
 	 * @param theMove the number of available moves on a player.
 	 */
 	public Player(final int theMove) {
+
 		myMove = theMove;
+
 	}
 
 	/**
@@ -28,17 +46,20 @@ public class Player {
 	public boolean canMove(final Terrain theTerrain) {
 		boolean canPass = false;
 		if (!theTerrain.equals(Terrain.WALL)) {
-            canPass = true;
-			myMove--;
-			isAlive();
-        } 
+			if (myAnswer.getCorrectness() == true) {
+				myMaze.setArray(myPlayerLocation);
+				canPass = true;
+				myMove--;
+				isAlive();
+			}
+		}
 		return canPass;
 	}
 
 	/**
 	 * Checks if player is alive.
 	 */
-	private void isAlive() {
+	protected void isAlive() {
 		if(myMove <= 0) {
 			myAlive = false;
 		}
