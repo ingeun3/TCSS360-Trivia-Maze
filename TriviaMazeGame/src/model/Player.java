@@ -43,9 +43,9 @@ public class Player {
 	 * @param theTerrain the terrain player wants to move
 	 * @return false if the given terrain is wall and true otherwise.
 	 */
-	public boolean canMove(final Terrain theTerrain) {
+	public boolean canMove(final char theTerrain) {
 		boolean canPass = false;
-		if (!theTerrain.equals(Terrain.WALL)) {
+		if (theTerrain != '@') {
 			if (myAnswer.getCorrectness() == true) {
 				myMaze.setArray(myPlayerLocation);
 				canPass = true;
