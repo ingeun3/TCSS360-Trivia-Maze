@@ -3,17 +3,14 @@ package view;
 import controller.keyBoardHandler;
 import model.Player;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements Runnable {
     // Class Constants
-
+    private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     // The serial Version ID.
     private static final long serialVersionUID = 1L;
     //Tile size is set for 48x48.
@@ -49,7 +46,7 @@ public class GamePanel extends JPanel implements Runnable {
      * @param theArray the 2D array representation of the map that GamePanel will draw.
      */
     public GamePanel(char[][] theArray, Player thePlayer) {
-        this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+        this.setPreferredSize(new Dimension((int) screenSize.getWidth(), (int) screenSize.getHeight()));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         myMazeArray = theArray;
