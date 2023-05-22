@@ -24,10 +24,9 @@ public class GameInterface {
     private final NorthPanel myNorthPanel;
     // The JPanel that displays the game in the CENTER of the JFrame.
     private final GamePanel myGamePanel;
-
    // GraphicsDevice mygDevice;
 
-    keyBoardHandler keyH = new keyBoardHandler();
+    keyBoardHandler keyH = keyBoardHandler.getInstance();
 
     // The JPanel that will pop up from the JFrame.
     private final LevelInterface myLevelInterface;
@@ -44,15 +43,9 @@ public class GameInterface {
         myMazeArray = theMazeArray;
         String level = LEVEL_PROMPT + theLevel;
         String moves = MOVE_PROMPT + theMoves;
-        myGamePanel = new GamePanel(myMazeArray, thePlayer);
+        myGamePanel = GamePanel.getInstance(myMazeArray, thePlayer);
         myNorthPanel = new NorthPanel(level, moves);
         myLevelInterface = new LevelInterface(theMazeArray);
-        //GraphicsEnvironment gEnviroment = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        //mygDevice = gEnviroment.getDefaultScreenDevice();
-
-
-
-
     }
 
     /**
