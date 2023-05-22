@@ -45,7 +45,7 @@ public class GameInterface {
         String level = LEVEL_PROMPT + theLevel;
         String moves = MOVE_PROMPT + theMoves;
         myGamePanel = new GamePanel(myMazeArray, thePlayer);
-        myNorthPanel = new NorthPanel(myGamePanel, level, moves);
+        myNorthPanel = new NorthPanel(level, moves);
         myLevelInterface = new LevelInterface(theMazeArray);
         //GraphicsEnvironment gEnviroment = GraphicsEnvironment.getLocalGraphicsEnvironment();
         //mygDevice = gEnviroment.getDefaultScreenDevice();
