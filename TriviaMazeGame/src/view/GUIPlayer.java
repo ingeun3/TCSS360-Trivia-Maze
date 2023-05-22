@@ -62,7 +62,8 @@ import java.awt.*;
          */
         public void update() {
             boolean value = true;
-            if (myPlayer.canMove(Terrain.valueOf(myMaze.)) == true) {
+
+            if (myPlayer.canMove(Terrain.valueOf(myMaze[y][x])) == true) {
                 if (keyH.getKey() == "up") {
                     direction = "up";
                     y = y - speed;
