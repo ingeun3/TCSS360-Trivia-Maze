@@ -8,7 +8,7 @@ public class MazeMap {
     // Class Constants
     private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-    private static final int TILE_NUMBER = 30;
+    private static final int TILE_NUMBER = 15;
     // Tile size is set for 48x48.
     private static final int TILE_SIZE = (int) screenSize.getWidth() / TILE_NUMBER; // change 18 or 14
 
