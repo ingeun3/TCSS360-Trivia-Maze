@@ -4,13 +4,11 @@ import model.Answer;
 import model.Maze;
 import model.Question;
 import org.sqlite.SQLiteDataSource;
-import view.GUIPlayer;
-import view.GameInterface;
-import view.GamePanel;
+
 import view.QuestionPane;
 
 import javax.swing.*;
-import java.awt.*;
+
 import java.io.FileNotFoundException;
 
 

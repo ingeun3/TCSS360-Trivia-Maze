@@ -62,8 +62,6 @@ public class MazeMap {
                     case '+':
                         theGraphics.drawImage(road.getImage(), leftx, topy, TILE_SIZE, TILE_SIZE, null);
                         break;
-                    case 'M':
-                        theGraphics.drawImage(up.getImage(), leftx, topy, TILE_SIZE, TILE_SIZE,null);
                 }
 
             }
