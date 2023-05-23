@@ -15,7 +15,7 @@ public class PlayerTest {
 
     // Initialize myPlayer object with 5 moves before each test.
     @BeforeEach
-    void setUp() {
+    void setUp() throws FileNotFoundException {
             myPlayer = new Player(5);
     }
     // Tests canMove method on Wall.

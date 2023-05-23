@@ -4,6 +4,7 @@ import controller.keyBoardHandler;
 import model.Player;
 
 import java.awt.*;
+import java.io.FileNotFoundException;
 
 import javax.swing.JFrame;
 
@@ -24,10 +25,9 @@ public class GameInterface {
     private final NorthPanel myNorthPanel;
     // The JPanel that displays the game in the CENTER of the JFrame.
     private final GamePanel myGamePanel;
-
    // GraphicsDevice mygDevice;
 
-    keyBoardHandler keyH = new keyBoardHandler();
+    keyBoardHandler keyH = keyBoardHandler.getInstance();
 
     // The JPanel that will pop up from the JFrame.
     private final LevelInterface myLevelInterface;
@@ -39,12 +39,12 @@ public class GameInterface {
      * @param theMoves the number of legal moves in this level.
      * @param theMazeArray the 2d array that contains the map structure.
      */
-    public GameInterface (int theLevel, int theMoves, char[][] theMazeArray, Player thePlayer) {
+    public GameInterface (int theLevel, int theMoves, char[][] theMazeArray, Player thePlayer) throws FileNotFoundException {
         myGameInterface = new JFrame("Trivia Maze");
         myMazeArray = theMazeArray;
         String level = LEVEL_PROMPT + theLevel;
         String moves = MOVE_PROMPT + theMoves;
-        myGamePanel = new GamePanel(myMazeArray, thePlayer);
+        myGamePanel = GamePanel.getInstance(myMazeArray, thePlayer);
         myNorthPanel = new NorthPanel(level, moves);
         myLevelInterface = new LevelInterface(theMazeArray);
     }

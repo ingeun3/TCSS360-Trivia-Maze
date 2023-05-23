@@ -6,13 +6,14 @@ import model.Player;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
 import javax.swing.JPanel;
 
-public class GamePanel extends JPanel implements Runnable {
+public class GamePanel extends JPanel {
     // The serial Version ID.
     private static final long serialVersionUID = 1L;
     // The FPS of the game is set 60.
-    private static final int FPS = 2; // FPS 60 times
+    //private static final int FPS = 2; // FPS 60 times
 
     // Class Fields
 
@@ -23,38 +24,42 @@ public class GamePanel extends JPanel implements Runnable {
     // The thread.
     private Thread gameThread;
 
-    keyBoardHandler keyH = new keyBoardHandler();
-
-    //Sound mySound = new Sound();
+        keyBoardHandler keyH = keyBoardHandler.getInstance();
 
 
     // The Player object that contains graphic of the player.
     GUIPlayer myPlayerGUI;
 
-    /**
-     * The default constructor for GamePanel object
-     * @param theArray the 2D array representation of the map that GamePanel will draw.
-     */
-    public GamePanel(char[][] theArray, Player thePlayer) {
-       // this.setPreferredSize(new Dimension((int) screenSize.getWidth(), (int) screenSize.getHeight()));
+    // Singleton instance
+    private static GamePanel instance;
+
+    private GamePanel(char[][] theArray, Player thePlayer) throws FileNotFoundException {
+        // this.setPreferredSize(new Dimension((int) screenSize.getWidth(), (int) screenSize.getHeight()));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         myMazeArray = theArray;
         // The 2D Array of the map layout.
         myMazemap = new MazeMap(this, myMazeArray);
-        myPlayerGUI = new GUIPlayer(this, keyH, thePlayer, myMazeArray);
+        myPlayerGUI = GUIPlayer.getInstance();
         start();
+    }
+
+    public static GamePanel getInstance(char[][] theArray, Player thePlayer) throws FileNotFoundException {
+        if (instance == null) {
+            instance = new GamePanel(theArray, thePlayer);
+        }
+        return instance;
     }
 
     /**
      * Initializing GamePanel object.
      */
     public void start() {
-        this.addKeyListener(keyH);
+       this.addKeyListener(keyH);
         this.setFocusable(true); //???
         run();
-        startGameThread();
-       // mySound.playMusic();
+//        startGameThread();
+        //playMusic(0);
 
         this.addMouseListener(new MouseAdapter() {
             @Override
@@ -66,55 +71,56 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
 
-    /**
-     * Starts the thread of the program.
-     */
-    public void startGameThread() {
-        gameThread = new Thread(this);
-        gameThread.start();
-    }
+//    /**
+//     * Starts the thread of the program.
+//     */
+//    public void startGameThread() {
+//        gameThread = new Thread(this);
+//        gameThread.start();
+//    }
 
     /**
      * The main logic that updates the GamePanel.
      */
-    @Override
+    // @Override
     public void run() {
-        double drawInterval = 1000000000/FPS;
-        double delta = 0;
-        long lastTime = System.nanoTime();
-        long currentTime;
-        long timer = 0;
-        int drawCount = 0;
-        while(gameThread != null) {
-            currentTime = System.nanoTime();
-            //how much time has passed
-            delta += (currentTime - lastTime) / drawInterval;
-            timer += (currentTime - lastTime);
-            lastTime = currentTime;
-            // when delta reach draw interval, we update
-            if (delta >= 1) {
-                update();
-                repaint();
-                delta--;
-                drawCount++;
-
-            }
-            //When timer reach 1 sec.
-            if (timer >= 1000000000) {
-                drawCount = 0;
-                timer = 0;
-            }
-
-
-        }
+//        double drawInterval = 1000000000/FPS;
+//        double delta = 0;
+//        long lastTime = System.nanoTime();
+//        long currentTime;
+//        long timer = 0;
+//        int drawCount = 0;
+//        while(gameThread != null) {
+//            currentTime = System.nanoTime();
+//            //how much time has passed
+//            delta += (currentTime - lastTime) / drawInterval;
+//            timer += (currentTime - lastTime);
+//            lastTime = currentTime;
+//            // when delta reach draw interval, we
+        // when delta reach draw interval, we update
+//            if (delta >= 1) {
+//                update();
+        repaint();
+//                delta--;
+//                drawCount++;
+//
+//            }
+//            //When timer reach 1 sec.
+//            if (timer >= 1000000000) {
+//                drawCount = 0;
+//                timer = 0;
+//            }
+//
+//
+//        }
     }
 
     /**
      * Updates player position
      */
-    public void update() {
-        myPlayerGUI.update();
-    }
+//    public void update() {
+//        myPlayerGUI.update();
+//    }
 
     /**
      * paintComponent method that draws the player.
@@ -128,16 +134,4 @@ public class GamePanel extends JPanel implements Runnable {
         g2.dispose();
 
     }
-//    public void playMusic(int i ) {
-//        sound.setFile(i);
-//        sound.play();
-//        sound.loop();
-//    }
-//    public void stopMusic() {
-//        sound.stop();
-//    }
-//    public void playSE(int i) {
-//        sound.setFile(i);
-//        sound.play();
-//    }
 }

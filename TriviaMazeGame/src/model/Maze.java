@@ -57,6 +57,9 @@ public class Maze {
         return myMaze;
     }
 
+    public char charAt(int x, int y) {
+        return myMaze[y][x];
+    }
     /**
      * Updates the map whenever player makes a move.
      * @param thePoint The point player wants to move.
@@ -87,9 +90,9 @@ public class Maze {
         return null;
     }
 
-//    public Point getMyPlayerLocation() {
-//        return myPlayerLocation;
-//    }
+    public Point getMyPlayerLocation() {
+        return myPlayerLocation;
+    }
 
     /**
      * This method reads the character from the map.
@@ -167,9 +170,10 @@ public class Maze {
 
     }
 
-    public Terrain[][] getMyGrid() {
-        return myGrid;
+    public char getTerrain(Point thePoint) {
+        return myMaze[thePoint.y][thePoint.x];
     }
+
 
     /**
      * Randomly assigns 50 percent of the intersection points to become a question points.

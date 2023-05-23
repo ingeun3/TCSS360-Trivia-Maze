@@ -2,65 +2,93 @@ package controller;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.FileNotFoundException;
+
+import model.Maze;
 import model.Player;
+import view.GUIPlayer;
 
 public class keyBoardHandler implements KeyListener{
-
     private boolean upPressed, downPressed, leftPressed, rightPressed;
+    private Player myPlayer = new Player(10);
+    private GUIPlayer mySprite = GUIPlayer.getInstance();
+    private static keyBoardHandler instance;
+    private keyBoardHandler() throws FileNotFoundException {
+    }
 
-    Player myPlayer;
-
+    /**
+     * Method to get the singleton instance of the keyBoardHandler class.
+     * If the instance does not exist, it will be created.
+     *
+     * @return the singleton instance of the keyBoardHandler class.
+     */
+    public static keyBoardHandler getInstance() throws FileNotFoundException {
+        if (instance == null) {
+            instance = new keyBoardHandler();
+        }
+        return instance;
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {
     }
-
     @Override
     public void keyPressed(KeyEvent e) {
-        int code = e.getKeyCode(); // number of the key that proesssed
-        if (code == KeyEvent.VK_W) {
+        int code = e.getKeyCode();
+        if (code == KeyEvent.VK_W && !upPressed) {
             upPressed = true;
-        }
-        if (code == KeyEvent.VK_S) {
+            update();
+        } else if (code == KeyEvent.VK_S && !downPressed) {
             downPressed = true;
-        }
-        if (code == KeyEvent.VK_A) {
+            update();
+        } else if (code == KeyEvent.VK_A && !leftPressed) {
             leftPressed = true;
-        }
-        if (code == KeyEvent.VK_D) {
+            update();
+        } else if (code == KeyEvent.VK_D && !rightPressed) {
             rightPressed = true;
+            update();
         }
     }
-
     @Override
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
         if (code == KeyEvent.VK_W) {
             upPressed = false;
-        }
-        if (code == KeyEvent.VK_S) {
+        } else if (code == KeyEvent.VK_S) {
             downPressed = false;
-        }
-        if (code == KeyEvent.VK_A) {
+        } else if (code == KeyEvent.VK_A) {
             leftPressed = false;
-        }
-        if (code == KeyEvent.VK_D) {
+        } else if (code == KeyEvent.VK_D) {
             rightPressed = false;
         }
-
     }
     public String getKey() {
-        String result = "";
-        if(upPressed == true) {
-            result = "up";
-        } else if (downPressed == true) {
-            result = "down";
-        } else if (leftPressed == true) {
-            result = "left";
-        } else if (rightPressed == true){
-            result = "right";
+        if (upPressed) {
+            return "up";
+        } else if (downPressed) {
+            return "down";
+        } else if (leftPressed) {
+            return "left";
+        } else if (rightPressed) {
+            return "right";
+        } else {
+            return "";
         }
-
-        return result;
+    }
+    public void update() {
+        String key = getKey();
+        if (key.equals("up") && myPlayer.canMove(myPlayer.PlayerN())) {
+            mySprite.setDirection("up");
+            mySprite.setY(mySprite.getY() - mySprite.getSpeed());
+        } else if (key.equals("down") && myPlayer.canMove(myPlayer.PlayerS())) {
+            mySprite.setDirection("down");
+            mySprite.setY(mySprite.getY() + mySprite.getSpeed());
+        } else if (key.equals("left") && myPlayer.canMove(myPlayer.PlayerW())) {
+            mySprite.setDirection("left");
+            mySprite.setX(mySprite.getX() - mySprite.getSpeed());
+        } else if (key.equals("right") && myPlayer.canMove(myPlayer.PlayerE())) {
+            mySprite.setDirection("right");
+            mySprite.setX(mySprite.getX() + mySprite.getSpeed());
+        }
     }
 }

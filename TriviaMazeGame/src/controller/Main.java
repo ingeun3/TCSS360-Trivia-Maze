@@ -69,15 +69,20 @@ public class Main {
         Player player = new Player(10);
 
 
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                setLookAndFeel();
+        setLookAndFeel();
 
-                new GameInterface(1, 10, mazeMap.getArray(), player).start();
-            }
+        new Controller(10, "maze_map2.txt").start();
+;
 
-        });
+//        EventQueue.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                setLookAndFeel();
+//
+//                new GameInterface(1, 1, mazeMap.getArray(), player).start();
+//                ;            }
+//
+//        });
     }
 
     /**
