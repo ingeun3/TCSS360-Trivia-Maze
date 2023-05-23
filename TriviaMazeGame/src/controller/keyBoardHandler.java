@@ -14,7 +14,6 @@ public class keyBoardHandler implements KeyListener{
     private Player myPlayer;
     private GUIPlayer mySprite = GUIPlayer.getInstance();
     private static keyBoardHandler instance;
-    private static Maze myMaze;
     private keyBoardHandler() {
         // Private constructor to prevent direct instantiation.
     }
@@ -25,9 +24,8 @@ public class keyBoardHandler implements KeyListener{
      *
      * @return the singleton instance of the keyBoardHandler class.
      */
-    public static keyBoardHandler getInstance(Maze theMaze) {
+    public static keyBoardHandler getInstance() {
         if (instance == null) {
-            myMaze = theMaze;
             instance = new keyBoardHandler();
         }
         return instance;
@@ -95,19 +93,36 @@ public class keyBoardHandler implements KeyListener{
      */
     public void update() {
         //if (myPlayer.canMove(Terrain.valueOf(myMaze.)) == true) {
-        if (getKey() == "up" && myPlayer.canMove(myMaze.getTerrain(myMaze.PlayerS()))) {
+        if (getKey() == "up") {
             mySprite.setDirection("up");
             mySprite.setY(mySprite.getY() - mySprite.getSpeed()/2);
-        } else if (getKey() == "down" && myPlayer.canMove(myMaze.getTerrain(myMaze.PlayerS()))) {
+        } else if (getKey() == "down") {
             mySprite.setDirection("down");
             mySprite.setY(mySprite.getY() + mySprite.getSpeed()/2);
-        } else if (getKey() == "left" && myPlayer.canMove(myMaze.getTerrain(myMaze.PlayerS()))) {
+        } else if (getKey() == "left") {
             mySprite.setDirection("left");
             mySprite.setX(mySprite.getX() - mySprite.getSpeed()/2);
-        } else if (getKey() == "right" && myPlayer.canMove(myMaze.getTerrain(myMaze.PlayerS()))) {
+        } else if (getKey() == "right") {
             mySprite.setDirection("right");
             mySprite.setX(mySprite.getX() + mySprite.getSpeed()/2);
         }
         //  }
     }
+//    public void update() {
+//        //if (myPlayer.canMove(Terrain.valueOf(myMaze.)) == true) {
+//        if (getKey() == "up" && myPlayer.canMove(myMaze.getTerrain(myMaze.PlayerS()))) {
+//            mySprite.setDirection("up");
+//            mySprite.setY(mySprite.getY() - mySprite.getSpeed()/2);
+//        } else if (getKey() == "down" && myPlayer.canMove(myMaze.getTerrain(myMaze.PlayerS()))) {
+//            mySprite.setDirection("down");
+//            mySprite.setY(mySprite.getY() + mySprite.getSpeed()/2);
+//        } else if (getKey() == "left" && myPlayer.canMove(myMaze.getTerrain(myMaze.PlayerS()))) {
+//            mySprite.setDirection("left");
+//            mySprite.setX(mySprite.getX() - mySprite.getSpeed()/2);
+//        } else if (getKey() == "right" && myPlayer.canMove(myMaze.getTerrain(myMaze.PlayerS()))) {
+//            mySprite.setDirection("right");
+//            mySprite.setX(mySprite.getX() + mySprite.getSpeed()/2);
+//        }
+//        //  }
+//    }
 }
