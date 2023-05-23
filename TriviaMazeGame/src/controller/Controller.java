@@ -86,27 +86,15 @@ public class Controller implements KeyListener{
         if (code == KeyEvent.VK_W && !upPressed) {
             upPressed = true;
             update();
-            if(myPlayer.isQuestionPoint()) {
-                myQuestionPane.ask();
-            }
         } else if (code == KeyEvent.VK_S && !downPressed) {
             downPressed = true;
             update();
-            if(myPlayer.isQuestionPoint()) {
-                myQuestionPane.ask();
-            }
         } else if (code == KeyEvent.VK_A && !leftPressed) {
             leftPressed = true;
             update();
-            if(myPlayer.isQuestionPoint()) {
-                myQuestionPane.ask();
-            }
         } else if (code == KeyEvent.VK_D && !rightPressed) {
             rightPressed = true;
             update();
-            if(myPlayer.isQuestionPoint()) {
-                myQuestionPane.ask();
-            }
         }
     }
     @Override
@@ -129,10 +117,8 @@ public class Controller implements KeyListener{
             return "down";
         } else if (leftPressed) {
             return "left";
-        } else if (rightPressed) {
-            return "right";
         } else {
-            return "";
+            return "right";
         }
     }
     public void update() {
@@ -140,23 +126,31 @@ public class Controller implements KeyListener{
         if (key.equals("up") && myPlayer.canMove(myPlayer.PlayerN())) {
             mySprite.setDirection("up");
             mySprite.setY(mySprite.getY() - mySprite.getSpeed());
-            myPlayer.isQuestionPoint();
+            if(myPlayer.isQuestionPoint()) {
+                myQuestionPane.ask();
+            }
 
         } else if (key.equals("down") && myPlayer.canMove(myPlayer.PlayerS())) {
             mySprite.setDirection("down");
             mySprite.setY(mySprite.getY() + mySprite.getSpeed());
-            myPlayer.isQuestionPoint();
-           // myPlayer.setMyMove();
+            if(myPlayer.isQuestionPoint()) {
+                myQuestionPane.ask();
+            }
+
         } else if (key.equals("left") && myPlayer.canMove(myPlayer.PlayerW())) {
             mySprite.setDirection("left");
             mySprite.setX(mySprite.getX() - mySprite.getSpeed());
-            myPlayer.isQuestionPoint();
-           // myPlayer.setMyMove();
+            if(myPlayer.isQuestionPoint()) {
+                myQuestionPane.ask();
+            }
+
         } else if (key.equals("right") && myPlayer.canMove(myPlayer.PlayerE())) {
             mySprite.setDirection("right");
             mySprite.setX(mySprite.getX() + mySprite.getSpeed());
-            myPlayer.isQuestionPoint();
-            // myPlayer.setMyMove();
+            if(myPlayer.isQuestionPoint()) {
+                myQuestionPane.ask();
+            }
+
         }
     }
 
