@@ -4,6 +4,7 @@ import controller.keyBoardHandler;
 import model.Player;
 
 import java.awt.*;
+import java.io.FileNotFoundException;
 
 import javax.swing.JFrame;
 
@@ -38,7 +39,7 @@ public class GameInterface {
      * @param theMoves the number of legal moves in this level.
      * @param theMazeArray the 2d array that contains the map structure.
      */
-    public GameInterface (int theLevel, int theMoves, char[][] theMazeArray, Player thePlayer) {
+    public GameInterface (int theLevel, int theMoves, char[][] theMazeArray, Player thePlayer) throws FileNotFoundException {
         myGameInterface = new JFrame("Trivia Maze");
         myMazeArray = theMazeArray;
         String level = LEVEL_PROMPT + theLevel;

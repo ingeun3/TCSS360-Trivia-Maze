@@ -7,7 +7,7 @@ import view.GamePanel;
 
 import java.io.FileNotFoundException;
 
-public class Controller implements Runnable {
+public class Controller {
     private Player myPlayer;
     private GamePanel myGamePanel;
     private GameInterface myGameInterface;
@@ -25,22 +25,17 @@ public class Controller implements Runnable {
         myGameInterface.start();
         myGamePanel.start();
         while(true) {
+//            if (keyH.getKey() == "up") {
+//                System.out.println("hi");
+//                myGamePanel.run();
+//            } else if (keyH.getKey() == "down" && myPlayer.canMove(myMaze.getTerrain(myMaze.PlayerS()))) {
+//                myGamePanel.run();
+//            } else if (keyH.getKey() == "left" && myPlayer.canMove(myMaze.getTerrain(myMaze.PlayerW()))) {
+//                myGamePanel.run();
+//            } else if (keyH.getKey() == "right" && myPlayer.canMove(myMaze.getTerrain(myMaze.PlayerE()))) {
+//                myGamePanel.run();
+//            }
             myGamePanel.run();
         }
-    }
-
-    @Override
-    public void run() {
-//        if (keyH.getKey() == "up") {
-//            System.out.println("hi");
-//            myGamePanel.run();
-//        } else if (keyH.getKey() == "down" && myPlayer.canMove(myMaze.getTerrain(myMaze.PlayerS()))) {
-//            myGamePanel.run();
-//        } else if (keyH.getKey() == "left" && myPlayer.canMove(myMaze.getTerrain(myMaze.PlayerW()))) {
-//            myGamePanel.run();
-//        } else if (keyH.getKey() == "right" && myPlayer.canMove(myMaze.getTerrain(myMaze.PlayerE()))) {
-//
-//        }
-       // myGamePanel.run();
     }
 }

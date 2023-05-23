@@ -2,6 +2,7 @@ package model;
 
 import javax.swing.ImageIcon;
 import java.awt.*;
+import java.io.FileNotFoundException;
 
 public class Player {
 	// Class constant
@@ -11,8 +12,6 @@ public class Player {
 
 	// Class field
 
-	// The x, and y location of the player.
-	private int x, y;
 	// The direction the player is facing.
 	private String direction;
 	// The current image of a player.
@@ -32,23 +31,40 @@ public class Player {
 	 * Default constructor of a player object
 	 * @param theMove the number of available moves on a player.
 	 */
-	public Player(final int theMove) {
-
-		myMove = theMove;
+	public Player(final int theMove) throws FileNotFoundException {
+		myMaze = new Maze("maze_map2.txt");
+		myPlayerLocation = new Point(1,1);
 
 	}
 
+	public Point PlayerN() {
+		return new Point(myPlayerLocation.x, myPlayerLocation.y - 1);
+	}
+
+	public Point PlayerS() {
+		return new Point(myPlayerLocation.x, myPlayerLocation.y + 1);
+	}
+
+	public Point PlayerW() {
+		return new Point(myPlayerLocation.x - 1, myPlayerLocation.y);
+	}
+
+	public Point PlayerE() {
+		return new Point(myPlayerLocation.x + 1, myPlayerLocation.y);
+	}
 
 	/**
 	 * Checks if player can make a move on a given terrain
 	 * @param theTerrain the terrain player wants to move
 	 * @return false if the given terrain is wall and true otherwise.
 	 */
-	public boolean canMove(final char theTerrain) {
+	public boolean canMove(final Point theTerrain) {
 		boolean canPass = false;
-		if (theTerrain != '@') {
+		if (myMaze.charAt(theTerrain.x, theTerrain.y) != '@') {
 			//if (myAnswer.getCorrectness() == true) {
-			myMaze.setArray(myPlayerLocation);
+			myMaze.setArray(theTerrain);
+			myPlayerLocation = theTerrain;
+		//	System.out.println(myMaze.toString());
 			canPass = true;
 			myMove--;
 			isAlive();
