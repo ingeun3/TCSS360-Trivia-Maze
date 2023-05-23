@@ -5,16 +5,15 @@ import model.Player;
 
 import java.awt.*;
 
-import javax.swing.*;
+import javax.swing.JFrame;
 
 public class GameInterface {
     // Class Constants
+
     // The level prompt that will be displayed in the middle of the north panel.
     private static final String LEVEL_PROMPT = "Level ";
     // The move prompt that will be displayed in the right of the north panel.
     private static final String MOVE_PROMPT = "Remaining Moves: ";
-
-
 
     // Class Fields
 
@@ -25,12 +24,9 @@ public class GameInterface {
     private final NorthPanel myNorthPanel;
     // The JPanel that displays the game in the CENTER of the JFrame.
     private final GamePanel myGamePanel;
-
-    private JPanel myTopPanel;
-
    // GraphicsDevice mygDevice;
 
-    keyBoardHandler keyH = new keyBoardHandler();
+    keyBoardHandler keyH = keyBoardHandler.getInstance();
 
     // The JPanel that will pop up from the JFrame.
     private final LevelInterface myLevelInterface;
@@ -47,29 +43,9 @@ public class GameInterface {
         myMazeArray = theMazeArray;
         String level = LEVEL_PROMPT + theLevel;
         String moves = MOVE_PROMPT + theMoves;
-        myGamePanel = new GamePanel(myMazeArray, thePlayer, level, moves);
-        myNorthPanel = new NorthPanel();
-        myTopPanel = new JPanel();
-        myTopPanel.setLayout(new BorderLayout());
+        myGamePanel = GamePanel.getInstance(myMazeArray, thePlayer);
+        myNorthPanel = new NorthPanel(level, moves);
         myLevelInterface = new LevelInterface(theMazeArray);
-        //GraphicsEnvironment gEnviroment = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        //mygDevice = gEnviroment.getDefaultScreenDevice();
-
-
-
-
-    }
-
-    public void putTitle() {
-
-    }
-
-    public void putGame() {
-
-    }
-
-    public void putLevel() {
-
     }
 
     /**
@@ -77,11 +53,7 @@ public class GameInterface {
      */
     public void start() {
         myGameInterface.setSize(800, 600);
-
-        myTopPanel.add(myNorthPanel, BorderLayout.WEST);
-        myGameInterface.getContentPane().add(myTopPanel, BorderLayout.NORTH);
-
-//        myGameInterface.getContentPane().add(myNorthPanel, BorderLayout.NORTH);
+        myGameInterface.getContentPane().add(myNorthPanel, BorderLayout.NORTH);
         myGameInterface.getContentPane().add(myGamePanel, BorderLayout.CENTER);
         myGameInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myGameInterface.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -89,7 +61,6 @@ public class GameInterface {
         myGameInterface.setLocationRelativeTo(null);
         myGameInterface.setVisible(true);
         myGamePanel.requestFocus();
-
     }
    // public void setFullScren(){
        // mygDevice.setFullScreenWindow(myGameInterface);
