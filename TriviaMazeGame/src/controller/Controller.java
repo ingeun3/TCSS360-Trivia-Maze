@@ -81,22 +81,9 @@ public class Controller implements KeyListener{
 
         System.out.println(myQuestionPane.getChoice());
 
-//        Answer chosenAnswer = null;
-//        String chosenAnswerString = myQuestionPane.getChoice();
     }
 
-    /**
-     * Method to get the singleton instance of the keyBoardHandler class.
-     * If the instance does not exist, it will be created.
-     *
-     * @return the singleton instance of the keyBoardHandler class.
-     */
-//    public static Controller getInstance() throws FileNotFoundException {
-//        if (instance == null) {
-//            instance = new Controller();
-//        }
-//        return instance;
-//    }
+
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -156,7 +143,7 @@ public class Controller implements KeyListener{
             isRightAnswer(myQuestionPane.getChoice());
             myCurrentQ++;
             myQuestionPane = new QuestionPane(myQ[myCurrentQ % mySize],
-                    myQnA.get(myQ[myCurrentQ % mySize]));
+                    myQnA.get(myQ[myCurrentQ % mySize]).clone());
 
 
         }
