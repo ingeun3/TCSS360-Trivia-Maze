@@ -6,13 +6,14 @@ import model.Player;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel {
     // The serial Version ID.
     private static final long serialVersionUID = 1L;
     // The FPS of the game is set 60.
-    private static final int FPS = 2; // FPS 60 times
+    //private static final int FPS = 2; // FPS 60 times
 
     // Class Fields
 
@@ -32,7 +33,7 @@ public class GamePanel extends JPanel {
     // Singleton instance
     private static GamePanel instance;
 
-    private GamePanel(char[][] theArray, Player thePlayer) {
+    private GamePanel(char[][] theArray, Player thePlayer) throws FileNotFoundException {
         // this.setPreferredSize(new Dimension((int) screenSize.getWidth(), (int) screenSize.getHeight()));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
@@ -43,7 +44,7 @@ public class GamePanel extends JPanel {
         start();
     }
 
-    public static GamePanel getInstance(char[][] theArray, Player thePlayer) {
+    public static GamePanel getInstance(char[][] theArray, Player thePlayer) throws FileNotFoundException {
         if (instance == null) {
             instance = new GamePanel(theArray, thePlayer);
         }

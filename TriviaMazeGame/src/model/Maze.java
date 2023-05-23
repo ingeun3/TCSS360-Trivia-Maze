@@ -175,21 +175,6 @@ public class Maze {
         return myMaze[thePoint.y][thePoint.x];
     }
 
-    public Point PlayerN() {
-        return new Point(myPlayerLocation.x, myPlayerLocation.y - 1);
-    }
-
-    public Point PlayerS() {
-        return new Point(myPlayerLocation.x, myPlayerLocation.y + 1);
-    }
-
-    public Point PlayerW() {
-        return new Point(myPlayerLocation.x - 1, myPlayerLocation.y);
-    }
-
-    public Point PlayerE() {
-        return new Point(myPlayerLocation.x + 1, myPlayerLocation.y);
-    }
 
     /**
      * Randomly assigns 50 percent of the intersection points to become a question points.

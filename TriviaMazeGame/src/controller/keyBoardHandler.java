@@ -1,6 +1,5 @@
 package controller;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.FileNotFoundException;
@@ -8,21 +7,13 @@ import java.io.FileNotFoundException;
 import model.Maze;
 import model.Player;
 import view.GUIPlayer;
-import view.MazeMap;
 
 public class keyBoardHandler implements KeyListener{
-
     private boolean upPressed, downPressed, leftPressed, rightPressed;
-    private boolean keyPressed;
-    private Player myPlayer;
-
-    private Maze myMaze;
+    private Player myPlayer = new Player(10);
     private GUIPlayer mySprite = GUIPlayer.getInstance();
-
-    private int myChosenDirection;
     private static keyBoardHandler instance;
-    private keyBoardHandler()  {
-        // Private constructor to prevent direct instantiation.
+    private keyBoardHandler() throws FileNotFoundException {
     }
 
     /**
@@ -31,7 +22,7 @@ public class keyBoardHandler implements KeyListener{
      *
      * @return the singleton instance of the keyBoardHandler class.
      */
-    public static keyBoardHandler getInstance() {
+    public static keyBoardHandler getInstance() throws FileNotFoundException {
         if (instance == null) {
             instance = new keyBoardHandler();
         }
@@ -41,101 +32,63 @@ public class keyBoardHandler implements KeyListener{
     @Override
     public void keyTyped(KeyEvent e) {
     }
-
     @Override
     public void keyPressed(KeyEvent e) {
-        int code = e.getKeyCode(); // number of the key that processed
-        if (code == KeyEvent.VK_W) {
+        int code = e.getKeyCode();
+        if (code == KeyEvent.VK_W && !upPressed) {
             upPressed = true;
             update();
-        }
-        if (code == KeyEvent.VK_S) {
+        } else if (code == KeyEvent.VK_S && !downPressed) {
             downPressed = true;
             update();
-        }
-        if (code == KeyEvent.VK_A) {
+        } else if (code == KeyEvent.VK_A && !leftPressed) {
             leftPressed = true;
             update();
-        }
-        if (code == KeyEvent.VK_D) {
+        } else if (code == KeyEvent.VK_D && !rightPressed) {
             rightPressed = true;
             update();
         }
     }
-
     @Override
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
-        if (code == KeyEvent.VK_W)   {
+        if (code == KeyEvent.VK_W) {
             upPressed = false;
-
-        }
-        if (code == KeyEvent.VK_S) {
+        } else if (code == KeyEvent.VK_S) {
             downPressed = false;
-        }
-        if (code == KeyEvent.VK_A) {
+        } else if (code == KeyEvent.VK_A) {
             leftPressed = false;
-        }
-        if (code == KeyEvent.VK_D) {
+        } else if (code == KeyEvent.VK_D) {
             rightPressed = false;
         }
-
     }
     public String getKey() {
-        String result = "";
-        if(upPressed == true) {
-            result = "up";
-        } else if (downPressed == true) {
-            result = "down";
-        } else if (leftPressed == true) {
-            result = "left";
-        } else if (rightPressed == true){
-            result = "right";
+        if (upPressed) {
+            return "up";
+        } else if (downPressed) {
+            return "down";
+        } else if (leftPressed) {
+            return "left";
+        } else if (rightPressed) {
+            return "right";
+        } else {
+            return "";
         }
-
-        return result;
     }
-
-    /**
-     * Updates the location of the player by the direction the player is facing.
-     */
     public void update() {
-        //if (myPlayer.canMove(Terrain.valueOf(myMaze.)) == true) {
-        Point chosenDirection = new Point(0, 0);
-        if (getKey() == "up") {
-            int y = mySprite.getY() - mySprite.getSpeed()/2;
-            chosenDirection = new Point(y, 0);
-
-
+        String key = getKey();
+        if (key.equals("up") && myPlayer.canMove(myPlayer.PlayerN())) {
             mySprite.setDirection("up");
-//            mySprite.setY(mySprite.getY() - mySprite.getSpeed()/2);
-        } else if (getKey() == "down") {
+            mySprite.setY(mySprite.getY() - mySprite.getSpeed());
+        } else if (key.equals("down") && myPlayer.canMove(myPlayer.PlayerS())) {
             mySprite.setDirection("down");
-            mySprite.setY(mySprite.getY() + mySprite.getSpeed()/2);
-        } else if (getKey() == "left") {
+            mySprite.setY(mySprite.getY() + mySprite.getSpeed());
+        } else if (key.equals("left") && myPlayer.canMove(myPlayer.PlayerW())) {
             mySprite.setDirection("left");
-            mySprite.setX(mySprite.getX() - mySprite.getSpeed()/2);
-        } else if (getKey() == "right") {
+            mySprite.setX(mySprite.getX() - mySprite.getSpeed());
+        } else if (key.equals("right") && myPlayer.canMove(myPlayer.PlayerE())) {
             mySprite.setDirection("right");
-            mySprite.setX(mySprite.getX() + mySprite.getSpeed()/2);
+            mySprite.setX(mySprite.getX() + mySprite.getSpeed());
         }
-        //  }
     }
-//    public void update() {
-//        //if (myPlayer.canMove(Terrain.valueOf(myMaze.)) == true) {
-//        if (getKey() == "up" && myPlayer.canMove(myMaze.getTerrain(myMaze.PlayerS()))) {
-//            mySprite.setDirection("up");
-//            mySprite.setY(mySprite.getY() - mySprite.getSpeed()/2);
-//        } else if (getKey() == "down" && myPlayer.canMove(myMaze.getTerrain(myMaze.PlayerS()))) {
-//            mySprite.setDirection("down");
-//            mySprite.setY(mySprite.getY() + mySprite.getSpeed()/2);
-//        } else if (getKey() == "left" && myPlayer.canMove(myMaze.getTerrain(myMaze.PlayerS()))) {
-//            mySprite.setDirection("left");
-//            mySprite.setX(mySprite.getX() - mySprite.getSpeed()/2);
-//        } else if (getKey() == "right" && myPlayer.canMove(myMaze.getTerrain(myMaze.PlayerS()))) {
-//            mySprite.setDirection("right");
-//            mySprite.setX(mySprite.getX() + mySprite.getSpeed()/2);
-//        }
-//        //  }
-//    }
 }
