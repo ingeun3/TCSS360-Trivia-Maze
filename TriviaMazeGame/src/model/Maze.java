@@ -20,6 +20,8 @@ public class Maze {
     // the default map file for maze.
     private static String myMazeMap;
 
+    private Point myExit;
+
     //initializing the intersection points
     private final ArrayList<Point> myIntersections;
     //initializing the intersection points
@@ -46,7 +48,9 @@ public class Maze {
         myIntersections = intersections(myMaze);
         myQuestionPoints = questionPointgenerator();
         myPlayerLocation = playerLocation();
+        myExit = new Point(0,0);
     }
+
 
     /**
      * This method return the 2D array representation of the maze.
@@ -121,6 +125,9 @@ public class Maze {
             for (int j = 0; j < column; j++) {
                 mazeMap[i][j] = line.charAt(j);
                 myGrid[i][j] = Terrain.valueOf(line.charAt(j));
+//                if (line.charAt(j) == 'E') {
+//                    myExit = new Point(i, j);
+//                }
             }
         }
         return mazeMap;
@@ -174,6 +181,10 @@ public class Maze {
         return myMaze[thePoint.y][thePoint.x];
     }
 
+    public Point getExit() {
+        return myExit;
+    }
+
 
     /**
      * Randomly assigns 50 percent of the intersection points to become a question points.
@@ -182,8 +193,9 @@ public class Maze {
     public ArrayList<Point> questionPointgenerator() {
         // initialize how many question will have in the map.
         int number = myIntersections.size() / 2;
+        int all = myIntersections.size();
         ArrayList<Point> questionPoint = new ArrayList<Point>();
-        for (int i = 0; i < number; i++) {
+        for (int i = 0; i < all; i++) {
             //initailize the ranPoints.
             int ranPoints = RANDOM_POINTS.nextInt(myIntersections.size());
             // Get the intersections Point from the ranPoints.

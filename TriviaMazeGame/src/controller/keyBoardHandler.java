@@ -79,15 +79,19 @@ public class keyBoardHandler implements KeyListener{
         if (key.equals("up") && myPlayer.canMove(myPlayer.PlayerN())) {
             mySprite.setDirection("up");
             mySprite.setY(mySprite.getY() - mySprite.getSpeed());
+            myPlayer.setMyMove();
         } else if (key.equals("down") && myPlayer.canMove(myPlayer.PlayerS())) {
             mySprite.setDirection("down");
             mySprite.setY(mySprite.getY() + mySprite.getSpeed());
+            myPlayer.setMyMove();
         } else if (key.equals("left") && myPlayer.canMove(myPlayer.PlayerW())) {
             mySprite.setDirection("left");
             mySprite.setX(mySprite.getX() - mySprite.getSpeed());
+            myPlayer.setMyMove();
         } else if (key.equals("right") && myPlayer.canMove(myPlayer.PlayerE())) {
             mySprite.setDirection("right");
             mySprite.setX(mySprite.getX() + mySprite.getSpeed());
+            myPlayer.setMyMove();
         }
     }
 }
