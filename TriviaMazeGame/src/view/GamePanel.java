@@ -24,7 +24,7 @@ public class GamePanel extends JPanel {
     // The thread.
     private Thread gameThread;
 
-        Controller keyH = Controller.getInstance();
+        Controller keyH = new Controller();
 
 
     // The Player object that contains graphic of the player.

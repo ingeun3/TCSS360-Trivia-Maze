@@ -21,7 +21,6 @@ public class Player {
 	// Boolean living status of player object (true if alive, false if otherwise),
 	private static boolean myAlive;
 
-	private Answer myAnswer;
 
 	private Maze myMaze;
 

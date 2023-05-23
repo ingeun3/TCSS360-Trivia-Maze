@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.*;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Random;
 
@@ -19,16 +20,22 @@ public class QuestionPane {
     private ImageIcon myImage;
     // The list of answers to the problem.
     private String[] myAnswers;
+
+    private String[] myShuffledAnswers;
     // The answer the player chose.
     private String myChosenAnswer;
 
     /**
      * Default constructor for QuestionPane.
-     * @param theQnA Map that contains the question as the key and array of answers in value.
+     *
      */
-    public QuestionPane(Map<String, String[]> theQnA) {
-        myPrompt = (String) theQnA.keySet().toArray()[0];
-        myAnswers = theQnA.get(myPrompt);
+    public QuestionPane(String theQuestion, String[] theAnswers) {
+        myPrompt = theQuestion;
+        String[] ans = new String[theAnswers.length];
+        ans = theAnswers;
+        myAnswers = theAnswers;
+        Collections.shuffle(Arrays.asList(ans));
+        myShuffledAnswers = ans;
         myImage = new ImageIcon("questionmark.png");
         myChosenAnswer = "";
 
@@ -45,8 +52,8 @@ public class QuestionPane {
         // null will change to game panel when merging code
         int ans = JOptionPane.showOptionDialog(null, myPrompt, QUESTION_TITLE,
                 JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
-                myImage, myAnswers, myAnswers[0]);
-        myChosenAnswer = myAnswers[ans];
+                myImage, myShuffledAnswers, myShuffledAnswers[0]);
+        myChosenAnswer = myShuffledAnswers[ans];
 
     }
 

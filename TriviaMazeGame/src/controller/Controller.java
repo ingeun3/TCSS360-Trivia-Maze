@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 
-import model.Answer;
 import model.Player;
 import model.Question;
 import org.sqlite.SQLiteDataSource;
@@ -20,60 +19,84 @@ public class Controller implements KeyListener{
     private boolean upPressed, downPressed, leftPressed, rightPressed;
     private Player myPlayer = new Player(10);
     private GUIPlayer mySprite = GUIPlayer.getInstance();
-    private static Controller instance;
-    private static ArrayList<Question> myQuestions;
+    private ArrayList<Question> myQuestions;
     // The map that stores current question in key and answers as a value.
-    private static Map<String, String[]> myQnA;
+    private Map<String, String[]> myQnA;
     // The SQL data source.
-    private static SQLiteDataSource myDataSource;
+    private SQLiteDataSource myDataSource;
     // Random object to grab random question.
-    private static Random myRandom;
+    private Random myRandom;
 
     private QuestionPane myQuestionPane;
 
-    private Controller() throws FileNotFoundException {
+    private String[] myQ;
+
+    private int myCurrentQ;
+
+    private int mySize;
+
+    private String myChosenAnswer;
+
+    public Controller() throws FileNotFoundException {
         myRandom = new Random();
         myQuestions = new ArrayList<Question>();
         //QuestionPanel questionPanel = new QuestionPanel(myQuestions);
         myDataSource = new SQLiteDataSource();
+        myCurrentQ = 0;
+        myQnA = new HashMap<String, String[]>();
+        myChosenAnswer = "";
         connect();
         retrieveData();
-
-        Map<String, String[]> myQnA = new HashMap<String, String[]>();
-
-        Collections.shuffle(myQuestions);
+        mySize = myQuestions.size();
 
         //gets a random question
-        Question askedQuestion = myQuestions.get(0);
+        Collections.shuffle(myQuestions);
 
-        int ansLength = askedQuestion.getAnswers().size();
-        String[] ansArray = new String[ansLength];
-        for (int i = 0; i < ansLength; i++) {
-            ansArray[i] = askedQuestion.getAnswers().get(i).getAnswer();
+
+        for (int i = 0; i < myQuestions.size(); i++) {
+            Question askedQuestion = myQuestions.get(i);
+
+            int ansLength = askedQuestion.getAnswers().size();
+            String[] ansArray = new String[ansLength];
+            for (int j = 0; j < ansLength; j++) {
+                ansArray[j] = askedQuestion.getAnswers().get(j);
+            }
+            //puts it in map to send to questionpane
+            myQnA.put(askedQuestion.getQuestion(), ansArray);
         }
-        //puts it in map to send to questionpane
-        myQnA.put(askedQuestion.getQuestion(), ansArray);
 
-        myQuestionPane = new QuestionPane(myQnA);
+        myQ = new String[myQuestions.size()];
+
+        int counter = 0;
+        for (Map.Entry<String, String[]> entry : myQnA.entrySet()) {
+            myQ[counter] = entry.getKey();
+            counter++;
+        }
+
+
+
+        myQuestionPane = new QuestionPane(myQ[myCurrentQ], myQnA.get(myQ[myCurrentQ]));
+
 
 
         System.out.println(myQuestionPane.getChoice());
 
-        Answer chosenAnswer = null;
-        String chosenAnswerString = myQuestionPane.getChoice();
+//        Answer chosenAnswer = null;
+//        String chosenAnswerString = myQuestionPane.getChoice();
     }
+
     /**
      * Method to get the singleton instance of the keyBoardHandler class.
      * If the instance does not exist, it will be created.
      *
      * @return the singleton instance of the keyBoardHandler class.
      */
-    public static Controller getInstance() throws FileNotFoundException {
-        if (instance == null) {
-            instance = new Controller();
-        }
-        return instance;
-    }
+//    public static Controller getInstance() throws FileNotFoundException {
+//        if (instance == null) {
+//            instance = new Controller();
+//        }
+//        return instance;
+//    }
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -110,45 +133,97 @@ public class Controller implements KeyListener{
         if (pressedKeyCode == KeyEvent.VK_W && myPlayer.canMove(myPlayer.PlayerN())) {
             mySprite.setDirection("up");
             mySprite.setY(mySprite.getY() - mySprite.getSpeed());
-            if(myPlayer.isQuestionPoint()) {
-                myQuestionPane.ask();
-            }
+            promptQuestions();
         } else if (pressedKeyCode == KeyEvent.VK_S && myPlayer.canMove(myPlayer.PlayerS())) {
             mySprite.setDirection("down");
             mySprite.setY(mySprite.getY() + mySprite.getSpeed());
-            if(myPlayer.isQuestionPoint()) {
-                myQuestionPane.ask();
-            }
+            promptQuestions();
         } else if (pressedKeyCode == KeyEvent.VK_A && myPlayer.canMove(myPlayer.PlayerW())) {
             mySprite.setDirection("left");
             mySprite.setX(mySprite.getX() - mySprite.getSpeed());
-            if(myPlayer.isQuestionPoint()) {
-                myQuestionPane.ask();
-            }
+            promptQuestions();
         } else if (pressedKeyCode == KeyEvent.VK_D && myPlayer.canMove(myPlayer.PlayerE())) {
             mySprite.setDirection("right");
             mySprite.setX(mySprite.getX() + mySprite.getSpeed());
-            if(myPlayer.isQuestionPoint()) {
-                myQuestionPane.ask();
-            }
+            promptQuestions();
         }
     }
 
+    public void promptQuestions() {
+        if(myPlayer.isQuestionPoint()) {
+            myQuestionPane.ask();
+
+            isRightAnswer(myQuestionPane.getChoice());
+            myCurrentQ++;
+            myQuestionPane = new QuestionPane(myQ[myCurrentQ % mySize],
+                    myQnA.get(myQ[myCurrentQ % mySize]));
+
+
+        }
+    }
+
+    private void isRightAnswer(String theChoice) {
+        boolean correctness = false;
+        System.out.println("the chosen " + theChoice);
+        System.out.println("the actual " + myQnA.get(myQ[myCurrentQ % mySize])[0]);
+        if (myQuestionPane.getChoice() == myQnA.get(myQ[myCurrentQ % mySize])[0]) {
+            //the right answer is the first entry
+            System.out.println("correct");
+        } else {
+            System.out.println("incorrect");
+        }
+
+
+       // return correctness;
+    }
+
+    private void resetPlayer(boolean theCorrectness) {
+        if (theCorrectness) {
+            //move up
+        } else {
+            //go back
+        }
+    }
+
+    private void checkCurrentQ() {
+        if (myCurrentQ == myQuestions.size()) {
+            myCurrentQ = 0;
+        }
+    }
 
     /**
      * Returns one of question in a random order.
      * @return random question.
      */
-    private static Question getRandomQuestion() {
+    private Question getRandomQuestion() {
         int rand = myRandom.nextInt(myQuestions.size());
         Question question = myQuestions.get(rand);
+//        myCurrentQ++;
+//        checkCurrentQ();
+//        makeQuestion(question);
         return question;
+
     }
+
+    private void shuffleQuestions() {
+        Collections.shuffle(myQuestions);
+
+    }
+
+//    private static void makeQuestion(Question theQuestion) {
+//        int ansLength = theQuestion.getAnswers().size();
+//        String[] ansArray = new String[ansLength];
+//        for (int i = 0; i < ansLength; i++) {
+//            ansArray[i] = theQuestion.getAnswers().get(i).getAnswer();
+//        }
+//        //puts it in map to send to questionpane
+//        myQnA.put(theQuestion.getQuestion(), ansArray);
+//    }
 
     /**
      * Connects to the SQL data source.
      */
-    public static void connect() {
+    public void connect() {
         try {
             myDataSource = new SQLiteDataSource();
             myDataSource.setUrl("jdbc:sqlite:questions.db");
@@ -161,7 +236,7 @@ public class Controller implements KeyListener{
     /**
      * Receives data from data source.
      */
-    private static void retrieveData() {
+    private void retrieveData() {
         String query1 = "SELECT * FROM multiplechoicequestions";
         String query2 = "SELECT * FROM booleanquestions";
 
@@ -204,14 +279,14 @@ public class Controller implements KeyListener{
      * @param theWrongAnswer2 the wrong answer
      * @param theImage the image of a question
      */
-    private static void addMultipleChoiceQuestion(String theQuestion, String theRightAnswer,
+    private void addMultipleChoiceQuestion(String theQuestion, String theRightAnswer,
                                                   String theWrongAnswer1, String theWrongAnswer2,
                                                   String theImage) {
 
         Question question = initializeQuestion(theQuestion, theImage);
-        question.formAnswers(theRightAnswer, true);
-        question.formAnswers(theWrongAnswer1, false);
-        question.formAnswers(theWrongAnswer2, false);
+        question.addAnswers(theRightAnswer);
+        question.addAnswers(theWrongAnswer1);
+        question.addAnswers(theWrongAnswer2);
         myQuestions.add(question);
     }
 
@@ -222,12 +297,12 @@ public class Controller implements KeyListener{
      * @param theWrongAnswer the wrong answer
      * @param theImage the image of a question
      */
-    private static void addBooleanQuestion(String theQuestion, String theRightAnswer,
+    private void addBooleanQuestion(String theQuestion, String theRightAnswer,
                                            String theWrongAnswer, String theImage) {
 
         Question question = initializeQuestion(theQuestion, theImage);
-        question.formAnswers(theRightAnswer, true);
-        question.formAnswers(theWrongAnswer, false);
+        question.addAnswers(theRightAnswer);
+        question.addAnswers(theWrongAnswer);
         myQuestions.add(question);
     }
 
@@ -238,7 +313,7 @@ public class Controller implements KeyListener{
      * @param theImage the image of a question
      * @return the Question object initiated
      */
-    private static Question initializeQuestion(String theQuestion, String theImage) {
+    private Question initializeQuestion(String theQuestion, String theImage) {
         Question question;
         if (theImage == null) {
             question = new Question(theQuestion);
