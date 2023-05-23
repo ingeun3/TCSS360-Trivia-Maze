@@ -168,7 +168,6 @@ public class Maze {
     }
 
     public Terrain[][] getMyGrid() {
-        System.out.println(myGrid.length);
         return myGrid;
     }
 

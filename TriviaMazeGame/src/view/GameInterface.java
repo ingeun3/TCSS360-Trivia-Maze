@@ -47,12 +47,6 @@ public class GameInterface {
         myGamePanel = new GamePanel(myMazeArray, thePlayer);
         myNorthPanel = new NorthPanel(level, moves);
         myLevelInterface = new LevelInterface(theMazeArray);
-        //GraphicsEnvironment gEnviroment = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        //mygDevice = gEnviroment.getDefaultScreenDevice();
-
-
-
-
     }
 
     /**
@@ -64,12 +58,9 @@ public class GameInterface {
         myGameInterface.getContentPane().add(myGamePanel, BorderLayout.CENTER);
         myGameInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myGameInterface.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        //myGameInterface.pack();
         myGameInterface.setLocationRelativeTo(null);
         myGameInterface.setVisible(true);
         myGamePanel.requestFocus();
     }
-   // public void setFullScren(){
-       // mygDevice.setFullScreenWindow(myGameInterface);
-    //}
+
 }

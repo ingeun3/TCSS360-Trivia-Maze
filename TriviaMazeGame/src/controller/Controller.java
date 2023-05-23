@@ -12,7 +12,7 @@ import view.GamePanel;
 import java.awt.*;
 import java.io.FileNotFoundException;
 
-public class Controller {
+public class Controller extends Jpanel{
     // The graphic of a player
     private static GUIPlayer myPlayerImage;
     // The GamePanel to display the game.

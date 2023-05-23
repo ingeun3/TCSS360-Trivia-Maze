@@ -17,7 +17,7 @@ import java.awt.*;
         // Tile size is set for 48x48.
         private static final int TILE_SIZE = (int) screenSize.getWidth() / 30; // change 18 or 14
         // The movement speed of the player.
-        private static final int speed =6;
+        private static final int speed = TILE_SIZE;
         // The Image of a player facing up.
         private static final ImageIcon up = new ImageIcon("up.png");
         // The Image of a player facing down.
@@ -50,8 +50,8 @@ import java.awt.*;
         public GUIPlayer(GamePanel gp, keyBoardHandler theKey, Player thePlayer, char[][] theMaze) {
             this.gp = gp;
             this.keyH = theKey;
-            x = 100;
-            y = 100;
+            x = 0;
+            y = 0;
             direction = "right";
             myImage = new ImageIcon("right.png");
             myPlayer = thePlayer;
@@ -63,22 +63,26 @@ import java.awt.*;
          */
         public void update() {
             boolean value = true;
-            //if (myPlayer.canMove(Terrain.valueOf(myMaze.)) == true) {
-                if (keyH.getKey() == "up") {
-                    direction = "up";
-                    y = y - speed;
-                } else if (keyH.getKey() == "down") {
-                    direction = "down";
-                    y += speed;
-                } else if (keyH.getKey() == "left") {
-                    direction = "left";
-                    x -= speed;
-                } else if (keyH.getKey() == "right") {
-                    direction = "right";
-                    x += speed;
-                }
-          //  }
-        }
+            //for (int i = 0; i < myMaze.length; i++) {
+               // for (int j = 0; j <myMaze[i].length; j++) {
+                   // if (myMaze[y][x] != '@') {
+                        if (keyH.getKey() == "up") {
+                            direction = "up";
+                            y = y - speed;
+                        } else if (keyH.getKey() == "down") {
+                            direction = "down";
+                            y += speed;
+                        } else if (keyH.getKey() == "left") {
+                            direction = "left";
+                            x -= speed;
+                        } else if (keyH.getKey() == "right") {
+                            direction = "right";
+                            x += speed;
+                        }
+                    }
+               // }
+              //  }
+           // }
 
         /**
          * Draws the Player GUI

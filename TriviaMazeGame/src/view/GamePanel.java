@@ -12,7 +12,7 @@ public class GamePanel extends JPanel implements Runnable {
     // The serial Version ID.
     private static final long serialVersionUID = 1L;
     // The FPS of the game is set 60.
-    private static final int FPS = 60; // FPS 60 times
+    private static final int FPS = 2; // FPS 60 times
 
     // Class Fields
 
@@ -24,6 +24,8 @@ public class GamePanel extends JPanel implements Runnable {
     private Thread gameThread;
 
     keyBoardHandler keyH = new keyBoardHandler();
+
+    //Sound mySound = new Sound();
 
 
     // The Player object that contains graphic of the player.
@@ -52,7 +54,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true); //???
         run();
         startGameThread();
-        //playMusic(0);
+       // mySound.playMusic();
 
         this.addMouseListener(new MouseAdapter() {
             @Override
@@ -126,4 +128,16 @@ public class GamePanel extends JPanel implements Runnable {
         g2.dispose();
 
     }
+//    public void playMusic(int i ) {
+//        sound.setFile(i);
+//        sound.play();
+//        sound.loop();
+//    }
+//    public void stopMusic() {
+//        sound.stop();
+//    }
+//    public void playSE(int i) {
+//        sound.setFile(i);
+//        sound.play();
+//    }
 }
