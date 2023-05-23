@@ -21,6 +21,8 @@ public class MazeMap {
     // Image of the Wall.
     private static final ImageIcon wall = new ImageIcon("wall.png");
 
+    private static final ImageIcon up = new ImageIcon("up.png");
+
     // Class Fields
 
     // The 2D layout of the maze map.

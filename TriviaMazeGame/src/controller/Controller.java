@@ -80,79 +80,62 @@ public class Controller implements KeyListener{
     @Override
     public void keyTyped(KeyEvent e) {
     }
+    private int pressedKeyCode = -1;
+
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
-        if (code == KeyEvent.VK_W && !upPressed) {
-            upPressed = true;
+        if (code == KeyEvent.VK_W && pressedKeyCode != KeyEvent.VK_W) {
+            pressedKeyCode = KeyEvent.VK_W;
             update();
-        } else if (code == KeyEvent.VK_S && !downPressed) {
-            downPressed = true;
+        } else if (code == KeyEvent.VK_S && pressedKeyCode != KeyEvent.VK_S) {
+            pressedKeyCode = KeyEvent.VK_S;
             update();
-        } else if (code == KeyEvent.VK_A && !leftPressed) {
-            leftPressed = true;
+        } else if (code == KeyEvent.VK_A && pressedKeyCode != KeyEvent.VK_A) {
+            pressedKeyCode = KeyEvent.VK_A;
             update();
-        } else if (code == KeyEvent.VK_D && !rightPressed) {
-            rightPressed = true;
+        } else if (code == KeyEvent.VK_D && pressedKeyCode != KeyEvent.VK_D) {
+            pressedKeyCode = KeyEvent.VK_D;
             update();
         }
     }
+
     @Override
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
-        if (code == KeyEvent.VK_W) {
-            upPressed = false;
-        } else if (code == KeyEvent.VK_S) {
-            downPressed = false;
-        } else if (code == KeyEvent.VK_A) {
-            leftPressed = false;
-        } else if (code == KeyEvent.VK_D) {
-            rightPressed = false;
+        if (code == pressedKeyCode) {
+            pressedKeyCode = -1;
         }
     }
-    public String getKey() {
-        if (upPressed) {
-            return "up";
-        } else if (downPressed) {
-            return "down";
-        } else if (leftPressed) {
-            return "left";
-        } else {
-            return "right";
-        }
-    }
+
     public void update() {
-        String key = getKey();
-        if (key.equals("up") && myPlayer.canMove(myPlayer.PlayerN())) {
+        if (pressedKeyCode == KeyEvent.VK_W && myPlayer.canMove(myPlayer.PlayerN())) {
             mySprite.setDirection("up");
             mySprite.setY(mySprite.getY() - mySprite.getSpeed());
             if(myPlayer.isQuestionPoint()) {
                 myQuestionPane.ask();
             }
-
-        } else if (key.equals("down") && myPlayer.canMove(myPlayer.PlayerS())) {
+        } else if (pressedKeyCode == KeyEvent.VK_S && myPlayer.canMove(myPlayer.PlayerS())) {
             mySprite.setDirection("down");
             mySprite.setY(mySprite.getY() + mySprite.getSpeed());
             if(myPlayer.isQuestionPoint()) {
                 myQuestionPane.ask();
             }
-
-        } else if (key.equals("left") && myPlayer.canMove(myPlayer.PlayerW())) {
+        } else if (pressedKeyCode == KeyEvent.VK_A && myPlayer.canMove(myPlayer.PlayerW())) {
             mySprite.setDirection("left");
             mySprite.setX(mySprite.getX() - mySprite.getSpeed());
             if(myPlayer.isQuestionPoint()) {
                 myQuestionPane.ask();
             }
-
-        } else if (key.equals("right") && myPlayer.canMove(myPlayer.PlayerE())) {
+        } else if (pressedKeyCode == KeyEvent.VK_D && myPlayer.canMove(myPlayer.PlayerE())) {
             mySprite.setDirection("right");
             mySprite.setX(mySprite.getX() + mySprite.getSpeed());
             if(myPlayer.isQuestionPoint()) {
                 myQuestionPane.ask();
             }
-
         }
     }
+
 
     /**
      * Returns one of question in a random order.
