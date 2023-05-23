@@ -1,6 +1,5 @@
 package view;
 
-import controller.keyBoardHandler;
 import model.Player;
 
 import java.awt.*;
@@ -58,12 +57,9 @@ public class GameInterface {
         myGameInterface.getContentPane().add(myGamePanel, BorderLayout.CENTER);
         myGameInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myGameInterface.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        //myGameInterface.pack();
         myGameInterface.setLocationRelativeTo(null);
         myGameInterface.setVisible(true);
         myGamePanel.requestFocus();
     }
-   // public void setFullScren(){
-       // mygDevice.setFullScreenWindow(myGameInterface);
-    //}
+
 }
