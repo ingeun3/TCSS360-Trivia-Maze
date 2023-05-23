@@ -8,7 +8,7 @@ public class MazeMap {
     // Class Constants
     private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-    private static final int TILE_NUMBER = 30;
+    private static final int TILE_NUMBER = 15;
     // Tile size is set for 48x48.
     private static final int TILE_SIZE = (int) screenSize.getWidth() / TILE_NUMBER; // change 18 or 14
 
@@ -20,6 +20,8 @@ public class MazeMap {
     private static final ImageIcon road = new ImageIcon("road.png");
     // Image of the Wall.
     private static final ImageIcon wall = new ImageIcon("wall.png");
+
+    private static final ImageIcon up = new ImageIcon("up.png");
 
     // Class Fields
 
@@ -36,6 +38,10 @@ public class MazeMap {
     public MazeMap(GamePanel gp, char[][] theArray) {
         this.gp = gp;
         myArray = theArray;
+    }
+
+    public char[][] getMap() {
+        return myArray;
     }
 
 
