@@ -74,13 +74,16 @@ public class Player {
 		}
 		return canPass;
 	}
-
-	public void isQuestionPoint() {
-		if (myMaze.getQuestionPoints().contains(myPlayerLocation)) {
-			JOptionPane.showMessageDialog(null, "point found");
-	  		}
+	public int getMyMove() {
+		return myMove;
 	}
-
+	public boolean isQuestionPoint() {
+		boolean isQuestionPt = false;
+		if (myMaze.getQuestionPoints().contains(myPlayerLocation)) {
+			isQuestionPt = true;
+		}
+		return isQuestionPt;
+	}
 	public void setMyMove() {
 		myMove--;
 		if(myMove <= 0) {

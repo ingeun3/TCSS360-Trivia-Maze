@@ -1,6 +1,6 @@
 package view;
 
-import controller.keyBoardHandler;
+import controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,7 +34,7 @@ public class GUIPlayer {
     // Singleton instance
     private static GUIPlayer instance;
 
-    private keyBoardHandler keyH;
+    private Controller keyH;
 
     private GUIPlayer() {
         x = TILE_SIZE;

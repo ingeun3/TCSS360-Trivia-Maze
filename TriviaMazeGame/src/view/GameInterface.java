@@ -1,6 +1,5 @@
 package view;
 
-import controller.keyBoardHandler;
 import model.Player;
 
 import java.awt.*;
