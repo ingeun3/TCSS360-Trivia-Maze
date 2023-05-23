@@ -74,7 +74,7 @@ public class Main {
 
         setLookAndFeel();
 
-        new Controller(50, "maze_map2.txt", question).start();
+        new Controller(50, "maze_map3.txt", question).start();
 ;
 
 //        EventQueue.invokeLater(new Runnable() {

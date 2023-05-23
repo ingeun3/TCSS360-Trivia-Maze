@@ -176,14 +176,14 @@ public class Maze {
         return intersectionsPoint;
 
     }
-
-    public char getTerrain(Point thePoint) {
-        return myMaze[thePoint.y][thePoint.x];
-    }
-
-    public Point getExit() {
-        return myExit;
-    }
+//
+//    public char getTerrain(Point thePoint) {
+//        return myMaze[thePoint.y][thePoint.x];
+//    }
+//
+//    public Point getExit() {
+//        return myExit;
+//    }
 
 
     /**

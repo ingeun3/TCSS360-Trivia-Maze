@@ -32,7 +32,7 @@ public class Player {
 	 * @param theMove the number of available moves on a player.
 	 */
 	public Player(final int theMove) throws FileNotFoundException {
-		myMaze = new Maze("maze_map2.txt");
+		myMaze = new Maze("maze_map3.txt");
 		myPlayerLocation = new Point(1,1);
 		myAlive = true;
 		myMove = theMove;
@@ -57,29 +57,28 @@ public class Player {
 
 	/**
 	 * Checks if player can make a move on a given terrain
-	 * @param theTerrain the terrain player wants to move
+	 * @param theTargetPoint the terrain player wants to move
 	 * @return false if the given terrain is wall and true otherwise.
 	 */
-	public boolean canMove(final Point theTerrain) {
+	public boolean canMove(final Point theTargetPoint) {
 		boolean canPass = false;
-//		if (myMaze.getQuestionPoints().contains(theTerrain)) {
-//			myPlayerLocation = theTerrain;
-////			JOptionPane.showMessageDialog(null, "point found");
-//
-//		} else
-		if (myMaze.charAt(theTerrain.x, theTerrain.y) != '@') {
-			//if (myAnswer.getCorrectness() == true) {
-			myMaze.setArray(theTerrain);
-			myPlayerLocation = theTerrain;
 
-			System.out.println(theTerrain);
-		//	System.out.println(myMaze.toString());
+		if (myMaze.charAt(theTargetPoint.x, theTargetPoint.y) != '@') {
+			//if (myAnswer.getCorrectness() == true) {
+			myMaze.setArray(theTargetPoint);
+			myPlayerLocation = theTargetPoint;
+
 			canPass = true;
-//			myMove--;
-//			isAlive();
+
 			//}
 		}
 		return canPass;
+	}
+
+	public void isQuestionPoint() {
+		if (myMaze.getQuestionPoints().contains(myPlayerLocation)) {
+			JOptionPane.showMessageDialog(null, "point found");
+	  		}
 	}
 
 	public void setMyMove() {

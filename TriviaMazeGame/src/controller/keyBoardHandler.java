@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.FileNotFoundException;
 
+import model.Maze;
 import model.Player;
 import view.GUIPlayer;
 
@@ -37,6 +38,7 @@ public class keyBoardHandler implements KeyListener{
         if (code == KeyEvent.VK_W && !upPressed) {
             upPressed = true;
             update();
+
         } else if (code == KeyEvent.VK_S && !downPressed) {
             downPressed = true;
             update();
@@ -79,19 +81,23 @@ public class keyBoardHandler implements KeyListener{
         if (key.equals("up") && myPlayer.canMove(myPlayer.PlayerN())) {
             mySprite.setDirection("up");
             mySprite.setY(mySprite.getY() - mySprite.getSpeed());
-            //myPlayer.setMyMove();
+            myPlayer.isQuestionPoint();
+           // myPlayer.setMyMove();
         } else if (key.equals("down") && myPlayer.canMove(myPlayer.PlayerS())) {
             mySprite.setDirection("down");
             mySprite.setY(mySprite.getY() + mySprite.getSpeed());
-            //myPlayer.setMyMove();
+            myPlayer.isQuestionPoint();
+           // myPlayer.setMyMove();
         } else if (key.equals("left") && myPlayer.canMove(myPlayer.PlayerW())) {
             mySprite.setDirection("left");
             mySprite.setX(mySprite.getX() - mySprite.getSpeed());
-            //myPlayer.setMyMove();
+            myPlayer.isQuestionPoint();
+           // myPlayer.setMyMove();
         } else if (key.equals("right") && myPlayer.canMove(myPlayer.PlayerE())) {
             mySprite.setDirection("right");
             mySprite.setX(mySprite.getX() + mySprite.getSpeed());
-            //myPlayer.setMyMove();
+            myPlayer.isQuestionPoint();
+            // myPlayer.setMyMove();
         }
     }
 }

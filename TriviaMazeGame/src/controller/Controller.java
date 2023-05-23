@@ -15,7 +15,6 @@ public class Controller {
     private GamePanel myGamePanel;
     private GameInterface myGameInterface;
     private Maze myMaze;
-    private keyBoardHandler keyH;
 
     private QuestionPane myQuestion;
     public Controller (final int move, final String theMap, QuestionPane theQuestion) throws FileNotFoundException {
@@ -24,21 +23,17 @@ public class Controller {
         myQuestion = theQuestion;
         myGameInterface = new GameInterface(1,10, myMaze.getArray(), myPlayer);
         myGamePanel = GamePanel.getInstance(myMaze.getArray(), myPlayer);
-        keyH = keyBoardHandler.getInstance();
         start();
     }
     public void start() {
         myGameInterface.start();
         myGamePanel.start();
 
-
-
         while(myPlayer.getLivingStatus()) {
-            if (myMaze.getQuestionPoints().contains(myPlayer.getLocation())){
+            myGamePanel.run();
+            if (myMaze.getQuestionPoints().contains(myPlayer.getLocation())) {
                 JOptionPane.showMessageDialog(null, "point found");
             }
-            myGamePanel.run();
-
         }
     }
 }
