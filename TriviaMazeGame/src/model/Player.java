@@ -62,16 +62,17 @@ public class Player {
 	 */
 	public boolean canMove(final Point theTerrain) {
 		boolean canPass = false;
-		if (myMaze.getQuestionPoints().contains(theTerrain)) {
-			myPlayerLocation = theTerrain;
-			JOptionPane.showMessageDialog(null, "point found");
-
-		} else
+//		if (myMaze.getQuestionPoints().contains(theTerrain)) {
+//			myPlayerLocation = theTerrain;
+////			JOptionPane.showMessageDialog(null, "point found");
+//
+//		} else
 		if (myMaze.charAt(theTerrain.x, theTerrain.y) != '@') {
 			//if (myAnswer.getCorrectness() == true) {
 			myMaze.setArray(theTerrain);
 			myPlayerLocation = theTerrain;
-			System.out.println(myPlayerLocation);
+
+			System.out.println(theTerrain);
 		//	System.out.println(myMaze.toString());
 			canPass = true;
 //			myMove--;
