@@ -1,6 +1,6 @@
 package model;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
 
@@ -19,7 +19,7 @@ public class Player {
 	// Number of available moves on a player object.
 	private static int myMove;
 	// Boolean living status of player object (true if alive, false if otherwise),
-	private static boolean myAlive = true;
+	private static boolean myAlive;
 
 	private Answer myAnswer;
 
@@ -34,6 +34,8 @@ public class Player {
 	public Player(final int theMove) throws FileNotFoundException {
 		myMaze = new Maze("maze_map2.txt");
 		myPlayerLocation = new Point(1,1);
+		myAlive = true;
+		myMove = theMove;
 
 	}
 
@@ -60,18 +62,33 @@ public class Player {
 	 */
 	public boolean canMove(final Point theTerrain) {
 		boolean canPass = false;
+//		if (myMaze.getQuestionPoints().contains(theTerrain)) {
+//			myPlayerLocation = theTerrain;
+////			JOptionPane.showMessageDialog(null, "point found");
+//
+//		} else
 		if (myMaze.charAt(theTerrain.x, theTerrain.y) != '@') {
 			//if (myAnswer.getCorrectness() == true) {
 			myMaze.setArray(theTerrain);
 			myPlayerLocation = theTerrain;
+
+			System.out.println(theTerrain);
 		//	System.out.println(myMaze.toString());
 			canPass = true;
-			myMove--;
-			isAlive();
+//			myMove--;
+//			isAlive();
 			//}
 		}
 		return canPass;
 	}
+
+	public void setMyMove() {
+		myMove--;
+		if(myMove <= 0) {
+			myAlive = false;
+		}
+	}
+
 
 
 	/**
@@ -83,6 +100,9 @@ public class Player {
 		}
 	}
 
+	public Point getLocation() {
+		return myPlayerLocation;
+	}
 	/**
 	 * Getter method for the living status of a player.
 	 * @return true if player is alive and false otherwise.

@@ -31,7 +31,7 @@ public class QuestionPane {
         myAnswers = theQnA.get(myPrompt);
         myImage = new ImageIcon("questionmark.png");
         myChosenAnswer = "";
-        start();
+
         //answers are just string[] without boolean value because view doesn't need to know if
         //answer is right or wrong because listener is in controller I think
 
@@ -41,7 +41,7 @@ public class QuestionPane {
      * Launching the question window to prompt the player with a question and store the answer
      * they chose.
      */
-    private void start() {
+    public void ask() {
         // null will change to game panel when merging code
         int ans = JOptionPane.showOptionDialog(null, myPrompt, QUESTION_TITLE,
                 JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,

@@ -58,6 +58,7 @@ public class Main {
 
         QuestionPane question = new QuestionPane(myQnA);
 
+
         System.out.println(question.getChoice());
 
         Answer chosenAnswer = null;
@@ -65,13 +66,17 @@ public class Main {
 
 
 
-        Maze mazeMap = new Maze("maze_map2.txt");
-        Player player = new Player(10);
+
+
+//        Maze mazeMap = new Maze("maze_map2.txt");
+//        Player player = new Player(10);
+
+
 
 
         setLookAndFeel();
 
-        new Controller(10, "maze_map2.txt").start();
+        new Controller(50, "maze_map2.txt", question).start();
 ;
 
 //        EventQueue.invokeLater(new Runnable() {
