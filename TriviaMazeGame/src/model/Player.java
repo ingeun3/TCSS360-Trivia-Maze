@@ -1,5 +1,7 @@
 package model;
 
+import view.QuestionPane;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
@@ -27,6 +29,8 @@ public class Player {
 
 	private Point myPlayerLocation;
 
+	private QuestionPane myQuestion;
+
 	/**
 	 * Default constructor of a player object
 	 * @param theMove the number of available moves on a player.
@@ -34,6 +38,7 @@ public class Player {
 	public Player(final int theMove) throws FileNotFoundException {
 		myMaze = new Maze("maze_map3.txt");
 		myPlayerLocation = new Point(1,1);
+//		myQuestion = theQuestion;
 		myAlive = true;
 		myMove = theMove;
 
@@ -76,9 +81,11 @@ public class Player {
 	}
 
 	public void isQuestionPoint() {
+
 		if (myMaze.getQuestionPoints().contains(myPlayerLocation)) {
-			JOptionPane.showMessageDialog(null, "point found");
+			myQuestion.ask();
 	  		}
+
 	}
 
 	public void setMyMove() {
@@ -86,6 +93,10 @@ public class Player {
 		if(myMove <= 0) {
 			myAlive = false;
 		}
+	}
+
+	public int getMoves() {
+		return myMove;
 	}
 
 
