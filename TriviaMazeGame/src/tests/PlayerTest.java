@@ -18,8 +18,10 @@ public class PlayerTest {
     void setUp() throws FileNotFoundException {
             myPlayer = new Player(5);
     }
-    // Tests canMove method on Wall.
-   // @Test
+    // Redo the tester.
+    // Hi
+//     Tests canMove method on Wall.
+//    @Test
 //    void canMoveWallTest() {
 //        assertEquals(false, myPlayer.canMove(Terrain.WALL));
 //    }
@@ -56,11 +58,11 @@ public class PlayerTest {
 //        myPlayer.canMove(Terrain.START_POINT);
 //        myPlayer.canMove(Terrain.END_POINT);
 //        myPlayer.canMove(Terrain.CHECK_POINT);
-
-        //assertEquals(false, myPlayer.getLivingStatus());
-   // }
-    // Tests isAlive method with myPlayer object with 4 different legal moves and 1 illegal move.
-  //  @Test
+//
+//        assertEquals(false, myPlayer.getLivingStatus());
+//    }
+//     Tests isAlive method with myPlayer object with 4 different legal moves and 1 illegal move.
+//    @Test
 //    void isAlive1RemainingMoveTest() {
 //        myPlayer.canMove(Terrain.ROAD);
 //        myPlayer.canMove(Terrain.QUESTION_POINT);
