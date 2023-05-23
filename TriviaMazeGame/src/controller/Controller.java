@@ -7,10 +7,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 import model.Answer;
 import model.Player;
@@ -32,33 +29,30 @@ public class Controller implements KeyListener{
     // Random object to grab random question.
     private static Random myRandom;
 
-    private QuestionPane myQuestionPane;
+    private static QuestionPane myQuestionPane;
+
+    private static Question myAskedQuestion;
+
+    private static int myCurrentQ;
 
     private Controller() throws FileNotFoundException {
         myRandom = new Random();
         myQuestions = new ArrayList<Question>();
         //QuestionPanel questionPanel = new QuestionPanel(myQuestions);
         myDataSource = new SQLiteDataSource();
+        myCurrentQ = 0;
+        myQnA = new HashMap<String, String[]>();
         connect();
         retrieveData();
 
-        Map<String, String[]> myQnA = new HashMap<String, String[]>();
 
         //gets a random question
-        Question askedQuestion = getRandomQuestion();
+        shuffleQuestions();
 
-        int ansLength = askedQuestion.getAnswers().size();
-        String[] ansArray = new String[ansLength];
-        for (int i = 0; i < ansLength; i++) {
-            ansArray[i] = askedQuestion.getAnswers().get(i).getAnswer();
-        }
-        //puts it in map to send to questionpane
-        myQnA.put(askedQuestion.getQuestion(), ansArray);
+        myAskedQuestion = myQuestions.get(0);
 
-        myQuestionPane = new QuestionPane(myQnA);
-
-
-        System.out.println(myQuestionPane.getChoice());
+        //turns question into questionpane
+        makeQuestion(myAskedQuestion);
 
         Answer chosenAnswer = null;
         String chosenAnswerString = myQuestionPane.getChoice();
@@ -114,12 +108,15 @@ public class Controller implements KeyListener{
             mySprite.setY(mySprite.getY() - mySprite.getSpeed());
             if(myPlayer.isQuestionPoint()) {
                 myQuestionPane.ask();
+
+
             }
         } else if (pressedKeyCode == KeyEvent.VK_S && myPlayer.canMove(myPlayer.PlayerS())) {
             mySprite.setDirection("down");
             mySprite.setY(mySprite.getY() + mySprite.getSpeed());
             if(myPlayer.isQuestionPoint()) {
                 myQuestionPane.ask();
+
             }
         } else if (pressedKeyCode == KeyEvent.VK_A && myPlayer.canMove(myPlayer.PlayerW())) {
             mySprite.setDirection("left");
@@ -132,6 +129,7 @@ public class Controller implements KeyListener{
             mySprite.setX(mySprite.getX() + mySprite.getSpeed());
             if(myPlayer.isQuestionPoint()) {
                 myQuestionPane.ask();
+
             }
         }
     }
@@ -141,10 +139,36 @@ public class Controller implements KeyListener{
      * Returns one of question in a random order.
      * @return random question.
      */
-    private static Question getRandomQuestion() {
-        int rand = myRandom.nextInt(myQuestions.size());
-        Question question = myQuestions.get(rand);
-        return question;
+    private static void getNextQuestion() {
+//        int rand = myRandom.nextInt(myQuestions.size());
+        myCurrentQ++;
+        Question question = myQuestions.get(myCurrentQ);
+
+        checkCurrentQ();
+        makeQuestion(question);
+
+    }
+
+    private static void checkCurrentQ() {
+        if (myCurrentQ == myQuestions.size()) {
+            myCurrentQ = 0;
+        }
+    }
+
+    private static void shuffleQuestions() {
+        Collections.shuffle(myQuestions);
+
+    }
+
+    private static void makeQuestion(Question theQuestion) {
+        int ansLength = theQuestion.getAnswers().size();
+        String[] ansArray = new String[ansLength];
+        for (int i = 0; i < ansLength; i++) {
+            ansArray[i] = theQuestion.getAnswers().get(i).getAnswer();
+        }
+        //puts it in map to send to questionpane
+        myQnA.put(theQuestion.getQuestion(), ansArray);
+        myQuestionPane = new QuestionPane(myQnA);
     }
 
     /**
