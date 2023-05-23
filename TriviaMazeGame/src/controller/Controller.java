@@ -7,10 +7,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 import model.Answer;
 import model.Player;
@@ -44,8 +41,10 @@ public class Controller implements KeyListener{
 
         Map<String, String[]> myQnA = new HashMap<String, String[]>();
 
+        Collections.shuffle(myQuestions);
+
         //gets a random question
-        Question askedQuestion = getRandomQuestion();
+        Question askedQuestion = myQuestions.get(0);
 
         int ansLength = askedQuestion.getAnswers().size();
         String[] ansArray = new String[ansLength];
@@ -63,7 +62,6 @@ public class Controller implements KeyListener{
         Answer chosenAnswer = null;
         String chosenAnswerString = myQuestionPane.getChoice();
     }
-
     /**
      * Method to get the singleton instance of the keyBoardHandler class.
      * If the instance does not exist, it will be created.
