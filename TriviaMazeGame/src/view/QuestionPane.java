@@ -21,7 +21,6 @@ public class QuestionPane {
     // The list of answers to the problem.
     private String[] myAnswers;
 
-    private String[] myShuffledAnswers;
     // The answer the player chose.
     private String myChosenAnswer;
 
@@ -31,11 +30,8 @@ public class QuestionPane {
      */
     public QuestionPane(String theQuestion, String[] theAnswers) {
         myPrompt = theQuestion;
-        String[] ans = new String[theAnswers.length];
-        ans = theAnswers;
         myAnswers = theAnswers;
-        Collections.shuffle(Arrays.asList(ans));
-        myShuffledAnswers = ans;
+        Collections.shuffle(Arrays.asList(theAnswers));
         myImage = new ImageIcon("questionmark.png");
         myChosenAnswer = "";
 
@@ -52,8 +48,8 @@ public class QuestionPane {
         // null will change to game panel when merging code
         int ans = JOptionPane.showOptionDialog(null, myPrompt, QUESTION_TITLE,
                 JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
-                myImage, myShuffledAnswers, myShuffledAnswers[0]);
-        myChosenAnswer = myShuffledAnswers[ans];
+                myImage, myAnswers, myAnswers[0]);
+        myChosenAnswer = myAnswers[ans];
 
     }
 
