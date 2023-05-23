@@ -48,6 +48,7 @@ public class Maze {
         myPlayerLocation = playerLocation();
     }
 
+
     /**
      * This method return the 2D array representation of the maze.
      *

@@ -49,6 +49,7 @@ public class Player {
 		if (theTerrain != '@') {
 			//if (myAnswer.getCorrectness() == true) {
 			myMaze.setArray(myPlayerLocation);
+
 			canPass = true;
 			myMove--;
 			isAlive();
@@ -57,7 +58,17 @@ public class Player {
 		return canPass;
 	}
 
+//	public boolean canMove(final Point theLocation) {
+//		boolean canPass = false;
+//		if ()
+//		return canPass;
+//	}
 
+
+
+	public Point getLocation() {
+		return myPlayerLocation;
+	}
 	/**
 	 * Checks if player is alive.
 	 */

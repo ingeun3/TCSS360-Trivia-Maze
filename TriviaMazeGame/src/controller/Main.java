@@ -65,6 +65,8 @@ public class Main {
 
 
 
+
+
         Maze mazeMap = new Maze("maze_map2.txt");
         Player player = new Player(10);
 

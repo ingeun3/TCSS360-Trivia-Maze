@@ -38,6 +38,10 @@ public class MazeMap {
         myArray = theArray;
     }
 
+    public char[][] getMap() {
+        return myArray;
+    }
+
 
 
     /**

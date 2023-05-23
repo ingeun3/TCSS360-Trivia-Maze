@@ -24,6 +24,9 @@ public class Controller implements Runnable {
     public void start() {
         myGameInterface.start();
         myGamePanel.start();
+
+
+
         while(true) {
             myGamePanel.run();
         }

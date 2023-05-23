@@ -1,20 +1,27 @@
 package controller;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.FileNotFoundException;
 
 import model.Maze;
 import model.Player;
 import view.GUIPlayer;
+import view.MazeMap;
 
 public class keyBoardHandler implements KeyListener{
 
     private boolean upPressed, downPressed, leftPressed, rightPressed;
     private boolean keyPressed;
     private Player myPlayer;
+
+    private Maze myMaze;
     private GUIPlayer mySprite = GUIPlayer.getInstance();
+
+    private int myChosenDirection;
     private static keyBoardHandler instance;
-    private keyBoardHandler() {
+    private keyBoardHandler()  {
         // Private constructor to prevent direct instantiation.
     }
 
@@ -61,6 +68,7 @@ public class keyBoardHandler implements KeyListener{
         int code = e.getKeyCode();
         if (code == KeyEvent.VK_W)   {
             upPressed = false;
+
         }
         if (code == KeyEvent.VK_S) {
             downPressed = false;
@@ -93,9 +101,14 @@ public class keyBoardHandler implements KeyListener{
      */
     public void update() {
         //if (myPlayer.canMove(Terrain.valueOf(myMaze.)) == true) {
+        Point chosenDirection = new Point(0, 0);
         if (getKey() == "up") {
+            int y = mySprite.getY() - mySprite.getSpeed()/2;
+            chosenDirection = new Point(y, 0);
+
+
             mySprite.setDirection("up");
-            mySprite.setY(mySprite.getY() - mySprite.getSpeed()/2);
+//            mySprite.setY(mySprite.getY() - mySprite.getSpeed()/2);
         } else if (getKey() == "down") {
             mySprite.setDirection("down");
             mySprite.setY(mySprite.getY() + mySprite.getSpeed()/2);
