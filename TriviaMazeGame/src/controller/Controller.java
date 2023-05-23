@@ -6,6 +6,7 @@ import view.GameInterface;
 import view.GamePanel;
 import view.QuestionPane;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
 
@@ -33,21 +34,11 @@ public class Controller {
 
 
         while(myPlayer.getLivingStatus()) {
-//            if (keyH.getKey() == "up") {
-//                System.out.println("hi");
-//                myGamePanel.run();
-//            } else if (keyH.getKey() == "down" && myPlayer.canMove(myMaze.getTerrain(myMaze.PlayerS()))) {
-//                myGamePanel.run();
-//            } else if (keyH.getKey() == "left" && myPlayer.canMove(myMaze.getTerrain(myMaze.PlayerW()))) {
-//                myGamePanel.run();
-//            } else if (keyH.getKey() == "right" && myPlayer.canMove(myMaze.getTerrain(myMaze.PlayerE()))) {
-//                myGamePanel.run();
-//            }
-            myGamePanel.run();
-//            System.out.println(myPlayer.getLocation());
-            if (myPlayer.getLocation().equals(new Point(1, 2))) {
-                myQuestion.ask();
+            if (myMaze.getQuestionPoints().contains(myPlayer.getLocation())){
+                JOptionPane.showMessageDialog(null, "point found");
             }
+            myGamePanel.run();
+
         }
     }
 }

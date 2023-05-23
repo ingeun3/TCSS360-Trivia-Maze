@@ -37,7 +37,7 @@ public class GUIPlayer {
     private keyBoardHandler keyH;
 
     private GUIPlayer() {
-        x = TILE_SIZE + 10;
+        x = TILE_SIZE;
         y = TILE_SIZE;
         direction = "right";
         myImage = new ImageIcon("right.png");
