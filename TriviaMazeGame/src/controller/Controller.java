@@ -4,7 +4,9 @@ import model.Maze;
 import model.Player;
 import view.GameInterface;
 import view.GamePanel;
+import view.QuestionPane;
 
+import java.awt.*;
 import java.io.FileNotFoundException;
 
 public class Controller {
@@ -13,9 +15,12 @@ public class Controller {
     private GameInterface myGameInterface;
     private Maze myMaze;
     private keyBoardHandler keyH;
-    public Controller (final int move, final String theMap) throws FileNotFoundException {
+
+    private QuestionPane myQuestion;
+    public Controller (final int move, final String theMap, QuestionPane theQuestion) throws FileNotFoundException {
         myMaze = new Maze(theMap);
         myPlayer = new Player(move);
+        myQuestion = theQuestion;
         myGameInterface = new GameInterface(1,10, myMaze.getArray(), myPlayer);
         myGamePanel = GamePanel.getInstance(myMaze.getArray(), myPlayer);
         keyH = keyBoardHandler.getInstance();
@@ -27,7 +32,7 @@ public class Controller {
 
 
 
-        while(true) {
+        while(myPlayer.getLivingStatus()) {
 //            if (keyH.getKey() == "up") {
 //                System.out.println("hi");
 //                myGamePanel.run();
@@ -39,6 +44,10 @@ public class Controller {
 //                myGamePanel.run();
 //            }
             myGamePanel.run();
+//            System.out.println(myPlayer.getLocation());
+            if (myPlayer.getLocation().equals(new Point(1, 2))) {
+                myQuestion.ask();
+            }
         }
     }
 }
