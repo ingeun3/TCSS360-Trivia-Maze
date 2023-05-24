@@ -29,9 +29,6 @@ public class GameLoop {
 
         while(myPlayer.getLivingStatus()) {
             myGamePanel.run();
-            if (myMaze.getQuestionPoints().contains(myPlayer.getLocation())) {
-                JOptionPane.showMessageDialog(null, "point found");
-            }
         }
     }
 }

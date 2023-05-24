@@ -37,7 +37,7 @@ public class GUIPlayer {
     private Controller keyH;
 
     private GUIPlayer() {
-        x = TILE_SIZE;
+        x = TILE_SIZE + 5;
         y = TILE_SIZE;
         direction = "right";
         myImage = new ImageIcon("right.png");

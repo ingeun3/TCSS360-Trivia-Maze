@@ -49,7 +49,13 @@ public class QuestionPane {
         int ans = JOptionPane.showOptionDialog(null, myPrompt, QUESTION_TITLE,
                 JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
                 myImage, myAnswers, myAnswers[0]);
-        myChosenAnswer = myAnswers[ans];
+
+        if (ans == -1) {
+            myChosenAnswer = "Did not answer.";
+        } else {
+            myChosenAnswer = myAnswers[ans];
+
+        }
 
     }
 
