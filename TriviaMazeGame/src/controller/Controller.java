@@ -137,7 +137,6 @@ public class Controller implements KeyListener{
     public void promptQuestions() {
         if(myPlayer.isQuestionPoint()) {
             myQuestionPane.ask();
-
             isRightAnswer(myQuestionPane.getChoice());
             myCurrentQ++;
             myQuestionPane = new QuestionPane(myQ[myCurrentQ % mySize],
