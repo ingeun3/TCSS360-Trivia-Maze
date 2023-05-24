@@ -19,7 +19,7 @@ import view.QuestionPane;
 public class Controller implements KeyListener{
     private boolean upPressed, downPressed, leftPressed, rightPressed;
     private Player myPlayer = new Player(10);
-    private GUIPlayer mySprite = GUIPlayer.getInstance();
+    private GUIPlayer mySprite = GUIPlayer.getInstance(myPlayer.getLocation());
     private ArrayList<Question> myQuestions;
     // The map that stores current question in key and answers as a value.
     private Map<String, String[]> myQnA;

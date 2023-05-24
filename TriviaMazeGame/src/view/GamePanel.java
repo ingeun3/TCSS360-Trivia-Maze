@@ -21,6 +21,9 @@ public class GamePanel extends JPanel {
 
     // The Map Object that contains the graphic of the map
     private final MazeMap myMazemap;
+
+    private final Player myPlayer;
+
     // The thread.
     private Thread gameThread;
 
@@ -38,9 +41,10 @@ public class GamePanel extends JPanel {
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         myMazeArray = theArray;
+        myPlayer = thePlayer;
         // The 2D Array of the map layout.
         myMazemap = new MazeMap(this, myMazeArray);
-        myPlayerGUI = GUIPlayer.getInstance();
+        myPlayerGUI = GUIPlayer.getInstance(thePlayer.getLocation());
         start();
     }
 
