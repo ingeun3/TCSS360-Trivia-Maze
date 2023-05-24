@@ -38,6 +38,8 @@ public class Controller implements KeyListener{
 
     private String myChosenAnswer;
 
+    private Point myPoint;
+
     public Controller() throws FileNotFoundException {
         myRandom = new Random();
         myQuestions = new ArrayList<Question>();
@@ -49,6 +51,7 @@ public class Controller implements KeyListener{
         connect();
         retrieveData();
         mySize = myQuestions.size();
+        myPoint = new Point();
 
         //gets a random question
         Collections.shuffle(myQuestions);
@@ -137,10 +140,9 @@ public class Controller implements KeyListener{
     public void promptQuestions() {
         if(myPlayer.isQuestionPoint()) {
             myQuestionPane.ask();
-            isRightAnswer(myQuestionPane.getChoice());
-            myCurrentQ++;
-            myQuestionPane = new QuestionPane(myQ[myCurrentQ % mySize],
-                    myQnA.get(myQ[myCurrentQ % mySize]).clone());
+
+
+
 
 
         }
@@ -151,9 +153,17 @@ public class Controller implements KeyListener{
         System.out.println("the chosen " + theChoice);
         System.out.println("the actual " + myQnA.get(myQ[myCurrentQ % mySize])[0]);
         if (myQuestionPane.getChoice() == myQnA.get(myQ[myCurrentQ % mySize])[0]) {
+            myCurrentQ++;
+            myQuestionPane = new QuestionPane(myQ[myCurrentQ % mySize],
+                    myQnA.get(myQ[myCurrentQ % mySize]).clone());
+            myPoint = myPlayer.getLocation();
             //the right answer is the first entry
             //System.out.println("correct");
         } else {
+            //myPlayer.getLocation() = myPoint;
+                setLocation(myPoint);
+               mySprite.setX(myPoint.x);
+               mySprite.setY(myPoint.y);
 //            myPlayer.movePlayer(new Point(1,1));
 //            mySprite.setX(mySprite.getTileSize());
 //            mySprite.setY(mySprite.getTileSize());
@@ -161,6 +171,11 @@ public class Controller implements KeyListener{
 
 
        // return correctness;
+    }
+
+    private Point setLocation(Point thePoint){
+        myPoint = thePoint;
+        return myPoint;
     }
 
     private void resetPlayer(boolean theCorrectness) {
