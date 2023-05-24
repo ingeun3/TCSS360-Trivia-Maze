@@ -73,6 +73,10 @@ public class Player {
 		}
 		return canPass;
 	}
+
+	public void movePlayer(Point thePoint) {
+		myMaze.setArray(thePoint);
+	}
 	public int getMyMove() {
 		return myMove;
 	}

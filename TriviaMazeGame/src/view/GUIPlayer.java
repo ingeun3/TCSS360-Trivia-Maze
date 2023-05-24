@@ -74,6 +74,9 @@ public class GUIPlayer {
         return speed;
     }
 
+    public int getTileSize() {
+        return TILE_SIZE;
+    }
     /**
      * Draws the Player GUI
      *
