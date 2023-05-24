@@ -75,7 +75,7 @@ public class Controller implements KeyListener{
 
 
 
-        myQuestionPane = new QuestionPane(myQ[myCurrentQ], myQnA.get(myQ[myCurrentQ]));
+        myQuestionPane = new QuestionPane(myQ[myCurrentQ], myQnA.get(myQ[myCurrentQ]).clone());
 
 
 
