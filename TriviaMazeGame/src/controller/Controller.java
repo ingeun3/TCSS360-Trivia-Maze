@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.FileNotFoundException;
@@ -78,9 +79,6 @@ public class Controller implements KeyListener{
         myQuestionPane = new QuestionPane(myQ[myCurrentQ], myQnA.get(myQ[myCurrentQ]).clone());
 
 
-
-        System.out.println(myQuestionPane.getChoice());
-
     }
 
 
@@ -155,9 +153,11 @@ public class Controller implements KeyListener{
         System.out.println("the actual " + myQnA.get(myQ[myCurrentQ % mySize])[0]);
         if (myQuestionPane.getChoice() == myQnA.get(myQ[myCurrentQ % mySize])[0]) {
             //the right answer is the first entry
-            System.out.println("correct");
+            //System.out.println("correct");
         } else {
-            System.out.println("incorrect");
+//            myPlayer.movePlayer(new Point(1,1));
+//            mySprite.setX(mySprite.getTileSize());
+//            mySprite.setY(mySprite.getTileSize());
         }
 
 
