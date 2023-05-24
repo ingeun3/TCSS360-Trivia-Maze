@@ -1,6 +1,6 @@
 package view;
 
-import controller.keyBoardHandler;
+import controller.Controller;
 import model.Player;
 
 import java.awt.*;
@@ -24,7 +24,7 @@ public class GamePanel extends JPanel {
     // The thread.
     private Thread gameThread;
 
-        keyBoardHandler keyH = keyBoardHandler.getInstance();
+        Controller keyH = new Controller();
 
 
     // The Player object that contains graphic of the player.

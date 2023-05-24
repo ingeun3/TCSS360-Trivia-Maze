@@ -11,7 +11,7 @@ public class Question {
     // The question.
     private final String myQuestion;
     // The list of answers to the question.
-    private final ArrayList<Answer> myAnswers;
+    private final ArrayList<String> myAnswers;
 
     /**
      * The default constructor for Question object.
@@ -19,7 +19,7 @@ public class Question {
      */
     public Question(String theQuestion) {
         myQuestion = theQuestion;
-        myAnswers = new ArrayList<Answer>();
+        myAnswers = new ArrayList<String>();
         myImage = null;
     }
 
@@ -30,27 +30,23 @@ public class Question {
      */
     public Question(String theQuestion, String theImage) {
         myQuestion = theQuestion;
-        myAnswers = new ArrayList<Answer>();
+        myAnswers = new ArrayList<String>();
         myImage = new ImageIcon(theImage);
     }
 
     /**
      * Constructs answer for the question.
      * @param theAnswer the answer to include in the question.
-     * @param theCorrectness the correctness of this answer.
      */
-    public void formAnswers(String theAnswer, boolean theCorrectness) {
-        Answer answer = new Answer(theAnswer, theCorrectness);
-        addAnswer(answer);
+    public void addAnswers(String theAnswer) {
+        myAnswers.add(theAnswer);
     }
 
     /**
      * Adding answer to the Answer object.
      * @param theAnswer
      */
-    private void addAnswer(Answer theAnswer) {
-        myAnswers.add(theAnswer);
-    }
+
 
     /**
      * Returns the question prompt.
@@ -84,7 +80,7 @@ public class Question {
      * Returns the ArrayList of answers this question has.
      * @return the lists of answers this question has.
      */
-    public ArrayList<Answer> getAnswers() {
+    public ArrayList<String> getAnswers() {
         return myAnswers;
         //should clone?
     }

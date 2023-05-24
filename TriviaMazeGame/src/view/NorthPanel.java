@@ -14,6 +14,10 @@ public class NorthPanel extends JPanel{
     // The JPanel object that contains buttons.
     private final JPanel myButtonPanel;
     // The JButton object for Help buttons.
+
+    private final JButton myHomeButton;
+
+
     private final JButton myHelpButton;
     // The JButton object for Save buttons.
     private final JButton mySaveButton;
@@ -27,20 +31,18 @@ public class NorthPanel extends JPanel{
     // The number of remaining moves display in the right of the NorthPanel.
     private JLabel myMoves;
 
-    GamePanel gp;
-
     /**
      * The default constructor for NorthPanel.
      * @param theLevel the current level that will display in the center of the NorthPanel.
      * @param theMoves the number of remaining moves that will display in the right of the NorthPanel.
      */
-    public NorthPanel(String theLevel, String theMoves) {
+    public NorthPanel() {
         myButtonPanel = new JPanel(new FlowLayout());
+        myHomeButton = new JButton("Home");
         myHelpButton = new JButton("Help");
         mySaveButton     = new JButton("Save");
         myLevelButton = new JButton("Level");
-        myLevel = new JLabel(theLevel,  SwingConstants.CENTER);
-        myMoves = new JLabel(theMoves,  SwingConstants.CENTER);
+
         start();
     }
 
@@ -51,7 +53,8 @@ public class NorthPanel extends JPanel{
         myButtonPanel.add(myHelpButton);
         myButtonPanel.add(mySaveButton);
         myButtonPanel.add(myLevelButton);
-        myButtonPanel.setLayout(new GridLayout(1,3));
+        myButtonPanel.setLayout(new FlowLayout());
+//        myButtonPanel.setLayout(new GridLayout(1,3));
 
         myHelpButton.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent theEvent) {
@@ -64,8 +67,8 @@ public class NorthPanel extends JPanel{
             }
         });
         this.add(myButtonPanel);
-        this.add(myLevel);
-        this.add(myMoves);
+//        this.add(myLevel);
+//        this.add(myMoves);
         this.setLayout(new GridLayout(1, 3));
     }
 

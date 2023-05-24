@@ -1,6 +1,6 @@
 package model;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
 
@@ -19,9 +19,8 @@ public class Player {
 	// Number of available moves on a player object.
 	private static int myMove;
 	// Boolean living status of player object (true if alive, false if otherwise),
-	private static boolean myAlive = true;
+	private static boolean myAlive;
 
-	private Answer myAnswer;
 
 	private Maze myMaze;
 
@@ -32,8 +31,10 @@ public class Player {
 	 * @param theMove the number of available moves on a player.
 	 */
 	public Player(final int theMove) throws FileNotFoundException {
-		myMaze = new Maze("maze_map2.txt");
+		myMaze = new Maze("maze_map3.txt");
 		myPlayerLocation = new Point(1,1);
+		myAlive = true;
+		myMove = theMove;
 
 	}
 
@@ -55,23 +56,40 @@ public class Player {
 
 	/**
 	 * Checks if player can make a move on a given terrain
-	 * @param theTerrain the terrain player wants to move
+	 * @param theTargetPoint the terrain player wants to move
 	 * @return false if the given terrain is wall and true otherwise.
 	 */
-	public boolean canMove(final Point theTerrain) {
+	public boolean canMove(final Point theTargetPoint) {
 		boolean canPass = false;
-		if (myMaze.charAt(theTerrain.x, theTerrain.y) != '@') {
+
+		if (myMaze.charAt(theTargetPoint.x, theTargetPoint.y) != '@') {
 			//if (myAnswer.getCorrectness() == true) {
-			myMaze.setArray(theTerrain);
-			myPlayerLocation = theTerrain;
-		//	System.out.println(myMaze.toString());
+			myMaze.setArray(theTargetPoint);
+			myPlayerLocation = theTargetPoint;
+
 			canPass = true;
-			myMove--;
-			isAlive();
+
 			//}
 		}
 		return canPass;
 	}
+	public int getMyMove() {
+		return myMove;
+	}
+	public boolean isQuestionPoint() {
+		boolean isQuestionPt = false;
+		if (myMaze.getQuestionPoints().contains(myPlayerLocation)) {
+			isQuestionPt = true;
+		}
+		return isQuestionPt;
+	}
+	public void setMyMove() {
+		myMove--;
+		if(myMove <= 0) {
+			myAlive = false;
+		}
+	}
+
 
 
 	/**
@@ -83,6 +101,9 @@ public class Player {
 		}
 	}
 
+	public Point getLocation() {
+		return myPlayerLocation;
+	}
 	/**
 	 * Getter method for the living status of a player.
 	 * @return true if player is alive and false otherwise.
