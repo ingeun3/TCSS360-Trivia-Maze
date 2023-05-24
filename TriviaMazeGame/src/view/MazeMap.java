@@ -59,13 +59,10 @@ public class MazeMap {
             for (int x = 0; x < myArray[y].length; x++) {
                 leftx = leftx + TILE_SIZE;
 
-                switch (myArray[y][x]) {
-                    case '@':
+                if (myArray[y][x] == '@') {
                         theGraphics.drawImage(wall.getImage(), leftx, topy, TILE_SIZE, TILE_SIZE , null);
-                        break;
-                    case '+':
+                } else {
                         theGraphics.drawImage(road.getImage(), leftx, topy, TILE_SIZE, TILE_SIZE, null);
-                        break;
                 }
 
             }

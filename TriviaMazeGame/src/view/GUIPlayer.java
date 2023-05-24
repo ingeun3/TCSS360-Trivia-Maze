@@ -25,11 +25,12 @@ public class GUIPlayer {
     // Class Fields
 
     // The x, and y location of the player.
-    private int x, y;
+    private static int x;
+    private static int y;
     // The direction the player is facing.
-    private String direction;
+    private static String direction;
     // The current image of a player.
-    private ImageIcon myImage;
+    private static ImageIcon myImage;
 
     // Singleton instance
     private static GUIPlayer instance;
@@ -37,14 +38,18 @@ public class GUIPlayer {
     private Controller keyH;
 
     private GUIPlayer() {
-        x = TILE_SIZE;
-        y = TILE_SIZE;
-        direction = "right";
-        myImage = new ImageIcon("right.png");
+//        x = TILE_SIZE;
+//        y = TILE_SIZE;
+//        direction = "right";
+//        myImage = new ImageIcon("right.png");
     }
 
-    public static GUIPlayer getInstance() {
+    public static GUIPlayer getInstance(Point theSpawnPoint) {
         if (instance == null) {
+            x = (int) theSpawnPoint.getX() * TILE_SIZE;
+            y = (int) theSpawnPoint.getY() * TILE_SIZE;
+            direction = "right";
+            myImage = new ImageIcon("right.png");
             instance = new GUIPlayer();
         }
         return instance;
