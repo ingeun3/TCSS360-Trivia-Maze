@@ -179,15 +179,6 @@ public class Maze {
         return intersectionsPoint;
 
     }
-//
-//    public char getTerrain(Point thePoint) {
-//        return myMaze[thePoint.y][thePoint.x];
-//    }
-//
-//    public Point getExit() {
-//        return myExit;
-//    }
-
 
     /**
      * Randomly assigns 50 percent of the intersection points to become a question points.

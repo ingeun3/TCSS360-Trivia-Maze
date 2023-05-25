@@ -26,6 +26,8 @@ public class Player {
 
 	private Point myPlayerLocation;
 
+	private Point myPoint;
+
 	/**
 	 * Default constructor of a player object
 	 * @param theMove the number of available moves on a player.
