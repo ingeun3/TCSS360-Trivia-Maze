@@ -121,61 +121,52 @@ public class Controller implements KeyListener{
         if (pressedKeyCode == KeyEvent.VK_W && myPlayer.canMove(myPlayer.PlayerN())) {
             mySprite.setDirection("up");
             mySprite.setY(mySprite.getY() - mySprite.getSpeed());
-            promptQuestions();
+
         } else if (pressedKeyCode == KeyEvent.VK_S && myPlayer.canMove(myPlayer.PlayerS())) {
             mySprite.setDirection("down");
             mySprite.setY(mySprite.getY() + mySprite.getSpeed());
-            promptQuestions();
+           // promptQuestions();
         } else if (pressedKeyCode == KeyEvent.VK_A && myPlayer.canMove(myPlayer.PlayerW())) {
             mySprite.setDirection("left");
             mySprite.setX(mySprite.getX() - mySprite.getSpeed());
-            promptQuestions();
+           // promptQuestions();
         } else if (pressedKeyCode == KeyEvent.VK_D && myPlayer.canMove(myPlayer.PlayerE())) {
             mySprite.setDirection("right");
             mySprite.setX(mySprite.getX() + mySprite.getSpeed());
-            promptQuestions();
+            //promptQuestions();
         }
+        promptQuestions();
     }
 
     public void promptQuestions() {
         if(myPlayer.isQuestionPoint()) {
             myQuestionPane.ask();
-
-
-
-
-
+            isRightAnswer(myQuestionPane.getChoice());
+            myCurrentQ++;
+            myQuestionPane = new QuestionPane(myQ[myCurrentQ % mySize],
+                    myQnA.get(myQ[myCurrentQ % mySize]).clone());
         }
     }
 
     private void isRightAnswer(String theChoice) {
         boolean correctness = false;
-        System.out.println("the chosen " + theChoice);
-        System.out.println("the actual " + myQnA.get(myQ[myCurrentQ % mySize])[0]);
-        if (myQuestionPane.getChoice() == myQnA.get(myQ[myCurrentQ % mySize])[0]) {
-            myCurrentQ++;
-            myQuestionPane = new QuestionPane(myQ[myCurrentQ % mySize],
-                    myQnA.get(myQ[myCurrentQ % mySize]).clone());
+//        System.out.println("the chosen " + theChoice);
+//        System.out.println("the actual " + myQnA.get(myQ[myCurrentQ % mySize])[0]);
+        if (theChoice.equals(myQnA.get(myQ[myCurrentQ % mySize])[0])) {
             myPoint = myPlayer.getLocation();
-            //the right answer is the first entry
-            //System.out.println("correct");
+
         } else {
-            //myPlayer.getLocation() = myPoint;
-                setLocation(myPoint);
-               mySprite.setX(myPoint.x);
-               mySprite.setY(myPoint.y);
-//            myPlayer.movePlayer(new Point(1,1));
-//            mySprite.setX(mySprite.getTileSize());
-//            mySprite.setY(mySprite.getTileSize());
+            setLocation(myPoint);
+            System.out.println("This is passed");
         }
-
-
-       // return correctness;
     }
 
-    private Point setLocation(Point thePoint){
-        myPoint = thePoint;
-        return myPoint;
+    private void setLocation(Point thePoint){
+        myPlayer.movePlayer(thePoint);
+        System.out.println(mySprite.getTileSize() + "before" + thePoint.x + "mypoint" + myPoint.x);
+        mySprite.setX(thePoint.x * mySprite.getTileSize());
+        System.out.println(mySprite.getTileSize());
+        mySprite.setY(thePoint.y * mySprite.getTileSize());
     }
 
     private void resetPlayer(boolean theCorrectness) {
@@ -199,9 +190,6 @@ public class Controller implements KeyListener{
     private Question getRandomQuestion() {
         int rand = myRandom.nextInt(myQuestions.size());
         Question question = myQuestions.get(rand);
-//        myCurrentQ++;
-//        checkCurrentQ();
-//        makeQuestion(question);
         return question;
 
     }
@@ -211,15 +199,6 @@ public class Controller implements KeyListener{
 
     }
 
-//    private static void makeQuestion(Question theQuestion) {
-//        int ansLength = theQuestion.getAnswers().size();
-//        String[] ansArray = new String[ansLength];
-//        for (int i = 0; i < ansLength; i++) {
-//            ansArray[i] = theQuestion.getAnswers().get(i).getAnswer();
-//        }
-//        //puts it in map to send to questionpane
-//        myQnA.put(theQuestion.getQuestion(), ansArray);
-//    }
 
     /**
      * Connects to the SQL data source.
