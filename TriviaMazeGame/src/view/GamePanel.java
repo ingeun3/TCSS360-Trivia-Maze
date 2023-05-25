@@ -12,22 +12,13 @@ import javax.swing.JPanel;
 public class GamePanel extends JPanel {
     // The serial Version ID.
     private static final long serialVersionUID = 1L;
-    // The FPS of the game is set 60.
-    //private static final int FPS = 2; // FPS 60 times
 
     // Class Fields
 
     char[][] myMazeArray;
-
     // The Map Object that contains the graphic of the map
     private final MazeMap myMazemap;
 
-    private final Player myPlayer;
-
-    // The thread.
-    private Thread gameThread;
-
-        Controller keyH = new Controller();
 
 
     // The Player object that contains graphic of the player.
@@ -41,9 +32,8 @@ public class GamePanel extends JPanel {
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         myMazeArray = theArray;
-        myPlayer = thePlayer;
         // The 2D Array of the map layout.
-        myMazemap = new MazeMap(this, myMazeArray);
+        myMazemap = new MazeMap(myMazeArray, theArray[0].length);
         myPlayerGUI = GUIPlayer.getInstance(thePlayer.getLocation());
         start();
     }
@@ -59,10 +49,9 @@ public class GamePanel extends JPanel {
      * Initializing GamePanel object.
      */
     public void start() {
-       this.addKeyListener(keyH);
-        this.setFocusable(true); //???
+
+        this.setFocusable(true);
         run();
-//        startGameThread();
         //playMusic(0);
 
         this.addMouseListener(new MouseAdapter() {
@@ -75,56 +64,12 @@ public class GamePanel extends JPanel {
 
     }
 
-//    /**
-//     * Starts the thread of the program.
-//     */
-//    public void startGameThread() {
-//        gameThread = new Thread(this);
-//        gameThread.start();
-//    }
-
     /**
      * The main logic that updates the GamePanel.
      */
-    // @Override
     public void run() {
-//        double drawInterval = 1000000000/FPS;
-//        double delta = 0;
-//        long lastTime = System.nanoTime();
-//        long currentTime;
-//        long timer = 0;
-//        int drawCount = 0;
-//        while(gameThread != null) {
-//            currentTime = System.nanoTime();
-//            //how much time has passed
-//            delta += (currentTime - lastTime) / drawInterval;
-//            timer += (currentTime - lastTime);
-//            lastTime = currentTime;
-//            // when delta reach draw interval, we
-        // when delta reach draw interval, we update
-//            if (delta >= 1) {
-//                update();
         repaint();
-//                delta--;
-//                drawCount++;
-//
-//            }
-//            //When timer reach 1 sec.
-//            if (timer >= 1000000000) {
-//                drawCount = 0;
-//                timer = 0;
-//            }
-//
-//
-//        }
     }
-
-    /**
-     * Updates player position
-     */
-//    public void update() {
-//        myPlayerGUI.update();
-//    }
 
     /**
      * paintComponent method that draws the player.
@@ -136,6 +81,5 @@ public class GamePanel extends JPanel {
         myMazemap.draw(g2);
         myPlayerGUI.draw(g2);
         g2.dispose();
-
     }
 }

@@ -10,7 +10,7 @@ public class GUIPlayer {
 
     private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     // Tile size is set for 48x48.
-    private static final int TILE_SIZE = (int) screenSize.getWidth() / 15; // change 18 or 14
+    private static final int TILE_SIZE = (int) screenSize.getWidth() / 15;
     // The movement speed of the player.
     private static final int speed = TILE_SIZE;
     // The Image of a player facing up.
@@ -38,18 +38,15 @@ public class GUIPlayer {
     private Controller keyH;
 
     private GUIPlayer() {
-//        x = TILE_SIZE;
-//        y = TILE_SIZE;
-//        direction = "right";
-//        myImage = new ImageIcon("right.png");
+
     }
 
     public static GUIPlayer getInstance(Point theSpawnPoint) {
         if (instance == null) {
             x = (int) theSpawnPoint.getX() * TILE_SIZE;
             y = (int) theSpawnPoint.getY() * TILE_SIZE;
-            direction = "right";
-            myImage = new ImageIcon("right.png");
+            direction = "up";
+            myImage = new ImageIcon("up.png");
             instance = new GUIPlayer();
         }
         return instance;

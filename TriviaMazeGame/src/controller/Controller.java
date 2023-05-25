@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 
+import model.Maze;
 import model.Player;
 import model.Question;
 import org.sqlite.SQLiteDataSource;
@@ -18,15 +19,13 @@ import view.QuestionPane;
 
 public class Controller implements KeyListener{
     private boolean upPressed, downPressed, leftPressed, rightPressed;
-    private Player myPlayer = new Player(10);
-    private GUIPlayer mySprite = GUIPlayer.getInstance(myPlayer.getLocation());
+    private Player myPlayer;
+    private GUIPlayer mySprite;
     private ArrayList<Question> myQuestions;
     // The map that stores current question in key and answers as a value.
     private Map<String, String[]> myQnA;
     // The SQL data source.
     private SQLiteDataSource myDataSource;
-    // Random object to grab random question.
-    private Random myRandom;
 
     private QuestionPane myQuestionPane;
 
@@ -36,23 +35,22 @@ public class Controller implements KeyListener{
 
     private int mySize;
 
-    private String myChosenAnswer;
-
     private Point myPoint;
 
-    public Controller() throws FileNotFoundException {
-        myRandom = new Random();
+
+    public Controller(String theMapName, int theMove) throws FileNotFoundException {
         myQuestions = new ArrayList<Question>();
-        //QuestionPanel questionPanel = new QuestionPanel(myQuestions);
         myDataSource = new SQLiteDataSource();
         myCurrentQ = 0;
         myQnA = new HashMap<String, String[]>();
-        myChosenAnswer = "";
         connect();
         retrieveData();
         mySize = myQuestions.size();
-        myPoint = new Point();
 
+
+        myPlayer = new Player(theMove, theMapName);
+        myPoint = myPlayer.getLocation();
+        mySprite = GUIPlayer.getInstance(myPlayer.getLocation());
         //gets a random question
         Collections.shuffle(myQuestions);
 
@@ -76,12 +74,7 @@ public class Controller implements KeyListener{
             myQ[counter] = entry.getKey();
             counter++;
         }
-
-
-
         myQuestionPane = new QuestionPane(myQ[myCurrentQ], myQnA.get(myQ[myCurrentQ]).clone());
-
-
     }
 
 
@@ -118,24 +111,24 @@ public class Controller implements KeyListener{
     }
 
     public void update() {
-        if (pressedKeyCode == KeyEvent.VK_W && myPlayer.canMove(myPlayer.PlayerN())) {
+        if (pressedKeyCode == KeyEvent.VK_W && myPlayer.canMove(myPlayer.PlayerN()) && myPlayer.getLivingStatus()) {
             mySprite.setDirection("up");
             mySprite.setY(mySprite.getY() - mySprite.getSpeed());
-
-        } else if (pressedKeyCode == KeyEvent.VK_S && myPlayer.canMove(myPlayer.PlayerS())) {
+            myPlayer.setMyMove();
+        } else if (pressedKeyCode == KeyEvent.VK_S && myPlayer.canMove(myPlayer.PlayerS()) && myPlayer.getLivingStatus()) {
             mySprite.setDirection("down");
             mySprite.setY(mySprite.getY() + mySprite.getSpeed());
-           // promptQuestions();
-        } else if (pressedKeyCode == KeyEvent.VK_A && myPlayer.canMove(myPlayer.PlayerW())) {
+            myPlayer.setMyMove();
+        } else if (pressedKeyCode == KeyEvent.VK_A && myPlayer.canMove(myPlayer.PlayerW()) && myPlayer.getLivingStatus()) {
             mySprite.setDirection("left");
             mySprite.setX(mySprite.getX() - mySprite.getSpeed());
-           // promptQuestions();
-        } else if (pressedKeyCode == KeyEvent.VK_D && myPlayer.canMove(myPlayer.PlayerE())) {
+            myPlayer.setMyMove();
+        } else if (pressedKeyCode == KeyEvent.VK_D && myPlayer.canMove(myPlayer.PlayerE()) && myPlayer.getLivingStatus()) {
             mySprite.setDirection("right");
             mySprite.setX(mySprite.getX() + mySprite.getSpeed());
-            //promptQuestions();
+            myPlayer.setMyMove();
         }
-        promptQuestions();
+       // promptQuestions();
     }
 
     public void promptQuestions() {
@@ -150,8 +143,6 @@ public class Controller implements KeyListener{
 
     private void isRightAnswer(String theChoice) {
         boolean correctness = false;
-//        System.out.println("the chosen " + theChoice);
-//        System.out.println("the actual " + myQnA.get(myQ[myCurrentQ % mySize])[0]);
         if (theChoice.equals(myQnA.get(myQ[myCurrentQ % mySize])[0])) {
             myPoint = myPlayer.getLocation();
 
@@ -163,42 +154,9 @@ public class Controller implements KeyListener{
 
     private void setLocation(Point thePoint){
         myPlayer.movePlayer(thePoint);
-        System.out.println(mySprite.getTileSize() + "before" + thePoint.x + "mypoint" + myPoint.x);
         mySprite.setX(thePoint.x * mySprite.getTileSize());
-        System.out.println(mySprite.getTileSize());
         mySprite.setY(thePoint.y * mySprite.getTileSize());
     }
-
-    private void resetPlayer(boolean theCorrectness) {
-        if (theCorrectness) {
-            //move up
-        } else {
-            //go back
-        }
-    }
-
-    private void checkCurrentQ() {
-        if (myCurrentQ == myQuestions.size()) {
-            myCurrentQ = 0;
-        }
-    }
-
-    /**
-     * Returns one of question in a random order.
-     * @return random question.
-     */
-    private Question getRandomQuestion() {
-        int rand = myRandom.nextInt(myQuestions.size());
-        Question question = myQuestions.get(rand);
-        return question;
-
-    }
-
-    private void shuffleQuestions() {
-        Collections.shuffle(myQuestions);
-
-    }
-
 
     /**
      * Connects to the SQL data source.
@@ -224,7 +182,6 @@ public class Controller implements KeyListener{
              Statement stmt = conn.createStatement(); ) {
             ResultSet rs1 = stmt.executeQuery(query1);
 
-
             //walk through each 'row' of results, grab data by column/field name
             // and print it
             while (rs1.next()) {
@@ -247,8 +204,6 @@ public class Controller implements KeyListener{
             e.printStackTrace();
             System.exit(0);
         }
-
-
     }
 
     /**
