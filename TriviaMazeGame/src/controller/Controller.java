@@ -51,7 +51,7 @@ public class Controller implements KeyListener{
         connect();
         retrieveData();
         mySize = myQuestions.size();
-        myPoint = new Point();
+        myPoint = myPlayer.getLocation();
 
         //gets a random question
         Collections.shuffle(myQuestions);
@@ -154,6 +154,7 @@ public class Controller implements KeyListener{
 //        System.out.println("the actual " + myQnA.get(myQ[myCurrentQ % mySize])[0]);
         if (theChoice.equals(myQnA.get(myQ[myCurrentQ % mySize])[0])) {
             myPoint = myPlayer.getLocation();
+            System.out.println("before" + myPoint.x);
 
         } else {
             setLocation(myPoint);
@@ -163,7 +164,7 @@ public class Controller implements KeyListener{
 
     private void setLocation(Point thePoint){
         myPlayer.movePlayer(thePoint);
-        System.out.println(mySprite.getTileSize() + "before" + thePoint.x + "mypoint" + myPoint.x);
+
         mySprite.setX(thePoint.x * mySprite.getTileSize());
         System.out.println(mySprite.getTileSize());
         mySprite.setY(thePoint.y * mySprite.getTileSize());

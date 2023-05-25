@@ -73,7 +73,9 @@ public class Player {
 	}
 
 	public void movePlayer(Point thePoint) {
+
 		myMaze.setArray(thePoint);
+		myPlayerLocation = thePoint;
 	}
 	public int getMyMove() {
 		return myMove;
