@@ -12,28 +12,21 @@ public class Player {
 
 	// Class field
 
-	// The direction the player is facing.
-	private String direction;
-	// The current image of a player.
-
 	// Number of available moves on a player object.
 	private static int myMove;
 	// Boolean living status of player object (true if alive, false if otherwise),
 	private static boolean myAlive;
 
-
 	private Maze myMaze;
 
 	private Point myPlayerLocation;
-
-	private Point myPoint;
 
 	/**
 	 * Default constructor of a player object
 	 * @param theMove the number of available moves on a player.
 	 */
-	public Player(final int theMove) throws FileNotFoundException {
-		myMaze = new Maze("maze_map3.txt");
+	public Player(final int theMove, final String theMapName) throws FileNotFoundException {
+		myMaze = new Maze(theMapName);
 		myPlayerLocation = myMaze.getMyPlayerLocation();
 		myAlive = true;
 		myMove = theMove;
@@ -63,12 +56,14 @@ public class Player {
 	 */
 	public boolean canMove(final Point theTargetPoint) {
 		boolean canPass = false;
-
-		if (myMaze.charAt(theTargetPoint.x, theTargetPoint.y) != '@') {
-			myMaze.setArray(theTargetPoint);
-			myPlayerLocation = theTargetPoint;
-			canPass = true;
+		if(theTargetPoint.x >= 0 && theTargetPoint.x < myMaze.getArray()[0].length
+		&& theTargetPoint.y >= 0 && theTargetPoint.y < myMaze.getArray().length) {
+			if (myMaze.charAt(theTargetPoint.x, theTargetPoint.y) != '@') {
+				movePlayer(theTargetPoint);
+				canPass = true;
+			}
 		}
+
 		return canPass;
 	}
 
@@ -77,9 +72,7 @@ public class Player {
 		myMaze.setArray(thePoint);
 		myPlayerLocation = thePoint;
 	}
-	public int getMyMove() {
-		return myMove;
-	}
+
 	public boolean isQuestionPoint() {
 		boolean isQuestionPt = false;
 		if (myMaze.getQuestionPoints().contains(myPlayerLocation)) {
@@ -87,14 +80,17 @@ public class Player {
 		}
 		return isQuestionPt;
 	}
+
+	public int getMyMove() {
+		return myMove;
+	}
+
 	public void setMyMove() {
 		myMove--;
 		if(myMove <= 0) {
 			myAlive = false;
 		}
 	}
-
-
 
 	/**
 	 * Checks if player is alive.
@@ -114,14 +110,6 @@ public class Player {
 	 */
 	public boolean getLivingStatus() {
 		return myAlive;
-	}
-
-	/**
-	 * Getter method for the image of a player icon.
-	 * @return
-	 */
-	public ImageIcon getIcon() {
-		return myImage;
 	}
 
 	/**

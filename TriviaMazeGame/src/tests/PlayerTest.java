@@ -1,9 +1,7 @@
 package tests;
 
 import model.Player;
-import model.Terrain;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
 
@@ -14,10 +12,10 @@ public class PlayerTest {
     private Player myPlayer;
 
     // Initialize myPlayer object with 5 moves before each test.
-    @BeforeEach
-    void setUp() throws FileNotFoundException {
-            myPlayer = new Player(5);
-    }
+//    @BeforeEach
+//    void setUp() throws FileNotFoundException {
+//            myPlayer = new Player(5);
+//    }
     // Redo the tester.
     // Hi
 //     Tests canMove method on Wall.

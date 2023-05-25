@@ -30,11 +30,6 @@ public class Maze {
     private Point myPlayerLocation;
 
     /**
-     * The terrain grid for the simulation.
-     */
-    private Terrain[][] myGrid;
-
-    /**
      * This is a default constructor for Maze class.
      *
      * @throws FileNotFoundException
@@ -50,7 +45,6 @@ public class Maze {
         myPlayerLocation = playerLocation();
         myExit = new Point(0,0);
     }
-
 
     /**
      * This method return the 2D array representation of the maze.
@@ -69,21 +63,22 @@ public class Maze {
      * @param thePoint The point player wants to move.
      */
     public void setArray(Point thePoint) {
-        if (myMaze[thePoint.y][thePoint.x] != '@') {
-            myMaze[myPlayerLocation.y][myPlayerLocation.x] = '+';
-            myMaze[thePoint.y][thePoint.x] = 'M';
-            myPlayerLocation = new Point(thePoint.x,thePoint.y);
+        if(thePoint.x > 0 && thePoint.x > myMaze.length - 1 && thePoint.y > 0    && thePoint.y > myMaze[0].length - 1) {
+            if (myMaze[thePoint.y][thePoint.x] != '@') {
+                myMaze[myPlayerLocation.y][myPlayerLocation.x] = '+';
+                myMaze[thePoint.y][thePoint.x] = 'M';
+                myPlayerLocation = new Point(thePoint.x,thePoint.y);
+            }
         }
 
+
     }
-
-
 
     /**
      * This method returns the location of the player in Point object.
      * @return the location of the player.
      */
-    public Point playerLocation() {
+    private Point playerLocation() {
         for (int i = 0; i < myMaze.length; i++) {
             for (int j = 0; j < myMaze.length; j++) {
                 if (myMaze[i][j] == 'M') {
@@ -118,16 +113,11 @@ public class Maze {
         //initialize the array size.
         char[][] mazeMap = new char[row][column];
 
-        myGrid = new Terrain[row][column];
         // read the character from the map.
         for (int i = 0; i < row; i++) {
             String line = myScanner.next();
             for (int j = 0; j < column; j++) {
                 mazeMap[i][j] = line.charAt(j);
-                myGrid[i][j] = Terrain.valueOf(line.charAt(j));
-//                if (line.charAt(j) == 'E') {
-//                    myExit = new Point(i, j);
-//                }
             }
         }
         return mazeMap;
