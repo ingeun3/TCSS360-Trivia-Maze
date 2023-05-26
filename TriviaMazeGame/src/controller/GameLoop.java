@@ -14,20 +14,23 @@ public class GameLoop {
     private GamePanel myGamePanel;
     private GameInterface myGameInterface;
     private Maze myMaze;
+    private Controller keyH;
 
     private QuestionPane myQuestion;
-    public GameLoop(final int move, final String theMap) throws FileNotFoundException {
+    public GameLoop(final int theMove, final String theMap) throws FileNotFoundException {
+        keyH = new Controller(theMap, theMove);
         myMaze = new Maze(theMap);
-        myPlayer = new Player(move);
-        myGameInterface = new GameInterface(1,10, myMaze.getArray(), myPlayer);
+        myPlayer = new Player(theMove, theMap);
+        myGameInterface = new GameInterface(1,theMove, myMaze.getArray(), myPlayer);
         myGamePanel = GamePanel.getInstance(myMaze.getArray(), myPlayer);
+        myGamePanel.addKeyListener(keyH);
         start();
     }
     public void start() {
         myGameInterface.start();
         myGamePanel.start();
 
-        while(myPlayer.getLivingStatus()) {
+        while(true) {
             myGamePanel.run();
         }
     }

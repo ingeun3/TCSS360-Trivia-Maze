@@ -36,13 +36,14 @@ public class NorthPanel extends JPanel{
      * @param theLevel the current level that will display in the center of the NorthPanel.
      * @param theMoves the number of remaining moves that will display in the right of the NorthPanel.
      */
-    public NorthPanel() {
+    public NorthPanel(String theLevel, String theMoves) {
         myButtonPanel = new JPanel(new FlowLayout());
         myHomeButton = new JButton("Home");
         myHelpButton = new JButton("Help");
         mySaveButton     = new JButton("Save");
         myLevelButton = new JButton("Level");
-
+        myLevel = new JLabel(theLevel,  SwingConstants.CENTER);
+        myMoves = new JLabel(theMoves,  SwingConstants.CENTER);
         start();
     }
 
@@ -67,8 +68,8 @@ public class NorthPanel extends JPanel{
             }
         });
         this.add(myButtonPanel);
-//        this.add(myLevel);
-//        this.add(myMoves);
+        this.add(myLevel);
+        this.add(myMoves);
         this.setLayout(new GridLayout(1, 3));
     }
 
