@@ -50,7 +50,7 @@ public class Controller implements KeyListener{
 
         myPlayer = new Player(theMove, theMapName);
         myPoint = myPlayer.getLocation();
-        mySprite = GUIPlayer.getInstance(myPlayer.getLocation());
+        mySprite = GUIPlayer.getInstance(myPlayer.getLocation(),myPlayer.getMazeLength());
         //gets a random question
         Collections.shuffle(myQuestions);
 
