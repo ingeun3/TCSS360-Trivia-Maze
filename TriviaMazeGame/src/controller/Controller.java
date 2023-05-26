@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.FileNotFoundException;
@@ -18,7 +19,7 @@ import view.QuestionPane;
 public class Controller implements KeyListener{
     private boolean upPressed, downPressed, leftPressed, rightPressed;
     private Player myPlayer = new Player(10);
-    private GUIPlayer mySprite = GUIPlayer.getInstance();
+    private GUIPlayer mySprite = GUIPlayer.getInstance(myPlayer.getLocation());
     private ArrayList<Question> myQuestions;
     // The map that stores current question in key and answers as a value.
     private Map<String, String[]> myQnA;
@@ -61,6 +62,7 @@ public class Controller implements KeyListener{
             for (int j = 0; j < ansLength; j++) {
                 ansArray[j] = askedQuestion.getAnswers().get(j);
             }
+            //puts it in map to send to questionpane
             myQnA.put(askedQuestion.getQuestion(), ansArray);
         }
 
@@ -71,13 +73,11 @@ public class Controller implements KeyListener{
             myQ[counter] = entry.getKey();
             counter++;
         }
-        myQuestionPane = new QuestionPane(myQ[myCurrentQ], myQnA.get(myQ[myCurrentQ])
-                .clone());
 
 
 
+        myQuestionPane = new QuestionPane(myQ[myCurrentQ], myQnA.get(myQ[myCurrentQ]).clone());
 
-        System.out.println(myQuestionPane.getChoice());
 
     }
 
@@ -153,9 +153,11 @@ public class Controller implements KeyListener{
         System.out.println("the actual " + myQnA.get(myQ[myCurrentQ % mySize])[0]);
         if (myQuestionPane.getChoice() == myQnA.get(myQ[myCurrentQ % mySize])[0]) {
             //the right answer is the first entry
-            System.out.println("correct");
+            //System.out.println("correct");
         } else {
-            System.out.println("incorrect");
+//            myPlayer.movePlayer(new Point(1,1));
+//            mySprite.setX(mySprite.getTileSize());
+//            mySprite.setY(mySprite.getTileSize());
         }
 
 

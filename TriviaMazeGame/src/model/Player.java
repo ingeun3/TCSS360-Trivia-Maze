@@ -32,7 +32,7 @@ public class Player {
 	 */
 	public Player(final int theMove) throws FileNotFoundException {
 		myMaze = new Maze("maze_map3.txt");
-		myPlayerLocation = new Point(1,1);
+		myPlayerLocation = myMaze.getMyPlayerLocation();
 		myAlive = true;
 		myMove = theMove;
 
@@ -61,17 +61,20 @@ public class Player {
 	 */
 	public boolean canMove(final Point theTargetPoint) {
 		boolean canPass = false;
-
-		if (myMaze.charAt(theTargetPoint.x, theTargetPoint.y) != '@') {
-			//if (myAnswer.getCorrectness() == true) {
-			myMaze.setArray(theTargetPoint);
-			myPlayerLocation = theTargetPoint;
-
-			canPass = true;
-
-			//}
+		if(theTargetPoint.x >= 0 && theTargetPoint.x < myMaze.getArray()[0].length
+		&& theTargetPoint.y >= 0 && theTargetPoint.y < myMaze.getArray().length) {
+			if (myMaze.charAt(theTargetPoint.x, theTargetPoint.y) != '@') {
+				myMaze.setArray(theTargetPoint);
+				myPlayerLocation = theTargetPoint;
+				canPass = true;
+			}
 		}
+
 		return canPass;
+	}
+
+	public void movePlayer(Point thePoint) {
+		myMaze.setArray(thePoint);
 	}
 	public int getMyMove() {
 		return myMove;
