@@ -7,7 +7,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 public class Lighting {
-    GamePanel gp;
+    GUIPlayer gp;
     BufferedImage darknessFilter;
 
     public Lighting(GUIPlayer gp, int circleSize){

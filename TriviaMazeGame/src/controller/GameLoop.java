@@ -24,6 +24,7 @@ public class GameLoop {
 
     private QuestionPane myQuestion;
     public GameLoop(final int theMove, final String theMap) throws FileNotFoundException {
+
         keyH = new Controller(theMap, theMove);
         myMaze = new Maze(theMap);
         myPlayer = new Player(theMove, theMap);

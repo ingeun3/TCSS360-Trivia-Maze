@@ -19,7 +19,11 @@ public class Main {
 
 
     public static void main(String[] theArgs) throws FileNotFoundException {
+        maze1 =
+                maze2=
+                maze3
         setLookAndFeel();
+
         new GameLoop(10, "maze_map3.txt").start();
     }
 

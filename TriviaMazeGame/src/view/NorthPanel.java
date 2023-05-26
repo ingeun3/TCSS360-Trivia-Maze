@@ -31,6 +31,7 @@ public class NorthPanel extends JPanel{
     // The number of remaining moves display in the right of the NorthPanel.
     private JLabel myMoves;
 
+
     /**
      * The default constructor for NorthPanel.
      * @param theLevel the current level that will display in the center of the NorthPanel.
