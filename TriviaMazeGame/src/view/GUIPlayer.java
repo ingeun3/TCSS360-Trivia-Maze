@@ -10,6 +10,11 @@ public class GUIPlayer {
 
     private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     // Tile size is set for 48x48.
+
+    public final int screenW = screenSize.width;
+
+    public final int screenH = screenSize.height;
+
     private static final int TILE_SIZE = (int) screenSize.getWidth() / 15;
     // The movement speed of the player.
     private static final int speed = TILE_SIZE;
@@ -21,6 +26,10 @@ public class GUIPlayer {
     private static final ImageIcon left = new ImageIcon("left.png");
     // The Image of a player facing right.
     private static final ImageIcon right = new ImageIcon("right.png");
+
+    Enviroment myEnviro = new Enviroment(this);
+
+
 
     // Class Fields
 
@@ -36,6 +45,7 @@ public class GUIPlayer {
     private static GUIPlayer instance;
 
     private Controller keyH;
+    public int tilesize;
 
     private GUIPlayer() {
 
@@ -47,8 +57,11 @@ public class GUIPlayer {
             y = (int) theSpawnPoint.getY() * TILE_SIZE;
             direction = "up";
             myImage = new ImageIcon("up.png");
+
             instance = new GUIPlayer();
+
         }
+
         return instance;
     }
 
@@ -78,6 +91,14 @@ public class GUIPlayer {
 
     public int getTileSize() {
         return TILE_SIZE;
+    }
+
+    public int getsize(){
+        return tilesize= (int) screenSize.getWidth() / 15;
+    }
+
+    public void set(){
+        myEnviro.setup();
     }
     /**
      * Draws the Player GUI
