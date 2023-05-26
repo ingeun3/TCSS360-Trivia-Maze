@@ -15,12 +15,17 @@ import model.Player;
 import model.Question;
 import org.sqlite.SQLiteDataSource;
 import view.GUIPlayer;
+import view.Lighting;
+import view.NorthPanel;
 import view.QuestionPane;
 
 public class Controller implements KeyListener{
+    private static final String MOVE_PROMPT = "Remaining Moves: ";
+    private static final String LEVEL_PROMPT = "Level ";
     private boolean upPressed, downPressed, leftPressed, rightPressed;
     private Player myPlayer;
     private GUIPlayer mySprite;
+    private Lighting myLighting;
     private ArrayList<Question> myQuestions;
     // The map that stores current question in key and answers as a value.
     private Map<String, String[]> myQnA;
@@ -37,8 +42,10 @@ public class Controller implements KeyListener{
 
     private Point myPoint;
 
+    private NorthPanel myNorthPanel;
 
-    public Controller(String theMapName, int theMove) throws FileNotFoundException {
+
+    public Controller(String theMapName, int theMove, int theLevel) throws FileNotFoundException {
         myQuestions = new ArrayList<Question>();
         myDataSource = new SQLiteDataSource();
         myCurrentQ = 0;
@@ -46,11 +53,16 @@ public class Controller implements KeyListener{
         connect();
         retrieveData();
         mySize = myQuestions.size();
-
+        myNorthPanel = NorthPanel.getInstance(LEVEL_PROMPT + theLevel,MOVE_PROMPT + theMove);
 
         myPlayer = new Player(theMove, theMapName);
+
+//
         myPoint = myPlayer.getLocation();
-        mySprite = GUIPlayer.getInstance(myPlayer.getLocation());
+        mySprite = GUIPlayer.getInstance(myPlayer.getLocation(),myPlayer.getMazeLength());
+
+        myLighting = Lighting.getInstance(mySprite, 350);
+        myLighting.setup();
         //gets a random question
         Collections.shuffle(myQuestions);
 
@@ -115,20 +127,25 @@ public class Controller implements KeyListener{
             mySprite.setDirection("up");
             mySprite.setY(mySprite.getY() - mySprite.getSpeed());
             myPlayer.setMyMove();
+            myNorthPanel.setMoves(MOVE_PROMPT + myPlayer.getMyMove());
         } else if (pressedKeyCode == KeyEvent.VK_S && myPlayer.canMove(myPlayer.PlayerS()) && myPlayer.getLivingStatus()) {
             mySprite.setDirection("down");
             mySprite.setY(mySprite.getY() + mySprite.getSpeed());
             myPlayer.setMyMove();
+            myNorthPanel.setMoves(MOVE_PROMPT + myPlayer.getMyMove());
         } else if (pressedKeyCode == KeyEvent.VK_A && myPlayer.canMove(myPlayer.PlayerW()) && myPlayer.getLivingStatus()) {
             mySprite.setDirection("left");
             mySprite.setX(mySprite.getX() - mySprite.getSpeed());
             myPlayer.setMyMove();
+            myNorthPanel.setMoves(MOVE_PROMPT + myPlayer.getMyMove());
         } else if (pressedKeyCode == KeyEvent.VK_D && myPlayer.canMove(myPlayer.PlayerE()) && myPlayer.getLivingStatus()) {
             mySprite.setDirection("right");
             mySprite.setX(mySprite.getX() + mySprite.getSpeed());
             myPlayer.setMyMove();
+            myNorthPanel.setMoves(MOVE_PROMPT + myPlayer.getMyMove());
         }
-       // promptQuestions();
+        myLighting.setup();
+        promptQuestions();
     }
 
     public void promptQuestions() {
@@ -142,13 +159,13 @@ public class Controller implements KeyListener{
     }
 
     private void isRightAnswer(String theChoice) {
-        boolean correctness = false;
         if (theChoice.equals(myQnA.get(myQ[myCurrentQ % mySize])[0])) {
             myPoint = myPlayer.getLocation();
 
         } else {
             setLocation(myPoint);
             System.out.println("This is passed");
+            myLighting.setup();
         }
     }
 

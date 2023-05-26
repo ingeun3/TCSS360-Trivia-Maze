@@ -40,7 +40,7 @@ public class GameInterface {
         String level = LEVEL_PROMPT + theLevel;
         String moves = MOVE_PROMPT + theMoves;
         myGamePanel = GamePanel.getInstance(myMazeArray, thePlayer);
-        myNorthPanel = new NorthPanel(level, moves);
+        myNorthPanel = NorthPanel.getInstance(level, moves);
         myLevelInterface = new LevelInterface(theMazeArray);
     }
 

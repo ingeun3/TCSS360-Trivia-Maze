@@ -66,7 +66,9 @@ public class Player {
 
 		return canPass;
 	}
-
+	public int getMazeLength() {
+		return myMaze.getArray()[0].length;
+	}
 	public void movePlayer(Point thePoint) {
 
 		myMaze.setArray(thePoint);

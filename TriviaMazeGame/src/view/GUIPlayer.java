@@ -11,13 +11,12 @@ public class GUIPlayer {
     private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     // Tile size is set for 48x48.
 
-    public final int screenW = screenSize.width;
+    private static int myTileNumber;
+    // Tile size is set for 48x48.
+    private static int myTileSize;
 
-    public final int screenH = screenSize.height;
-
-    private static final int TILE_SIZE = (int) screenSize.getWidth() / 15;
     // The movement speed of the player.
-    private static final int speed = TILE_SIZE;
+    private static int mySpeed;
     // The Image of a player facing up.
     private static final ImageIcon up = new ImageIcon("up.png");
     // The Image of a player facing down.
@@ -27,7 +26,6 @@ public class GUIPlayer {
     // The Image of a player facing right.
     private static final ImageIcon right = new ImageIcon("right.png");
 
-    Enviroment myEnviro = new Enviroment(this);
 
 
 
@@ -44,17 +42,19 @@ public class GUIPlayer {
     // Singleton instance
     private static GUIPlayer instance;
 
-    private Controller keyH;
     public int tilesize;
 
     private GUIPlayer() {
 
     }
 
-    public static GUIPlayer getInstance(Point theSpawnPoint) {
+    public static GUIPlayer getInstance(Point theSpawnPoint, int theTileNum) {
         if (instance == null) {
-            x = (int) theSpawnPoint.getX() * TILE_SIZE;
-            y = (int) theSpawnPoint.getY() * TILE_SIZE;
+            myTileNumber = theTileNum;
+            myTileSize = (int) screenSize.getWidth() / myTileNumber;
+            mySpeed = myTileSize;
+            x = (int) theSpawnPoint.getX() * myTileSize;
+            y = (int) theSpawnPoint.getY() * myTileSize;
             direction = "up";
             myImage = new ImageIcon("up.png");
 
@@ -86,20 +86,17 @@ public class GUIPlayer {
     }
 
     public int getSpeed() {
-        return speed;
+        return mySpeed;
     }
 
     public int getTileSize() {
-        return TILE_SIZE;
+        return myTileSize;
     }
 
-    public int getsize(){
-        return tilesize= (int) screenSize.getWidth() / 15;
+    public Point getsize(){
+        return new Point(screenSize.width, screenSize.height);
     }
 
-    public void set(){
-        myEnviro.setup();
-    }
     /**
      * Draws the Player GUI
      *
@@ -121,6 +118,6 @@ public class GUIPlayer {
                 myImage = right;
                 break;
         }
-        theGraphics.drawImage(myImage.getImage(), x, y, TILE_SIZE , TILE_SIZE, null);
+        theGraphics.drawImage(myImage.getImage(), x, y, myTileSize , myTileSize, null);
     }
 }
