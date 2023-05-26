@@ -7,6 +7,7 @@ import view.GamePanel;
 import view.QuestionPane;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.FileNotFoundException;
 
 public class GameLoop {
@@ -15,6 +16,11 @@ public class GameLoop {
     private GameInterface myGameInterface;
     private Maze myMaze;
     private Controller keyH;
+
+    public Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    // Tile size is set for 48x48.
+    public int screenWidth = (int) screenSize.getWidth() / 15;
+    // The movement speed of the player.
 
     private QuestionPane myQuestion;
     public GameLoop(final int theMove, final String theMap) throws FileNotFoundException {

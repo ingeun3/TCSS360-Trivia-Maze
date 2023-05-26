@@ -42,6 +42,7 @@ public class LevelInterface {
 
         myLevel1.addActionListener(new ActionListener() {
         public void actionPerformed(final ActionEvent theEvent) {
+            
             System.out.println("it clicked");
         }
         });

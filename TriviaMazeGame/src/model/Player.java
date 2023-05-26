@@ -70,6 +70,7 @@ public class Player {
 		return myMaze.getArray()[0].length;
 	}
 	public void movePlayer(Point thePoint) {
+
 		myMaze.setArray(thePoint);
 		myPlayerLocation = thePoint;
 	}
