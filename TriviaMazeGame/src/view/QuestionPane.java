@@ -34,10 +34,6 @@ public class QuestionPane {
         Collections.shuffle(Arrays.asList(theAnswers));
         myImage = new ImageIcon("questionmark.png");
         myChosenAnswer = "";
-
-        //answers are just string[] without boolean value because view doesn't need to know if
-        //answer is right or wrong because listener is in controller I think
-
     }
 
     /**

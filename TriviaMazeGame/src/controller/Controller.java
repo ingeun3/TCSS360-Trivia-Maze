@@ -61,7 +61,6 @@ public class Controller implements KeyListener{
             for (int j = 0; j < ansLength; j++) {
                 ansArray[j] = askedQuestion.getAnswers().get(j);
             }
-            //puts it in map to send to questionpane
             myQnA.put(askedQuestion.getQuestion(), ansArray);
         }
 
@@ -72,10 +71,9 @@ public class Controller implements KeyListener{
             myQ[counter] = entry.getKey();
             counter++;
         }
+        myQuestionPane = new QuestionPane(myQ[myCurrentQ], myQnA.get(myQ[myCurrentQ])
+                .clone());
 
-
-
-        myQuestionPane = new QuestionPane(myQ[myCurrentQ], myQnA.get(myQ[myCurrentQ]));
 
 
 
