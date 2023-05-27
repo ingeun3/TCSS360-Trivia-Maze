@@ -63,6 +63,10 @@ public class NorthPanel extends JPanel {
         return myInstance;
     }
 
+    public static NorthPanel getInstance() {
+        return myInstance;
+    }
+
     public void setLevel(String theLevel) {
         myLevel.setText(theLevel);
     }

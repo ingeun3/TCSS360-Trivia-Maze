@@ -5,7 +5,7 @@ import model.Player;
 import java.awt.*;
 import java.io.FileNotFoundException;
 
-import javax.swing.*;
+import javax.swing.JFrame;
 
 public class GameInterface {
     // Class Constants
@@ -14,8 +14,6 @@ public class GameInterface {
     private static final String LEVEL_PROMPT = "Level ";
     // The move prompt that will be displayed in the right of the north panel.
     private static final String MOVE_PROMPT = "Remaining Moves: ";
-
-    private static final ImageIcon LEVEL = new ImageIcon("level.png");
 
     // Class Fields
 
@@ -39,12 +37,9 @@ public class GameInterface {
     public GameInterface (int theLevel, int theMoves, char[][] theMazeArray, Player thePlayer) throws FileNotFoundException {
         myGameInterface = new JFrame("Trivia Maze");
         myMazeArray = theMazeArray;
-        String level = LEVEL_PROMPT + theLevel;
-        String moves = MOVE_PROMPT + theMoves;
         myGamePanel = GamePanel.getInstance(myMazeArray, thePlayer);
-        myNorthPanel = NorthPanel.getInstance(level, moves);
-        myLevelInterface = new LevelInterface(theMazeArray, LEVEL);
-       // myGameInterface.setBackground(Color.gray);
+        myNorthPanel = NorthPanel.getInstance();
+        myLevelInterface = new LevelInterface(theMazeArray);
     }
 
     /**
@@ -53,8 +48,7 @@ public class GameInterface {
     public void start() {
         myGameInterface.setSize(800, 600);
         myGameInterface.getContentPane().add(myNorthPanel, BorderLayout.NORTH);
-       // myGameInterface.getContentPane().add(myGamePanel, BorderLayout.CENTER);
-        myGameInterface.getContentPane().add(myLevelInterface, BorderLayout.CENTER);
+        myGameInterface.getContentPane().add(myGamePanel, BorderLayout.CENTER);
         myGameInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myGameInterface.setExtendedState(JFrame.MAXIMIZED_BOTH);
         myGameInterface.setLocationRelativeTo(null);
