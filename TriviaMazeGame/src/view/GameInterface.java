@@ -37,10 +37,8 @@ public class GameInterface {
     public GameInterface (int theLevel, int theMoves, char[][] theMazeArray, Player thePlayer) throws FileNotFoundException {
         myGameInterface = new JFrame("Trivia Maze");
         myMazeArray = theMazeArray;
-        String level = LEVEL_PROMPT + theLevel;
-        String moves = MOVE_PROMPT + theMoves;
         myGamePanel = GamePanel.getInstance(myMazeArray, thePlayer);
-        myNorthPanel = NorthPanel.getInstance(level, moves);
+        myNorthPanel = NorthPanel.getInstance();
         myLevelInterface = new LevelInterface(theMazeArray);
     }
 

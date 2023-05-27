@@ -161,12 +161,13 @@ public class Controller implements KeyListener{
     private void isRightAnswer(String theChoice) {
         if (theChoice.equals(myQnA.get(myQ[myCurrentQ % mySize])[0])) {
             myPoint = myPlayer.getLocation();
-
+            myLighting.setSize(100);
         } else {
             setLocation(myPoint);
             System.out.println("This is passed");
-            myLighting.setup();
+
         }
+        myLighting.setup();
     }
 
     private void setLocation(Point thePoint){
