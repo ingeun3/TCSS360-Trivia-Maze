@@ -164,7 +164,6 @@ public class Controller implements KeyListener{
             myLighting.setSize(100);
         } else {
             setLocation(myPoint);
-            System.out.println("This is passed");
 
         }
         myLighting.setup();
