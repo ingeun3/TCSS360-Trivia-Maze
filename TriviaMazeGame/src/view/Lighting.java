@@ -42,8 +42,11 @@ public class Lighting {
     public static Lighting getInstance() {
         return instance;
     }
-    public void setSize(int theDiameter) {
+    public void increaseSize(int theDiameter) {
         myDiameter = myDiameter + theDiameter;
+    }
+    public void setSize(int theDiameter) {
+        myDiameter = theDiameter;
     }
     public void setup() {
 

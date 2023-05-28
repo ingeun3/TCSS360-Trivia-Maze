@@ -12,8 +12,8 @@ public class GameLoop {
     private GameInterface myGameInterface;
 
 
-    private static final String MAP1 = "maze_map1.txt";
-    private static final String MAP2 = "maze_map2.txt";
+   // private static final String MAP1 = "maze_map1.txt";
+   // private static final String MAP2 = "maze_map2.txt";
     private static final String MAP3 = "maze_map3.txt";
 
     private Player myPlayer;
@@ -58,19 +58,19 @@ public class GameLoop {
     public GameLoop(final int theMove, final int theLevel) throws FileNotFoundException {
         myLevel = -1;
 
-        myMaze = new Maze(MAP1);
-        myMaze2 = new Maze(MAP2);
+        myMaze = new Maze(MAP3);
+        myMaze2 = new Maze(MAP3);
         myMaze3 = new Maze(MAP3);
 
         myGameInterface = GameInterface.getInstance(1,theMove);
         myLevelInterface = new LevelInterface(theLevel);
 
-        keyH = new Controller(MAP1, theMove, theLevel);
-        keyH2 = new Controller(MAP2, theMove, theLevel);
+        keyH = new Controller(MAP3, theMove, theLevel);
+        keyH2 = new Controller(MAP3, theMove, theLevel);
         keyH3 = new Controller(MAP3, theMove, theLevel);
 
-        myPlayer = new Player(theMove, MAP1);
-        myPlayer2 = new Player(theMove, MAP2);
+        myPlayer = new Player(theMove, MAP3);
+        myPlayer2 = new Player(theMove, MAP3);
         myPlayer3 = new Player(theMove, MAP3);
 
         myGamePanel = GamePanel.getInstance(myMaze.getArray(), myPlayer);
@@ -81,61 +81,62 @@ public class GameLoop {
         start();
     }
     public void start() {
-        //myGameInterface.start();
-
-
+        myGameInterface.setCenter(myGamePanel3);
+        myGameInterface.start();
 //        myGamePanel2.start();
-//        myGamePanel3.start();
+        myGamePanel3.addKeyListener(keyH3);
+        myGamePanel3.start();
 
         while(true) {
-            // when game run, display the level interface first
-            if (LVL) {
-                // If you've never run this map
-                if(!haveStartedLevel) {
-                   // put the level interface in the center of the JFrame
-                   myGameInterface.setCenter(myLevelInterface);
-                   // updates the JFrame
-                   myGameInterface.start();
-                   // No this command == seizure
-                    haveStartedLevel = true;
-                }
-                // listens to the level the player chose
-                System.out.println(myLevel);
-                myLevel = myLevelInterface.getMyNum();
-                System.out.println(myLevel);
-                // myLevel == -1 means we are in the level interface
-
-                // myLevel > 0 means player chose the level so we are leaving this if condition.
-                if(myLevel > 0) {
-                    LVL = false;
-                    Game = true;
-                }
-            }
-
-            // running game panel
-
-            else if (Game) {
-                if (myLevel == 1) {
-                    // set up the JFrame
-                    if (!haveStarted1) {
-                        // put the level interface in the center of the JFrame
-                        myGameInterface.setCenter(myGamePanel3);
-                        // updates the JFrame
-                        myGameInterface.start();
-
-                        myGamePanel3.addKeyListener(keyH3);
-
-                        myGamePanel3.start();
-                        // No this command == seizure
-                        haveStarted1 = true;
-                    }
-
-                    // This is the one that's going to run a loop and update
-                    myGamePanel3.run();
-                }
-
-
-            }
+            myGamePanel3.run();
+//            // when game run, display the level interface first
+//            if (LVL) {
+//                // If you've never run this map
+//                if(!haveStartedLevel) {
+//                   // put the level interface in the center of the JFrame
+//                   myGameInterface.setCenter(myLevelInterface);
+//                   // updates the JFrame
+//                   myGameInterface.start();
+//                   // No this command == seizure
+//                    haveStartedLevel = true;
+//                }
+//                // listens to the level the player chose
+//               // System.out.println(myLevel);
+//                myLevel = myLevelInterface.getMyNum();
+//                //System.out.println(myLevel);
+//                // myLevel == -1 means we are in the level interface
+//
+//                // myLevel > 0 means player chose the level so we are leaving this if condition.
+//                if(myLevel > 0) {
+//                    LVL = false;
+//                    Game = true;
+//                }
+//            }
+//
+//            // running game panel
+//
+//            else if (Game) {
+//                if (myLevel == 1) {
+//                    // set up the JFrame
+//                    if (!haveStarted1) {
+//                        // put the level interface in the center of the JFrame
+//                        myGameInterface.setCenter(myGamePanel3);
+//                        // updates the JFrame
+//                        myGameInterface.start();
+//
+//                        myGamePanel3.addKeyListener(keyH3);
+//
+//                        myGamePanel3.start();
+//                        // No this command == seizure
+//                        haveStarted1 = true;
+//                    }
+//
+//                    // This is the one that's going to run a loop and update
+//                    myGamePanel3.run();
+//                }
+//
+//
+//            }
         }
     }
 }

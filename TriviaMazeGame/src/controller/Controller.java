@@ -41,6 +41,8 @@ public class Controller implements KeyListener{
 
     private Point myEndPoint;
 
+    private Point myStartPoint;
+
     private NorthPanel myNorthPanel;
 
     private WinMessage myWinMessage;
@@ -48,7 +50,10 @@ public class Controller implements KeyListener{
     private LosingMessage myLosingMessage;
 
     private Maze myMaze;
+
+    private int myMove;
     public Controller(String theMapName, int theMove, int theLevel) throws FileNotFoundException {
+        myMove = theMove;
         myQuestions = new ArrayList<Question>();
         myDataSource = new SQLiteDataSource();
         myCurrentQ = 0;
@@ -64,8 +69,8 @@ public class Controller implements KeyListener{
         myPlayer = new Player(theMove, theMapName);
 
         myEndPoint = myMaze.getMyExit();
-        System.out.println(myEndPoint);
         myPoint = myPlayer.getLocation();
+        myStartPoint = myPlayer.getLocation();
         mySprite = GUIPlayer.getInstance(myPlayer.getLocation(),myPlayer.getMazeLength());
 
         myLighting = Lighting.getInstance(mySprite, 350);
@@ -106,16 +111,16 @@ public class Controller implements KeyListener{
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
-        if (code == KeyEvent.VK_W && pressedKeyCode != KeyEvent.VK_W && myPlayer.getLivingStatus()) {
+        if (code == KeyEvent.VK_W && pressedKeyCode != KeyEvent.VK_W && myPlayer.isAlive()) {
             pressedKeyCode = KeyEvent.VK_W;
             update();
-        } else if (code == KeyEvent.VK_S && pressedKeyCode != KeyEvent.VK_S && myPlayer.getLivingStatus())  {
+        } else if (code == KeyEvent.VK_S && pressedKeyCode != KeyEvent.VK_S && myPlayer.isAlive())  {
             pressedKeyCode = KeyEvent.VK_S;
             update();
-        } else if (code == KeyEvent.VK_A && pressedKeyCode != KeyEvent.VK_A && myPlayer.getLivingStatus()) {
+        } else if (code == KeyEvent.VK_A && pressedKeyCode != KeyEvent.VK_A && myPlayer.isAlive()) {
             pressedKeyCode = KeyEvent.VK_A;
             update();
-        } else if (code == KeyEvent.VK_D && pressedKeyCode != KeyEvent.VK_D && myPlayer.getLivingStatus()) {
+        } else if (code == KeyEvent.VK_D && pressedKeyCode != KeyEvent.VK_D && myPlayer.isAlive()) {
             pressedKeyCode = KeyEvent.VK_D;
             update();
         }
@@ -130,25 +135,21 @@ public class Controller implements KeyListener{
     }
 
     public void update() {
-        if (pressedKeyCode == KeyEvent.VK_W && myPlayer.canMove(myPlayer.PlayerN()) && myPlayer.getLivingStatus()) {
+        if (pressedKeyCode == KeyEvent.VK_W && myPlayer.canMove(myPlayer.PlayerN()) && myPlayer.isAlive()) {
             mySprite.setDirection("up");
             mySprite.setY(mySprite.getY() - mySprite.getSpeed());
-            myPlayer.setMyMove();
             myNorthPanel.setMoves(MOVE_PROMPT + myPlayer.getMyMove());
-        } else if (pressedKeyCode == KeyEvent.VK_S && myPlayer.canMove(myPlayer.PlayerS()) && myPlayer.getLivingStatus()) {
+        } else if (pressedKeyCode == KeyEvent.VK_S && myPlayer.canMove(myPlayer.PlayerS()) && myPlayer.isAlive()) {
             mySprite.setDirection("down");
             mySprite.setY(mySprite.getY() + mySprite.getSpeed());
-            myPlayer.setMyMove();
             myNorthPanel.setMoves(MOVE_PROMPT + myPlayer.getMyMove());
-        } else if (pressedKeyCode == KeyEvent.VK_A && myPlayer.canMove(myPlayer.PlayerW()) && myPlayer.getLivingStatus()) {
+        } else if (pressedKeyCode == KeyEvent.VK_A && myPlayer.canMove(myPlayer.PlayerW()) && myPlayer.isAlive()) {
             mySprite.setDirection("left");
             mySprite.setX(mySprite.getX() - mySprite.getSpeed());
-            myPlayer.setMyMove();
             myNorthPanel.setMoves(MOVE_PROMPT + myPlayer.getMyMove());
-        } else if (pressedKeyCode == KeyEvent.VK_D && myPlayer.canMove(myPlayer.PlayerE()) && myPlayer.getLivingStatus()) {
+        } else if (pressedKeyCode == KeyEvent.VK_D && myPlayer.canMove(myPlayer.PlayerE()) && myPlayer.isAlive()) {
             mySprite.setDirection("right");
             mySprite.setX(mySprite.getX() + mySprite.getSpeed());
-            myPlayer.setMyMove();
             myNorthPanel.setMoves(MOVE_PROMPT + myPlayer.getMyMove());
         }
         myLighting.setup();
@@ -159,8 +160,32 @@ public class Controller implements KeyListener{
     public void checkFinish() {
         if(myPlayer.getLocation().equals(myEndPoint)) {
             myWinMessage.start();
-        } else if (!myPlayer.getLivingStatus()) {
+            if(myWinMessage.getChoice() == "Play Again") {
+                mySprite.setDirection("up");
+                mySprite.setX(myStartPoint.x * mySprite.getTileSize());
+                mySprite.setY(myStartPoint.y* mySprite.getTileSize());
+                myPlayer.movePlayer(myStartPoint);
+                myPlayer.setMyMove(myMove);
+                myNorthPanel.setMoves(MOVE_PROMPT + myMove);
+                myLighting.setup();
+            } else if (myWinMessage.getChoice() == "Quit") {
+
+            }
+        } else if (!myPlayer.isAlive()) {
             myLosingMessage.start();
+            if(myLosingMessage.getChoice() == "Play Again") {
+                mySprite.setDirection("up");
+                mySprite.setX(myStartPoint.x * mySprite.getTileSize());
+                mySprite.setY(myStartPoint.y* mySprite.getTileSize());
+                myPlayer.movePlayer(myStartPoint);
+                myPlayer.setMyMove(myMove);
+                myNorthPanel.setMoves(MOVE_PROMPT + myMove);
+                myPoint = myStartPoint;
+                myLighting.setSize(350);
+                myLighting.setup();
+            } else if (myLosingMessage.getChoice() == "Quit") {
+
+            }
         }
     }
 
@@ -177,7 +202,7 @@ public class Controller implements KeyListener{
     private void isRightAnswer(String theChoice) {
         if (theChoice.equals(myQnA.get(myQ[myCurrentQ % mySize])[0])) {
             myPoint = myPlayer.getLocation();
-            myLighting.setSize(100);
+            myLighting.increaseSize(100);
         } else {
             setLocation(myPoint);
 
