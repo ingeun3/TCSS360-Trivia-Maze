@@ -14,10 +14,7 @@ import model.Maze;
 import model.Player;
 import model.Question;
 import org.sqlite.SQLiteDataSource;
-import view.GUIPlayer;
-import view.Lighting;
-import view.NorthPanel;
-import view.QuestionPane;
+import view.*;
 
 public class Controller implements KeyListener{
     private static final String MOVE_PROMPT = "Remaining Moves: ";
@@ -44,8 +41,16 @@ public class Controller implements KeyListener{
 
     private NorthPanel myNorthPanel;
 
+    private LevelInterface myLevelInterface;
+
+    private String myMapName;
+
+    //private int myLevelInterface;
+
+
 
     public Controller(String theMapName, int theMove, int theLevel) throws FileNotFoundException {
+       // myLevelInterface = theLevel;
         myQuestions = new ArrayList<Question>();
         myDataSource = new SQLiteDataSource();
         myCurrentQ = 0;
@@ -63,6 +68,7 @@ public class Controller implements KeyListener{
 
         myLighting = Lighting.getInstance(mySprite, 350);
         myLighting.setup();
+        myLevelInterface = new LevelInterface(theLevel);
         //gets a random question
         Collections.shuffle(myQuestions);
 

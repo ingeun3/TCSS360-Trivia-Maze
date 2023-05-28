@@ -5,7 +5,7 @@ import model.Player;
 import java.awt.*;
 import java.io.FileNotFoundException;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 public class GameInterface {
     // Class Constants
@@ -14,6 +14,8 @@ public class GameInterface {
     private static final String LEVEL_PROMPT = "Level ";
     // The move prompt that will be displayed in the right of the north panel.
     private static final String MOVE_PROMPT = "Remaining Moves: ";
+
+
 
     // Class Fields
 
@@ -25,7 +27,7 @@ public class GameInterface {
     private final GamePanel myGamePanel;
 
     // The JPanel that will pop up from the JFrame.
-    private final LevelInterface myLevelInterface;
+    //private final LevelInterface myLevelInterface;
     private char[][] myMazeArray;
 
     /**
@@ -37,9 +39,12 @@ public class GameInterface {
     public GameInterface (int theLevel, int theMoves, char[][] theMazeArray, Player thePlayer) throws FileNotFoundException {
         myGameInterface = new JFrame("Trivia Maze");
         myMazeArray = theMazeArray;
+        String level = LEVEL_PROMPT + theLevel;
+        String moves = MOVE_PROMPT + theMoves;
         myGamePanel = GamePanel.getInstance(myMazeArray, thePlayer);
-        myNorthPanel = NorthPanel.getInstance();
-        myLevelInterface = new LevelInterface(theMazeArray);
+        myNorthPanel = NorthPanel.getInstance(level, moves);
+        //myLevelInterface = new LevelInterface(1);
+        // myGameInterface.setBackground(Color.gray);
     }
 
     /**
@@ -48,12 +53,18 @@ public class GameInterface {
     public void start() {
         myGameInterface.setSize(800, 600);
         myGameInterface.getContentPane().add(myNorthPanel, BorderLayout.NORTH);
-        myGameInterface.getContentPane().add(myGamePanel, BorderLayout.CENTER);
+        //myGameInterface.getContentPane().add(myGamePanel, BorderLayout.CENTER);
+        //myGameInterface.getContentPane().add(myLevelInterface, BorderLayout.CENTER);
         myGameInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myGameInterface.setExtendedState(JFrame.MAXIMIZED_BOTH);
         myGameInterface.setLocationRelativeTo(null);
         myGameInterface.setVisible(true);
         myGamePanel.requestFocus();
+    }
+
+    public void setCenter(JPanel thePanel){
+        myGameInterface.getContentPane().add(thePanel, BorderLayout.CENTER);
+
     }
 
 }

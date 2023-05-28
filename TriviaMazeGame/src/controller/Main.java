@@ -16,12 +16,17 @@ import java.util.Map;
 import java.util.Random;
 
 public class Main {
-
+    // initializing the Controller.
+    private static Controller myClass;
 
     public static void main(String[] theArgs) throws FileNotFoundException {
+
+        //myClass= new Controller();
         setLookAndFeel();
         new GameLoop(20, 1,"maze_map3.txt").start();
     }
+
+
 
 
     /**

@@ -1,5 +1,7 @@
 package view;
 
+import model.Maze;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,6 +11,8 @@ import java.io.FileNotFoundException;
 public class LevelInterface extends JPanel {
 
 private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+    private static final ImageIcon LEVEL = new ImageIcon("level.png");
 
 private final int SCREEN_WIDTH = (int) screenSize.getWidth();
 
@@ -25,17 +29,26 @@ private final JButton myLevel3;
 
 private char[][] myLevelArrayMap;
 
-private static ImageIcon myImage;
+private int myNum ;
 
-public LevelInterface(char[][] theLevelMap, ImageIcon theImage) {
+private int myCompletedLevel ;
+
+//private static ImageIcon myImage;
+
+public LevelInterface(int theNum) {
+    myCompletedLevel = theNum;
     setLayout(new BorderLayout());
-
     myLevel1 = new JButton("Level 1");
     myLevel2 = new JButton("Level 2");
     myLevel3 = new JButton("Level 3");
-    myLevelArrayMap = theLevelMap;
-    myImage = theImage;
+
+    //myMaze = theMaze;
+   // myImage = theImage;
     start();
+}
+
+private void updateMap(char[][] newLevelMap){
+    myLevelArrayMap = newLevelMap;
 }
 
 private void start() {
@@ -43,7 +56,7 @@ private void start() {
     //SET THE PICTURE
     layeredPane.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
     //layeredPane.setBackground(Color.gray);
-    JLabel backgroundLabel = new JLabel(myImage);
+    JLabel backgroundLabel = new JLabel(LEVEL);
     backgroundLabel.setBounds(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
     layeredPane.add(backgroundLabel, JLayeredPane.DEFAULT_LAYER);
@@ -59,14 +72,30 @@ private void start() {
 
     layeredPane.add(buttonPanel, JLayeredPane.PALETTE_LAYER);
     add(layeredPane, BorderLayout.CENTER);
+    if (myCompletedLevel == 1){
+        myLevel1.setEnabled(true);
+        myLevel2.setEnabled(false);
+        myLevel3.setEnabled(false);
+    } else if (myCompletedLevel == 2){
+        myLevel1.setEnabled(true);
+        myLevel2.setEnabled(true);
+        myLevel3.setEnabled(false);
+    } else if (myCompletedLevel == 3){
+        myLevel1.setEnabled(true);
+        myLevel2.setEnabled(true);
+        myLevel3.setEnabled(true);
+    }
     myLevel1.addActionListener(new ActionListener() {
         public void actionPerformed(final ActionEvent theEvent) {
-
+            myNum = 1;
+             //char[][] level1Map =
+            //updateMap(level1Map);
         }
     });
     myLevel2.addActionListener(new ActionListener() {
         public void actionPerformed(final ActionEvent theEvent) {
             System.out.println("it clicked");
+            myNum = 2;
         }
 
 });
@@ -74,9 +103,14 @@ private void start() {
     myLevel3.addActionListener(new ActionListener() {
     public void actionPerformed(final ActionEvent theEvent) {
         System.out.println("it clicked");
+        myNum = 3;
     }
 });
 }
+
+    public int getMyNum(){
+    return myNum;
+    }
 
 }
 
