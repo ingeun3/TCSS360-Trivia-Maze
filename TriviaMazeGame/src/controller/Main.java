@@ -31,7 +31,7 @@ public class Main {
 
         try {
 
-            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
         } catch (final UnsupportedLookAndFeelException e) {
             System.out.println("UnsupportedLookAndFeelException");

@@ -32,6 +32,8 @@ public class NorthPanel extends JPanel {
         myButtonPanel.add(mySaveButton);
         myButtonPanel.add(myLevelButton);
         myButtonPanel.setLayout(new FlowLayout());
+        myButtonPanel.setFont(new Font("Arial", Font.BOLD, 28));
+        //myButtonPanel.setBackground(Color.GRAY);
 
         myHelpButton.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent theEvent) {

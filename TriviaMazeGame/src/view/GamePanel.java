@@ -39,7 +39,7 @@ public class GamePanel extends JPanel {
         // The 2D Array of the map layout.
         myMazemap = new MazeMap(myMazeArray, theArray[0].length);
         myPlayerGUI = GUIPlayer.getInstance(thePlayer.getLocation(), theArray[0].length);
-        myE = Lighting.getInstance();
+        myE = Lighting.getInstance(myPlayerGUI, 250);
         myE.setup();
         start();
 
