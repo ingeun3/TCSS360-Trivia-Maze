@@ -14,10 +14,7 @@ import model.Maze;
 import model.Player;
 import model.Question;
 import org.sqlite.SQLiteDataSource;
-import view.GUIPlayer;
-import view.Lighting;
-import view.NorthPanel;
-import view.QuestionPane;
+import view.*;
 
 public class Controller implements KeyListener{
     private static final String MOVE_PROMPT = "Remaining Moves: ";
@@ -42,9 +39,13 @@ public class Controller implements KeyListener{
 
     private Point myPoint;
 
+    private Point myEndPoint;
+
     private NorthPanel myNorthPanel;
 
+    private WinMessage myWinMessage;
 
+    private Maze myMaze;
     public Controller(String theMapName, int theMove, int theLevel) throws FileNotFoundException {
         myQuestions = new ArrayList<Question>();
         myDataSource = new SQLiteDataSource();
@@ -53,11 +54,15 @@ public class Controller implements KeyListener{
         connect();
         retrieveData();
         mySize = myQuestions.size();
+        myWinMessage = new WinMessage();
+
         myNorthPanel = NorthPanel.getInstance(LEVEL_PROMPT + theLevel,MOVE_PROMPT + theMove);
+        myMaze = new Maze(theMapName);
 
         myPlayer = new Player(theMove, theMapName);
 
-//
+        myEndPoint = myMaze.getMyExit();
+        System.out.println(myEndPoint);
         myPoint = myPlayer.getLocation();
         mySprite = GUIPlayer.getInstance(myPlayer.getLocation(),myPlayer.getMazeLength());
 
@@ -146,6 +151,13 @@ public class Controller implements KeyListener{
         }
         myLighting.setup();
         promptQuestions();
+        checkFinish();
+    }
+
+    public void checkFinish() {
+        if(myPlayer.getLocation().equals(myEndPoint)) {
+            myWinMessage.start();
+        }
     }
 
     public void promptQuestions() {
