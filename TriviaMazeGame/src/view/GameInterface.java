@@ -60,7 +60,6 @@ public class GameInterface {
     public void start() {
         myGameInterface.setSize(800, 600);
         myGameInterface.getContentPane().add(myNorthPanel, BorderLayout.NORTH);
-       // myGameInterface.getContentPane().add(myGamePanel, BorderLayout.CENTER);
         myGameInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myGameInterface.setExtendedState(JFrame.MAXIMIZED_BOTH);
         myGameInterface.setLocationRelativeTo(null);
@@ -71,6 +70,13 @@ public class GameInterface {
     public void setCenter(JPanel thePanel) {
         myGameInterface.getContentPane().add(thePanel, BorderLayout.CENTER);
         thePanel.requestFocus();
+        myGameInterface.setSize(800, 600);
+        myGameInterface.getContentPane().add(myNorthPanel, BorderLayout.NORTH);
+        myGameInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        myGameInterface.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        myGameInterface.setLocationRelativeTo(null);
+        myGameInterface.setVisible(true);
+        //
     }
     /**
      * Closes the GUI

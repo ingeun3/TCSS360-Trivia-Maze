@@ -5,139 +5,106 @@ import model.Player;
 import view.*;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 
 public class GameLoop {
-    private GameInterface myGameInterface;
-
-
     private static final String MAP1 = "maze_map1.txt";
     private static final String MAP2 = "maze_map2.txt";
     private static final String MAP3 = "maze_map3.txt";
 
-    private Player myPlayer;
-    private Player myPlayer2;
-    private Player myPlayer3;
-
-    private GamePanel myGamePanel;
-    private GamePanel myGamePanel2;
-    private GamePanel myGamePanel3;
-
-    private Maze myMaze;
-    private Maze myMaze2;
-    private Maze myMaze3;
-
-    private Controller keyH;
-    private Controller keyH2;
-    private Controller keyH3;
-
-    private LevelInterface myLevelInterface;
-
-    public Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    // Tile size is set for 48x48.
-   // public int screenWidth = (int) screenSize.getWidth() / 15;
-    // The movement speed of the player.
-    private int myLevel;
-
-    private boolean LVL = true;
-    private boolean Game = false;
-
-    // Checks if we set up the JFrame
-
     // for level interface
-    private boolean haveStartedLevel = false;
+    private boolean myLevelStarted = false;
 
-    // for lvl 1 map
-    private boolean haveStarted1 = false;
-    // for lvl 2 map
-    private boolean haveStarted2 = false;
-    // for lvl 3 map
-    private boolean haveStarted3 = false;
+    private GameInterface myGameInterface;
+    private LevelInterface myLevelInterface;
+    private GamePanel myCurrentGamePanel;
+    private Maze myCurrentMaze;
+    private Player myCurrentPlayer;
+    private Controller myCurrentKeyHandler;
+    private int myCurrentLevel;
+    private boolean myLevelCompleted;
+    private int myMoveCount;
+    private int mySelectedLevel;
 
-    public GameLoop(final int theMove, final int theLevel) throws FileNotFoundException {
-        myLevel = -1;
-
-        myMaze = new Maze(MAP1);
-        myMaze2 = new Maze(MAP2);
-        myMaze3 = new Maze(MAP3);
-
-        myGameInterface = GameInterface.getInstance(1,theMove);
+    public GameLoop(int theMove, int theLevel) throws FileNotFoundException {
+        myGameInterface = GameInterface.getInstance(theLevel, theMove);
         myLevelInterface = new LevelInterface(theLevel);
-
-        keyH = new Controller(MAP1, theMove, theLevel);
-        keyH2 = new Controller(MAP2, theMove, theLevel);
-        keyH3 = new Controller(MAP3, theMove, theLevel);
-
-        myPlayer = new Player(theMove, MAP1);
-        myPlayer2 = new Player(theMove, MAP2);
-        myPlayer3 = new Player(theMove, MAP3);
-
-        myGamePanel = GamePanel.getInstance(myMaze.getArray(), myPlayer);
-        myGamePanel2 = GamePanel.getInstance(myMaze2.getArray(), myPlayer2);
-        myGamePanel3 = GamePanel.getInstance(myMaze3.getArray(), myPlayer3);
-
+        myCurrentGamePanel = null;
+        myCurrentMaze = null;
+        myCurrentPlayer = null;
+        myCurrentKeyHandler = null;
+        myCurrentLevel = -1;
+        myLevelCompleted = true;
+        myMoveCount = theMove;
+        mySelectedLevel = theLevel;
 
         start();
     }
-    public void start() {
-        //myGameInterface.start();
 
+    void start() throws FileNotFoundException {
+        myGameInterface.setCenter(myLevelInterface);
+       // myGameInterface.start();
 
-//        myGamePanel2.start();
-//        myGamePanel3.start();
-
-        while(true) {
-            // when game run, display the level interface first
-            if (LVL) {
-                // If you've never run this map
-                if(!haveStartedLevel) {
-                   // put the level interface in the center of the JFrame
-                   myGameInterface.setCenter(myLevelInterface);
-                   // updates the JFrame
-                   myGameInterface.start();
-                   // No this command == seizure
-                    haveStartedLevel = true;
-                }
-                // listens to the level the player chose
-                System.out.println(myLevel);
-                myLevel = myLevelInterface.getMyNum();
-                System.out.println(myLevel);
-                // myLevel == -1 means we are in the level interface
-
-                // myLevel > 0 means player chose the level so we are leaving this if condition.
-                if(myLevel > 0) {
-                    LVL = false;
-                    Game = true;
-                }
-            }
-
-            // running game panel
-
-            else if (Game) {
-                if (myLevel == 1) {
-                    // set up the JFrame
-                    if (!haveStarted1) {
-                        // put the level interface in the center of the JFrame
-                        myGameInterface.setCenter(myGamePanel3);
-                        // updates the JFrame
-                        myGameInterface.start();
-
-                        myGamePanel3.addKeyListener(keyH3);
-
-                        myGamePanel3.start();
-                        // No this command == seizure
-                        haveStarted1 = true;
+        myLevelInterface.addLevelButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JButton source = (JButton) e.getSource();
+                String text = source.getText().trim(); // Remove spaces
+                String numericPart = text.replaceAll("\\D+", "");
+                mySelectedLevel = Integer.parseInt(numericPart);
+                System.out.println(mySelectedLevel);
+                if ((mySelectedLevel != myCurrentLevel && myLevelCompleted)) {
+                    try {
+                        switchToLevel(mySelectedLevel);
+                    } catch (FileNotFoundException et) {
+                        throw new RuntimeException(et);
                     }
-
-                    // This is the one that's going to run a loop and update
-                    myGamePanel3.run();
+                }
+                else {
+                    try {
+                        switchToLevel(mySelectedLevel);
+                        System.out.println("This is passed");
+                    } catch (FileNotFoundException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
 
-
             }
-        }
+        });
+
+        //switchToLevel(mySelectedLevel);
     }
 
+    private void switchToLevel(int level) throws FileNotFoundException {
+        myCurrentLevel = level;
+        // Load the appropriate maze and player based on the level
+        String mazeFileName;
+        if (level == 1) {
+            mazeFileName = MAP1;
+        } else if (level == 2) {
+            mazeFileName = MAP2;
+        } else if (level == 3) {
+            mazeFileName = MAP3;
+        } else {
+            throw new IllegalArgumentException("Invalid level: " + level);
+        }
 
+        myCurrentMaze = new Maze(mazeFileName);
+        myCurrentKeyHandler = new Controller(mazeFileName, myMoveCount, level);
+        myCurrentPlayer = new Player(myMoveCount, mazeFileName);
+        myCurrentGamePanel = GamePanel.getInstance(myCurrentMaze.getArray(), myCurrentPlayer);
+        myGameInterface.setCenter(myCurrentGamePanel);
+        myCurrentGamePanel.addKeyListener(myCurrentKeyHandler);
+        myCurrentGamePanel.start();
+        myCurrentGamePanel.run();
+        System.out.println("This is passed 2");
+        myLevelCompleted = false; //need to check they win or not in this comment
+       // }
+
+    }
+//    public void levelCompleted() {
+//        myLevelCompleted = true;
+//    }
 }

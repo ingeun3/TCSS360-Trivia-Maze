@@ -86,31 +86,36 @@ public class LevelInterface extends JPanel {
             myLevel2.setEnabled(true);
             myLevel3.setEnabled(true);
         }
-        myLevel1.addActionListener(new ActionListener() {
-            public void actionPerformed(final ActionEvent theEvent) {
-                myNum = 1;
-                //char[][] level1Map =
-                //updateMap(level1Map);
-            }
-        });
-        myLevel2.addActionListener(new ActionListener() {
-            public void actionPerformed(final ActionEvent theEvent) {
-                System.out.println("it clicked");
-                myNum = 2;
-            }
-
-        });
-
-        myLevel3.addActionListener(new ActionListener() {
-            public void actionPerformed(final ActionEvent theEvent) {
-                System.out.println("it clicked");
-                myNum = 3;
-            }
-        });
+//        myLevel1.addActionListener(new ActionListener() {
+//            public void actionPerformed(final ActionEvent theEvent) {
+//                myNum = 1;
+//                //char[][] level1Map =
+//                //updateMap(level1Map);
+//            }
+//        });
+//        myLevel2.addActionListener(new ActionListener() {
+//            public void actionPerformed(final ActionEvent theEvent) {
+//                System.out.println("it clicked");
+//                myNum = 2;
+//            }
+//
+//        });
+//
+//        myLevel3.addActionListener(new ActionListener() {
+//            public void actionPerformed(final ActionEvent theEvent) {
+//                System.out.println("it clicked");
+//                myNum = 3;
+//            }
+//        });
     }
 
     public int getMyNum(){
         return myNum;
     }
 
+    public void addLevelButtonListener(ActionListener actionListener) {
+        myLevel1.addActionListener(actionListener);
+        myLevel2.addActionListener(actionListener);
+        myLevel3.addActionListener(actionListener);
+    }
 }
