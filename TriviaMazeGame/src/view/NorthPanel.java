@@ -8,54 +8,32 @@ import java.io.FileNotFoundException;
 
 import model.Maze;
 
-public class NorthPanel extends JPanel{
-    // Class Constants
+public class NorthPanel extends JPanel {
 
-    // The JPanel object that contains buttons.
-    private final JPanel myButtonPanel;
-    // The JButton object for Help buttons.
+    private static NorthPanel myInstance;
 
-    private final JButton myHomeButton;
-
-
-    private final JButton myHelpButton;
-    // The JButton object for Save buttons.
-    private final JButton mySaveButton;
-    // The JButton object for Level buttons.
-    private final JButton myLevelButton;
-
-    // Class Fields
-
-    // The Level that will display in the center of the NorthPanel.
+    private JPanel myButtonPanel;
+    private JButton myHomeButton;
+    private JButton myHelpButton;
+    private JButton mySaveButton;
+    private JButton myLevelButton;
     private JLabel myLevel;
-    // The number of remaining moves display in the right of the NorthPanel.
     private JLabel myMoves;
 
-    /**
-     * The default constructor for NorthPanel.
-     * @param theLevel the current level that will display in the center of the NorthPanel.
-     * @param theMoves the number of remaining moves that will display in the right of the NorthPanel.
-     */
-    public NorthPanel(String theLevel, String theMoves) {
+    private NorthPanel(String theLevel, String theMoves) {
         myButtonPanel = new JPanel(new FlowLayout());
         myHomeButton = new JButton("Home");
         myHelpButton = new JButton("Help");
-        mySaveButton     = new JButton("Save");
+        mySaveButton = new JButton("Save");
         myLevelButton = new JButton("Level");
-        myLevel = new JLabel(theLevel,  SwingConstants.CENTER);
-        myMoves = new JLabel(theMoves,  SwingConstants.CENTER);
-        start();
-    }
-
-    /**
-     * Initializing NorthPanel.
-     */
-    private void start() {
+        myLevel = new JLabel(theLevel, SwingConstants.CENTER);
+        myMoves = new JLabel(theMoves, SwingConstants.CENTER);
         myButtonPanel.add(myHelpButton);
         myButtonPanel.add(mySaveButton);
         myButtonPanel.add(myLevelButton);
         myButtonPanel.setLayout(new FlowLayout());
-//        myButtonPanel.setLayout(new GridLayout(1,3));
+        myButtonPanel.setFont(new Font("Arial", Font.BOLD, 28));
+        //myButtonPanel.setBackground(Color.GRAY);
 
         myHelpButton.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent theEvent) {
@@ -67,27 +45,33 @@ public class NorthPanel extends JPanel{
                 }
             }
         });
+
         this.add(myButtonPanel);
         this.add(myLevel);
         this.add(myMoves);
         this.setLayout(new GridLayout(1, 3));
     }
 
-    /**
-     * Updates the current level.
-     * @param theLevel the level you want to update to.
-     */
-    public void setLevel(String theLevel) {
-        myLevel = new JLabel(theLevel);
-        start();
+    public static NorthPanel getInstance(String theLevel, String theMoves) {
+        if (myInstance == null) {
+            synchronized (NorthPanel.class) {
+                if (myInstance == null) {
+                    myInstance = new NorthPanel(theLevel, theMoves);
+                }
+            }
+        }
+        return myInstance;
     }
 
-    /**
-     * Updates the remaining moves.
-     * @param theMoves the updated remaining number of  moves.
-     */
+    public static NorthPanel getInstance() {
+        return myInstance;
+    }
+
+    public void setLevel(String theLevel) {
+        myLevel.setText(theLevel);
+    }
+
     public void setMoves(String theMoves) {
-        myMoves = new JLabel(theMoves);
-        start();
+        myMoves.setText(theMoves);
     }
 }

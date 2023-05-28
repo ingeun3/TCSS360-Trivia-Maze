@@ -24,6 +24,10 @@ public class GamePanel extends JPanel {
     // The Player object that contains graphic of the player.
     GUIPlayer myPlayerGUI;
 
+    Lighting myE;
+
+
+
     // Singleton instance
     private static GamePanel instance;
 
@@ -34,8 +38,11 @@ public class GamePanel extends JPanel {
         myMazeArray = theArray;
         // The 2D Array of the map layout.
         myMazemap = new MazeMap(myMazeArray, theArray[0].length);
-        myPlayerGUI = GUIPlayer.getInstance(thePlayer.getLocation());
+        myPlayerGUI = GUIPlayer.getInstance(thePlayer.getLocation(), theArray[0].length);
+        myE = Lighting.getInstance();
+        myE.setup();
         start();
+
     }
 
     public static GamePanel getInstance(char[][] theArray, Player thePlayer) throws FileNotFoundException {
@@ -52,6 +59,7 @@ public class GamePanel extends JPanel {
 
         this.setFocusable(true);
         run();
+        myE.setup();
         //playMusic(0);
 
         this.addMouseListener(new MouseAdapter() {
@@ -61,6 +69,7 @@ public class GamePanel extends JPanel {
                 requestFocusInWindow();
             }
         });
+
 
     }
 
@@ -80,6 +89,7 @@ public class GamePanel extends JPanel {
         Graphics2D g2 = (Graphics2D) theGraphics; // graphics to graphics 2D
         myMazemap.draw(g2);
         myPlayerGUI.draw(g2);
+        myE.draw(g2);
         g2.dispose();
     }
 }

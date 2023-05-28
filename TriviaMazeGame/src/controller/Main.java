@@ -20,7 +20,7 @@ public class Main {
 
     public static void main(String[] theArgs) throws FileNotFoundException {
         setLookAndFeel();
-        new GameLoop(100, "maze_map3.txt").start();
+        new GameLoop(21, 1).start();
     }
 
 
@@ -31,7 +31,7 @@ public class Main {
 
         try {
 
-            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
         } catch (final UnsupportedLookAndFeelException e) {
             System.out.println("UnsupportedLookAndFeelException");
