@@ -2,12 +2,12 @@ package view;
 
 import javax.swing.*;
 
-public class WinMessage {
+public class LosingMessage {
     // Clas Constants
 
     // The default prompt for asking question.
-    private static final String MESSAGE = "Great Job!";
-    private static final String TITLE = "Level Completed";
+    private static final String MESSAGE = "You are Terrible LOL!!!";
+    private static final String TITLE = "You suck";
     //Class Fields
 
 //    // The question that was asked.
@@ -20,7 +20,7 @@ public class WinMessage {
 
     // The answer the player chose.
 
-    public WinMessage() {
+    public LosingMessage() {
         myOptions = new String[]{"Play Again", "Quit"};
         myChosenAnswer = "";
     }

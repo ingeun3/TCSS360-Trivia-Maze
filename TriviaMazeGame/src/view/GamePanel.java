@@ -39,7 +39,7 @@ public class GamePanel extends JPanel {
         // The 2D Array of the map layout.
         myMazemap = new MazeMap(myMazeArray, theArray[0].length);
         myPlayerGUI = GUIPlayer.getInstance(thePlayer.getLocation(), theArray[0].length);
-        myE = Lighting.getInstance(myPlayerGUI, 250);
+        myE = Lighting.getInstance();
         myE.setup();
         start();
 
@@ -89,7 +89,7 @@ public class GamePanel extends JPanel {
         Graphics2D g2 = (Graphics2D) theGraphics; // graphics to graphics 2D
         myMazemap.draw(g2);
         myPlayerGUI.draw(g2);
-        myE.draw(g2);
+       // myE.draw(g2);
         g2.dispose();
     }
 }

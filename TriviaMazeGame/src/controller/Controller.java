@@ -45,6 +45,8 @@ public class Controller implements KeyListener{
 
     private WinMessage myWinMessage;
 
+    private LosingMessage myLosingMessage;
+
     private Maze myMaze;
     public Controller(String theMapName, int theMove, int theLevel) throws FileNotFoundException {
         myQuestions = new ArrayList<Question>();
@@ -55,7 +57,7 @@ public class Controller implements KeyListener{
         retrieveData();
         mySize = myQuestions.size();
         myWinMessage = new WinMessage();
-
+        myLosingMessage = new LosingMessage();
         myNorthPanel = NorthPanel.getInstance(LEVEL_PROMPT + theLevel,MOVE_PROMPT + theMove);
         myMaze = new Maze(theMapName);
 
@@ -104,16 +106,16 @@ public class Controller implements KeyListener{
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
-        if (code == KeyEvent.VK_W && pressedKeyCode != KeyEvent.VK_W) {
+        if (code == KeyEvent.VK_W && pressedKeyCode != KeyEvent.VK_W && myPlayer.getLivingStatus()) {
             pressedKeyCode = KeyEvent.VK_W;
             update();
-        } else if (code == KeyEvent.VK_S && pressedKeyCode != KeyEvent.VK_S) {
+        } else if (code == KeyEvent.VK_S && pressedKeyCode != KeyEvent.VK_S && myPlayer.getLivingStatus())  {
             pressedKeyCode = KeyEvent.VK_S;
             update();
-        } else if (code == KeyEvent.VK_A && pressedKeyCode != KeyEvent.VK_A) {
+        } else if (code == KeyEvent.VK_A && pressedKeyCode != KeyEvent.VK_A && myPlayer.getLivingStatus()) {
             pressedKeyCode = KeyEvent.VK_A;
             update();
-        } else if (code == KeyEvent.VK_D && pressedKeyCode != KeyEvent.VK_D) {
+        } else if (code == KeyEvent.VK_D && pressedKeyCode != KeyEvent.VK_D && myPlayer.getLivingStatus()) {
             pressedKeyCode = KeyEvent.VK_D;
             update();
         }
@@ -157,6 +159,8 @@ public class Controller implements KeyListener{
     public void checkFinish() {
         if(myPlayer.getLocation().equals(myEndPoint)) {
             myWinMessage.start();
+        } else if (!myPlayer.getLivingStatus()) {
+            myLosingMessage.start();
         }
     }
 

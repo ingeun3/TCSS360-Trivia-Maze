@@ -29,8 +29,7 @@ public class Lighting {
         myW = (int) mySprite.getsize().getX();
         myH = (int) mySprite.getsize().getY();
 
-       setup();
-       // myGraphics.dispose();
+        setup();
     }
 
     public static Lighting getInstance(GUIPlayer gp, int circleSize) {
