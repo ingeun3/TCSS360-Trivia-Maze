@@ -66,6 +66,7 @@ public class Controller implements KeyListener{
         myNorthPanel = NorthPanel.getInstance(LEVEL_PROMPT + theLevel,MOVE_PROMPT + theMove);
         myMaze = new Maze(theMapName);
 
+
         myPlayer = new Player(theMove, theMapName);
 
         myEndPoint = myMaze.getMyExit();
