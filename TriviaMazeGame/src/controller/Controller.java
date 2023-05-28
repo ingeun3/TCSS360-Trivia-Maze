@@ -39,18 +39,16 @@ public class Controller implements KeyListener{
 
     private Point myPoint;
 
+    private Point myEndPoint;
+
     private NorthPanel myNorthPanel;
 
-    private LevelInterface myLevelInterface;
+    private WinMessage myWinMessage;
 
-    private String myMapName;
+    private LosingMessage myLosingMessage;
 
-    //private int myLevelInterface;
-
-
-
+    private Maze myMaze;
     public Controller(String theMapName, int theMove, int theLevel) throws FileNotFoundException {
-       // myLevelInterface = theLevel;
         myQuestions = new ArrayList<Question>();
         myDataSource = new SQLiteDataSource();
         myCurrentQ = 0;
@@ -58,17 +56,20 @@ public class Controller implements KeyListener{
         connect();
         retrieveData();
         mySize = myQuestions.size();
+        myWinMessage = new WinMessage();
+        myLosingMessage = new LosingMessage();
         myNorthPanel = NorthPanel.getInstance(LEVEL_PROMPT + theLevel,MOVE_PROMPT + theMove);
+        myMaze = new Maze(theMapName);
 
         myPlayer = new Player(theMove, theMapName);
 
-//
+        myEndPoint = myMaze.getMyExit();
+        System.out.println(myEndPoint);
         myPoint = myPlayer.getLocation();
         mySprite = GUIPlayer.getInstance(myPlayer.getLocation(),myPlayer.getMazeLength());
 
         myLighting = Lighting.getInstance(mySprite, 350);
         myLighting.setup();
-        myLevelInterface = new LevelInterface(theLevel);
         //gets a random question
         Collections.shuffle(myQuestions);
 
@@ -105,16 +106,16 @@ public class Controller implements KeyListener{
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
-        if (code == KeyEvent.VK_W && pressedKeyCode != KeyEvent.VK_W) {
+        if (code == KeyEvent.VK_W && pressedKeyCode != KeyEvent.VK_W && myPlayer.getLivingStatus()) {
             pressedKeyCode = KeyEvent.VK_W;
             update();
-        } else if (code == KeyEvent.VK_S && pressedKeyCode != KeyEvent.VK_S) {
+        } else if (code == KeyEvent.VK_S && pressedKeyCode != KeyEvent.VK_S && myPlayer.getLivingStatus())  {
             pressedKeyCode = KeyEvent.VK_S;
             update();
-        } else if (code == KeyEvent.VK_A && pressedKeyCode != KeyEvent.VK_A) {
+        } else if (code == KeyEvent.VK_A && pressedKeyCode != KeyEvent.VK_A && myPlayer.getLivingStatus()) {
             pressedKeyCode = KeyEvent.VK_A;
             update();
-        } else if (code == KeyEvent.VK_D && pressedKeyCode != KeyEvent.VK_D) {
+        } else if (code == KeyEvent.VK_D && pressedKeyCode != KeyEvent.VK_D && myPlayer.getLivingStatus()) {
             pressedKeyCode = KeyEvent.VK_D;
             update();
         }
@@ -152,6 +153,15 @@ public class Controller implements KeyListener{
         }
         myLighting.setup();
         promptQuestions();
+        checkFinish();
+    }
+
+    public void checkFinish() {
+        if(myPlayer.getLocation().equals(myEndPoint)) {
+            myWinMessage.start();
+        } else if (!myPlayer.getLivingStatus()) {
+            myLosingMessage.start();
+        }
     }
 
     public void promptQuestions() {
@@ -170,7 +180,6 @@ public class Controller implements KeyListener{
             myLighting.setSize(100);
         } else {
             setLocation(myPoint);
-            System.out.println("This is passed");
 
         }
         myLighting.setup();

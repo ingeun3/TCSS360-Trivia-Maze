@@ -23,7 +23,7 @@ public class Main {
 
         //myClass= new Controller();
         setLookAndFeel();
-        new GameLoop(20, 1,"maze_map3.txt").start();
+        new GameLoop(21, 1).start();
     }
 
 
