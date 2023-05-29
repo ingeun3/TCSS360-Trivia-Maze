@@ -6,6 +6,7 @@ import model.Question;
 import org.sqlite.SQLiteDataSource;
 import view.GameInterface;
 import view.GamePanel;
+import view.Sound;
 
 import javax.swing.*;
 import java.io.FileNotFoundException;
@@ -19,6 +20,8 @@ public class Main {
 
 
     public static void main(String[] theArgs) throws FileNotFoundException {
+        Sound sound = new Sound();
+        sound.playMusic();
        // setLookAndFeel();
         new GameLoop().start();
     }
