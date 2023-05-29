@@ -64,8 +64,12 @@ public class LevelInterface extends JPanel {
 
         JPanel buttonPanel = new JPanel(new GridLayout(3, 1));
         buttonPanel.setOpaque(false);
-        buttonPanel.setBounds(500, 200, 500, 300);
-        // myLevel1.setBackground(Color.lightGray);
+        buttonPanel.setBounds(SCREEN_WIDTH/2- 750, SCREEN_HEIGHT/2 - 300, 1500, 600);
+
+//        myLevel1.setBackground(Color.lightGray);
+        myLevel1.setFont(new Font("Arial", Font.BOLD, 40));
+        myLevel2.setFont(new Font("Arial", Font.BOLD, 40));
+        myLevel3.setFont(new Font("Arial", Font.BOLD, 40));
 
         buttonPanel.add(myLevel1);
         buttonPanel.add(myLevel2);
@@ -86,37 +90,36 @@ public class LevelInterface extends JPanel {
             myLevel2.setEnabled(true);
             myLevel3.setEnabled(true);
         }
-//        myLevel1.addActionListener(new ActionListener() {
-//            public void actionPerformed(final ActionEvent theEvent) {
-//                myNum = 1;
-//                //char[][] level1Map =
-//                //updateMap(level1Map);
-//            }
-//        });
-//        myLevel2.addActionListener(new ActionListener() {
-//            public void actionPerformed(final ActionEvent theEvent) {
-//                System.out.println("it clicked");
-//                myNum = 2;
-//            }
-//
-//        });
-//
-//        myLevel3.addActionListener(new ActionListener() {
-//            public void actionPerformed(final ActionEvent theEvent) {
-//                System.out.println("it clicked");
-//                myNum = 3;
-//            }
-//        });
-    }
+        myLevel1.addActionListener(new ActionListener() {
+            public void actionPerformed(final ActionEvent theEvent) {
+                myNum = 1;
+                //char[][] level1Map =
+                //updateMap(level1Map);
+            }
+        });
+        myLevel2.addActionListener(new ActionListener() {
+            public void actionPerformed(final ActionEvent theEvent) {
+                myNum = 2;
+            }
 
+        });
+
+        myLevel3.addActionListener(new ActionListener() {
+            public void actionPerformed(final ActionEvent theEvent) {
+                myNum = 3;
+            }
+        });
+    }
+//    public void addLevelButtonListener(ActionListener actionListener) {
+//
+//        myLevel1.addActionListener(actionListener);
+//        myLevel2.addActionListener(actionListener);
+//        myLevel3.addActionListener(actionListener);
+//    }
     public int getMyNum(){
-        return myNum;
+        int temp = myNum;
+        myNum = -1;
+        return temp;
     }
 
-    public void addLevelButtonListener(ActionListener actionListener) {
-
-        myLevel1.addActionListener(actionListener);
-        myLevel2.addActionListener(actionListener);
-        myLevel3.addActionListener(actionListener);
-    }
 }

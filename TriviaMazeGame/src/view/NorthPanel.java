@@ -11,45 +11,28 @@ import model.Maze;
 public class NorthPanel extends JPanel {
 
     private static NorthPanel myInstance;
+    ;
+    private JButton myStageButton;
 
-    private JPanel myButtonPanel;
-    private JButton myHomeButton;
-    private JButton myHelpButton;
-    private JButton mySaveButton;
-    private JButton myLevelButton;
+
     private JLabel myLevel;
     private JLabel myMoves;
 
+    private boolean myStageButtonClicked;
+
     private NorthPanel(String theLevel, String theMoves) {
-        myButtonPanel = new JPanel(new FlowLayout());
-        myHomeButton = new JButton("Home");
-        myHelpButton = new JButton("Help");
-        mySaveButton = new JButton("Save");
-        myLevelButton = new JButton("Level");
+        myStageButtonClicked = false;
+        myStageButton = new JButton("Stage");
         myLevel = new JLabel(theLevel, SwingConstants.CENTER);
         myMoves = new JLabel(theMoves, SwingConstants.CENTER);
-        myButtonPanel.add(myHelpButton);
-        myButtonPanel.add(mySaveButton);
-        myButtonPanel.add(myLevelButton);
-        myButtonPanel.setLayout(new FlowLayout());
-        myButtonPanel.setFont(new Font("Arial", Font.BOLD, 28));
+
         //myButtonPanel.setBackground(Color.GRAY);
 
-        myHelpButton.addActionListener(new ActionListener() {
-            public void actionPerformed(final ActionEvent theEvent) {
-                try {
-                    Maze mazeMap = new Maze("tutorial_map.txt");
-                    TutorialFrame tutorial = new TutorialFrame();
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-
-        this.add(myButtonPanel);
+        this.add(myStageButton);
         this.add(myLevel);
         this.add(myMoves);
         this.setLayout(new GridLayout(1, 3));
+        start();
     }
 
     public static NorthPanel getInstance(String theLevel, String theMoves) {
@@ -63,8 +46,22 @@ public class NorthPanel extends JPanel {
         return myInstance;
     }
 
+    public void start() {
+        myStageButton.addActionListener(new ActionListener() {
+            public void actionPerformed(final ActionEvent theEvent) {
+                myStageButtonClicked = true;
+            }
+
+        });
+    }
     public static NorthPanel getInstance() {
         return myInstance;
+    }
+
+    public boolean stageButton() {
+        boolean flag = myStageButtonClicked;
+        myStageButtonClicked = false;
+        return flag;
     }
 
     public void setLevel(String theLevel) {

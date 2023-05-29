@@ -21,7 +21,7 @@ public class WinMessage {
     // The answer the player chose.
 
     public WinMessage() {
-        myOptions = new String[]{"Play Again", "Quit"};
+        myOptions = new String[]{"Play Again", "Next"};
         myChosenAnswer = "";
     }
     public void start() {

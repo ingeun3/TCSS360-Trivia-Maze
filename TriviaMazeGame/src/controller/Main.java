@@ -6,8 +6,6 @@ import model.Question;
 import org.sqlite.SQLiteDataSource;
 import view.GameInterface;
 import view.GamePanel;
-import view.Sound;
-import view.TitlePanel;
 
 import javax.swing.*;
 import java.io.FileNotFoundException;
@@ -21,11 +19,8 @@ public class Main {
 
 
     public static void main(String[] theArgs) throws FileNotFoundException {
-        setLookAndFeel();
-//        Sound sound = new Sound();
-//        sound.playMusic();
-        new GameLoop(10, "maze_map3.txt").start();
-
+       // setLookAndFeel();
+        new GameLoop().start();
     }
 
 
@@ -36,7 +31,7 @@ public class Main {
 
         try {
 
-            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
         } catch (final UnsupportedLookAndFeelException e) {
             System.out.println("UnsupportedLookAndFeelException");

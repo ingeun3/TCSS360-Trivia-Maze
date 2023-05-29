@@ -39,31 +39,17 @@ public class GUIPlayer {
     // The current image of a player.
     private static ImageIcon myImage;
 
-    // Singleton instance
-    private static GUIPlayer instance;
 
-    public int tilesize;
-
-    private GUIPlayer() {
-
+    public GUIPlayer(Point theSpawnPoint, int theTileNum) {
+        myTileNumber = theTileNum;
+        myTileSize = (int) screenSize.getWidth() / myTileNumber;
+        mySpeed = myTileSize;
+        x = (int) theSpawnPoint.getX() * myTileSize;
+        y = (int) theSpawnPoint.getY() * myTileSize;
+        direction = "up";
+        myImage = new ImageIcon("up.png");
     }
 
-    public static GUIPlayer getInstance(Point theSpawnPoint, int theTileNum) {
-        if (instance == null) {
-            myTileNumber = theTileNum;
-            myTileSize = (int) screenSize.getWidth() / myTileNumber;
-            mySpeed = myTileSize;
-            x = (int) theSpawnPoint.getX() * myTileSize;
-            y = (int) theSpawnPoint.getY() * myTileSize;
-            direction = "up";
-            myImage = new ImageIcon("up.png");
-
-            instance = new GUIPlayer();
-
-        }
-
-        return instance;
-    }
 
     public void setDirection(String theDirection) {
         direction = theDirection;

@@ -4,117 +4,125 @@ import model.Maze;
 import model.Player;
 import view.*;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 
 public class GameLoop {
-    private static final String MAP1 = "maze_map1.txt";
-    private static final String MAP2 = "maze_map2.txt";
-    private static final String MAP3 = "maze_map3.txt";
+    private static final String MOVE_PROMPT = "Remaining Moves: ";
+    private static final String LEVEL_PROMPT = "Level ";
 
-    // for level interface
-    private boolean myLevelStarted = false;
+    private static final String MAP1 = "maze_map3.txt";
+    private static final String MAP2 = "maze_map4.txt";
+    private static final String MAP3 = "maze_map5.txt";
+
+    private int myInitialMoves = 0;
+
 
     private GameInterface myGameInterface;
     private LevelInterface myLevelInterface;
     private GamePanel myCurrentGamePanel;
-    private Maze myCurrentMaze;
-    private Player myCurrentPlayer;
-    private Controller myCurrentKeyHandler;
-    private int myCurrentLevel;
-    private boolean myLevelCompleted;
-    private int myMoveCount;
-    private int mySelectedLevel;
+    private Maze currentMaze;
+    private Player currentPlayer;
+    private Controller myCurrentController;
+    private NorthPanel myCurrentNorthPanel;
 
-    public GameLoop(int theMove, int theLevel) throws FileNotFoundException {
-        myGameInterface = GameInterface.getInstance(theLevel, theMove);
-        myLevelInterface = new LevelInterface(theLevel);
+    private int myCurrentLevel;
+
+    private int completedLevels;
+
+    private String mymMazeFileName;
+
+    private boolean levelSetup = false;
+    private boolean gameSetup = false;
+    private boolean level = true;
+    private boolean game = false;
+
+    public GameLoop() throws FileNotFoundException {
+        completedLevels = 1;
+        myGameInterface = GameInterface.getInstance(1, 100);
+        myLevelInterface = new LevelInterface(completedLevels);
         myCurrentGamePanel = null;
-        myCurrentMaze = null;
-        myCurrentPlayer = null;
-        myCurrentKeyHandler = null;
+        currentMaze = null;
+        currentPlayer = null;
+        myCurrentController = null;
+
         myCurrentLevel = -1;
-        myLevelCompleted = false;
-        myMoveCount = theMove;
-        mySelectedLevel = theLevel;
 
         start();
     }
-
-    void start() throws FileNotFoundException {
-        if (!myLevelCompleted) { // false which mean hasn't started yet.
-            myGameInterface.setCenter(myLevelInterface);
-            myGameInterface.start();
-            System.out.println("passedd");
-            myLevelCompleted = true;
-        }
-       //myGameInterface.start();
-
-        myLevelInterface.addLevelButtonListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JButton source = (JButton) e.getSource();
-                String text = source.getText().trim(); // Remove spaces
-                String numericPart = text.replaceAll("\\D+", "");
-                mySelectedLevel = Integer.parseInt(numericPart);
-                System.out.println(mySelectedLevel);
-                if ((mySelectedLevel != myCurrentLevel && myLevelCompleted)) {
-                    try {
-                        switchToLevel(mySelectedLevel);
-                    } catch (FileNotFoundException et) {
-                        throw new RuntimeException(et);
-                    }
-                }
-                else {
-                    try {
-                        switchToLevel(mySelectedLevel);
-                        System.out.println("This is passed");
-                    } catch (FileNotFoundException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
-
-            }
-        });
-
-        //switchToLevel(mySelectedLevel);
-    }
-
-    private void switchToLevel(int level) throws FileNotFoundException {
-        myCurrentLevel = level;
-        // Load the appropriate maze and player based on the level
-        String mazeFileName;
-        if (level == 1) {
-            mazeFileName = MAP1;
-        } else if (level == 2) {
-            mazeFileName = MAP2;
-        } else if (level == 3) {
-            mazeFileName = MAP3;
-        } else {
-            throw new IllegalArgumentException("Invalid level: " + level);
-        }
-
-        myCurrentMaze = new Maze(mazeFileName);
-        myCurrentKeyHandler = new Controller(mazeFileName, myMoveCount, level);
-        myCurrentPlayer = new Player(myMoveCount, mazeFileName);
-        myCurrentGamePanel = GamePanel.getInstance(myCurrentMaze.getArray(), myCurrentPlayer);
-        myGameInterface.setCenter(myCurrentGamePanel);
+    public void start() throws FileNotFoundException {
         myGameInterface.start();
-        myCurrentGamePanel.addKeyListener(myCurrentKeyHandler);
-        myCurrentGamePanel.start();
+        while(true) {
+            if(level) {
+                runningLevelInterface();
+            } else if (game) {
+                if (myCurrentLevel == 1) {
+                    mymMazeFileName = MAP1;
+                } else if (myCurrentLevel == 2) {
+                    mymMazeFileName = MAP2;
+                } else if (myCurrentLevel == 3) {
+                    mymMazeFileName = MAP3;
+                } else {
+                    throw new IllegalArgumentException("Invalid level: " + myCurrentLevel);
+                }
+                runningGamePanel();
+            }
+        }
+    }
 
 
-       // while(true) {
-            myCurrentGamePanel.run();
-            System.out.println("This is passed 2");
-       // }
-       // myLevelCompleted = false; //need to check they win or not in this comment
-       // }
+    public void runningLevelInterface() {
+        if(!levelSetup) {
+            myGameInterface.setCenter(myLevelInterface);
+            levelSetup = true;
+        }
+        System.out.println();
+        myCurrentLevel = myLevelInterface.getMyNum();
+        if (myCurrentLevel > 0) {
+            level = false;
+            game = true;
+            levelSetup = false;
+        }
 
     }
-//    public void levelCompleted() {
-//        myLevelCompleted = true;
-//    }
+
+    private void runningGamePanel() throws FileNotFoundException {
+        if(!gameSetup) {
+            if(myCurrentLevel == 1) {
+                myInitialMoves = 25;
+            } else if(myCurrentLevel == 2) {
+                myInitialMoves = 50;
+            } else if(myCurrentLevel == 3) {
+                myInitialMoves = 75;
+            }
+            currentMaze = new Maze(mymMazeFileName);
+            currentPlayer = new Player(myInitialMoves, mymMazeFileName);
+            myCurrentController = new Controller(mymMazeFileName, myInitialMoves, myCurrentLevel);
+            myCurrentGamePanel = new GamePanel(currentMaze.getArray(), currentPlayer);
+            myCurrentNorthPanel = NorthPanel.getInstance(LEVEL_PROMPT + myCurrentLevel, MOVE_PROMPT + myInitialMoves);
+            myCurrentNorthPanel.setMoves(MOVE_PROMPT + myInitialMoves);
+            myCurrentNorthPanel.setLevel(LEVEL_PROMPT + myCurrentLevel);
+            myCurrentGamePanel.start();
+            myCurrentGamePanel.addKeyListener(myCurrentController);
+            myGameInterface.setNorthPanel(myCurrentNorthPanel);
+            myGameInterface.setCenter(myCurrentGamePanel);
+            gameSetup = true;
+        }
+        if(myCurrentNorthPanel.stageButton()) {
+
+            level = true;
+            game = false;
+            gameSetup = false;
+            myCurrentLevel = -1;
+            myGameInterface.removeNorthPanel();
+
+        } else if(myCurrentController.didWin() && myCurrentLevel < 3) {
+            myCurrentLevel++;
+            gameSetup = false;
+
+        } else {
+            myCurrentGamePanel.run();
+        }
+
+    }
+
 }

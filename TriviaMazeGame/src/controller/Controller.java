@@ -18,10 +18,6 @@ import view.*;
 
 public class Controller implements KeyListener{
     private static final String MOVE_PROMPT = "Remaining Moves: ";
-    private static final String LEVEL_PROMPT = "Level ";
-
-    private int pressedKeyCode = -1;
-    private boolean upPressed, downPressed, leftPressed, rightPressed;
     private Player myPlayer;
     private GUIPlayer mySprite;
     private Lighting myLighting;
@@ -53,8 +49,11 @@ public class Controller implements KeyListener{
 
     private Maze myMaze;
 
+    private boolean myWin;
+
     private int myMove;
     public Controller(String theMapName, int theMove, int theLevel) throws FileNotFoundException {
+        myWin = false;
         myMove = theMove;
         myQuestions = new ArrayList<Question>();
         myDataSource = new SQLiteDataSource();
@@ -65,16 +64,16 @@ public class Controller implements KeyListener{
         mySize = myQuestions.size();
         myWinMessage = new WinMessage();
         myLosingMessage = new LosingMessage();
-        myNorthPanel = NorthPanel.getInstance(LEVEL_PROMPT + theLevel,MOVE_PROMPT + theMove);
-        myMaze = new Maze(theMapName);
+        myNorthPanel = NorthPanel.getInstance();
 
+        myMaze = new Maze(theMapName);
 
         myPlayer = new Player(theMove, theMapName);
 
         myEndPoint = myMaze.getMyExit();
         myPoint = myPlayer.getLocation();
         myStartPoint = myPlayer.getLocation();
-        mySprite = GUIPlayer.getInstance(myPlayer.getLocation(),myPlayer.getMazeLength());
+        mySprite = new GUIPlayer (myPlayer.getLocation(),myPlayer.getMazeLength());
 
         myLighting = Lighting.getInstance(mySprite, 350);
         myLighting.setup();
@@ -101,7 +100,6 @@ public class Controller implements KeyListener{
             myQ[counter] = entry.getKey();
             counter++;
         }
-
         myQuestionPane = new QuestionPane(myQ[myCurrentQ], myQnA.get(myQ[myCurrentQ]).clone());
     }
 
@@ -110,7 +108,7 @@ public class Controller implements KeyListener{
     @Override
     public void keyTyped(KeyEvent e) {
     }
-
+    private int pressedKeyCode = -1;
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -156,11 +154,12 @@ public class Controller implements KeyListener{
             mySprite.setX(mySprite.getX() + mySprite.getSpeed());
             myNorthPanel.setMoves(MOVE_PROMPT + myPlayer.getMyMove());
         }
+
         myLighting.setup();
-        promptQuestions();
+     //   promptQuestions();
+
         checkFinish();
     }
-
     public void checkFinish() {
         if(myPlayer.getLocation().equals(myEndPoint)) {
             myWinMessage.start();
@@ -171,9 +170,11 @@ public class Controller implements KeyListener{
                 myPlayer.movePlayer(myStartPoint);
                 myPlayer.setMyMove(myMove);
                 myNorthPanel.setMoves(MOVE_PROMPT + myMove);
+                myPoint = myStartPoint;
+                myLighting.setSize(350);
                 myLighting.setup();
-            } else if (myWinMessage.getChoice() == "Quit") {
-
+            } else if (myWinMessage.getChoice() == "Next") {
+                myWin = true;
             }
         } else if (!myPlayer.isAlive()) {
             myLosingMessage.start();
@@ -193,7 +194,12 @@ public class Controller implements KeyListener{
         }
     }
 
+
+    public boolean didWin() {
+        return myWin;
+    }
     public void promptQuestions() {
+        //System.out.println("1");System.out.println("hi");
         if(myPlayer.isQuestionPoint()) {
             myQuestionPane.ask();
             isRightAnswer(myQuestionPane.getChoice());
