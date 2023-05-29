@@ -19,7 +19,7 @@ public class Main {
 
 
     public static void main(String[] theArgs) throws FileNotFoundException {
-        setLookAndFeel();
+       // setLookAndFeel();
         new GameLoop().start();
     }
 

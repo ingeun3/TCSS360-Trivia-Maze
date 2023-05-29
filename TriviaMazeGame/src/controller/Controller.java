@@ -18,8 +18,6 @@ import view.*;
 
 public class Controller implements KeyListener{
     private static final String MOVE_PROMPT = "Remaining Moves: ";
-    private static final String LEVEL_PROMPT = "Level ";
-    private boolean upPressed, downPressed, leftPressed, rightPressed;
     private Player myPlayer;
     private GUIPlayer mySprite;
     private Lighting myLighting;
@@ -66,7 +64,8 @@ public class Controller implements KeyListener{
         mySize = myQuestions.size();
         myWinMessage = new WinMessage();
         myLosingMessage = new LosingMessage();
-        myNorthPanel = NorthPanel.getInstance(LEVEL_PROMPT + theLevel,MOVE_PROMPT + theMove);
+        myNorthPanel = NorthPanel.getInstance();
+
         myMaze = new Maze(theMapName);
 
         myPlayer = new Player(theMove, theMapName);
@@ -155,8 +154,9 @@ public class Controller implements KeyListener{
             mySprite.setX(mySprite.getX() + mySprite.getSpeed());
             myNorthPanel.setMoves(MOVE_PROMPT + myPlayer.getMyMove());
         }
+
         myLighting.setup();
-        promptQuestions();
+     //   promptQuestions();
 
         checkFinish();
     }
@@ -193,10 +193,13 @@ public class Controller implements KeyListener{
             }
         }
     }
+
+
     public boolean didWin() {
         return myWin;
     }
-    public void promptQuestions() { System.out.println("1");
+    public void promptQuestions() {
+        //System.out.println("1");System.out.println("hi");
         if(myPlayer.isQuestionPoint()) {
             myQuestionPane.ask();
             isRightAnswer(myQuestionPane.getChoice());

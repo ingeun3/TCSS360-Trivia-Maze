@@ -40,8 +40,6 @@ public class GUIPlayer {
     private static ImageIcon myImage;
 
 
-    public int tilesize;
-
     public GUIPlayer(Point theSpawnPoint, int theTileNum) {
         myTileNumber = theTileNum;
         myTileSize = (int) screenSize.getWidth() / myTileNumber;
@@ -50,7 +48,6 @@ public class GUIPlayer {
         y = (int) theSpawnPoint.getY() * myTileSize;
         direction = "up";
         myImage = new ImageIcon("up.png");
-
     }
 
 

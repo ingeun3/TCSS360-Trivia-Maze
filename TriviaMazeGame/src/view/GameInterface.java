@@ -17,7 +17,7 @@ public class GameInterface {
 
     // Class Fields
     private JFrame myGameInterface;
-    private NorthPanel myNorthPanel;
+    private JPanel myNorthPanel;
 
     private JPanel myGamePanel;
 
@@ -39,7 +39,7 @@ public class GameInterface {
         String level = LEVEL_PROMPT + theLevel;
         String moves = MOVE_PROMPT + theMoves;
        // myGamePanel = GamePanel.getInstance(myMazeArray, thePlayer);
-        myNorthPanel = NorthPanel.getInstance(level, moves);
+        myNorthPanel =  NorthPanel.getInstance(level, moves);
        // myLevelInterface = new LevelInterface(theLevel);
     }
 
@@ -63,22 +63,29 @@ public class GameInterface {
      */
     public void start() {
         myGameInterface.setSize(800, 600);
-        myGameInterface.getContentPane().add(myNorthPanel, BorderLayout.NORTH);
-       // myGameInterface.getContentPane().add(myGamePanel, BorderLayout.CENTER);
         myGameInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myGameInterface.setExtendedState(JFrame.MAXIMIZED_BOTH);
         myGameInterface.setLocationRelativeTo(null);
         myGameInterface.setVisible(true);
        // myGamePanel.requestFocus();
     }
+    public void removeNorthPanel() {
+        myGameInterface.getContentPane().remove(myNorthPanel);
+    }
+    public void setNorthPanel(JPanel thePanel) {
+        // Deleting the old game panel;
+        myGameInterface.getContentPane().remove(myNorthPanel);
+        myNorthPanel = thePanel;
+        myGameInterface.getContentPane().add(myNorthPanel, BorderLayout.NORTH);
+        thePanel.requestFocus();
 
+        start();
+    }
     public void setCenter(JPanel thePanel) {
         // Deleting the old game panel;
         myGameInterface.getContentPane().remove(myGamePanel);
         myGamePanel = thePanel;
         myGameInterface.getContentPane().add(myGamePanel, BorderLayout.CENTER);
-//        myGameInterface.getContentPane().invalidate();
-//        myGameInterface.getContentPane().validate();
         thePanel.requestFocus();
 
         start();
