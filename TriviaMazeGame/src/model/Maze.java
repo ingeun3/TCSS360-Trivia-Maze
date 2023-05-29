@@ -82,7 +82,7 @@ public class Maze {
      */
     private Point playerLocation() {
         for (int i = 0; i < myMaze.length; i++) {
-            for (int j = 0; j < myMaze.length; j++) {
+            for (int j = 0; j < myMaze[0].length; j++) {
                 if (myMaze[i][j] == 'M') {
                     return new Point(j,i);
                 }
@@ -93,7 +93,7 @@ public class Maze {
 
     private Point exitLocation() {
         for (int i = 0; i < myMaze.length; i++) {
-            for (int j = 0; j < myMaze.length; j++) {
+            for (int j = 0; j < myMaze[0].length; j++) {
                 if (myMaze[i][j] == 'E') {
                     return new Point(j,i);
                 }

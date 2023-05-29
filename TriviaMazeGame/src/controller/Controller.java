@@ -51,8 +51,11 @@ public class Controller implements KeyListener{
 
     private Maze myMaze;
 
+    private boolean myWin;
+
     private int myMove;
     public Controller(String theMapName, int theMove, int theLevel) throws FileNotFoundException {
+        myWin = false;
         myMove = theMove;
         myQuestions = new ArrayList<Question>();
         myDataSource = new SQLiteDataSource();
@@ -71,7 +74,7 @@ public class Controller implements KeyListener{
         myEndPoint = myMaze.getMyExit();
         myPoint = myPlayer.getLocation();
         myStartPoint = myPlayer.getLocation();
-        mySprite = GUIPlayer.getInstance(myPlayer.getLocation(),myPlayer.getMazeLength());
+        mySprite = new GUIPlayer (myPlayer.getLocation(),myPlayer.getMazeLength());
 
         myLighting = Lighting.getInstance(mySprite, 350);
         myLighting.setup();
@@ -154,9 +157,9 @@ public class Controller implements KeyListener{
         }
         myLighting.setup();
         promptQuestions();
+
         checkFinish();
     }
-
     public void checkFinish() {
         if(myPlayer.getLocation().equals(myEndPoint)) {
             myWinMessage.start();
@@ -167,9 +170,11 @@ public class Controller implements KeyListener{
                 myPlayer.movePlayer(myStartPoint);
                 myPlayer.setMyMove(myMove);
                 myNorthPanel.setMoves(MOVE_PROMPT + myMove);
+                myPoint = myStartPoint;
+                myLighting.setSize(350);
                 myLighting.setup();
-            } else if (myWinMessage.getChoice() == "Quit") {
-
+            } else if (myWinMessage.getChoice() == "Next") {
+                myWin = true;
             }
         } else if (!myPlayer.isAlive()) {
             myLosingMessage.start();
@@ -188,8 +193,10 @@ public class Controller implements KeyListener{
             }
         }
     }
-
-    public void promptQuestions() {
+    public boolean didWin() {
+        return myWin;
+    }
+    public void promptQuestions() { System.out.println("1");
         if(myPlayer.isQuestionPoint()) {
             myQuestionPane.ask();
             isRightAnswer(myQuestionPane.getChoice());

@@ -20,7 +20,7 @@ public class Main {
 
     public static void main(String[] theArgs) throws FileNotFoundException {
         setLookAndFeel();
-        new GameLoop(21, 1).start();
+        new GameLoop().start();
     }
 
 

@@ -18,6 +18,9 @@ public class GameInterface {
     // Class Fields
     private JFrame myGameInterface;
     private NorthPanel myNorthPanel;
+
+    private JPanel myGamePanel;
+
   //  private GamePanel myGamePanel;
   //  private LevelInterface myLevelInterface;
   //  private char[][] myMazeArray;
@@ -32,6 +35,7 @@ public class GameInterface {
     private GameInterface(int theLevel, int theMoves)  {
         myGameInterface = new JFrame("Trivia Maze");
        // myMazeArray = theMazeArray;
+        myGamePanel = new JPanel();
         String level = LEVEL_PROMPT + theLevel;
         String moves = MOVE_PROMPT + theMoves;
        // myGamePanel = GamePanel.getInstance(myMazeArray, thePlayer);
@@ -69,8 +73,15 @@ public class GameInterface {
     }
 
     public void setCenter(JPanel thePanel) {
-        myGameInterface.getContentPane().add(thePanel, BorderLayout.CENTER);
+        // Deleting the old game panel;
+        myGameInterface.getContentPane().remove(myGamePanel);
+        myGamePanel = thePanel;
+        myGameInterface.getContentPane().add(myGamePanel, BorderLayout.CENTER);
+//        myGameInterface.getContentPane().invalidate();
+//        myGameInterface.getContentPane().validate();
         thePanel.requestFocus();
+
+        start();
     }
     /**
      * Closes the GUI
