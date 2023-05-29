@@ -1,5 +1,6 @@
 package view;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -7,6 +8,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.*;
 
 public class Sound {
 
@@ -24,12 +26,15 @@ public class Sound {
         try {
 
             // Initialize audio system
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(getClass().getResource("/src/starwar.wav"));
+            File musicFile = new File("starwar.wav");
 
-            if (audioInputStream != null) {
+
+            if (musicFile.exists()) {
+                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(musicFile);
                 clip = AudioSystem.getClip();
                 clip.open(audioInputStream);
-
+                clip.start();
+                //JOptionPane.showMessageDialog(null, "click okay");
                 // Play the audio in a loop
                 //clip.loop(Clip.LOOP_CONTINUOUSLY);
             } else {

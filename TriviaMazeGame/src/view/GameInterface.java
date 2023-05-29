@@ -28,6 +28,8 @@ public class GameInterface {
     private final LevelInterface myLevelInterface;
     private char[][] myMazeArray;
 
+    private TitlePanel myTitle;
+
     /**
      * Default constructor of the GameInterface (main GUI).
      * @param theLevel the Level of the current game
@@ -36,6 +38,7 @@ public class GameInterface {
      */
     public GameInterface (int theLevel, int theMoves, char[][] theMazeArray, Player thePlayer) throws FileNotFoundException {
         myGameInterface = new JFrame("Trivia Maze");
+        myTitle = new TitlePanel();
         myMazeArray = theMazeArray;
         String level = LEVEL_PROMPT + theLevel;
         String moves = MOVE_PROMPT + theMoves;
@@ -49,8 +52,9 @@ public class GameInterface {
      */
     public void start() {
         myGameInterface.setSize(800, 600);
-        myGameInterface.getContentPane().add(myNorthPanel, BorderLayout.NORTH);
-        myGameInterface.getContentPane().add(myGamePanel, BorderLayout.CENTER);
+        myGameInterface.getContentPane().add(myTitle, BorderLayout.CENTER);
+//        myGameInterface.getContentPane().add(myNorthPanel, BorderLayout.NORTH);
+//        myGameInterface.getContentPane().add(myGamePanel, BorderLayout.CENTER);
         myGameInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myGameInterface.setExtendedState(JFrame.MAXIMIZED_BOTH);
         myGameInterface.setLocationRelativeTo(null);

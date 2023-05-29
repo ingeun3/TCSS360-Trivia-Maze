@@ -33,4 +33,6 @@ public class Lighting {
     public void draw(Graphics2D g2){
         g2.drawImage(darknessFilter, 0, 0, null);
     }
+
+
 }
