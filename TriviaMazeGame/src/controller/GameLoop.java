@@ -36,7 +36,7 @@ public class GameLoop {
         myCurrentPlayer = null;
         myCurrentKeyHandler = null;
         myCurrentLevel = -1;
-        myLevelCompleted = true;
+        myLevelCompleted = false;
         myMoveCount = theMove;
         mySelectedLevel = theLevel;
 
@@ -44,8 +44,13 @@ public class GameLoop {
     }
 
     void start() throws FileNotFoundException {
-        myGameInterface.setCenter(myLevelInterface);
-       // myGameInterface.start();
+        if (!myLevelCompleted) { // false which mean hasn't started yet.
+            myGameInterface.setCenter(myLevelInterface);
+            myGameInterface.start();
+            System.out.println("passedd");
+            myLevelCompleted = true;
+        }
+       //myGameInterface.start();
 
         myLevelInterface.addLevelButtonListener(new ActionListener() {
             @Override
@@ -96,11 +101,16 @@ public class GameLoop {
         myCurrentPlayer = new Player(myMoveCount, mazeFileName);
         myCurrentGamePanel = GamePanel.getInstance(myCurrentMaze.getArray(), myCurrentPlayer);
         myGameInterface.setCenter(myCurrentGamePanel);
+        myGameInterface.start();
         myCurrentGamePanel.addKeyListener(myCurrentKeyHandler);
         myCurrentGamePanel.start();
-        myCurrentGamePanel.run();
-        System.out.println("This is passed 2");
-        myLevelCompleted = false; //need to check they win or not in this comment
+
+
+       // while(true) {
+            myCurrentGamePanel.run();
+            System.out.println("This is passed 2");
+       // }
+       // myLevelCompleted = false; //need to check they win or not in this comment
        // }
 
     }

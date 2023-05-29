@@ -68,14 +68,15 @@ public class GameInterface {
     }
 
     public void setCenter(JPanel thePanel) {
+//        myGameInterface.setSize(800, 600);
+//        myGameInterface.getContentPane().add(myNorthPanel, BorderLayout.NORTH);
+//        myGameInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        myGameInterface.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//        myGameInterface.setLocationRelativeTo(null);
+//        myGameInterface.setVisible(true);
         myGameInterface.getContentPane().add(thePanel, BorderLayout.CENTER);
         thePanel.requestFocus();
-        myGameInterface.setSize(800, 600);
-        myGameInterface.getContentPane().add(myNorthPanel, BorderLayout.NORTH);
-        myGameInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        myGameInterface.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        myGameInterface.setLocationRelativeTo(null);
-        myGameInterface.setVisible(true);
+
         //
     }
     /**

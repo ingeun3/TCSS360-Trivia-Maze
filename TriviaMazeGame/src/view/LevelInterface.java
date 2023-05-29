@@ -114,6 +114,7 @@ public class LevelInterface extends JPanel {
     }
 
     public void addLevelButtonListener(ActionListener actionListener) {
+
         myLevel1.addActionListener(actionListener);
         myLevel2.addActionListener(actionListener);
         myLevel3.addActionListener(actionListener);
