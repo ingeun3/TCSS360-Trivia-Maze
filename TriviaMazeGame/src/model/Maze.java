@@ -63,7 +63,8 @@ public class Maze {
      * @param thePoint The point player wants to move.
      */
     public void setArray(Point thePoint) {
-        if(thePoint.x > 0 && thePoint.x > myMaze.length - 1 && thePoint.y > 0    && thePoint.y > myMaze[0].length - 1) {
+
+        if(thePoint.x >= 0 && thePoint.x <= myMaze.length - 1 && thePoint.y >= 0 && thePoint.y <= myMaze[0].length - 1) {
             if (myMaze[thePoint.y][thePoint.x] != '@') {
                 myMaze[myPlayerLocation.y][myPlayerLocation.x] = '+';
                 myMaze[thePoint.y][thePoint.x] = 'M';

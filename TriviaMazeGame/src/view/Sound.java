@@ -17,7 +17,7 @@ public class Sound {
     URL soundURL[] = new URL[30];
 
     public Sound() {
-        playMusic();
+       //playMusic();
 
         //soundURL [0] = getClass().getClass().getResource("starwar.wav");
 

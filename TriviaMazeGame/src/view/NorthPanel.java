@@ -26,7 +26,7 @@ public class NorthPanel extends JPanel {
         myLevel = new JLabel(theLevel, SwingConstants.CENTER);
         myMoves = new JLabel(theMoves, SwingConstants.CENTER);
 
-        //myButtonPanel.setBackground(Color.GRAY);
+        myStageButton.setBackground(Color.GRAY);
 
         this.add(myStageButton);
         this.add(myLevel);

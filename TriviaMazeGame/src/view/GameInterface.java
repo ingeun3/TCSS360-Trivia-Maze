@@ -21,9 +21,9 @@ public class GameInterface {
 
     private JPanel myGamePanel;
 
-    //  private GamePanel myGamePanel;
-    //  private LevelInterface myLevelInterface;
-    //  private char[][] myMazeArray;
+  //  private GamePanel myGamePanel;
+  //  private LevelInterface myLevelInterface;
+  //  private char[][] myMazeArray;
 
     /**
      * Private constructor of the GameInterface (main GUI).
@@ -34,13 +34,13 @@ public class GameInterface {
      */
     private GameInterface(int theLevel, int theMoves)  {
         myGameInterface = new JFrame("Trivia Maze");
-        // myMazeArray = theMazeArray;
+       // myMazeArray = theMazeArray;
         myGamePanel = new JPanel();
         String level = LEVEL_PROMPT + theLevel;
         String moves = MOVE_PROMPT + theMoves;
-        // myGamePanel = GamePanel.getInstance(myMazeArray, thePlayer);
+       // myGamePanel = GamePanel.getInstance(myMazeArray, thePlayer);
         myNorthPanel =  NorthPanel.getInstance(level, moves);
-        // myLevelInterface = new LevelInterface(theLevel);
+       // myLevelInterface = new LevelInterface(theLevel);
     }
 
     /**
@@ -62,12 +62,12 @@ public class GameInterface {
      * Starting the GUI
      */
     public void start() {
-        myGameInterface.setSize(800, 600);
+        myGameInterface.setPreferredSize(new Dimension(800, 600));
         myGameInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myGameInterface.setExtendedState(JFrame.MAXIMIZED_BOTH);
         myGameInterface.setLocationRelativeTo(null);
         myGameInterface.setVisible(true);
-        // myGamePanel.requestFocus();
+       // myGamePanel.requestFocus();
     }
     public void removeNorthPanel() {
         myGameInterface.getContentPane().remove(myNorthPanel);
