@@ -1,6 +1,5 @@
 package view;
 
-import controller.Controller;
 import model.Player;
 
 import java.awt.*;
@@ -89,7 +88,7 @@ public class GamePanel extends JPanel {
         Graphics2D g2 = (Graphics2D) theGraphics; // graphics to graphics 2D
         myMazemap.draw(g2);
         myPlayerGUI.draw(g2);
-//        myE.draw(g2);
+        myE.draw(g2);
         g2.dispose();
     }
 }

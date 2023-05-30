@@ -16,7 +16,7 @@ import model.Question;
 import org.sqlite.SQLiteDataSource;
 import view.*;
 
-public class Controller implements KeyListener{
+public class GameLogic implements KeyListener{
     private static final String MOVE_PROMPT = "Remaining Moves: ";
     private Player myPlayer;
     private GUIPlayer mySprite;
@@ -51,8 +51,11 @@ public class Controller implements KeyListener{
 
     private boolean myWin;
 
+    private EscPanel myEscape;
+
     private int myMove;
-    public Controller(String theMapName, int theMove, int theLevel) throws FileNotFoundException {
+    public GameLogic(String theMapName, int theMove, int theLevel) throws FileNotFoundException {
+        myEscape = new EscPanel();
         myWin = false;
         myMove = theMove;
         myQuestions = new ArrayList<Question>();
@@ -125,6 +128,9 @@ public class Controller implements KeyListener{
         } else if (code == KeyEvent.VK_D && pressedKeyCode != KeyEvent.VK_D && myPlayer.isAlive()) {
             pressedKeyCode = KeyEvent.VK_D;
             update();
+        } else if (code == KeyEvent.VK_ESCAPE) {
+            pressedKeyCode = KeyEvent.VK_ESCAPE;
+            myEscape.start();
         }
     }
 
@@ -188,18 +194,16 @@ public class Controller implements KeyListener{
                 myPoint = myStartPoint;
                 myLighting.setSize(350);
                 myLighting.setup();
-            } else if (myLosingMessage.getChoice() == "Quit") {
+            } else if (myLosingMessage.getChoice() == "Go to Stage") {
 
             }
         }
     }
 
-
     public boolean didWin() {
         return myWin;
     }
     public void promptQuestions() {
-        //System.out.println("1");System.out.println("hi");
         if(myPlayer.isQuestionPoint()) {
             myQuestionPane.ask();
             isRightAnswer(myQuestionPane.getChoice());

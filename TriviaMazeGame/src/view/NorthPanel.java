@@ -26,14 +26,24 @@ public class NorthPanel extends JPanel {
         myLevel = new JLabel(theLevel, SwingConstants.CENTER);
         myMoves = new JLabel(theMoves, SwingConstants.CENTER);
 
-        myStageButton.setBackground(Color.GRAY);
+       // myStageButton.setBackground(Color.GRAY);
 
         this.add(myStageButton);
+        myStageButton.setBackground(Color.WHITE);
         this.add(myLevel);
         this.add(myMoves);
         this.setLayout(new GridLayout(1, 3));
+
         start();
     }
+    // Title
+    // Theme
+    // Qiestions
+    // Maps
+    // Exit button for Title and level
+    // Equation move
+    // About
+    // make the stage button work on the losing message
 
     public static NorthPanel getInstance(String theLevel, String theMoves) {
         if (myInstance == null) {

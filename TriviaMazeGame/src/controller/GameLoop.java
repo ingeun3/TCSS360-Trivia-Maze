@@ -4,6 +4,8 @@ import model.Maze;
 import model.Player;
 import view.*;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.FileNotFoundException;
 
 public class GameLoop {
@@ -21,10 +23,11 @@ public class GameLoop {
 
     private GameInterface myGameInterface;
     private LevelInterface myLevelInterface;
+    private TitlePanel myTitlePanel;
     private GamePanel myCurrentGamePanel;
     private Maze currentMaze;
     private Player currentPlayer;
-    private Controller myCurrentController;
+    private GameLogic myCurrentGameLogic;
     private NorthPanel myCurrentNorthPanel;
 
     private int myCurrentLevel;
@@ -35,26 +38,31 @@ public class GameLoop {
 
     private boolean levelSetup = false;
     private boolean gameSetup = false;
-    private boolean level = true;
-    private boolean game = false;
+    private boolean titleSetup = false;
 
+    private boolean title = true;
+    private boolean level = false;
+    private boolean game = false;
 
 
     public GameLoop() throws FileNotFoundException {
         myCompletedLevel = 1;
+        myTitlePanel = new TitlePanel();
         myGameInterface = GameInterface.getInstance(1, 100);
         myLevelInterface = new LevelInterface();
         myCurrentGamePanel = null;
         currentMaze = null;
         currentPlayer = null;
-        myCurrentController = null;
+        myCurrentGameLogic = null;
         myCurrentLevel = -1;
         start();
     }
     public void start() throws FileNotFoundException {
         myGameInterface.start();
         while(true) {
-            if(level) {
+            if (title) {
+                runningTitleInterface();
+            } else if(level) {
                 runningLevelInterface();
             } else if (game) {
                 if (myCurrentLevel == 1) {
@@ -70,8 +78,20 @@ public class GameLoop {
             }
         }
     }
+    public void runningTitleInterface() {
+        if(!titleSetup) {
+            myGameInterface.setCenter(myTitlePanel);
+            titleSetup = true;
+        }
+        System.out.println();
+        myCurrentLevel = myTitlePanel.getMyNum();
+        if (myCurrentLevel == 0) {
+            title = false;
+            level = true;
+            titleSetup = false;
+        }
 
-
+    }
     public void runningLevelInterface() {
         if(!levelSetup) {
             myGameInterface.setCenter(myLevelInterface);
@@ -84,7 +104,6 @@ public class GameLoop {
             game = true;
             levelSetup = false;
         }
-
     }
 
     private void runningGamePanel() throws FileNotFoundException {
@@ -98,13 +117,13 @@ public class GameLoop {
             }
             currentMaze = new Maze(mymMazeFileName);
             currentPlayer = new Player(myInitialMoves, mymMazeFileName);
-            myCurrentController = new Controller(mymMazeFileName, myInitialMoves, myCurrentLevel);
+            myCurrentGameLogic = new GameLogic(mymMazeFileName, myInitialMoves, myCurrentLevel);
             myCurrentGamePanel = new GamePanel(currentMaze.getArray(), currentPlayer);
             myCurrentNorthPanel = NorthPanel.getInstance(LEVEL_PROMPT + myCurrentLevel, MOVE_PROMPT + myInitialMoves);
             myCurrentNorthPanel.setMoves(MOVE_PROMPT + myInitialMoves);
             myCurrentNorthPanel.setLevel(LEVEL_PROMPT + myCurrentLevel);
             myCurrentGamePanel.start();
-            myCurrentGamePanel.addKeyListener(myCurrentController);
+            myCurrentGamePanel.addKeyListener(myCurrentGameLogic);
             myGameInterface.setNorthPanel(myCurrentNorthPanel);
             myGameInterface.setCenter(myCurrentGamePanel);
             gameSetup = true;
@@ -114,10 +133,10 @@ public class GameLoop {
             level = true;
             game = false;
             gameSetup = false;
-            myCurrentLevel = -1;
+            myCurrentLevel = 0;
             myGameInterface.removeNorthPanel();
 
-        } else if(myCurrentController.didWin() && myCurrentLevel < 3) {
+        } else if(myCurrentGameLogic.didWin() && myCurrentLevel < 3) {
             myCurrentLevel++;
             if (myCurrentLevel > myCompletedLevel) {
                 System.out.println("hi");
