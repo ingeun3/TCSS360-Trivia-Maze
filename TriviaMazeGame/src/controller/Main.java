@@ -22,8 +22,8 @@ public class Main {
 
     public static void main(String[] theArgs) throws FileNotFoundException {
         setLookAndFeel();
-//        Sound sound = new Sound();
-//        sound.playMusic();
+        Sound sound = new Sound();
+        sound.playMusic();
         new GameLoop(10, "maze_map3.txt").start();
 
     }
