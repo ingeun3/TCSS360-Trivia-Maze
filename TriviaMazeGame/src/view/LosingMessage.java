@@ -21,7 +21,7 @@ public class LosingMessage {
     // The answer the player chose.
 
     public LosingMessage() {
-        myOptions = new String[]{"Play Again", "Quit"};
+        myOptions = new String[]{"Play Again", "Go to Stage"};
         myChosenAnswer = "";
     }
     public void start() {

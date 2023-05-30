@@ -26,14 +26,14 @@ public class LevelInterface extends JPanel {
 
     private char[][] myLevelArrayMap;
 
-    private int myNum ;
+    private int myPanelNumber ;
 
     private int myCompletedLevel ;
 
 //private static ImageIcon myImage;
 
     public LevelInterface() {
-        myNum = -1;
+        myPanelNumber = 0;
         myCompletedLevel = 1;
         setLayout(new BorderLayout());
         myLevel1 = new JButton("Level 1");
@@ -74,28 +74,26 @@ public class LevelInterface extends JPanel {
         add(layeredPane, BorderLayout.CENTER);
         myLevel1.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent theEvent) {
-                myNum = 1;
-                //char[][] level1Map =
-                //updateMap(level1Map);
+                myPanelNumber = 1;
             }
         });
         myLevel2.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent theEvent) {
-                myNum = 2;
+                myPanelNumber = 2;
             }
 
         });
 
         myLevel3.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent theEvent) {
-                myNum = 3;
+                myPanelNumber = 3;
             }
         });
     }
 
     public int getMyNum(){
-        int temp = myNum;
-        myNum = -1;
+        int temp = myPanelNumber;
+        myPanelNumber = 0;
         return temp;
     }
 

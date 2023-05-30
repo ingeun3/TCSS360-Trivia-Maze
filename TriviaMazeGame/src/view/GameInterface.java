@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 
 import javax.swing.*;
 
-public class GameInterface {
+public class GameInterface extends JFrame{
     // Singleton instance
     private static GameInterface instance;
 
@@ -16,7 +16,7 @@ public class GameInterface {
     private static final String MOVE_PROMPT = "Remaining Moves: ";
 
     // Class Fields
-    private JFrame myGameInterface;
+  //  private JFrame myGameInterface;
     private JPanel myNorthPanel;
 
     private JPanel myGamePanel;
@@ -33,7 +33,7 @@ public class GameInterface {
      * @throws FileNotFoundException if the image file is not found
      */
     private GameInterface(int theLevel, int theMoves)  {
-        myGameInterface = new JFrame("Trivia Maze");
+        super("Trivia Maze");
        // myMazeArray = theMazeArray;
         myGamePanel = new JPanel();
         String level = LEVEL_PROMPT + theLevel;
@@ -62,38 +62,40 @@ public class GameInterface {
      * Starting the GUI
      */
     public void start() {
-        myGameInterface.setPreferredSize(new Dimension(800, 600));
-        myGameInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        myGameInterface.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        myGameInterface.setLocationRelativeTo(null);
-        myGameInterface.setVisible(true);
+        setPreferredSize(new Dimension(800, 600));
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setLocationRelativeTo(null);
+        setVisible(true);
        // myGamePanel.requestFocus();
     }
     public void removeNorthPanel() {
-        myGameInterface.getContentPane().remove(myNorthPanel);
+        getContentPane().remove(myNorthPanel);
     }
     public void setNorthPanel(JPanel thePanel) {
         // Deleting the old game panel;
-        myGameInterface.getContentPane().remove(myNorthPanel);
+        getContentPane().remove(myNorthPanel);
         myNorthPanel = thePanel;
-        myGameInterface.getContentPane().add(myNorthPanel, BorderLayout.NORTH);
+        getContentPane().add(myNorthPanel, BorderLayout.NORTH);
         thePanel.requestFocus();
 
         start();
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
     public void setCenter(JPanel thePanel) {
         // Deleting the old game panel;
-        myGameInterface.getContentPane().remove(myGamePanel);
+        getContentPane().remove(myGamePanel);
         myGamePanel = thePanel;
-        myGameInterface.getContentPane().add(myGamePanel, BorderLayout.CENTER);
+        getContentPane().add(myGamePanel, BorderLayout.CENTER);
         thePanel.requestFocus();
 
         start();
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
     /**
      * Closes the GUI
      */
     public void close() {
-        myGameInterface.dispose();
+        dispose();
     }
 }
