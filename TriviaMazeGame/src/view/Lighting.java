@@ -7,29 +7,91 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 public class Lighting {
-    GamePanel gp;
-    BufferedImage darknessFilter;
+    private static Lighting instance;
 
-    public Lighting(GUIPlayer gp, int circleSize){
-        // buffered image
-        darknessFilter = new BufferedImage(gp.screenW, gp.screenH, BufferedImage.TYPE_INT_ARGB );
-        Graphics2D g2 = (Graphics2D) darknessFilter.getGraphics();
-        Area screenArea = new Area(new Rectangle2D.Double(0, 0, gp.screenW, gp.screenH));
-        int centerX = gp.getX() + (gp.getsize()/2); // x and y of the light circle.
-        int centerY = gp.getY() + (gp.getsize()/2);
+    private BufferedImage darknessFilter;
+    private int myW;
+    private int myH;
+    private int myCenterX;
+    private int myCenterY;
+    private double myTopLeftX;
+    private double myTopLeftY;
+    private static int myDiameter;
+    private Area myScreenArea;
+    private Area myLightArea;
+    private Graphics2D myGraphics;
+    private static GUIPlayer mySprite;
 
-        double x = centerX - (circleSize / 2); // get top of the light circle.
-        double y = centerY - (circleSize / 2);
+    private Lighting(GUIPlayer gp, int circleSize) {
+        mySprite = gp;
+        myDiameter = circleSize;
 
-        Shape circleShape = new Ellipse2D.Double(x, y, circleSize, circleSize);
-        // create anohter light circle
-        Area lightArea = new Area (circleShape);
-        // subtract from the screenARea
-        screenArea.subtract(lightArea);
-        g2.setColor(new Color(0,0,0,0.95f));
-        g2.fill(screenArea);
-        g2.dispose();
+        myW = (int) mySprite.getsize().getX();
+        myH = (int) mySprite.getsize().getY();
+
+        setup();
     }
+
+    public static Lighting getInstance(GUIPlayer gp, int circleSize) {
+        if (instance == null) {
+            instance = new Lighting(gp, circleSize);
+
+        }
+        return instance;
+    }
+    public static Lighting getInstance() {
+        return instance;
+    }
+    public void increaseSize(int theDiameter) {
+        myDiameter = myDiameter + theDiameter;
+    }
+    public void setSize(int theDiameter) {
+        myDiameter = theDiameter;
+    }
+    public void setup() {
+
+        darknessFilter = new BufferedImage(myW, myH, BufferedImage.TYPE_INT_ARGB );
+        myGraphics = (Graphics2D) darknessFilter.getGraphics();
+        myScreenArea = new Area(new Rectangle2D.Double(0, 0, myW ,myH));
+
+
+        myCenterX = mySprite.getX() + (mySprite.getTileSize()/2); // x and y of the light circle.
+        myCenterY = mySprite.getY() + (mySprite.getTileSize()/2);
+
+        myTopLeftX = myCenterX - (myDiameter / 2); // get top of the light circle.
+        myTopLeftY = myCenterY - (myDiameter / 2);
+
+        Shape circleShape = new Ellipse2D.Double(myTopLeftX, myTopLeftY, myDiameter, myDiameter);
+        // create anohter light circle
+        myLightArea = new Area (circleShape);
+        // subtract from the screenARea
+        myScreenArea.subtract(myLightArea);
+
+        Color color[] = new Color[5];
+        float fraction[] = new float[5];
+
+        color[0] = new Color(0,0,0,0f);
+        color[1] = new Color(0,0,0,0.25f);
+        color[2] = new Color(0,0,0,0.5f);
+        color[3] = new Color(0,0,0,0.75f);
+        color[4] = new Color(0,0,0,0.98f);
+
+        fraction[0] = 0f;
+        fraction[1] = 0.25f;
+        fraction[2] = 0.5f;
+        fraction[3] = 0.75f;
+        fraction[4] = 1f;
+
+        RadialGradientPaint gPaint = new RadialGradientPaint(myCenterX, myCenterY, (myDiameter/2), fraction, color);
+
+        myGraphics.setPaint(gPaint);
+
+        myGraphics.fill(myLightArea);
+        //myGraphics.setColor(new Color(0,0,0,0.95f));
+        myGraphics.fill(myScreenArea);
+        myGraphics.dispose();
+    }
+
     public void draw(Graphics2D g2){
         g2.drawImage(darknessFilter, 0, 0, null);
     }

@@ -24,32 +24,33 @@ public class GamePanel extends JPanel {
     // The Player object that contains graphic of the player.
     GUIPlayer myPlayerGUI;
 
-    Enviroment myE;
+    Lighting myE;
 
 
 
     // Singleton instance
     private static GamePanel instance;
 
-    private GamePanel(char[][] theArray, Player thePlayer) throws FileNotFoundException {
+    public GamePanel(char[][] theArray, Player thePlayer) throws FileNotFoundException {
         // this.setPreferredSize(new Dimension((int) screenSize.getWidth(), (int) screenSize.getHeight()));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         myMazeArray = theArray;
         // The 2D Array of the map layout.
         myMazemap = new MazeMap(myMazeArray, theArray[0].length);
-        myPlayerGUI = GUIPlayer.getInstance(thePlayer.getLocation());
-        myE = new Enviroment(myPlayerGUI);
+        myPlayerGUI = new GUIPlayer(thePlayer.getLocation(), theArray[0].length);
+        myE = Lighting.getInstance();
+        myE.setup();
         start();
 
     }
 
-    public static GamePanel getInstance(char[][] theArray, Player thePlayer) throws FileNotFoundException {
-        if (instance == null) {
-            instance = new GamePanel(theArray, thePlayer);
-        }
-        return instance;
-    }
+//    public static GamePanel getInstance(char[][] theArray, Player thePlayer) throws FileNotFoundException {
+//        if (instance == null) {
+//            instance = new GamePanel(theArray, thePlayer);
+//        }
+//        return instance;
+//    }
 
     /**
      * Initializing GamePanel object.
@@ -88,7 +89,7 @@ public class GamePanel extends JPanel {
         Graphics2D g2 = (Graphics2D) theGraphics; // graphics to graphics 2D
         myMazemap.draw(g2);
         myPlayerGUI.draw(g2);
-        myE.draw(g2);
+//        myE.draw(g2);
         g2.dispose();
     }
 }

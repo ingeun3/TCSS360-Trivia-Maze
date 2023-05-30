@@ -1,17 +1,19 @@
 package view;
 
-import model.Maze;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
 
-public class LevelInterface {
+public class LevelInterface extends JPanel {
 
-    // The JPanel object that level buttons contain.
-    public final JPanel myLevelButtonPanels;
+    private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+    private static final ImageIcon LEVEL = new ImageIcon("level.png");
+
+    private final int SCREEN_WIDTH = (int) screenSize.getWidth();
+
+    private final int SCREEN_HEIGHT = (int) screenSize.getHeight();
 
     // The JButton object for level1.
     private final JButton myLevel1;
@@ -24,38 +26,97 @@ public class LevelInterface {
 
     private char[][] myLevelArrayMap;
 
+    private int myNum ;
 
-    public LevelInterface(char[][] theLevelMap) {
-        myLevelButtonPanels = new JPanel(new BorderLayout());
-        myLevel1 = new JButton("Level1");
-        myLevel2     = new JButton("Level2");
-        myLevel3 = new JButton("Level3");
-        myLevelArrayMap = theLevelMap;
+    private int myCompletedLevel ;
+
+//private static ImageIcon myImage;
+
+    public LevelInterface() {
+        myNum = -1;
+        myCompletedLevel = 1;
+        setLayout(new BorderLayout());
+        myLevel1 = new JButton("Level 1");
+        myLevel2 = new JButton("Level 2");
+        myLevel3 = new JButton("Level 3");
         start();
     }
 
-    private void start() {
-        myLevelButtonPanels.add(myLevel1);
-        myLevelButtonPanels.add(myLevel2);
-        myLevelButtonPanels.add(myLevel3);
-        myLevelButtonPanels.setLayout(new GridLayout(3,1));
+    private void updateMap(char[][] newLevelMap){
+        myLevelArrayMap = newLevelMap;
+    }
 
+    private void start() {
+        unLockLevel();
+        JLayeredPane layeredPane = new JLayeredPane();
+        //SET THE PICTURE
+        layeredPane.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+        //layeredPane.setBackground(Color.gray);
+        JLabel backgroundLabel = new JLabel(LEVEL);
+        backgroundLabel.setBounds(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+        layeredPane.add(backgroundLabel, JLayeredPane.DEFAULT_LAYER);
+
+        JPanel buttonPanel = new JPanel(new GridLayout(3, 1));
+        buttonPanel.setOpaque(false);
+        buttonPanel.setBounds(SCREEN_WIDTH/2- 750, SCREEN_HEIGHT/2 - 300, 1500, 600);
+
+//        myLevel1.setBackground(Color.lightGray);
+        myLevel1.setFont(new Font("Arial", Font.BOLD, 40));
+        myLevel2.setFont(new Font("Arial", Font.BOLD, 40));
+        myLevel3.setFont(new Font("Arial", Font.BOLD, 40));
+
+        buttonPanel.add(myLevel1);
+        buttonPanel.add(myLevel2);
+        buttonPanel.add(myLevel3);
+
+        layeredPane.add(buttonPanel, JLayeredPane.PALETTE_LAYER);
+        add(layeredPane, BorderLayout.CENTER);
         myLevel1.addActionListener(new ActionListener() {
-        public void actionPerformed(final ActionEvent theEvent) {
-            
-            System.out.println("it clicked");
-        }
+            public void actionPerformed(final ActionEvent theEvent) {
+                myNum = 1;
+                //char[][] level1Map =
+                //updateMap(level1Map);
+            }
         });
         myLevel2.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent theEvent) {
-                System.out.println("it clicked");
+                myNum = 2;
             }
+
         });
 
         myLevel3.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent theEvent) {
-                System.out.println("it clicked");
+                myNum = 3;
             }
         });
-}
     }
+
+    public int getMyNum(){
+        int temp = myNum;
+        myNum = -1;
+        return temp;
+    }
+
+
+    public void unLockLevel(){
+        if (myCompletedLevel == 1){
+            myLevel1.setEnabled(true);
+            myLevel2.setEnabled(false);
+            myLevel3.setEnabled(false);
+        } else if (myCompletedLevel == 2){
+            myLevel1.setEnabled(true);
+            myLevel2.setEnabled(true);
+            myLevel3.setEnabled(false);
+        } else if (myCompletedLevel == 3){
+            myLevel1.setEnabled(true);
+            myLevel2.setEnabled(true);
+            myLevel3.setEnabled(true);
+        }
+        myCompletedLevel++;
+
+
+    }
+
+}

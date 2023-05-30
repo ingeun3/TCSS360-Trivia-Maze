@@ -14,8 +14,6 @@ public class Player {
 
 	// Number of available moves on a player object.
 	private static int myMove;
-	// Boolean living status of player object (true if alive, false if otherwise),
-	private static boolean myAlive;
 
 	private Maze myMaze;
 
@@ -28,7 +26,6 @@ public class Player {
 	public Player(final int theMove, final String theMapName) throws FileNotFoundException {
 		myMaze = new Maze(theMapName);
 		myPlayerLocation = myMaze.getMyPlayerLocation();
-		myAlive = true;
 		myMove = theMove;
 
 	}
@@ -63,10 +60,12 @@ public class Player {
 				canPass = true;
 			}
 		}
-
+			myMove--;
 		return canPass;
 	}
-
+	public int getMazeLength() {
+		return myMaze.getArray()[0].length;
+	}
 	public void movePlayer(Point thePoint) {
 
 		myMaze.setArray(thePoint);
@@ -85,33 +84,24 @@ public class Player {
 		return myMove;
 	}
 
-	public void setMyMove() {
-		myMove--;
-		if(myMove <= 0) {
-			myAlive = false;
-		}
+	public void setMyMove(final int theMove) {
+		myMove = theMove;
 	}
 
 	/**
 	 * Checks if player is alive.
 	 */
-	protected void isAlive() {
-		if(myMove <= 0) {
-			myAlive = false;
+	public boolean isAlive() {
+		boolean livingStatus = true;
+		if(myMove < 0) {
+			livingStatus = false;
 		}
+		return livingStatus;
 	}
 
 	public Point getLocation() {
 		return myPlayerLocation;
 	}
-	/**
-	 * Getter method for the living status of a player.
-	 * @return true if player is alive and false otherwise.
-	 */
-	public boolean getLivingStatus() {
-		return myAlive;
-	}
-
 	/**
 	 * Overrides the toString method.
 	 */

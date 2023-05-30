@@ -8,86 +8,67 @@ import java.io.FileNotFoundException;
 
 import model.Maze;
 
-public class NorthPanel extends JPanel{
-    // Class Constants
+public class NorthPanel extends JPanel {
 
-    // The JPanel object that contains buttons.
-    private final JPanel myButtonPanel;
-    // The JButton object for Help buttons.
-
-    private final JButton myHomeButton;
+    private static NorthPanel myInstance;
+    ;
+    private JButton myStageButton;
 
 
-    private final JButton myHelpButton;
-    // The JButton object for Save buttons.
-    private final JButton mySaveButton;
-    // The JButton object for Level buttons.
-    private final JButton myLevelButton;
-
-    // Class Fields
-
-    // The Level that will display in the center of the NorthPanel.
     private JLabel myLevel;
-    // The number of remaining moves display in the right of the NorthPanel.
     private JLabel myMoves;
 
-    /**
-     * The default constructor for NorthPanel.
-     * @param theLevel the current level that will display in the center of the NorthPanel.
-     * @param theMoves the number of remaining moves that will display in the right of the NorthPanel.
-     */
-    public NorthPanel(String theLevel, String theMoves) {
-        myButtonPanel = new JPanel(new FlowLayout());
-        myHomeButton = new JButton("Home");
-        myHelpButton = new JButton("Help");
-        mySaveButton     = new JButton("Save");
-        myLevelButton = new JButton("Level");
-        myLevel = new JLabel(theLevel,  SwingConstants.CENTER);
-        myMoves = new JLabel(theMoves,  SwingConstants.CENTER);
-        start();
-    }
+    private boolean myStageButtonClicked;
 
-    /**
-     * Initializing NorthPanel.
-     */
-    private void start() {
-        myButtonPanel.add(myHelpButton);
-        myButtonPanel.add(mySaveButton);
-        myButtonPanel.add(myLevelButton);
-        myButtonPanel.setLayout(new FlowLayout());
-//        myButtonPanel.setLayout(new GridLayout(1,3));
+    private NorthPanel(String theLevel, String theMoves) {
+        myStageButtonClicked = false;
+        myStageButton = new JButton("Stage");
+        myLevel = new JLabel(theLevel, SwingConstants.CENTER);
+        myMoves = new JLabel(theMoves, SwingConstants.CENTER);
 
-        myHelpButton.addActionListener(new ActionListener() {
-            public void actionPerformed(final ActionEvent theEvent) {
-                try {
-                    Maze mazeMap = new Maze("tutorial_map.txt");
-                    TutorialFrame tutorial = new TutorialFrame();
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-        this.add(myButtonPanel);
+        myStageButton.setBackground(Color.GRAY);
+
+        this.add(myStageButton);
         this.add(myLevel);
         this.add(myMoves);
         this.setLayout(new GridLayout(1, 3));
+        start();
     }
 
-    /**
-     * Updates the current level.
-     * @param theLevel the level you want to update to.
-     */
+    public static NorthPanel getInstance(String theLevel, String theMoves) {
+        if (myInstance == null) {
+            synchronized (NorthPanel.class) {
+                if (myInstance == null) {
+                    myInstance = new NorthPanel(theLevel, theMoves);
+                }
+            }
+        }
+        return myInstance;
+    }
+
+    public void start() {
+        myStageButton.addActionListener(new ActionListener() {
+            public void actionPerformed(final ActionEvent theEvent) {
+                myStageButtonClicked = true;
+            }
+
+        });
+    }
+    public static NorthPanel getInstance() {
+        return myInstance;
+    }
+
+    public boolean stageButton() {
+        boolean flag = myStageButtonClicked;
+        myStageButtonClicked = false;
+        return flag;
+    }
+
     public void setLevel(String theLevel) {
-        myLevel = new JLabel(theLevel);
-        start();
+        myLevel.setText(theLevel);
     }
 
-    /**
-     * Updates the remaining moves.
-     * @param theMoves the updated remaining number of  moves.
-     */
     public void setMoves(String theMoves) {
-        myMoves = new JLabel(theMoves);
-        start();
+        myMoves.setText(theMoves);
     }
 }

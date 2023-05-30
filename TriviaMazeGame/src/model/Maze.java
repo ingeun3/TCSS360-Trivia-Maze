@@ -43,7 +43,7 @@ public class Maze {
         myIntersections = intersections(myMaze);
         myQuestionPoints = questionPointgenerator();
         myPlayerLocation = playerLocation();
-        myExit = new Point(0,0);
+        myExit = exitLocation();
     }
 
     /**
@@ -63,7 +63,8 @@ public class Maze {
      * @param thePoint The point player wants to move.
      */
     public void setArray(Point thePoint) {
-        if(thePoint.x > 0 && thePoint.x > myMaze.length - 1 && thePoint.y > 0    && thePoint.y > myMaze[0].length - 1) {
+
+        if(thePoint.x >= 0 && thePoint.x <= myMaze.length - 1 && thePoint.y >= 0 && thePoint.y <= myMaze[0].length - 1) {
             if (myMaze[thePoint.y][thePoint.x] != '@') {
                 myMaze[myPlayerLocation.y][myPlayerLocation.x] = '+';
                 myMaze[thePoint.y][thePoint.x] = 'M';
@@ -73,15 +74,28 @@ public class Maze {
 
 
     }
-
+    public Point getMyExit() {
+        return myExit;
+    }
     /**
      * This method returns the location of the player in Point object.
      * @return the location of the player.
      */
     private Point playerLocation() {
         for (int i = 0; i < myMaze.length; i++) {
-            for (int j = 0; j < myMaze.length; j++) {
+            for (int j = 0; j < myMaze[0].length; j++) {
                 if (myMaze[i][j] == 'M') {
+                    return new Point(j,i);
+                }
+            }
+        }
+        return null;
+    }
+
+    private Point exitLocation() {
+        for (int i = 0; i < myMaze.length; i++) {
+            for (int j = 0; j < myMaze[0].length; j++) {
+                if (myMaze[i][j] == 'E') {
                     return new Point(j,i);
                 }
             }
