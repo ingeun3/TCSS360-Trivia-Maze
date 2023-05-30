@@ -62,7 +62,7 @@ public class GameInterface {
      * Starting the GUI
      */
     public void start() {
-        myGameInterface.setSize(800, 600);
+        myGameInterface.setPreferredSize(new Dimension(800, 600));
         myGameInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myGameInterface.setExtendedState(JFrame.MAXIMIZED_BOTH);
         myGameInterface.setLocationRelativeTo(null);

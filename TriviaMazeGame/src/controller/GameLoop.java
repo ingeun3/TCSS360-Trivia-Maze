@@ -14,6 +14,8 @@ public class GameLoop {
     private static final String MAP2 = "maze_map4.txt";
     private static final String MAP3 = "maze_map5.txt";
 
+
+
     private int myInitialMoves = 0;
 
 
@@ -27,7 +29,7 @@ public class GameLoop {
 
     private int myCurrentLevel;
 
-    private int completedLevels;
+    private int myCompletedLevel;
 
     private String mymMazeFileName;
 
@@ -36,17 +38,17 @@ public class GameLoop {
     private boolean level = true;
     private boolean game = false;
 
+
+
     public GameLoop() throws FileNotFoundException {
-        completedLevels = 1;
+        myCompletedLevel = 1;
         myGameInterface = GameInterface.getInstance(1, 100);
-        myLevelInterface = new LevelInterface(completedLevels);
+        myLevelInterface = new LevelInterface();
         myCurrentGamePanel = null;
         currentMaze = null;
         currentPlayer = null;
         myCurrentController = null;
-
         myCurrentLevel = -1;
-
         start();
     }
     public void start() throws FileNotFoundException {
@@ -117,6 +119,11 @@ public class GameLoop {
 
         } else if(myCurrentController.didWin() && myCurrentLevel < 3) {
             myCurrentLevel++;
+            if (myCurrentLevel > myCompletedLevel) {
+                System.out.println("hi");
+                myCompletedLevel++;
+                myLevelInterface.unLockLevel();
+            }
             gameSetup = false;
 
         } else {

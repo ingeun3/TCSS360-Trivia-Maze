@@ -1,12 +1,9 @@
 package view;
 
-import model.Maze;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
 
 public class LevelInterface extends JPanel {
 
@@ -35,16 +32,13 @@ public class LevelInterface extends JPanel {
 
 //private static ImageIcon myImage;
 
-    public LevelInterface(int theNum) {
+    public LevelInterface() {
         myNum = -1;
-        myCompletedLevel = theNum;
+        myCompletedLevel = 1;
         setLayout(new BorderLayout());
         myLevel1 = new JButton("Level 1");
         myLevel2 = new JButton("Level 2");
         myLevel3 = new JButton("Level 3");
-
-        //myMaze = theMaze;
-        // myImage = theImage;
         start();
     }
 
@@ -53,6 +47,7 @@ public class LevelInterface extends JPanel {
     }
 
     private void start() {
+        unLockLevel();
         JLayeredPane layeredPane = new JLayeredPane();
         //SET THE PICTURE
         layeredPane.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -77,19 +72,6 @@ public class LevelInterface extends JPanel {
 
         layeredPane.add(buttonPanel, JLayeredPane.PALETTE_LAYER);
         add(layeredPane, BorderLayout.CENTER);
-        if (myCompletedLevel == 1){
-            myLevel1.setEnabled(true);
-            myLevel2.setEnabled(false);
-            myLevel3.setEnabled(false);
-        } else if (myCompletedLevel == 2){
-            myLevel1.setEnabled(true);
-            myLevel2.setEnabled(true);
-            myLevel3.setEnabled(false);
-        } else if (myCompletedLevel == 3){
-            myLevel1.setEnabled(true);
-            myLevel2.setEnabled(true);
-            myLevel3.setEnabled(true);
-        }
         myLevel1.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent theEvent) {
                 myNum = 1;
@@ -110,16 +92,31 @@ public class LevelInterface extends JPanel {
             }
         });
     }
-//    public void addLevelButtonListener(ActionListener actionListener) {
-//
-//        myLevel1.addActionListener(actionListener);
-//        myLevel2.addActionListener(actionListener);
-//        myLevel3.addActionListener(actionListener);
-//    }
+
     public int getMyNum(){
         int temp = myNum;
         myNum = -1;
         return temp;
+    }
+
+
+    public void unLockLevel(){
+        if (myCompletedLevel == 1){
+            myLevel1.setEnabled(true);
+            myLevel2.setEnabled(false);
+            myLevel3.setEnabled(false);
+        } else if (myCompletedLevel == 2){
+            myLevel1.setEnabled(true);
+            myLevel2.setEnabled(true);
+            myLevel3.setEnabled(false);
+        } else if (myCompletedLevel == 3){
+            myLevel1.setEnabled(true);
+            myLevel2.setEnabled(true);
+            myLevel3.setEnabled(true);
+        }
+        myCompletedLevel++;
+
+
     }
 
 }
