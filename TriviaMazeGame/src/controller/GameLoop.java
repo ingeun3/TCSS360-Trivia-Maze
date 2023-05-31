@@ -44,7 +44,6 @@ public class GameLoop {
     private boolean level = false;
     private boolean game = false;
 
-
     public GameLoop() throws FileNotFoundException {
         myCompletedLevel = 1;
         myTitlePanel = new TitlePanel();
@@ -128,7 +127,7 @@ public class GameLoop {
             myGameInterface.setCenter(myCurrentGamePanel);
             gameSetup = true;
         }
-        if(myCurrentNorthPanel.stageButton()) {
+        if(myCurrentNorthPanel.stageButton() || myCurrentGameLogic.goToStage()) {
 
             level = true;
             game = false;
@@ -139,7 +138,6 @@ public class GameLoop {
         } else if(myCurrentGameLogic.didWin() && myCurrentLevel < 3) {
             myCurrentLevel++;
             if (myCurrentLevel > myCompletedLevel) {
-                System.out.println("hi");
                 myCompletedLevel++;
                 myLevelInterface.unLockLevel();
             }

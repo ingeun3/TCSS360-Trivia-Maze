@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 import model.Maze;
 
@@ -18,18 +20,37 @@ public class NorthPanel extends JPanel {
     private JLabel myLevel;
     private JLabel myMoves;
 
+    private Font myFont;
+
     private boolean myStageButtonClicked;
 
     private NorthPanel(String theLevel, String theMoves) {
+        try {
+            InputStream is = getClass().getResourceAsStream("smalle.ttf");
+            myFont = Font.createFont(Font.TRUETYPE_FONT, is);
+        } catch (FontFormatException | IOException e) {
+            throw new RuntimeException(e);
+        }
         myStageButtonClicked = false;
-        myStageButton = new JButton("Stage");
-        myLevel = new JLabel(theLevel, SwingConstants.CENTER);
-        myMoves = new JLabel(theMoves, SwingConstants.CENTER);
 
-       // myStageButton.setBackground(Color.GRAY);
+        setBackground(new Color(0, 0, 0));
+
+        myStageButton = new JButton("Stage");
+        myStageButton.setFont(myFont.deriveFont(Font.PLAIN, 20));
+        myStageButton.setForeground(Color.WHITE);
+        myStageButton.setBackground(new Color(0, 0, 0));
+
+
+        myLevel = new JLabel(theLevel, SwingConstants.CENTER);
+        myLevel.setForeground(new Color(255, 255, 255, 200));
+        myLevel.setFont(myFont.deriveFont(Font.PLAIN, 20));
+
+        myMoves = new JLabel(theMoves, SwingConstants.CENTER);
+        myMoves.setForeground(new Color(255, 255, 255, 200));
+        myMoves.setFont(myFont.deriveFont(Font.PLAIN, 20));
+
 
         this.add(myStageButton);
-        myStageButton.setBackground(Color.WHITE);
         this.add(myLevel);
         this.add(myMoves);
         this.setLayout(new GridLayout(1, 3));

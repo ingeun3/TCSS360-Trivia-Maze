@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class LevelInterface extends JPanel {
 
@@ -30,7 +32,7 @@ public class LevelInterface extends JPanel {
 
     private int myCompletedLevel ;
 
-//private static ImageIcon myImage;
+    private Font myFont;
 
     public LevelInterface() {
         myPanelNumber = 0;
@@ -42,11 +44,14 @@ public class LevelInterface extends JPanel {
         start();
     }
 
-    private void updateMap(char[][] newLevelMap){
-        myLevelArrayMap = newLevelMap;
-    }
-
     private void start() {
+        try {
+            InputStream is = getClass().getResourceAsStream("smalle.ttf");
+            myFont = Font.createFont(Font.TRUETYPE_FONT, is);
+        } catch (FontFormatException | IOException e) {
+            throw new RuntimeException(e);
+        }
+
         unLockLevel();
         JLayeredPane layeredPane = new JLayeredPane();
         //SET THE PICTURE
@@ -62,9 +67,9 @@ public class LevelInterface extends JPanel {
         buttonPanel.setBounds(SCREEN_WIDTH/2- 750, SCREEN_HEIGHT/2 - 300, 1500, 600);
 
 //        myLevel1.setBackground(Color.lightGray);
-        myLevel1.setFont(new Font("Arial", Font.BOLD, 40));
-        myLevel2.setFont(new Font("Arial", Font.BOLD, 40));
-        myLevel3.setFont(new Font("Arial", Font.BOLD, 40));
+        myLevel1.setFont(myFont.deriveFont(Font.PLAIN, 45));
+        myLevel2.setFont(myFont.deriveFont(Font.PLAIN, 45));
+        myLevel3.setFont(myFont.deriveFont(Font.PLAIN, 45));
 
         buttonPanel.add(myLevel1);
         buttonPanel.add(myLevel2);

@@ -19,9 +19,12 @@ public class WinMessage {
     private String myChosenAnswer;
 
     // The answer the player chose.
-
-    public WinMessage() {
-        myOptions = new String[]{"Play Again", "Next"};
+    public WinMessage(int theLevel) {
+        if (theLevel == 3) {
+            myOptions = new String[]{"Play Again", "Go to Stage"};
+        } else {
+            myOptions = new String[]{"Play Again", "Next"};
+        }
         myChosenAnswer = "";
     }
     public void start() {

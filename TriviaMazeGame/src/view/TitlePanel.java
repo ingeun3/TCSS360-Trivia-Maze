@@ -76,8 +76,13 @@ public class TitlePanel extends JPanel {
     public void start() {
         myStartButton.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent theEvent) {
-                System.out.println("hi");
                 myPanelNumber = 0;
+            }
+
+        });
+        myQuitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(final ActionEvent theEvent) {
+                System.exit(0);
             }
 
         });
