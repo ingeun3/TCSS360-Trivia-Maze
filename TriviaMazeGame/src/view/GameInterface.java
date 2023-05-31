@@ -66,6 +66,7 @@ public class GameInterface extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
+       // setUndecorated(true);
     }
     public void removeNorthPanel() {
         getContentPane().remove(myNorthPanel);

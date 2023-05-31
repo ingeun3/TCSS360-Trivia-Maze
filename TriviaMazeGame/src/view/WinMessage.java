@@ -20,7 +20,7 @@ public class WinMessage {
 
     // The answer the player chose.
     public WinMessage(int theLevel) {
-        if (theLevel == 3) {
+        if (theLevel == 4) {
             myOptions = new String[]{"Play Again", "Go to Stage"};
         } else {
             myOptions = new String[]{"Play Again", "Next"};
