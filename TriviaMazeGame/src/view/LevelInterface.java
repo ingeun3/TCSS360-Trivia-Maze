@@ -57,7 +57,6 @@ public class LevelInterface extends JPanel {
 
         //SET THE PICTURE
         layeredPane.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
-        //layeredPane.setBackground(Color.gray);
         JLabel backgroundLabel = new JLabel(LEVEL);
         backgroundLabel.setBounds(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -71,7 +70,6 @@ public class LevelInterface extends JPanel {
         myLevel1.setFont(myFont.deriveFont(Font.PLAIN, 45));
         myLevel2.setFont(myFont.deriveFont(Font.PLAIN, 45));
         myLevel3.setFont(myFont.deriveFont(Font.PLAIN, 45));
-        //myLevel1.setPreferredSize(new Dimension(SCREEN_WIDTH/2, SCREEN_HEIGHT/2));
 
         buttonPanel.add(myLevel1);
         buttonPanel.add(myLevel2);

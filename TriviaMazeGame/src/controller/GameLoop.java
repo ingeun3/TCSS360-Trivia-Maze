@@ -3,9 +3,6 @@ package controller;
 import model.Maze;
 import model.Player;
 import view.*;
-
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.FileNotFoundException;
 
 public class GameLoop {

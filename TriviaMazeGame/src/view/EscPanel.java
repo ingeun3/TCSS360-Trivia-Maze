@@ -50,16 +50,18 @@ public class EscPanel extends JFrame {
         });
 
         // Set button size and font
-        yesButton.setPreferredSize(new Dimension(120, 60));
         yesButton.setFont(myFont.deriveFont(Font.PLAIN, 45));
-        //yesButton.setForeground(Color.WHITE);
+        yesButton.setForeground(Color.WHITE);
+        yesButton.setBorderPainted(false);
+        yesButton.setOpaque(true);
         yesButton.setBackground(new Color(0, 0, 0));
-        yesButton.setOpaque(false);
-        noButton.setPreferredSize(new Dimension(120, 60));
+
         noButton.setFont(myFont.deriveFont(Font.PLAIN, 45));
-       // noButton.setForeground(Color.WHITE); this make button to look uglier in game panle.
+        noButton.setForeground(Color.WHITE);
+        noButton.setOpaque(true);
+        noButton.setBorderPainted(false);
         noButton.setBackground(new Color(0, 0, 0));
-        noButton.setOpaque(false);
+
 
         buttonPanel.add(yesButton);
         buttonPanel.add(noButton);
