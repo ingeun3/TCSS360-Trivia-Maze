@@ -93,7 +93,7 @@ public class Player {
 	 */
 	public boolean isAlive() {
 		boolean livingStatus = true;
-		if(myMove < 0) {
+		if(myMove <= 0) {
 			livingStatus = false;
 		}
 		return livingStatus;

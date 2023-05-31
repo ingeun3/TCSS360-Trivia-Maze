@@ -64,10 +64,8 @@ public class GameInterface extends JFrame{
     public void start() {
         setPreferredSize(new Dimension(800, 600));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
         setVisible(true);
-       // myGamePanel.requestFocus();
     }
     public void removeNorthPanel() {
         getContentPane().remove(myNorthPanel);

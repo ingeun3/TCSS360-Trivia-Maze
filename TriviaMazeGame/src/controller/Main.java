@@ -20,8 +20,8 @@ public class Main {
 
 
     public static void main(String[] theArgs) throws FileNotFoundException {
-        //Sound sound = new Sound();
-        //sound.playMusic();
+        Sound sound = new Sound();
+//        sound.playMusic();
        // setLookAndFeel();
         new GameLoop().start();
     }

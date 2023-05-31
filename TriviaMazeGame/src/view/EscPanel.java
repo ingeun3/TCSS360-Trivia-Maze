@@ -9,7 +9,6 @@ import java.io.InputStream;
 public class EscPanel extends JFrame {
 
     private Font myFont;
-
     public EscPanel() {
         try {
             InputStream is = getClass().getResourceAsStream("smalle.ttf");
@@ -17,7 +16,6 @@ public class EscPanel extends JFrame {
         } catch (FontFormatException | IOException e) {
             throw new RuntimeException(e);
         }
-
         setSize(500, 600);
         setUndecorated(true);
         setBackground(new Color(0, 0, 0, 200)); // Transparent black background
@@ -40,8 +38,7 @@ public class EscPanel extends JFrame {
         yesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Handle "Yes" button click event
-                JOptionPane.showMessageDialog(null, "You clicked Yes!");
+                 System.exit(0);
             }
         });
 
@@ -96,4 +93,5 @@ public class EscPanel extends JFrame {
             }
         });
     }
+
 }

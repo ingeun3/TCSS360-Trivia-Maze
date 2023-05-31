@@ -53,9 +53,12 @@ public class GameLogic implements KeyListener{
 
     private EscPanel myEscape;
 
+    private boolean myGoToStage;
+
     private int myMove;
     public GameLogic(String theMapName, int theMove, int theLevel) throws FileNotFoundException {
         myEscape = new EscPanel();
+        myGoToStage = false;
         myWin = false;
         myMove = theMove;
         myQuestions = new ArrayList<Question>();
@@ -65,7 +68,7 @@ public class GameLogic implements KeyListener{
         connect();
         retrieveData();
         mySize = myQuestions.size();
-        myWinMessage = new WinMessage();
+        myWinMessage = new WinMessage(theLevel);
         myLosingMessage = new LosingMessage();
         myNorthPanel = NorthPanel.getInstance();
 
@@ -143,19 +146,19 @@ public class GameLogic implements KeyListener{
     }
 
     public void update() {
-        if (pressedKeyCode == KeyEvent.VK_W && myPlayer.canMove(myPlayer.PlayerN()) && myPlayer.isAlive()) {
+        if (pressedKeyCode == KeyEvent.VK_W && myPlayer.canMove(myPlayer.PlayerN())) {
             mySprite.setDirection("up");
             mySprite.setY(mySprite.getY() - mySprite.getSpeed());
             myNorthPanel.setMoves(MOVE_PROMPT + myPlayer.getMyMove());
-        } else if (pressedKeyCode == KeyEvent.VK_S && myPlayer.canMove(myPlayer.PlayerS()) && myPlayer.isAlive()) {
+        } else if (pressedKeyCode == KeyEvent.VK_S && myPlayer.canMove(myPlayer.PlayerS())) {
             mySprite.setDirection("down");
             mySprite.setY(mySprite.getY() + mySprite.getSpeed());
             myNorthPanel.setMoves(MOVE_PROMPT + myPlayer.getMyMove());
-        } else if (pressedKeyCode == KeyEvent.VK_A && myPlayer.canMove(myPlayer.PlayerW()) && myPlayer.isAlive()) {
+        } else if (pressedKeyCode == KeyEvent.VK_A && myPlayer.canMove(myPlayer.PlayerW())) {
             mySprite.setDirection("left");
             mySprite.setX(mySprite.getX() - mySprite.getSpeed());
             myNorthPanel.setMoves(MOVE_PROMPT + myPlayer.getMyMove());
-        } else if (pressedKeyCode == KeyEvent.VK_D && myPlayer.canMove(myPlayer.PlayerE()) && myPlayer.isAlive()) {
+        } else if (pressedKeyCode == KeyEvent.VK_D && myPlayer.canMove(myPlayer.PlayerE())) {
             mySprite.setDirection("right");
             mySprite.setX(mySprite.getX() + mySprite.getSpeed());
             myNorthPanel.setMoves(MOVE_PROMPT + myPlayer.getMyMove());
@@ -181,6 +184,8 @@ public class GameLogic implements KeyListener{
                 myLighting.setup();
             } else if (myWinMessage.getChoice() == "Next") {
                 myWin = true;
+            } else if (myWinMessage.getChoice() == "Go to Stage") {
+                myGoToStage = true;
             }
         } else if (!myPlayer.isAlive()) {
             myLosingMessage.start();
@@ -195,11 +200,13 @@ public class GameLogic implements KeyListener{
                 myLighting.setSize(350);
                 myLighting.setup();
             } else if (myLosingMessage.getChoice() == "Go to Stage") {
-
+                myGoToStage = true;
             }
         }
     }
-
+    public boolean goToStage() {
+        return myGoToStage;
+    }
     public boolean didWin() {
         return myWin;
     }
