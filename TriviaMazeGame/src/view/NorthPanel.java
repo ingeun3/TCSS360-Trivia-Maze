@@ -35,10 +35,15 @@ public class NorthPanel extends JPanel {
 
         setBackground(new Color(0, 0, 0));
 
+
         myStageButton = new JButton("Stage");
         myStageButton.setFont(myFont.deriveFont(Font.PLAIN, 20));
+        myStageButton.setBackground(Color.black);
+        //
+        myStageButton.setOpaque(true);
+        myStageButton.setBorderPainted(false);
         myStageButton.setForeground(Color.WHITE);
-        myStageButton.setBackground(new Color(0, 0, 0));
+       // myStageButton.setBackground(new Color(0, 0, 0));
 
 
         myLevel = new JLabel(theLevel, SwingConstants.CENTER);

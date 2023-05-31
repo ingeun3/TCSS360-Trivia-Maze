@@ -43,25 +43,29 @@ public class TitlePanel extends JPanel {
         } catch (FontFormatException | IOException e) {
             throw new RuntimeException(e);
         }
-
         setBackground(new Color(0, 0, 0)); // Transparent black background
-        myButtonPanel.setBackground(new Color(0, 0, 0, 200)); // Set the panel's background same as frame
+       myButtonPanel.setBackground(new Color(0, 0, 0)); // Set the panel's background same as frame
 
 //        myButtonPanel.setBounds(300, 500, 300, 100);
         myStartButton.setPreferredSize(new Dimension(120, 60));
         myStartButton.setFont(myFont.deriveFont(Font.PLAIN, 45));
         myStartButton.setForeground(Color.WHITE);
         myStartButton.setBackground(new Color(0, 0, 0));
+        //myStartButton.setOpaque(true);
+        myStartButton.setBorderPainted(false);
 //        myStartButton.setOpaque(false);
         myAboutButton.setPreferredSize(new Dimension(120, 60));
         myAboutButton.setFont(myFont.deriveFont(Font.PLAIN, 45));
         myAboutButton.setForeground(Color.WHITE);
         myAboutButton.setBackground(new Color(0, 0, 0));
-//        myAboutButton.setOpaque(false);
+        myAboutButton.setBorderPainted(false);
+
         myQuitButton.setPreferredSize(new Dimension(120, 60));
         myQuitButton.setFont(myFont.deriveFont(Font.PLAIN, 45));
         myQuitButton.setForeground(Color.WHITE);
         myQuitButton.setBackground(new Color(0, 0, 0));
+        //myQuitButton.setOpaque(true);
+        myQuitButton.setBorderPainted(false);
 //        myQuitButton.setOpaque(false);
         myButtonPanel.add(myStartButton);
         myButtonPanel.add(myAboutButton);
