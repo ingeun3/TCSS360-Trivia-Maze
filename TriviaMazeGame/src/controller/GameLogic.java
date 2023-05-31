@@ -16,7 +16,7 @@ import model.Question;
 import org.sqlite.SQLiteDataSource;
 import view.*;
 
-public class GameLogic implements KeyListener{
+public class GameLogic implements KeyListener {
     private static final String MOVE_PROMPT = "Remaining Moves: ";
     private Player myPlayer;
     private GUIPlayer mySprite;
@@ -43,9 +43,9 @@ public class GameLogic implements KeyListener{
 
     private NorthPanel myNorthPanel;
 
-    private WinMessage myWinMessage;
-
-    private LosingMessage myLosingMessage;
+//    private WinMessage myWinMessage;
+//
+//    private LosingMessage myLosingMessage;
 
     private Maze myMaze;
 
@@ -56,6 +56,7 @@ public class GameLogic implements KeyListener{
     private boolean myGoToStage;
 
     private int myMove;
+
     public GameLogic(String theMapName, int theMove, int theLevel) throws FileNotFoundException {
         myEscape = new EscPanel();
         myGoToStage = false;
@@ -68,8 +69,8 @@ public class GameLogic implements KeyListener{
         connect();
         retrieveData();
         mySize = myQuestions.size();
-        myWinMessage = new WinMessage(theLevel);
-        myLosingMessage = new LosingMessage();
+//        myWinMessage = new WinMessage(theLevel);
+//        myLosingMessage = new LosingMessage();
         myNorthPanel = NorthPanel.getInstance();
 
         myMaze = new Maze(theMapName);
@@ -79,7 +80,7 @@ public class GameLogic implements KeyListener{
         myEndPoint = myMaze.getMyExit();
         myPoint = myPlayer.getLocation();
         myStartPoint = myPlayer.getLocation();
-        mySprite = new GUIPlayer (myPlayer.getLocation(),myPlayer.getMazeLength());
+        mySprite = new GUIPlayer(myPlayer.getLocation(), myPlayer.getMazeLength());
 
         myLighting = Lighting.getInstance(mySprite, 350);
         myLighting.setup();
@@ -110,10 +111,10 @@ public class GameLogic implements KeyListener{
     }
 
 
-
     @Override
     public void keyTyped(KeyEvent e) {
     }
+
     private int pressedKeyCode = -1;
 
     @Override
@@ -122,7 +123,7 @@ public class GameLogic implements KeyListener{
         if (code == KeyEvent.VK_W && pressedKeyCode != KeyEvent.VK_W && myPlayer.isAlive()) {
             pressedKeyCode = KeyEvent.VK_W;
             update();
-        } else if (code == KeyEvent.VK_S && pressedKeyCode != KeyEvent.VK_S && myPlayer.isAlive())  {
+        } else if (code == KeyEvent.VK_S && pressedKeyCode != KeyEvent.VK_S && myPlayer.isAlive()) {
             pressedKeyCode = KeyEvent.VK_S;
             update();
         } else if (code == KeyEvent.VK_A && pressedKeyCode != KeyEvent.VK_A && myPlayer.isAlive()) {
@@ -165,14 +166,22 @@ public class GameLogic implements KeyListener{
         }
 
         myLighting.setup();
-     //   promptQuestions();
+        //   promptQuestions();
 
         checkFinish();
     }
+    //if(win) {
+    //1 = play again
+    //2 = next
+    //} else if (lost){
+    //1 = play again
+    //2 = level
+    // }
     public void checkFinish() {
         if(myPlayer.getLocation().equals(myEndPoint)) {
-            myWinMessage.start();
-            if(myWinMessage.getChoice() == "Play Again") {
+            EndingMessage endingMessage = new EndingMessage(true);
+            // if recieve 2, move next level
+            if(endingMessage.getMyOption() == 1) {
                 mySprite.setDirection("up");
                 mySprite.setX(myStartPoint.x * mySprite.getTileSize());
                 mySprite.setY(myStartPoint.y* mySprite.getTileSize());
@@ -182,14 +191,13 @@ public class GameLogic implements KeyListener{
                 myPoint = myStartPoint;
                 myLighting.setSize(350);
                 myLighting.setup();
-            } else if (myWinMessage.getChoice() == "Next") {
+            } else if (endingMessage.getMyOption() == 2) {
                 myWin = true;
-            } else if (myWinMessage.getChoice() == "Go to Stage") {
-                myGoToStage = true;
             }
         } else if (!myPlayer.isAlive()) {
-            myLosingMessage.start();
-            if(myLosingMessage.getChoice() == "Play Again") {
+            // if recieve 2, move to level interface
+            EndingMessage endingMessage = new EndingMessage(false);
+            if(endingMessage.getMyOption() == 1) {
                 mySprite.setDirection("up");
                 mySprite.setX(myStartPoint.x * mySprite.getTileSize());
                 mySprite.setY(myStartPoint.y* mySprite.getTileSize());
@@ -199,7 +207,7 @@ public class GameLogic implements KeyListener{
                 myPoint = myStartPoint;
                 myLighting.setSize(350);
                 myLighting.setup();
-            } else if (myLosingMessage.getChoice() == "Go to Stage") {
+            } else if (endingMessage.getMyOption() == 2) {
                 myGoToStage = true;
             }
         }

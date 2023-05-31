@@ -43,7 +43,7 @@ public class NorthPanel extends JPanel {
         myStageButton.setOpaque(true);
         myStageButton.setBorderPainted(false);
         myStageButton.setForeground(Color.WHITE);
-       // myStageButton.setBackground(new Color(0, 0, 0));
+
 
 
         myLevel = new JLabel(theLevel, SwingConstants.CENTER);
@@ -62,14 +62,13 @@ public class NorthPanel extends JPanel {
 
         start();
     }
-    // Title
+
     // Theme
     // Qiestions
     // Maps
-    // Exit button for Title and level
     // Equation move
     // About
-    // make the stage button work on the losing message
+    // change the theme in the winning/losing message
 
     public static NorthPanel getInstance(String theLevel, String theMoves) {
         if (myInstance == null) {

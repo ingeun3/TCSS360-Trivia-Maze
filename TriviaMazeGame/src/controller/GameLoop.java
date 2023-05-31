@@ -3,9 +3,6 @@ package controller;
 import model.Maze;
 import model.Player;
 import view.*;
-
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.FileNotFoundException;
 
 public class GameLoop {
@@ -15,7 +12,7 @@ public class GameLoop {
     private static final String MAP1 = "maze_map3.txt";
     private static final String MAP2 = "maze_map4.txt";
     private static final String MAP3 = "maze_map5.txt";
-
+    private static final String MAP4 = "maze_map6.txt";
 
 
     private int myInitialMoves = 0;
@@ -70,6 +67,8 @@ public class GameLoop {
                     mymMazeFileName = MAP2;
                 } else if (myCurrentLevel == 3) {
                     mymMazeFileName = MAP3;
+                } else if (myCurrentLevel == 4) {
+                    mymMazeFileName = MAP4;
                 } else {
                     throw new IllegalArgumentException("Invalid level: " + myCurrentLevel);
                 }
@@ -102,16 +101,22 @@ public class GameLoop {
             level = false;
             game = true;
             levelSetup = false;
+        } else if (myCurrentLevel < 0) {
+            level = false;
+            title = true;
+            levelSetup = false;
         }
     }
 
     private void runningGamePanel() throws FileNotFoundException {
         if(!gameSetup) {
             if(myCurrentLevel == 1) {
-                myInitialMoves = 25;
+                myInitialMoves = 1000;
             } else if(myCurrentLevel == 2) {
-                myInitialMoves = 50;
+                myInitialMoves = 25;
             } else if(myCurrentLevel == 3) {
+                myInitialMoves = 50;
+            } else if(myCurrentLevel == 4) {
                 myInitialMoves = 75;
             }
             currentMaze = new Maze(mymMazeFileName);
@@ -135,7 +140,7 @@ public class GameLoop {
             myCurrentLevel = 0;
             myGameInterface.removeNorthPanel();
 
-        } else if(myCurrentGameLogic.didWin() && myCurrentLevel < 3) {
+        } else if(myCurrentGameLogic.didWin() && myCurrentLevel < 4) {
             myCurrentLevel++;
             if (myCurrentLevel > myCompletedLevel) {
                 myCompletedLevel++;
