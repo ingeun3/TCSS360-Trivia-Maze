@@ -44,7 +44,7 @@ public class TitlePanel extends JPanel {
             throw new RuntimeException(e);
         }
         setBackground(new Color(0, 0, 0)); // Transparent black background
-       myButtonPanel.setBackground(new Color(0, 0, 0)); // Set the panel's background same as frame
+        myButtonPanel.setBackground(new Color(0, 0, 0)); // Set the panel's background same as frame
 
 //        myButtonPanel.setBounds(300, 500, 300, 100);
         myStartButton.setPreferredSize(new Dimension(120, 60));
