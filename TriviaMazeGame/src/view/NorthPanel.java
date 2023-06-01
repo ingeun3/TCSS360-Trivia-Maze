@@ -67,8 +67,8 @@ public class NorthPanel extends JPanel {
     // Qiestions
     // Maps
     // Equation move
-    // About
-    // change the theme in the winning/losing message
+
+
 
     public static NorthPanel getInstance(String theLevel, String theMoves) {
         if (myInstance == null) {
