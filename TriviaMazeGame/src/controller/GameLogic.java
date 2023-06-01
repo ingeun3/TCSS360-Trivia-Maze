@@ -133,7 +133,9 @@ public class GameLogic implements KeyListener {
             pressedKeyCode = KeyEvent.VK_D;
             update();
         } else if (code == KeyEvent.VK_ESCAPE) {
+            System.out.println("it hit");
             pressedKeyCode = KeyEvent.VK_ESCAPE;
+
             myEscape.start();
         }
     }

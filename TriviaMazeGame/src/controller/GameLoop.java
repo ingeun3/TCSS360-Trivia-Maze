@@ -3,6 +3,8 @@ package controller;
 import model.Maze;
 import model.Player;
 import view.*;
+
+import java.awt.*;
 import java.io.FileNotFoundException;
 
 public class GameLoop {
@@ -40,6 +42,8 @@ public class GameLoop {
     private boolean title = true;
     private boolean level = false;
     private boolean game = false;
+
+
 
     public GameLoop() throws FileNotFoundException {
         myCompletedLevel = 1;
@@ -133,7 +137,6 @@ public class GameLoop {
             gameSetup = true;
         }
         if(myCurrentNorthPanel.stageButton() || myCurrentGameLogic.goToStage()) {
-
             level = true;
             game = false;
             gameSetup = false;
@@ -153,5 +156,6 @@ public class GameLoop {
         }
 
     }
+
 
 }
