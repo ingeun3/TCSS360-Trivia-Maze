@@ -105,6 +105,10 @@ public class GameLoop {
             level = false;
             game = true;
             levelSetup = false;
+        } else if (myCurrentLevel < 0) {
+            level = false;
+            title = true;
+            levelSetup = false;
         }
     }
 
