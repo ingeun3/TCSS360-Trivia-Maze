@@ -160,7 +160,7 @@ public class GameLogic implements KeyListener {
         }
 
         myLighting.setup();
-         promptQuestions();
+        promptQuestions();
 
         checkFinish();
     }
@@ -179,7 +179,7 @@ public class GameLogic implements KeyListener {
                 @Override
                 public void onOptionSelected(int option) {
                     if (option == 1) {
-                       // System.out.println(option);
+                        // System.out.println(option);
                         // Play again
                         mySprite.setDirection("up");
                         mySprite.setX(myStartPoint.x * mySprite.getTileSize());
@@ -315,8 +315,8 @@ public class GameLogic implements KeyListener {
      * @param theImage the image of a question
      */
     private void addMultipleChoiceQuestion(String theQuestion, String theRightAnswer,
-                                                  String theWrongAnswer1, String theWrongAnswer2,
-                                                  String theImage) {
+                                           String theWrongAnswer1, String theWrongAnswer2,
+                                           String theImage) {
 
         Question question = initializeQuestion(theQuestion, theImage);
         question.addAnswers(theRightAnswer);
@@ -333,7 +333,7 @@ public class GameLogic implements KeyListener {
      * @param theImage the image of a question
      */
     private void addBooleanQuestion(String theQuestion, String theRightAnswer,
-                                           String theWrongAnswer, String theImage) {
+                                    String theWrongAnswer, String theImage) {
 
         Question question = initializeQuestion(theQuestion, theImage);
         question.addAnswers(theRightAnswer);
