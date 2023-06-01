@@ -21,6 +21,8 @@ public class GameInterface extends JFrame{
 
     private JPanel myGamePanel;
 
+    GraphicsDevice mygDevice;
+
   //  private GamePanel myGamePanel;
   //  private LevelInterface myLevelInterface;
   //  private char[][] myMazeArray;
@@ -40,7 +42,8 @@ public class GameInterface extends JFrame{
         String moves = MOVE_PROMPT + theMoves;
        // myGamePanel = GamePanel.getInstance(myMazeArray, thePlayer);
         myNorthPanel =  NorthPanel.getInstance(level, moves);
-       // myLevelInterface = new LevelInterface(theLevel);
+        GraphicsEnvironment gEnviroment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        mygDevice = gEnviroment.getDefaultScreenDevice();
     }
 
     /**
@@ -66,7 +69,11 @@ public class GameInterface extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
-       // setUndecorated(true);
+        //fullScreen();
+    }
+
+    public void fullScreen(){
+        mygDevice.setFullScreenWindow(this);
     }
     public void removeNorthPanel() {
         getContentPane().remove(myNorthPanel);
@@ -77,7 +84,7 @@ public class GameInterface extends JFrame{
         myNorthPanel = thePanel;
         getContentPane().add(myNorthPanel, BorderLayout.NORTH);
         thePanel.requestFocus();
-
+        //fullScreen();
         start();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
@@ -90,6 +97,7 @@ public class GameInterface extends JFrame{
 
         start();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+
     }
     /**
      * Closes the GUI

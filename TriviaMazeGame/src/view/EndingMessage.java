@@ -11,11 +11,10 @@ public class EndingMessage extends JFrame {
     private static final String WINNING_MESSAGE = "GOOD JOB";
     private static final String LOSING_MESSAGE = "LOL YOU SUCK";
     private Font myFont;
-    private int myOption;
+    private OptionSelectedListener optionSelectedListener;
 
     public EndingMessage(boolean theResult) {
         super();
-        myOption = 0;
 
         try {
             InputStream is = getClass().getResourceAsStream("smalle.ttf");
@@ -23,7 +22,6 @@ public class EndingMessage extends JFrame {
         } catch (FontFormatException | IOException e) {
             throw new RuntimeException(e);
         }
-//
 
         JLabel label = new JLabel();
         JPanel buttonPanel = new JPanel();
@@ -69,7 +67,9 @@ public class EndingMessage extends JFrame {
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                myOption = 1;
+                if (optionSelectedListener != null) {
+                    optionSelectedListener.onOptionSelected(1);
+                }
                 dispose(); // Close the window
             }
         });
@@ -77,7 +77,9 @@ public class EndingMessage extends JFrame {
         levelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                myOption = 2;
+                if (optionSelectedListener != null) {
+                    optionSelectedListener.onOptionSelected(2);
+                }
                 dispose(); // Close the window
             }
         });
@@ -85,7 +87,9 @@ public class EndingMessage extends JFrame {
         nextButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                myOption = 2;
+                if (optionSelectedListener != null) {
+                    optionSelectedListener.onOptionSelected(3);
+                }
                 dispose(); // Close the window
             }
         });
@@ -107,18 +111,11 @@ public class EndingMessage extends JFrame {
         setLocationRelativeTo(null);
     }
 
-    public int getMyOption() {
-        return myOption;
+    public void setOptionSelectedListener(OptionSelectedListener listener) {
+        this.optionSelectedListener = listener;
     }
 
-//    public static void main(String[] args) {
-//        EndingMessage test = new EndingMessage(false);
-////        SwingUtilities.invokeLater(new Runnable() {
-////            @Override
-////            public void run() {
-////                EndingMessage test = new EndingMessage(true);
-////            }
-////        });
-//    }
+    public interface OptionSelectedListener {
+        void onOptionSelected(int option);
+    }
 }
-

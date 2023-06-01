@@ -44,13 +44,6 @@ public class GamePanel extends JPanel {
 
     }
 
-//    public static GamePanel getInstance(char[][] theArray, Player thePlayer) throws FileNotFoundException {
-//        if (instance == null) {
-//            instance = new GamePanel(theArray, thePlayer);
-//        }
-//        return instance;
-//    }
-
     /**
      * Initializing GamePanel object.
      */

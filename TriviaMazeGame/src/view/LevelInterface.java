@@ -55,8 +55,6 @@ public class LevelInterface extends JPanel {
 
     private void start() {
         setBackground(new Color(0, 0, 0));
-
-
         myLevel0.setEnabled(false);
         myLevel1.setEnabled(false);
         myLevel2.setEnabled(false);
@@ -96,7 +94,6 @@ public class LevelInterface extends JPanel {
 
         myBackButton.setForeground(Color.WHITE);
         myBackButton.setBackground(new Color(0, 0, 0));
-        //myStartButton.setOpaque(true);
         myBackButton.setBorderPainted(false);
 
 
