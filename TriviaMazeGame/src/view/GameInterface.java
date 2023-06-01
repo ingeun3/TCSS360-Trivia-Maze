@@ -93,10 +93,12 @@ public class GameInterface extends JFrame{
         getContentPane().remove(myGamePanel);
         myGamePanel = thePanel;
         getContentPane().add(myGamePanel, BorderLayout.CENTER);
+
         thePanel.requestFocus();
 
         start();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+       /// fullScreen();
 
     }
     /**
