@@ -190,9 +190,11 @@ public class GameLogic implements KeyListener {
                         myPoint = myStartPoint;
                         myLighting.setSize(350);
                         myLighting.setup();
-                    } else if (option == 2) {
+                        System.out.println("1");
+                    } else if (option == 3) {
+
                         // Next level
-                       // System.out.println("it ");
+                        System.out.println("2");
                         myWin = true;
                     }
                 }
