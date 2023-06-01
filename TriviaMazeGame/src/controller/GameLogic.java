@@ -42,11 +42,6 @@ public class GameLogic implements KeyListener {
     private Point myStartPoint;
 
     private NorthPanel myNorthPanel;
-
-//    private WinMessage myWinMessage;
-//
-//    private LosingMessage myLosingMessage;
-
     private Maze myMaze;
 
     private boolean myWin;
@@ -69,8 +64,6 @@ public class GameLogic implements KeyListener {
         connect();
         retrieveData();
         mySize = myQuestions.size();
-//        myWinMessage = new WinMessage(theLevel);
-//        myLosingMessage = new LosingMessage();
         myNorthPanel = NorthPanel.getInstance();
 
         myMaze = new Maze(theMapName);
@@ -135,7 +128,6 @@ public class GameLogic implements KeyListener {
         } else if (code == KeyEvent.VK_ESCAPE) {
             System.out.println("it hit");
             pressedKeyCode = KeyEvent.VK_ESCAPE;
-
             myEscape.start();
         }
     }
@@ -168,10 +160,11 @@ public class GameLogic implements KeyListener {
         }
 
         myLighting.setup();
-        //   promptQuestions();
+         promptQuestions();
 
         checkFinish();
     }
+
     //if(win) {
     //1 = play again
     //2 = next
@@ -180,40 +173,56 @@ public class GameLogic implements KeyListener {
     //2 = level
     // }
     public void checkFinish() {
-        if(myPlayer.getLocation().equals(myEndPoint)) {
+        if (myPlayer.getLocation().equals(myEndPoint)) {
             EndingMessage endingMessage = new EndingMessage(true);
-            // if recieve 2, move next level
-            if(endingMessage.getMyOption() == 1) {
-                mySprite.setDirection("up");
-                mySprite.setX(myStartPoint.x * mySprite.getTileSize());
-                mySprite.setY(myStartPoint.y* mySprite.getTileSize());
-                myPlayer.movePlayer(myStartPoint);
-                myPlayer.setMyMove(myMove);
-                myNorthPanel.setMoves(MOVE_PROMPT + myMove);
-                myPoint = myStartPoint;
-                myLighting.setSize(350);
-                myLighting.setup();
-            } else if (endingMessage.getMyOption() == 2) {
-                myWin = true;
-            }
+            endingMessage.setOptionSelectedListener(new EndingMessage.OptionSelectedListener() {
+                @Override
+                public void onOptionSelected(int option) {
+                    if (option == 1) {
+                       // System.out.println(option);
+                        // Play again
+                        mySprite.setDirection("up");
+                        mySprite.setX(myStartPoint.x * mySprite.getTileSize());
+                        mySprite.setY(myStartPoint.y * mySprite.getTileSize());
+                        myPlayer.movePlayer(myStartPoint);
+                        myPlayer.setMyMove(myMove);
+                        myNorthPanel.setMoves(MOVE_PROMPT + myMove);
+                        myPoint = myStartPoint;
+                        myLighting.setSize(350);
+                        myLighting.setup();
+                    } else if (option == 2) {
+                        // Next level
+                       // System.out.println("it ");
+                        myWin = true;
+                    }
+                }
+            });
         } else if (!myPlayer.isAlive()) {
-            // if recieve 2, move to level interface
             EndingMessage endingMessage = new EndingMessage(false);
-            if(endingMessage.getMyOption() == 1) {
-                mySprite.setDirection("up");
-                mySprite.setX(myStartPoint.x * mySprite.getTileSize());
-                mySprite.setY(myStartPoint.y* mySprite.getTileSize());
-                myPlayer.movePlayer(myStartPoint);
-                myPlayer.setMyMove(myMove);
-                myNorthPanel.setMoves(MOVE_PROMPT + myMove);
-                myPoint = myStartPoint;
-                myLighting.setSize(350);
-                myLighting.setup();
-            } else if (endingMessage.getMyOption() == 2) {
-                myGoToStage = true;
-            }
+            endingMessage.setOptionSelectedListener(new EndingMessage.OptionSelectedListener() {
+                @Override
+                public void onOptionSelected(int option) {
+                    if (option == 1) {
+                        //System.out.println(option);
+                        // Play again
+                        mySprite.setDirection("up");
+                        mySprite.setX(myStartPoint.x * mySprite.getTileSize());
+                        mySprite.setY(myStartPoint.y * mySprite.getTileSize());
+                        myPlayer.movePlayer(myStartPoint);
+                        myPlayer.setMyMove(myMove);
+                        myNorthPanel.setMoves(MOVE_PROMPT + myMove);
+                        myPoint = myStartPoint;
+                        myLighting.setSize(350);
+                        myLighting.setup();
+                    } else if (option == 2) {
+                        // Go to levels
+                        myGoToStage = true;
+                    }
+                }
+            });
         }
     }
+
     public boolean goToStage() {
         return myGoToStage;
     }

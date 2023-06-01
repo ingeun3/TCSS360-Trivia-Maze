@@ -115,7 +115,7 @@ public class GameLoop {
     private void runningGamePanel() throws FileNotFoundException {
         if(!gameSetup) {
             if(myCurrentLevel == 1) {
-                myInitialMoves = 1000;
+                myInitialMoves = 20;
             } else if(myCurrentLevel == 2) {
                 myInitialMoves = 25;
             } else if(myCurrentLevel == 3) {
