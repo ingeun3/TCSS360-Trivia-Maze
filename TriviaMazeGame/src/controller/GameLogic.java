@@ -3,6 +3,8 @@ package controller;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -16,7 +18,9 @@ import model.Question;
 import org.sqlite.SQLiteDataSource;
 import view.*;
 
-public class GameLogic implements KeyListener {
+import static javax.swing.UIManager.addPropertyChangeListener;
+
+public class GameLogic implements KeyListener, PropertyChangeListener {
     private static final String MOVE_PROMPT = "Remaining Moves: ";
     private Player myPlayer;
     private GUIPlayer mySprite;
@@ -55,9 +59,16 @@ public class GameLogic implements KeyListener {
 
     private boolean myGoToStage;
 
+    private int myEndingMessageChoice;
+
+
     private int myMove;
 
     public GameLogic(String theMapName, int theMove, int theLevel) throws FileNotFoundException {
+
+
+        addPropertyChangeListener(this);
+        myEndingMessageChoice = 0;
         myEscape = new EscPanel();
         myGoToStage = false;
         myWin = false;
@@ -179,9 +190,10 @@ public class GameLogic implements KeyListener {
     // }
     public void checkFinish() {
         if(myPlayer.getLocation().equals(myEndPoint)) {
-            EndingMessage endingMessage = new EndingMessage(true);
+           EndingMessage endingMessage= new EndingMessage(true);
+
             // if recieve 2, move next level
-            if(endingMessage.getMyOption() == 1) {
+            if(endingMessage.popup() == 1) {
                 mySprite.setDirection("up");
                 mySprite.setX(myStartPoint.x * mySprite.getTileSize());
                 mySprite.setY(myStartPoint.y* mySprite.getTileSize());
@@ -191,13 +203,14 @@ public class GameLogic implements KeyListener {
                 myPoint = myStartPoint;
                 myLighting.setSize(350);
                 myLighting.setup();
-            } else if (endingMessage.getMyOption() == 2) {
+            } else if (myEndingMessageChoice == 2) {
                 myWin = true;
             }
         } else if (!myPlayer.isAlive()) {
             // if recieve 2, move to level interface
-            EndingMessage endingMessage = new EndingMessage(false);
-            if(endingMessage.getMyOption() == 1) {
+            EndingMessage endingMessage= new EndingMessage(false);
+
+            if(endingMessage.popup() == 1) {
                 mySprite.setDirection("up");
                 mySprite.setX(myStartPoint.x * mySprite.getTileSize());
                 mySprite.setY(myStartPoint.y* mySprite.getTileSize());
@@ -207,11 +220,22 @@ public class GameLogic implements KeyListener {
                 myPoint = myStartPoint;
                 myLighting.setSize(350);
                 myLighting.setup();
-            } else if (endingMessage.getMyOption() == 2) {
+            } else if (endingMessage.popup() == 2) {
                 myGoToStage = true;
             }
         }
     }
+
+    @Override
+
+    public void propertyChange(final PropertyChangeEvent theEvent) {
+        if ("text".equals(theEvent.getPropertyName())) {
+            myEndingMessageChoice = (int) theEvent.getNewValue();
+            System.out.println("something changed");
+        }
+    }
+
+
     public boolean goToStage() {
         return myGoToStage;
     }

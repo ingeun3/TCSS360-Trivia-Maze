@@ -122,6 +122,7 @@ public class GameLoop {
             currentMaze = new Maze(mymMazeFileName);
             currentPlayer = new Player(myInitialMoves, mymMazeFileName);
             myCurrentGameLogic = new GameLogic(mymMazeFileName, myInitialMoves, myCurrentLevel);
+
             myCurrentGamePanel = new GamePanel(currentMaze.getArray(), currentPlayer);
             myCurrentNorthPanel = NorthPanel.getInstance(LEVEL_PROMPT + myCurrentLevel, MOVE_PROMPT + myInitialMoves);
             myCurrentNorthPanel.setMoves(MOVE_PROMPT + myInitialMoves);

@@ -4,10 +4,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.IOException;
 import java.io.InputStream;
 
 public class EndingMessage extends JFrame {
+
+    private PropertyChangeSupport myPCS;
+
+    private static final String TEXT = "text";
     private static final String WINNING_MESSAGE = "GOOD JOB";
     private static final String LOSING_MESSAGE = "LOL YOU SUCK";
     private Font myFont;
@@ -15,6 +21,8 @@ public class EndingMessage extends JFrame {
 
     public EndingMessage(boolean theResult) {
         super();
+        myPCS = new PropertyChangeSupport(this);
+
         myOption = 0;
 
         try {
@@ -69,6 +77,7 @@ public class EndingMessage extends JFrame {
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                firePropertyChange("text", null, 1);
                 myOption = 1;
                 dispose(); // Close the window
             }
@@ -77,6 +86,9 @@ public class EndingMessage extends JFrame {
         levelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+
+                firePropertyChange("text", null, 2);
                 myOption = 2;
                 dispose(); // Close the window
             }
@@ -85,6 +97,8 @@ public class EndingMessage extends JFrame {
         nextButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                firePropertyChange("text", 0, 2);
+
                 myOption = 2;
                 dispose(); // Close the window
             }
@@ -102,9 +116,29 @@ public class EndingMessage extends JFrame {
         setBackground(new Color(0, 0, 0, 200)); // Transparent black background
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+//        pack(); // Pack the components
+//        setVisible(true);
+//        setLocationRelativeTo(null);
+    }
+
+    public int popup() {
         pack(); // Pack the components
         setVisible(true);
         setLocationRelativeTo(null);
+
+        return myOption;
+
+    }
+
+    //method displays it
+    //returns int
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+       myPCS.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        myPCS.removePropertyChangeListener(listener);
     }
 
     public int getMyOption() {
