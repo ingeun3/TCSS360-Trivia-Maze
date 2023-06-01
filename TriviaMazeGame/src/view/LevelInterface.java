@@ -126,7 +126,7 @@ public class LevelInterface extends JPanel {
 
         myBackButton.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent theEvent) {
-                System.out.println("1");
+                System.out.println("1 it clicked");
                 myPanelNumber = -1;
             }
         });

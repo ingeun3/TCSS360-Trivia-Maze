@@ -25,7 +25,7 @@ public class TitlePanel extends JPanel {
     private Font myFont;
 
     public TitlePanel() {
-        myPanelNumber = -1;
+        myPanelNumber = -3;
         myStartButton = new JButton("Start");
         myAboutButton = new JButton("About");
         myQuitButton = new JButton("Quit");

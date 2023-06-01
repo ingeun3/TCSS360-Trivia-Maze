@@ -4,8 +4,7 @@ import model.Maze;
 import model.Player;
 import view.*;
 
-import java.awt.*;
-import java.io.FileNotFoundException;
+import java.io.*;
 
 public class GameLoop {
     private static final String MOVE_PROMPT = "Remaining Moves: ";
@@ -43,8 +42,6 @@ public class GameLoop {
     private boolean level = false;
     private boolean game = false;
 
-
-
     public GameLoop() throws FileNotFoundException {
         myCompletedLevel = 1;
         myTitlePanel = new TitlePanel();
@@ -54,40 +51,60 @@ public class GameLoop {
         currentMaze = null;
         currentPlayer = null;
         myCurrentGameLogic = null;
-        myCurrentLevel = -1;
+        myCurrentLevel = -2;
         start();
+        load();
     }
     public void start() throws FileNotFoundException {
-        myGameInterface.start();
-        while(true) {
-            if (title) {
-                runningTitleInterface();
-            } else if(level) {
-                runningLevelInterface();
-            } else if (game) {
-                if (myCurrentLevel == 1) {
-                    mymMazeFileName = MAP1;
-                } else if (myCurrentLevel == 2) {
-                    mymMazeFileName = MAP2;
-                } else if (myCurrentLevel == 3) {
-                    mymMazeFileName = MAP3;
-                } else if (myCurrentLevel == 4) {
-                    mymMazeFileName = MAP4;
-                } else {
-                    throw new IllegalArgumentException("Invalid level: " + myCurrentLevel);
+            // Variables for tracking time
+            long startTime;
+            long elapsedTime;
+            myGameInterface.start();
+            int fPS = 60;
+            long frameTimePerSecond = 1000 / fPS;
+            boolean running = true;
+            while (running) {
+                startTime = System.currentTimeMillis();
+                if (title) {
+                    runningTitleInterface();
+                } else if (level) {
+                    runningLevelInterface();
+                } else if (game) {
+                    if (myCurrentLevel == 1) {
+                        mymMazeFileName = MAP1;
+                    } else if (myCurrentLevel == 2) {
+                        mymMazeFileName = MAP2;
+                    } else if (myCurrentLevel == 3) {
+                        mymMazeFileName = MAP3;
+                    } else if (myCurrentLevel == 4) {
+                        mymMazeFileName = MAP4;
+                    } else {
+                        throw new IllegalArgumentException("Invalid level: " + myCurrentLevel);
+                    }
+                    runningGamePanel();
                 }
-                runningGamePanel();
+                // Calculate the elapsed time for this frame
+                elapsedTime = System.currentTimeMillis() - startTime;
+
+                // Delay the loop to maintain the frame rate
+                if (elapsedTime < frameTimePerSecond) {
+                    try {
+                        Thread.sleep(frameTimePerSecond - elapsedTime);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
-    }
     public void runningTitleInterface() {
         if(!titleSetup) {
             myGameInterface.setCenter(myTitlePanel);
             titleSetup = true;
+            System.out.println("second time");
         }
-        System.out.println();
         myCurrentLevel = myTitlePanel.getMyNum();
         if (myCurrentLevel == 0) {
+            System.out.println("currentLeve" + myCurrentLevel);
             title = false;
             level = true;
             titleSetup = false;
@@ -99,16 +116,17 @@ public class GameLoop {
             myGameInterface.setCenter(myLevelInterface);
             levelSetup = true;
         }
-        System.out.println();
         myCurrentLevel = myLevelInterface.getMyNum();
         if (myCurrentLevel > 0) {
             level = false;
             game = true;
             levelSetup = false;
-        } else if (myCurrentLevel < 0) {
+        } else if (myCurrentLevel  < 0) {
+            System.out.println("it goes here");
             level = false;
             title = true;
             levelSetup = false;
+            //titleSetup = false;
         }
     }
 
@@ -156,6 +174,32 @@ public class GameLoop {
         }
 
     }
+    public void save() throws IOException {
+        GameState gameState = new GameState(myCompletedLevel, myCurrentLevel);
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("save.dat")))) {
+            oos.writeObject(gameState);
+            System.out.println("Game saved successfully.");
 
+            System.out.println("it's save");
+
+        } catch (IOException e) {
+            System.out.println("Failed to save the game.");
+            e.printStackTrace();
+        }
+    }
+
+    public void load() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File("save.dat")))) {
+            GameState gameState = (GameState) ois.readObject();
+            myCompletedLevel = gameState.getCompletedLevel();
+            myCurrentLevel = gameState.getCurrentLevel();
+            System.out.println("Game loaded successfully.");
+        } catch (FileNotFoundException e) {
+            // No save file found, continue with default values
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Failed to load the game.");
+            e.printStackTrace();
+        }
+    }
 
 }
