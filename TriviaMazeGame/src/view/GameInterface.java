@@ -69,7 +69,7 @@ public class GameInterface extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
-        //fullScreen();
+       // fullScreen();
     }
 
     public void fullScreen(){
@@ -84,7 +84,7 @@ public class GameInterface extends JFrame{
         myNorthPanel = thePanel;
         getContentPane().add(myNorthPanel, BorderLayout.NORTH);
         thePanel.requestFocus();
-        //fullScreen();
+//        fullScreen();
         start();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
