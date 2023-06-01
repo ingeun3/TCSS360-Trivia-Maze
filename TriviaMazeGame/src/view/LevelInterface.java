@@ -28,8 +28,6 @@ public class LevelInterface extends JPanel {
 
     private final JButton myBackButton;
 
-    private char[][] myLevelArrayMap;
-
     private int myPanelNumber ;
 
     private int myCompletedLevel ;
@@ -48,19 +46,17 @@ public class LevelInterface extends JPanel {
         myLevel3 = new JButton("LVL      3");
         myBackButton = new JButton("<-");
         myStageTitle = new JLabel("SELECT LEVEL", SwingConstants.CENTER);
-        myBackButton.setPreferredSize(new Dimension(200,100));
 
         start();
     }
 
     private void start() {
         setBackground(new Color(0, 0, 0));
-
-
         myLevel0.setEnabled(false);
         myLevel1.setEnabled(false);
         myLevel2.setEnabled(false);
         myLevel3.setEnabled(false);
+        myBackButton.setEnabled(true);
         try {
             InputStream is = getClass().getResourceAsStream("smalle.ttf");
             myFont = Font.createFont(Font.TRUETYPE_FONT, is);
@@ -70,40 +66,43 @@ public class LevelInterface extends JPanel {
 
         unLockLevel();
 
-
         JPanel buttonPanel = new JPanel(new GridLayout(3, 1));
 
         JPanel backPanel = new JPanel(new GridLayout(3,3));
 
         buttonPanel.setBackground(new Color(0, 0, 0));
         backPanel.setBackground(new Color(0, 0, 0));
+
+
         myLevel0.setForeground(Color.WHITE);
         myLevel0.setBackground(new Color(0, 0, 0));
-
         myLevel0.setBorderPainted(false);
+
         myLevel1.setForeground(Color.WHITE);
         myLevel1.setBackground(new Color(0, 0, 0));
-
         myLevel1.setBorderPainted(false);
+
         myLevel2.setForeground(Color.WHITE);
         myLevel2.setBackground(new Color(0, 0, 0));
-
         myLevel2.setBorderPainted(false);
+
         myLevel3.setForeground(Color.WHITE);
         myLevel3.setBackground(new Color(0, 0, 0));
         myLevel3.setBorderPainted(false);
+
         buttonPanel.setOpaque(false);
 
         myBackButton.setForeground(Color.WHITE);
         myBackButton.setBackground(new Color(0, 0, 0));
-        //myStartButton.setOpaque(true);
         myBackButton.setBorderPainted(false);
 
+        backPanel.setOpaque(false);
 
         myLevel0.setFont(myFont.deriveFont(Font.PLAIN, 45));
         myLevel1.setFont(myFont.deriveFont(Font.PLAIN, 45));
         myLevel2.setFont(myFont.deriveFont(Font.PLAIN, 45));
         myLevel3.setFont(myFont.deriveFont(Font.PLAIN, 45));
+
         myBackButton.setFont(myFont.deriveFont(Font.PLAIN, 40));
         myStageTitle.setFont(myFont.deriveFont(Font.PLAIN, 60));
         myStageTitle.setForeground(Color.WHITE);
@@ -122,16 +121,19 @@ public class LevelInterface extends JPanel {
         buttonPanel.add(myLevel2);
         buttonPanel.add(myLevel3);
 
-        this.add(buttonPanel, BorderLayout.CENTER);
         this.add(backPanel, BorderLayout.NORTH);
+        this.add(buttonPanel, BorderLayout.CENTER);
+
         myBackButton.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent theEvent) {
+                System.out.println("1");
                 myPanelNumber = -1;
             }
         });
         myLevel0.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent theEvent) {
-                myPanelNumber = 1;
+                System.out.println("2");
+               myPanelNumber = 1;
             }
         });
         myLevel1.addActionListener(new ActionListener() {

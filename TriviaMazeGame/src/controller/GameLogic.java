@@ -3,8 +3,6 @@ package controller;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -18,9 +16,7 @@ import model.Question;
 import org.sqlite.SQLiteDataSource;
 import view.*;
 
-import static javax.swing.UIManager.addPropertyChangeListener;
-
-public class GameLogic implements KeyListener, PropertyChangeListener {
+public class GameLogic implements KeyListener {
     private static final String MOVE_PROMPT = "Remaining Moves: ";
     private Player myPlayer;
     private GUIPlayer mySprite;
@@ -46,11 +42,6 @@ public class GameLogic implements KeyListener, PropertyChangeListener {
     private Point myStartPoint;
 
     private NorthPanel myNorthPanel;
-
-//    private WinMessage myWinMessage;
-//
-//    private LosingMessage myLosingMessage;
-
     private Maze myMaze;
 
     private boolean myWin;
@@ -59,16 +50,9 @@ public class GameLogic implements KeyListener, PropertyChangeListener {
 
     private boolean myGoToStage;
 
-    private int myEndingMessageChoice;
-
-
     private int myMove;
 
     public GameLogic(String theMapName, int theMove, int theLevel) throws FileNotFoundException {
-
-
-        addPropertyChangeListener(this);
-        myEndingMessageChoice = 0;
         myEscape = new EscPanel();
         myGoToStage = false;
         myWin = false;
@@ -80,8 +64,6 @@ public class GameLogic implements KeyListener, PropertyChangeListener {
         connect();
         retrieveData();
         mySize = myQuestions.size();
-//        myWinMessage = new WinMessage(theLevel);
-//        myLosingMessage = new LosingMessage();
         myNorthPanel = NorthPanel.getInstance();
 
         myMaze = new Maze(theMapName);
@@ -144,6 +126,7 @@ public class GameLogic implements KeyListener, PropertyChangeListener {
             pressedKeyCode = KeyEvent.VK_D;
             update();
         } else if (code == KeyEvent.VK_ESCAPE) {
+            System.out.println("it hit");
             pressedKeyCode = KeyEvent.VK_ESCAPE;
             myEscape.start();
         }
@@ -177,10 +160,11 @@ public class GameLogic implements KeyListener, PropertyChangeListener {
         }
 
         myLighting.setup();
-        //   promptQuestions();
+         promptQuestions();
 
         checkFinish();
     }
+
     //if(win) {
     //1 = play again
     //2 = next
@@ -189,52 +173,57 @@ public class GameLogic implements KeyListener, PropertyChangeListener {
     //2 = level
     // }
     public void checkFinish() {
-        if(myPlayer.getLocation().equals(myEndPoint)) {
-           EndingMessage endingMessage= new EndingMessage(true);
+        if (myPlayer.getLocation().equals(myEndPoint)) {
+            EndingMessage endingMessage = new EndingMessage(true);
+            endingMessage.setOptionSelectedListener(new EndingMessage.OptionSelectedListener() {
+                @Override
+                public void onOptionSelected(int option) {
+                    if (option == 1) {
+                       // System.out.println(option);
+                        // Play again
+                        mySprite.setDirection("up");
+                        mySprite.setX(myStartPoint.x * mySprite.getTileSize());
+                        mySprite.setY(myStartPoint.y * mySprite.getTileSize());
+                        myPlayer.movePlayer(myStartPoint);
+                        myPlayer.setMyMove(myMove);
+                        myNorthPanel.setMoves(MOVE_PROMPT + myMove);
+                        myPoint = myStartPoint;
+                        myLighting.setSize(350);
+                        myLighting.setup();
+                        System.out.println("1");
+                    } else if (option == 3) {
 
-            // if recieve 2, move next level
-            if(endingMessage.popup() == 1) {
-                mySprite.setDirection("up");
-                mySprite.setX(myStartPoint.x * mySprite.getTileSize());
-                mySprite.setY(myStartPoint.y* mySprite.getTileSize());
-                myPlayer.movePlayer(myStartPoint);
-                myPlayer.setMyMove(myMove);
-                myNorthPanel.setMoves(MOVE_PROMPT + myMove);
-                myPoint = myStartPoint;
-                myLighting.setSize(350);
-                myLighting.setup();
-            } else if (myEndingMessageChoice == 2) {
-                myWin = true;
-            }
+                        // Next level
+                        System.out.println("2");
+                        myWin = true;
+                    }
+                }
+            });
         } else if (!myPlayer.isAlive()) {
-            // if recieve 2, move to level interface
-            EndingMessage endingMessage= new EndingMessage(false);
-
-            if(endingMessage.popup() == 1) {
-                mySprite.setDirection("up");
-                mySprite.setX(myStartPoint.x * mySprite.getTileSize());
-                mySprite.setY(myStartPoint.y* mySprite.getTileSize());
-                myPlayer.movePlayer(myStartPoint);
-                myPlayer.setMyMove(myMove);
-                myNorthPanel.setMoves(MOVE_PROMPT + myMove);
-                myPoint = myStartPoint;
-                myLighting.setSize(350);
-                myLighting.setup();
-            } else if (endingMessage.popup() == 2) {
-                myGoToStage = true;
-            }
+            EndingMessage endingMessage = new EndingMessage(false);
+            endingMessage.setOptionSelectedListener(new EndingMessage.OptionSelectedListener() {
+                @Override
+                public void onOptionSelected(int option) {
+                    if (option == 1) {
+                        //System.out.println(option);
+                        // Play again
+                        mySprite.setDirection("up");
+                        mySprite.setX(myStartPoint.x * mySprite.getTileSize());
+                        mySprite.setY(myStartPoint.y * mySprite.getTileSize());
+                        myPlayer.movePlayer(myStartPoint);
+                        myPlayer.setMyMove(myMove);
+                        myNorthPanel.setMoves(MOVE_PROMPT + myMove);
+                        myPoint = myStartPoint;
+                        myLighting.setSize(350);
+                        myLighting.setup();
+                    } else if (option == 2) {
+                        // Go to levels
+                        myGoToStage = true;
+                    }
+                }
+            });
         }
     }
-
-    @Override
-
-    public void propertyChange(final PropertyChangeEvent theEvent) {
-        if ("text".equals(theEvent.getPropertyName())) {
-            myEndingMessageChoice = (int) theEvent.getNewValue();
-            System.out.println("something changed");
-        }
-    }
-
 
     public boolean goToStage() {
         return myGoToStage;
