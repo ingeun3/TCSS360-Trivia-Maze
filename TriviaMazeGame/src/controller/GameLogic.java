@@ -164,7 +164,8 @@ public class GameLogic implements KeyListener {
         }
 
         myLighting.setup();
-        promptQuestions();
+      //
+        //  promptQuestions();
 
         checkFinish();
     }
@@ -177,7 +178,7 @@ public class GameLogic implements KeyListener {
     //2 = level
     // }
     public void checkFinish() {
-        if (myPlayer.getLocation().equals(myEndPoint)) {
+        if (myPlayer.getLocation().equals(myEndPoint) && myLevel < 4) {
             EndingMessage endingMessage = new EndingMessage(true);
             endingMessage.setOptionSelectedListener(new EndingMessage.OptionSelectedListener() {
                 @Override
@@ -203,7 +204,7 @@ public class GameLogic implements KeyListener {
                     }
                 }
             });
-        } else if (!myPlayer.isAlive()) {
+        } else if (!myPlayer.isAlive() || myPlayer.getLocation().equals(myEndPoint) && myLevel == 4) {
             EndingMessage endingMessage = new EndingMessage(false);
             endingMessage.setOptionSelectedListener(new EndingMessage.OptionSelectedListener() {
                 @Override
