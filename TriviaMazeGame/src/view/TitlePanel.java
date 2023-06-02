@@ -93,6 +93,8 @@ public class TitlePanel extends JPanel {
         });
     }
 
+
+
     public int getMyNum(){
         int temp = myPanelNumber;
         myPanelNumber = -1;

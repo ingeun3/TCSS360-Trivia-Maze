@@ -113,6 +113,7 @@ public class GameLoop {
     }
     public void runningLevelInterface() {
         if(!levelSetup) {
+
             myGameInterface.setCenter(myLevelInterface);
             levelSetup = true;
         }
