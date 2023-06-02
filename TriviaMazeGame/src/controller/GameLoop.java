@@ -139,7 +139,7 @@ public class GameLoop {
             } else if(myCurrentLevel == 3) {
                 myInitialMoves = 50;
             } else if(myCurrentLevel == 4) {
-                myInitialMoves = 75;
+                myInitialMoves = 200;
             }
             currentMaze = new Maze(mymMazeFileName);
             currentPlayer = new Player(myInitialMoves, mymMazeFileName);

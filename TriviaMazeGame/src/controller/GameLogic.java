@@ -52,7 +52,10 @@ public class GameLogic implements KeyListener {
 
     private int myMove;
 
+    private int myLevel;
+
     public GameLogic(String theMapName, int theMove, int theLevel) throws FileNotFoundException {
+        myLevel = theLevel;
         myEscape = new EscPanel();
         myGoToStage = false;
         myWin = false;
@@ -76,6 +79,7 @@ public class GameLogic implements KeyListener {
         mySprite = new GUIPlayer(myPlayer.getLocation(), myPlayer.getMazeLength());
 
         myLighting = Lighting.getInstance(mySprite, 350);
+        myLighting.setSize(350);
         myLighting.setup();
         //gets a random question
         Collections.shuffle(myQuestions);
@@ -126,7 +130,7 @@ public class GameLogic implements KeyListener {
             pressedKeyCode = KeyEvent.VK_D;
             update();
         } else if (code == KeyEvent.VK_ESCAPE) {
-            System.out.println("it hit");
+           // System.out.println("it hit");
             pressedKeyCode = KeyEvent.VK_ESCAPE;
             myEscape.start();
         }
@@ -244,7 +248,14 @@ public class GameLogic implements KeyListener {
     private void isRightAnswer(String theChoice) {
         if (theChoice.equals(myQnA.get(myQ[myCurrentQ % mySize])[0])) {
             myPoint = myPlayer.getLocation();
-            myLighting.increaseSize(100);
+            if(myLevel < 3) {
+                myLighting.increaseSize(150);
+            } else if(myLevel == 3) {
+                myLighting.increaseSize(75);
+            } else if(myLevel == 4) {
+                myLighting.increaseSize(50);
+            }
+
         } else {
             setLocation(myPoint);
 
