@@ -16,16 +16,16 @@ public class GameInterface extends JFrame{
     private static final String MOVE_PROMPT = "Remaining Moves: ";
 
     // Class Fields
-  //  private JFrame myGameInterface;
+    //  private JFrame myGameInterface;
     private JPanel myNorthPanel;
 
     private JPanel myGamePanel;
 
     GraphicsDevice mygDevice;
 
-  //  private GamePanel myGamePanel;
-  //  private LevelInterface myLevelInterface;
-  //  private char[][] myMazeArray;
+    //  private GamePanel myGamePanel;
+    //  private LevelInterface myLevelInterface;
+    //  private char[][] myMazeArray;
 
     /**
      * Private constructor of the GameInterface (main GUI).
@@ -36,11 +36,11 @@ public class GameInterface extends JFrame{
      */
     private GameInterface(int theLevel, int theMoves)  {
         super("Trivia Maze");
-       // myMazeArray = theMazeArray;
+        // myMazeArray = theMazeArray;
         myGamePanel = new JPanel();
         String level = LEVEL_PROMPT + theLevel;
         String moves = MOVE_PROMPT + theMoves;
-       // myGamePanel = GamePanel.getInstance(myMazeArray, thePlayer);
+        // myGamePanel = GamePanel.getInstance(myMazeArray, thePlayer);
         myNorthPanel =  NorthPanel.getInstance(level, moves);
         GraphicsEnvironment gEnviroment = GraphicsEnvironment.getLocalGraphicsEnvironment();
         mygDevice = gEnviroment.getDefaultScreenDevice();
@@ -69,7 +69,7 @@ public class GameInterface extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
-//           fullScreen();
+        // fullScreen();
     }
 
     public void fullScreen(){

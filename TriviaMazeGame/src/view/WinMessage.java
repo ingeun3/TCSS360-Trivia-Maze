@@ -10,7 +10,7 @@ public class WinMessage {
     private static final String TITLE = "Level Completed";
     //Class Fields
 
-//    // The question that was asked.
+    //    // The question that was asked.
 //    private String myPrompt;
 //    // The Image that will be display in the question.
 //    private ImageIcon myImage;
