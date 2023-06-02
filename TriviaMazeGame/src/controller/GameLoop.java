@@ -154,8 +154,5 @@ public class GameLoop {
         } else {
             myCurrentGamePanel.run();
         }
-
     }
-
-
 }

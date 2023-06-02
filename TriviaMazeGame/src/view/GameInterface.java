@@ -69,7 +69,7 @@ public class GameInterface extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
-       // fullScreen();
+     //   fullScreen();
     }
 
     public void fullScreen(){
