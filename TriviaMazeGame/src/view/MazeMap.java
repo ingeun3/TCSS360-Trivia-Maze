@@ -13,7 +13,7 @@ public class MazeMap {
     // The serial Version ID.
     private static final long serialVersionUID = 1L;
     // Image of the Road.
-    private static final ImageIcon road = new ImageIcon("road.jpeg");
+    private static final ImageIcon road = new ImageIcon("road.png");
     // Image of the Wall.
     private static final ImageIcon wall = new ImageIcon("wall.png");
 

@@ -27,8 +27,6 @@ public class Sound {
 
             // Initialize audio system
             File musicFile = new File("starwar.wav");
-
-
             if (musicFile.exists()) {
                 AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(musicFile);
                 clip = AudioSystem.getClip();
