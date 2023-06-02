@@ -22,7 +22,7 @@ public class Lighting {
     private Graphics2D myGraphics;
     private static GUIPlayer mySprite;
 
-    private Lighting(GUIPlayer gp, int circleSize) {
+    public Lighting(GUIPlayer gp, int circleSize) {
         mySprite = gp;
         myDiameter = circleSize;
 

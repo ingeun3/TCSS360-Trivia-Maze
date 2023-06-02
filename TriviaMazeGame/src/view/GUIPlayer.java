@@ -24,6 +24,7 @@ public class GUIPlayer {
     // The Image of a player facing right.
     private static final ImageIcon right = new ImageIcon("right.png");
 
+    private final int myGap;
 
 
 
@@ -39,10 +40,11 @@ public class GUIPlayer {
 
 
     public GUIPlayer(Point theSpawnPoint, int theTileNum) {
+        myGap = (int) (screenSize.getWidth() - myTileSize *  myTileNumber) /2;
         myTileNumber = theTileNum;
         myTileSize = (int) screenSize.getWidth() / myTileNumber;
         mySpeed = myTileSize;
-        x = (int) theSpawnPoint.getX() * myTileSize;
+        x = (int) theSpawnPoint.getX() * myTileSize + myGap;
         y = (int) theSpawnPoint.getY() * myTileSize;
         direction = "up";
         myImage = new ImageIcon("up.png");
