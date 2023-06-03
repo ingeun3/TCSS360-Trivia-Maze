@@ -185,7 +185,7 @@ public class GameLogic implements KeyListener {
                     if (option == 1) {
                         // Play again
                         mySprite.setDirection("up");
-                        mySprite.setX(myStartPoint.x * mySprite.getTileSize());
+                        mySprite.setX(myStartPoint.x * mySprite.getTileSize() + mySprite.getGap());
                         mySprite.setY(myStartPoint.y * mySprite.getTileSize());
                         myPlayer.movePlayer(myStartPoint);
                         myPlayer.setMyMove(myMove);
@@ -200,7 +200,7 @@ public class GameLogic implements KeyListener {
                 }
             });
         }
-        else if (myPlayer.getLocation().equals(myEndPoint) && myLevel < 3) {
+        else if (myPlayer.getLocation().equals(myEndPoint) && myLevel < 4) {
             EndingMessage endingMessage = new EndingMessage(2);
             endingMessage.setOptionSelectedListener(new EndingMessage.OptionSelectedListener() {
                 @Override
