@@ -23,6 +23,7 @@ public class Main {
         Sound sound = new Sound();
 //        sound.playMusic();
        // setLookAndFeel();
+
         new GameLoop().start();
     }
 

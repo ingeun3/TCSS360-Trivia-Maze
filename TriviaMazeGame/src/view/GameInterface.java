@@ -21,10 +21,6 @@ public class GameInterface extends JFrame{
 
     private JPanel myGamePanel;
 
-    private JPanel myTitlePanel;
-
-    private JPanel myLevelPanel;
-
     GraphicsDevice mygDevice;
 
     //  private GamePanel myGamePanel;
@@ -45,10 +41,7 @@ public class GameInterface extends JFrame{
         String level = LEVEL_PROMPT + theLevel;
         String moves = MOVE_PROMPT + theMoves;
         // myGamePanel = GamePanel.getInstance(myMazeArray, thePlayer);
-
         myNorthPanel =  NorthPanel.getInstance(level, moves);
-        myTitlePanel = new TitlePanel();
-        myLevelPanel = new LevelInterface();
         GraphicsEnvironment gEnviroment = GraphicsEnvironment.getLocalGraphicsEnvironment();
         mygDevice = gEnviroment.getDefaultScreenDevice();
     }
@@ -76,7 +69,10 @@ public class GameInterface extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
-        // fullScreen();
+//         fullScreen();
+        // bring to front
+        // unload the preveious panel and load the esc
+        // set visible on the other one
     }
 
     public void fullScreen(){
@@ -85,11 +81,12 @@ public class GameInterface extends JFrame{
     public void removeNorthPanel() {
         getContentPane().remove(myNorthPanel);
     }
-
     public void setNorthPanel(JPanel thePanel) {
         // Deleting the old game panel;
         getContentPane().remove(myNorthPanel);
         myNorthPanel = thePanel;
+        revalidate();
+        repaint();
         getContentPane().add(myNorthPanel, BorderLayout.NORTH);
         thePanel.requestFocus();
 //        fullScreen();
@@ -100,6 +97,8 @@ public class GameInterface extends JFrame{
         // Deleting the old game panel;
         getContentPane().remove(myGamePanel);
         myGamePanel = thePanel;
+        revalidate();
+        repaint();
         getContentPane().add(myGamePanel, BorderLayout.CENTER);
         thePanel.requestFocus();
 

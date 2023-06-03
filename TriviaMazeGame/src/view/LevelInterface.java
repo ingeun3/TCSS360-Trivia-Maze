@@ -37,6 +37,7 @@ public class LevelInterface extends JPanel {
     private Font myFont;
 
     public LevelInterface() {
+       // super();
         myPanelNumber = 0;
         myCompletedLevel = 1;
         setLayout(new BorderLayout());

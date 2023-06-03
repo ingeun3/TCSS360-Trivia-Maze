@@ -82,10 +82,11 @@ public class GameLogic implements KeyListener {
         myLighting.setSize(350);
         myLighting.setup();
         //gets a random question
-        Collections.shuffle(myQuestions);
+        //Collections.shuffle(myQuestions);
 
 
         for (int i = 0; i < myQuestions.size(); i++) {
+           // Collections.shuffle(Collections.singletonList(myQuestions));
             Question askedQuestion = myQuestions.get(i);
 
             int ansLength = askedQuestion.getAnswers().size();
@@ -94,6 +95,7 @@ public class GameLogic implements KeyListener {
                 ansArray[j] = askedQuestion.getAnswers().get(j);
             }
             //puts it in map to send to questionpane
+            Collections.shuffle(Collections.singletonList(myQuestions));
             myQnA.put(askedQuestion.getQuestion(), ansArray);
         }
 
@@ -165,7 +167,7 @@ public class GameLogic implements KeyListener {
 
         myLighting.setup();
       //
-        //  promptQuestions();
+        promptQuestions();
 
         checkFinish();
     }
@@ -204,7 +206,8 @@ public class GameLogic implements KeyListener {
                     }
                 }
             });
-        } else if (!myPlayer.isAlive() || myPlayer.getLocation().equals(myEndPoint) && myLevel == 4) {
+        }
+        else if (!myPlayer.isAlive() || myPlayer.getLocation().equals(myEndPoint) && myLevel == 4) {
             EndingMessage endingMessage = new EndingMessage(false);
             endingMessage.setOptionSelectedListener(new EndingMessage.OptionSelectedListener() {
                 @Override
@@ -222,7 +225,7 @@ public class GameLogic implements KeyListener {
                         myLighting.setSize(350);
                         myLighting.setup();
                     } else if (option == 2) {
-                        // Go to levels
+                         //Go to levels
                         myGoToStage = true;
                     }
                 }
