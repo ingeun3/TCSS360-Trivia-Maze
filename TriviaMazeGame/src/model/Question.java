@@ -2,6 +2,7 @@ package model;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Question {
     // Class Fields
@@ -21,6 +22,7 @@ public class Question {
         myQuestion = theQuestion;
         myAnswers = new ArrayList<String>();
         myImage = null;
+
     }
 
     /**
