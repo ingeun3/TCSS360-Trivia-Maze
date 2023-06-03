@@ -13,7 +13,7 @@ public class TitlePanel extends JPanel {
 
     private JLabel myTitle;
     private JButton myStartButton;
-    private JButton myAboutButton;
+    private JButton myResetButton;
     private JButton myQuitButton;
     private static final int WIDTH  = Toolkit.getDefaultToolkit().getScreenSize().width;
     private static final int HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
@@ -24,10 +24,13 @@ public class TitlePanel extends JPanel {
 
     private Font myFont;
 
+    private boolean myReset;
     public TitlePanel() {
+        myReset = false;
+
         myPanelNumber = -3;
-        myStartButton = new JButton("Start");
-        myAboutButton = new JButton("About");
+        myStartButton = new JButton("START");
+        myResetButton = new JButton("RESTART");
         myQuitButton = new JButton("Quit");
         myTitle = new JLabel(icon);
         myButtonPanel = new JPanel();
@@ -54,11 +57,11 @@ public class TitlePanel extends JPanel {
         //myStartButton.setOpaque(true);
         myStartButton.setBorderPainted(false);
 //        myStartButton.setOpaque(false);
-        myAboutButton.setPreferredSize(new Dimension(120, 60));
-        myAboutButton.setFont(myFont.deriveFont(Font.PLAIN, 45));
-        myAboutButton.setForeground(Color.WHITE);
-        myAboutButton.setBackground(new Color(0, 0, 0));
-        myAboutButton.setBorderPainted(false);
+        myResetButton.setPreferredSize(new Dimension(120, 60));
+        myResetButton.setFont(myFont.deriveFont(Font.PLAIN, 45));
+        myResetButton.setForeground(Color.WHITE);
+        myResetButton.setBackground(new Color(0, 0, 0));
+        myResetButton.setBorderPainted(false);
 
         myQuitButton.setPreferredSize(new Dimension(120, 60));
         myQuitButton.setFont(myFont.deriveFont(Font.PLAIN, 45));
@@ -68,7 +71,7 @@ public class TitlePanel extends JPanel {
         myQuitButton.setBorderPainted(false);
 //        myQuitButton.setOpaque(false);
         myButtonPanel.add(myStartButton);
-        myButtonPanel.add(myAboutButton);
+        myButtonPanel.add(myResetButton);
         myButtonPanel.add(myQuitButton);
         myButtonPanel.setLayout(new GridLayout(3, 1));
 
@@ -82,6 +85,14 @@ public class TitlePanel extends JPanel {
         myStartButton.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent theEvent) {
                 myPanelNumber = 0;
+                myReset = false;
+            }
+
+        });
+        myResetButton.addActionListener(new ActionListener() {
+            public void actionPerformed(final ActionEvent theEvent) {
+                myPanelNumber = 0;
+                myReset = true;
             }
 
         });
@@ -92,7 +103,9 @@ public class TitlePanel extends JPanel {
 
         });
     }
-
+    public boolean restartGame() {
+        return myReset;
+    }
     public int getMyNum(){
         int temp = myPanelNumber;
         myPanelNumber = -1;

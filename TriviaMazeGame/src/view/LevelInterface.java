@@ -36,9 +36,9 @@ public class LevelInterface extends JPanel {
 
     private Font myFont;
 
-    public LevelInterface() {
+    public LevelInterface(int theCompletedLevel) {
         myPanelNumber = 0;
-        myCompletedLevel = 1;
+        myCompletedLevel = theCompletedLevel;
         setLayout(new BorderLayout());
         myLevel0 = new JButton("LVL      0");
         myLevel1 = new JButton("LVL      1");
@@ -161,13 +161,25 @@ public class LevelInterface extends JPanel {
     }
 
     public void unLockLevel(){
-        if (myCompletedLevel == 1){
+        if (myCompletedLevel == 0){
             myLevel0.setEnabled(true);
-        } else if (myCompletedLevel == 2){
+            myLevel1.setEnabled(false);
+            myLevel2.setEnabled(false);
+            myLevel3.setEnabled(false);
+        } else if (myCompletedLevel == 1){
+            myLevel0.setEnabled(true);
             myLevel1.setEnabled(true);
-        } else if (myCompletedLevel == 3){
+            myLevel2.setEnabled(false);
+            myLevel3.setEnabled(false);
+        } else if (myCompletedLevel == 2){
+            myLevel0.setEnabled(true);
+            myLevel1.setEnabled(true);
             myLevel2.setEnabled(true);
-        } else if (myCompletedLevel == 4){
+            myLevel3.setEnabled(false);
+        } else if (myCompletedLevel == 3){
+            myLevel0.setEnabled(true);
+            myLevel1.setEnabled(true);
+            myLevel2.setEnabled(true);
             myLevel3.setEnabled(true);
         }
         myCompletedLevel++;
