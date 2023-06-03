@@ -310,8 +310,7 @@ public class GameLogic implements KeyListener {
                 String question = rs2.getString("question");
                 String rightAnswer = rs2.getString("rightanswer");
                 String wrongAnswer = rs2.getString("wronganswer");
-                String image = rs2.getString("image");
-                addBooleanQuestion(question, rightAnswer, wrongAnswer, image);
+                addBooleanQuestion(question, rightAnswer, wrongAnswer);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -343,10 +342,10 @@ public class GameLogic implements KeyListener {
      * @param theQuestion the Question prompt
      * @param theRightAnswer the Correct answer
      * @param theWrongAnswer the wrong answer
-     * @param theImage the image of a question
+
      */
     private void addBooleanQuestion(String theQuestion, String theRightAnswer,
-                                    String theWrongAnswer, String theImage) {
+                                    String theWrongAnswer) {
 
         Question question = initializeQuestion(theQuestion);
         question.addAnswers(theRightAnswer);
