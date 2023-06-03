@@ -2,6 +2,7 @@ package controller;
 
 import model.Maze;
 import model.Player;
+import model.Sound;
 import view.*;
 
 import java.io.*;

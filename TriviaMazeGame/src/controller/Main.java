@@ -1,21 +1,9 @@
 package controller;
 
-import model.Maze;
-import model.Player;
-import model.Question;
-import org.sqlite.SQLiteDataSource;
-import view.GameInterface;
-import view.GamePanel;
-import view.Sound;
-
 import javax.swing.*;
-import java.io.FileNotFoundException;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Random;
 
 public class Main {
 
