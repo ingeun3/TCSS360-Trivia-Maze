@@ -11,21 +11,24 @@ public class Sound {
 
 
     Clip clip;
-    URL soundURL[] = new URL[30];
+  //  URL soundURL[] = new URL[30];
 
-    public Sound() {
-
-    }
-    public void playMusic(){
+    public Sound(String songName) {
         try {
-            File musicFile = new File("Title Sound.wav");
-            if (musicFile.exists()) {
-                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(musicFile);
+            File titleSound = new File(songName);
+
+            if (titleSound.exists()) {
+                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(titleSound);
                 clip = AudioSystem.getClip();
                 clip.open(audioInputStream);
                 FloatControl gainControl =
                         (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-                gainControl.setValue(-30.0f); // Reduce volume by 10 decibels.
+                if (songName == "Title Sound.wav") {
+                    gainControl.setValue(-30.0f);
+                } else {
+                    gainControl.setValue(-20.0f);
+                }
+
                 clip.start();
 
             } else {

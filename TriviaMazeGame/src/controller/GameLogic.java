@@ -102,6 +102,7 @@ public class GameLogic implements KeyListener {
         }
         myCurrentQuestion = getRandomNumber(mySize);
         myQuestionPane = new QuestionPane(myQ[myCurrentQuestion], myQnA.get(myQ[myCurrentQuestion]).clone());
+
     }
 
 
@@ -266,7 +267,7 @@ public class GameLogic implements KeyListener {
         if (theChoice.equals(myQnA.get(myQ[myCurrentQuestion])[0])) {
             myPoint = myPlayer.getLocation();
             if(myLevel < 3) {
-                myLighting.increaseSize(150);
+                myLighting.increaseSize(110);
             } else if(myLevel == 3) {
                 myLighting.increaseSize(75);
             } else if(myLevel == 4) {
