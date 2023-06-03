@@ -22,7 +22,7 @@ public class Main {
 
     public static void main(String[] theArgs) throws IOException {
         Sound sound = new Sound();
-//        sound.playMusic();
+        sound.playMusic();
        // setLookAndFeel();
 
         new GameLoop().start();

@@ -10,10 +10,11 @@ import java.io.InputStream;
 public class EndingMessage extends JFrame {
     private static final String WINNING_MESSAGE = "GOOD JOB";
     private static final String LOSING_MESSAGE = "LOL YOU SUCK";
+    private static final String COMPLETE_MESSAGE = "CONGRATS!";
     private Font myFont;
     private OptionSelectedListener optionSelectedListener;
 
-    public EndingMessage(boolean theResult) {
+    public EndingMessage(int theResult) {
         super();
 
         try {
@@ -50,11 +51,15 @@ public class EndingMessage extends JFrame {
         nextButton.setBorderPainted(false);
         nextButton.setBackground(new Color(0, 0, 0));
 
-        if (theResult) {
+        if (theResult == 1) {
+            label.setText(COMPLETE_MESSAGE);
+            buttonPanel.add(playButton);
+            buttonPanel.add(levelButton);
+        } else if (theResult == 2) {
             label.setText(WINNING_MESSAGE);
             buttonPanel.add(playButton);
             buttonPanel.add(nextButton);
-        } else {
+        } else if (theResult == 3) {
             label.setText(LOSING_MESSAGE);
             buttonPanel.add(playButton);
             buttonPanel.add(levelButton);
