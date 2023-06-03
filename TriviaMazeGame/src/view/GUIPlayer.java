@@ -96,6 +96,8 @@ public class GUIPlayer {
      *
      * @param theGraphics the Graphics object to draw on the JPanel.
      */
+
+    //maybe random number generator for multiple direction images so it looks like character is moving
     public void draw(Graphics2D theGraphics) {
         ImageIcon image = null;
         switch (direction) {
