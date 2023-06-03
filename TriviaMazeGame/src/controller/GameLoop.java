@@ -35,7 +35,7 @@ public class GameLoop implements Serializable {
     private String myMazeFileName;
 
     public GameLoop() throws IOException {
-        myCompletedLevel = 0;
+      //  myCompletedLevel = 0;
         load();
         myTitlePanel = new TitlePanel();
         myGameInterface = GameInterface.getInstance(1, 100);
@@ -99,6 +99,7 @@ public class GameLoop implements Serializable {
             if(myTitlePanel.restartGame()) {
                 myCompletedLevel = 0;
             }
+            //System.out.println(myCompletedLevel);
             myLevelInterface = new LevelInterface(myCompletedLevel);
             title = false;
             level = true;
@@ -166,7 +167,7 @@ public class GameLoop implements Serializable {
         }
 
     }
-    public void save() throws IOException {
+    public void save() {
         GameState gameState = new GameState(myCompletedLevel, myCurrentCenterPanel);
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("save.dat")))) {
             oos.writeObject(gameState);
