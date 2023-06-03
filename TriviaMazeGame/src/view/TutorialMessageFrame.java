@@ -24,7 +24,7 @@ public class TutorialMessageFrame extends JFrame {
         } catch (FontFormatException | IOException e) {
             throw new RuntimeException(e);
         }
-        setSize(new Dimension((int) screenSize.getWidth(),(int) screenSize.getHeight() * 2 /3));
+        setSize(new Dimension((int) screenSize.getWidth(),(int) screenSize.getHeight() * 5 / 6));
 
         setUndecorated(true);
         setBackground(new Color(0, 0, 0, 250)); // Transparent black background
