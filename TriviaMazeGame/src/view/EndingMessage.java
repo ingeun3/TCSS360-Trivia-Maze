@@ -108,7 +108,7 @@ public class EndingMessage extends JFrame {
         levelButton.setFocusable(false);
         nextButton.setFocusable(false);
 
-        setPreferredSize(new Dimension((int) screenSize.getWidth(), (int) screenSize.getHeight()));
+        setPreferredSize(new Dimension((int) screenSize.getWidth(), (int) screenSize.getHeight() * 5 / 6));
         setUndecorated(true);
         setBackground(new Color(0, 0, 0, 200)); // Transparent black background
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
