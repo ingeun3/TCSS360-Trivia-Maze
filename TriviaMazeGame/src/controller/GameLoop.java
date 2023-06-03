@@ -39,7 +39,6 @@ public class GameLoop implements Serializable {
     private boolean myGameSoundFlag;
 
     public GameLoop() throws IOException {
-      //  myCompletedLevel = 0;
         load();
         myTitleSoundFlag = false;
         myTitlePanel = new TitlePanel();
