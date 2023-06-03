@@ -279,16 +279,15 @@ public class GameLogic implements KeyListener {
                 String rightAnswer = rs1.getString("rightanswer");
                 String wrongAnswer1 = rs1.getString("wronganswer1");
                 String wrongAnswer2 = rs1.getString("wronganswer2");
-                String image = rs1.getString("image");
-                addMultipleChoiceQuestion(question, rightAnswer, wrongAnswer1, wrongAnswer2, image);
+                String wrongAnswer3 = rs1.getString("wronganswer3");
+                addMultipleChoiceQuestion(question, rightAnswer, wrongAnswer1, wrongAnswer2, wrongAnswer3);
             }
             ResultSet rs2 = stmt.executeQuery(query2);
             while (rs2.next()) {
                 String question = rs2.getString("question");
                 String rightAnswer = rs2.getString("rightanswer");
                 String wrongAnswer = rs2.getString("wronganswer");
-                String image = rs2.getString("image");
-                addBooleanQuestion(question, rightAnswer, wrongAnswer, image);
+                addBooleanQuestion(question, rightAnswer, wrongAnswer);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -302,16 +301,15 @@ public class GameLogic implements KeyListener {
      * @param theRightAnswer the Correct answer
      * @param theWrongAnswer1 the wrong answer
      * @param theWrongAnswer2 the wrong answer
-     * @param theImage the image of a question
      */
     private void addMultipleChoiceQuestion(String theQuestion, String theRightAnswer,
-                                           String theWrongAnswer1, String theWrongAnswer2,
-                                           String theImage) {
+                                           String theWrongAnswer1, String theWrongAnswer2, String theWrongAnswer3) {
 
-        Question question = initializeQuestion(theQuestion, theImage);
+        Question question = initializeQuestion(theQuestion);
         question.addAnswers(theRightAnswer);
         question.addAnswers(theWrongAnswer1);
         question.addAnswers(theWrongAnswer2);
+        question.addAnswers(theWrongAnswer3);
         myQuestions.add(question);
     }
 
@@ -320,12 +318,11 @@ public class GameLogic implements KeyListener {
      * @param theQuestion the Question prompt
      * @param theRightAnswer the Correct answer
      * @param theWrongAnswer the wrong answer
-     * @param theImage the image of a question
      */
     private void addBooleanQuestion(String theQuestion, String theRightAnswer,
-                                    String theWrongAnswer, String theImage) {
+                                    String theWrongAnswer) {
 
-        Question question = initializeQuestion(theQuestion, theImage);
+        Question question = initializeQuestion(theQuestion);
         question.addAnswers(theRightAnswer);
         question.addAnswers(theWrongAnswer);
         myQuestions.add(question);
@@ -335,16 +332,11 @@ public class GameLogic implements KeyListener {
      * Initiating the Question.
      *
      * @param theQuestion the Question prompt
-     * @param theImage the image of a question
      * @return the Question object initiated
      */
-    private Question initializeQuestion(String theQuestion, String theImage) {
-        Question question;
-        if (theImage == null) {
-            question = new Question(theQuestion);
-        } else {
-            question = new Question(theQuestion, theImage);
-        }
+    private Question initializeQuestion(String theQuestion) {
+        Question question = new Question(theQuestion);
+
         return question;
     }
     public static int getRandomNumber(int maxValue) {
