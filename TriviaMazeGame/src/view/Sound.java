@@ -4,10 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.*;
 import javax.swing.*;
 
 public class Sound {
@@ -17,24 +14,20 @@ public class Sound {
     URL soundURL[] = new URL[30];
 
     public Sound() {
-       //playMusic();
-
-        //soundURL [0] = getClass().getClass().getResource("starwar.wav");
 
     }
     public void playMusic(){
         try {
-
-            // Initialize audio system
-            File musicFile = new File("starwar.wav");
+            File musicFile = new File("Title Sound.wav");
             if (musicFile.exists()) {
                 AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(musicFile);
                 clip = AudioSystem.getClip();
                 clip.open(audioInputStream);
+                FloatControl gainControl =
+                        (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+                gainControl.setValue(-30.0f); // Reduce volume by 10 decibels.
                 clip.start();
-                //JOptionPane.showMessageDialog(null, "click okay");
-                // Play the audio in a loop
-                //clip.loop(Clip.LOOP_CONTINUOUSLY);
+
             } else {
                 System.out.println("Failed to load audio file.");
             }
@@ -42,20 +35,6 @@ public class Sound {
             e.printStackTrace();
         }
     }
-
-
-
-//    public void setFile(int i) {
-//        try {
-//            AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
-//            System.out.println("got");
-//            clip = AudioSystem.getClip();
-//            clip.open(ais);
-//
-//        }catch(Exception e) {
-//
-//        }
-//    }
 
     public void play() {
         clip.start();
@@ -66,6 +45,5 @@ public class Sound {
 
     public void stop() {
         clip.stop();
-
     }
 }
