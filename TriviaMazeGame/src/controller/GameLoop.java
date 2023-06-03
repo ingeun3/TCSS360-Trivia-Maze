@@ -14,26 +14,7 @@ public class GameLoop implements Serializable {
     private static final String MAP2 = "maze_map4.txt";
     private static final String MAP3 = "maze_map5.txt";
     private static final String MAP4 = "maze_map6.txt";
-
-
     private int myInitialMoves = 0;
-
-
-    private GameInterface myGameInterface;
-    private LevelInterface myLevelInterface;
-    private TitlePanel myTitlePanel;
-    private GamePanel myCurrentGamePanel;
-    private Maze currentMaze;
-    private Player currentPlayer;
-    private GameLogic myCurrentGameLogic;
-    private NorthPanel myCurrentNorthPanel;
-
-    private int myCurrentCenterPanel;
-
-    private int myCompletedLevel;
-
-    private String mymMazeFileName;
-
     private boolean levelSetup = false;
     private boolean gameSetup = false;
     private boolean titleSetup = false;
@@ -41,6 +22,17 @@ public class GameLoop implements Serializable {
     private boolean title = true;
     private boolean level = false;
     private boolean game = false;
+    private GameInterface myGameInterface;
+    private LevelInterface myLevelInterface;
+    private TitlePanel myTitlePanel;
+    private GamePanel myCurrentGamePanel;
+    private Maze myCurrentMaze;
+    private Player myCurrentPlayer;
+    private GameLogic myCurrentGameLogic;
+    private NorthPanel myCurrentNorthPanel;
+    private int myCurrentCenterPanel;
+    private int myCompletedLevel;
+    private String myMazeFileName;
 
     public GameLoop() throws IOException {
         myCompletedLevel = 0;
@@ -48,11 +40,10 @@ public class GameLoop implements Serializable {
         myTitlePanel = new TitlePanel();
         myGameInterface = GameInterface.getInstance(1, 100);
         myCurrentGamePanel = null;
-        currentMaze = null;
-        currentPlayer = null;
+        myCurrentMaze = null;
+        myCurrentPlayer = null;
         myCurrentGameLogic = null;
         myCurrentCenterPanel = -2;
-
         start();
     }
 
@@ -72,13 +63,13 @@ public class GameLoop implements Serializable {
                     runningLevelInterface();
                 } else if (game) {
                     if (myCurrentCenterPanel == 1) {
-                        mymMazeFileName = MAP1;
+                        myMazeFileName = MAP1;
                     } else if (myCurrentCenterPanel == 2) {
-                        mymMazeFileName = MAP2;
+                        myMazeFileName = MAP2;
                     } else if (myCurrentCenterPanel == 3) {
-                        mymMazeFileName = MAP3;
+                        myMazeFileName = MAP3;
                     } else if (myCurrentCenterPanel == 4) {
-                        mymMazeFileName = MAP4;
+                        myMazeFileName = MAP4;
                     } else {
                         throw new IllegalArgumentException("Invalid level: " + myCurrentCenterPanel);
                     }
@@ -113,11 +104,9 @@ public class GameLoop implements Serializable {
             level = true;
             titleSetup = false;
         }
-
     }
     public void runningLevelInterface() {
         if(!levelSetup) {
-
             myGameInterface.setCenter(myLevelInterface);
             levelSetup = true;
         }
@@ -127,14 +116,11 @@ public class GameLoop implements Serializable {
             game = true;
             levelSetup = false;
         } else if (myCurrentCenterPanel < 0) {
-            System.out.println("it goes here");
             level = false;
             title = true;
             levelSetup = false;
-            //titleSetup = false;
         }
     }
-
     private void runningGamePanel() throws IOException {
         if(!gameSetup) {
             if(myCurrentCenterPanel == 1) {
@@ -146,10 +132,10 @@ public class GameLoop implements Serializable {
             } else if(myCurrentCenterPanel == 4) {
                 myInitialMoves = 200;
             }
-            currentMaze = new Maze(mymMazeFileName);
-            currentPlayer = new Player(myInitialMoves, mymMazeFileName);
-            myCurrentGameLogic = new GameLogic(mymMazeFileName, myInitialMoves, myCurrentCenterPanel);
-            myCurrentGamePanel = new GamePanel(currentMaze.getArray(), currentPlayer);
+            myCurrentMaze = new Maze(myMazeFileName);
+            myCurrentPlayer = new Player(myInitialMoves, myMazeFileName);
+            myCurrentGameLogic = new GameLogic(myMazeFileName, myInitialMoves, myCurrentCenterPanel);
+            myCurrentGamePanel = new GamePanel(myCurrentMaze.getArray(), myCurrentPlayer);
             myCurrentNorthPanel = NorthPanel.getInstance(LEVEL_PROMPT + myCurrentCenterPanel, MOVE_PROMPT + myInitialMoves);
             myCurrentNorthPanel.setMoves(myInitialMoves);
             myCurrentNorthPanel.setLevel(myCurrentCenterPanel);
@@ -184,9 +170,7 @@ public class GameLoop implements Serializable {
         GameState gameState = new GameState(myCompletedLevel, myCurrentCenterPanel);
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("save.dat")))) {
             oos.writeObject(gameState);
-            System.out.println("Game saved successfully.");
         } catch (IOException e) {
-            System.out.println("Failed to save the game.");
             e.printStackTrace();
         }
     }
@@ -196,40 +180,10 @@ public class GameLoop implements Serializable {
             GameState gameState = (GameState) ois.readObject();
             myCompletedLevel = gameState.getCompletedLevel();
             myCurrentCenterPanel = gameState.getCurrentLevel();
-            System.out.println("Game loaded successfully.");
         } catch (FileNotFoundException e) {
             // No save file found, continue with default values
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Failed to load the game.");
             e.printStackTrace();
         }
     }
-//    public void save() throws IOException {
-//        GameState gameState = new GameState(myCompletedLevel, myCurrentCenterPanel);
-//        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("save.dat")))) {
-//            oos.writeObject(gameState);
-//            System.out.println("Game saved successfully.");
-//
-//            System.out.println("it's save");
-//
-//        } catch (IOException e) {
-//            System.out.println("Failed to save the game.");
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public void load() {
-//        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File("save.dat")))) {
-//            GameState gameState = (GameState) ois.readObject();
-//            myCompletedLevel = gameState.getCompletedLevel();
-//            myCurrentCenterPanel = gameState.getCurrentLevel();
-//            System.out.println("Game loaded successfully.");
-//        } catch (FileNotFoundException e) {
-//            // No save file found, continue with default values
-//        } catch (IOException | ClassNotFoundException e) {
-//            System.out.println("Failed to load the game.");
-//            e.printStackTrace();
-//        }
-//    }
-
 }
