@@ -1,7 +1,5 @@
 package view;
 
-import model.Player;
-
 import java.awt.*;
 import java.io.FileNotFoundException;
 
@@ -19,7 +17,7 @@ public class GameInterface extends JFrame{
     //  private JFrame myGameInterface;
     private JPanel myNorthPanel;
 
-    private JPanel myGamePanel;
+    private JPanel myCenterPanel;
 
     GraphicsDevice mygDevice;
 
@@ -37,7 +35,7 @@ public class GameInterface extends JFrame{
     private GameInterface(int theLevel, int theMoves)  {
         super("Trivia Maze");
         // myMazeArray = theMazeArray;
-        myGamePanel = new JPanel();
+        myCenterPanel = new JPanel();
         String level = LEVEL_PROMPT + theLevel;
         String moves = MOVE_PROMPT + theMoves;
         // myGamePanel = GamePanel.getInstance(myMazeArray, thePlayer);
@@ -69,7 +67,10 @@ public class GameInterface extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
-        // fullScreen();
+//         fullScreen();
+         // bring to front
+        // unload the preveious panel and load the esc
+        // set visible on the other one
     }
 
     public void fullScreen(){
@@ -77,11 +78,15 @@ public class GameInterface extends JFrame{
     }
     public void removeNorthPanel() {
         getContentPane().remove(myNorthPanel);
+        revalidate();
+        repaint();
     }
     public void setNorthPanel(JPanel thePanel) {
         // Deleting the old game panel;
         getContentPane().remove(myNorthPanel);
         myNorthPanel = thePanel;
+        revalidate();
+        repaint();
         getContentPane().add(myNorthPanel, BorderLayout.NORTH);
         thePanel.requestFocus();
 //        fullScreen();
@@ -90,9 +95,13 @@ public class GameInterface extends JFrame{
     }
     public void setCenter(JPanel thePanel) {
         // Deleting the old game panel;
-        getContentPane().remove(myGamePanel);
-        myGamePanel = thePanel;
-        getContentPane().add(myGamePanel, BorderLayout.CENTER);
+        getContentPane().remove(myCenterPanel);
+
+        myCenterPanel = thePanel;
+        revalidate();
+        repaint();
+
+        getContentPane().add(myCenterPanel, BorderLayout.CENTER);
         thePanel.requestFocus();
 
         start();

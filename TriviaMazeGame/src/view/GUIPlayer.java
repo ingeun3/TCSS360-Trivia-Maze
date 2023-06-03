@@ -40,10 +40,11 @@ public class GUIPlayer {
 
 
     public GUIPlayer(Point theSpawnPoint, int theTileNum) {
-        myGap = (int) (screenSize.getWidth() - myTileSize *  myTileNumber) /2;
         myTileNumber = theTileNum;
         myTileSize = (int) screenSize.getWidth() / myTileNumber;
         mySpeed = myTileSize;
+        myGap = (int) (screenSize.getWidth() - (myTileSize * theTileNum)) / 2;
+        System.out.println("before return" + myGap);
         x = (int) theSpawnPoint.getX() * myTileSize + myGap;
         y = (int) theSpawnPoint.getY() * myTileSize;
         direction = "up";
@@ -62,7 +63,6 @@ public class GUIPlayer {
     public void setX(int theX) {
         x = theX;
     }
-
     public int getY() {
         return y;
     }
@@ -77,6 +77,10 @@ public class GUIPlayer {
 
     public int getTileSize() {
         return myTileSize;
+    }
+
+    public int getGap() {
+        return myGap;
     }
 
     public Point getsize(){

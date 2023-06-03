@@ -6,7 +6,7 @@ import view.*;
 
 import java.io.*;
 
-public class GameLoop {
+public class GameLoop implements Serializable {
     private static final String MOVE_PROMPT = "Remaining Moves: ";
     private static final String LEVEL_PROMPT = "Level ";
 
@@ -14,26 +14,7 @@ public class GameLoop {
     private static final String MAP2 = "maze_map4.txt";
     private static final String MAP3 = "maze_map5.txt";
     private static final String MAP4 = "maze_map6.txt";
-
-
     private int myInitialMoves = 0;
-
-
-    private GameInterface myGameInterface;
-    private LevelInterface myLevelInterface;
-    private TitlePanel myTitlePanel;
-    private GamePanel myCurrentGamePanel;
-    private Maze currentMaze;
-    private Player currentPlayer;
-    private GameLogic myCurrentGameLogic;
-    private NorthPanel myCurrentNorthPanel;
-
-    private int myCurrentLevel;
-
-    private int myCompletedLevel;
-
-    private String mymMazeFileName;
-
     private boolean levelSetup = false;
     private boolean gameSetup = false;
     private boolean titleSetup = false;
@@ -41,21 +22,32 @@ public class GameLoop {
     private boolean title = true;
     private boolean level = false;
     private boolean game = false;
+    private GameInterface myGameInterface;
+    private LevelInterface myLevelInterface;
+    private TitlePanel myTitlePanel;
+    private GamePanel myCurrentGamePanel;
+    private Maze myCurrentMaze;
+    private Player myCurrentPlayer;
+    private GameLogic myCurrentGameLogic;
+    private NorthPanel myCurrentNorthPanel;
+    private int myCurrentCenterPanel;
+    private int myCompletedLevel;
+    private String myMazeFileName;
 
-    public GameLoop() throws FileNotFoundException {
-        myCompletedLevel = 1;
+    public GameLoop() throws IOException {
+      //  myCompletedLevel = 0;
+        load();
         myTitlePanel = new TitlePanel();
         myGameInterface = GameInterface.getInstance(1, 100);
-        myLevelInterface = new LevelInterface();
         myCurrentGamePanel = null;
-        currentMaze = null;
-        currentPlayer = null;
+        myCurrentMaze = null;
+        myCurrentPlayer = null;
         myCurrentGameLogic = null;
-        myCurrentLevel = -2;
+        myCurrentCenterPanel = -2;
         start();
-        load();
     }
-    public void start() throws FileNotFoundException {
+
+    public void start() throws IOException {
             // Variables for tracking time
             long startTime;
             long elapsedTime;
@@ -70,16 +62,16 @@ public class GameLoop {
                 } else if (level) {
                     runningLevelInterface();
                 } else if (game) {
-                    if (myCurrentLevel == 1) {
-                        mymMazeFileName = MAP1;
-                    } else if (myCurrentLevel == 2) {
-                        mymMazeFileName = MAP2;
-                    } else if (myCurrentLevel == 3) {
-                        mymMazeFileName = MAP3;
-                    } else if (myCurrentLevel == 4) {
-                        mymMazeFileName = MAP4;
+                    if (myCurrentCenterPanel == 1) {
+                        myMazeFileName = MAP1;
+                    } else if (myCurrentCenterPanel == 2) {
+                        myMazeFileName = MAP2;
+                    } else if (myCurrentCenterPanel == 3) {
+                        myMazeFileName = MAP3;
+                    } else if (myCurrentCenterPanel == 4) {
+                        myMazeFileName = MAP4;
                     } else {
-                        throw new IllegalArgumentException("Invalid level: " + myCurrentLevel);
+                        throw new IllegalArgumentException("Invalid level: " + myCurrentCenterPanel);
                     }
                     runningGamePanel();
                 }
@@ -100,54 +92,54 @@ public class GameLoop {
         if(!titleSetup) {
             myGameInterface.setCenter(myTitlePanel);
             titleSetup = true;
-            System.out.println("second time");
         }
-        myCurrentLevel = myTitlePanel.getMyNum();
-        if (myCurrentLevel == 0) {
-            System.out.println("currentLeve" + myCurrentLevel);
+        myCurrentCenterPanel = myTitlePanel.getMyNum();
+        if (myCurrentCenterPanel == 0) {
+           // System.out.println("currentLeve" + myCurrentLevel);
+            if(myTitlePanel.restartGame()) {
+                myCompletedLevel = 0;
+            }
+            //System.out.println(myCompletedLevel);
+            myLevelInterface = new LevelInterface(myCompletedLevel);
             title = false;
             level = true;
             titleSetup = false;
         }
-
     }
     public void runningLevelInterface() {
         if(!levelSetup) {
             myGameInterface.setCenter(myLevelInterface);
             levelSetup = true;
         }
-        myCurrentLevel = myLevelInterface.getMyNum();
-        if (myCurrentLevel > 0) {
+        myCurrentCenterPanel = myLevelInterface.getMyNum();
+        if (myCurrentCenterPanel > 0) {
             level = false;
             game = true;
             levelSetup = false;
-        } else if (myCurrentLevel  < 0) {
-            System.out.println("it goes here");
+        } else if (myCurrentCenterPanel < 0) {
             level = false;
             title = true;
             levelSetup = false;
-            //titleSetup = false;
         }
     }
-
-    private void runningGamePanel() throws FileNotFoundException {
+    private void runningGamePanel() throws IOException {
         if(!gameSetup) {
-            if(myCurrentLevel == 1) {
+            if(myCurrentCenterPanel == 1) {
                 myInitialMoves = 20;
-            } else if(myCurrentLevel == 2) {
+            } else if(myCurrentCenterPanel == 2) {
                 myInitialMoves = 25;
-            } else if(myCurrentLevel == 3) {
+            } else if(myCurrentCenterPanel == 3) {
                 myInitialMoves = 50;
-            } else if(myCurrentLevel == 4) {
+            } else if(myCurrentCenterPanel == 4) {
                 myInitialMoves = 200;
             }
-            currentMaze = new Maze(mymMazeFileName);
-            currentPlayer = new Player(myInitialMoves, mymMazeFileName);
-            myCurrentGameLogic = new GameLogic(mymMazeFileName, myInitialMoves, myCurrentLevel);
-            myCurrentGamePanel = new GamePanel(currentMaze.getArray(), currentPlayer);
-            myCurrentNorthPanel = NorthPanel.getInstance(LEVEL_PROMPT + myCurrentLevel, MOVE_PROMPT + myInitialMoves);
-            myCurrentNorthPanel.setMoves(MOVE_PROMPT + myInitialMoves);
-            myCurrentNorthPanel.setLevel(LEVEL_PROMPT + myCurrentLevel);
+            myCurrentMaze = new Maze(myMazeFileName);
+            myCurrentPlayer = new Player(myInitialMoves, myMazeFileName);
+            myCurrentGameLogic = new GameLogic(myMazeFileName, myInitialMoves, myCurrentCenterPanel);
+            myCurrentGamePanel = new GamePanel(myCurrentMaze.getArray(), myCurrentPlayer);
+            myCurrentNorthPanel = NorthPanel.getInstance(LEVEL_PROMPT + myCurrentCenterPanel, MOVE_PROMPT + myInitialMoves);
+            myCurrentNorthPanel.setMoves(myInitialMoves);
+            myCurrentNorthPanel.setLevel(myCurrentCenterPanel);
             myCurrentGamePanel.start();
             myCurrentGamePanel.addKeyListener(myCurrentGameLogic);
             myGameInterface.setNorthPanel(myCurrentNorthPanel);
@@ -158,15 +150,16 @@ public class GameLoop {
             level = true;
             game = false;
             gameSetup = false;
-            myCurrentLevel = 0;
+            myCurrentCenterPanel = 0;
             myGameInterface.removeNorthPanel();
 
-        } else if(myCurrentGameLogic.didWin() && myCurrentLevel < 4) {
-            myCurrentLevel++;
-            if (myCurrentLevel > myCompletedLevel) {
+        } else if(myCurrentGameLogic.didWin() && myCurrentCenterPanel < 4) {
+            myCurrentCenterPanel++;
+            if (myCurrentCenterPanel > myCompletedLevel) {
                 myCompletedLevel++;
                 myLevelInterface.unLockLevel();
             }
+            save();
             gameSetup = false;
 
         } else {
@@ -174,16 +167,11 @@ public class GameLoop {
         }
 
     }
-    public void save() throws IOException {
-        GameState gameState = new GameState(myCompletedLevel, myCurrentLevel);
+    public void save() {
+        GameState gameState = new GameState(myCompletedLevel, myCurrentCenterPanel);
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("save.dat")))) {
             oos.writeObject(gameState);
-            System.out.println("Game saved successfully.");
-
-            System.out.println("it's save");
-
         } catch (IOException e) {
-            System.out.println("Failed to save the game.");
             e.printStackTrace();
         }
     }
@@ -192,14 +180,11 @@ public class GameLoop {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File("save.dat")))) {
             GameState gameState = (GameState) ois.readObject();
             myCompletedLevel = gameState.getCompletedLevel();
-            myCurrentLevel = gameState.getCurrentLevel();
-            System.out.println("Game loaded successfully.");
+            myCurrentCenterPanel = gameState.getCurrentLevel();
         } catch (FileNotFoundException e) {
             // No save file found, continue with default values
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Failed to load the game.");
             e.printStackTrace();
         }
     }
-
 }

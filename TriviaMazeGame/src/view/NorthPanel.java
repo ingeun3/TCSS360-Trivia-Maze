@@ -11,6 +11,8 @@ import java.io.InputStream;
 import model.Maze;
 
 public class NorthPanel extends JPanel {
+    private static final String MOVE_PROMPT = "Remaining Moves: ";
+    private static final String LEVEL_PROMPT = "Level ";
 
     private static NorthPanel myInstance;
     ;
@@ -68,6 +70,10 @@ public class NorthPanel extends JPanel {
     // Maps
     // Equation move
 
+    // Change song
+    // shuffle the question
+    // save and load the game
+    // change end message when complete all levels
 
 
     public static NorthPanel getInstance(String theLevel, String theMoves) {
@@ -99,11 +105,15 @@ public class NorthPanel extends JPanel {
         return flag;
     }
 
-    public void setLevel(String theLevel) {
-        myLevel.setText(theLevel);
+    public void setLevel(int theLevel) {
+        if(theLevel <= 1) {
+            myLevel.setText("TUTORIAL");
+        } else  {
+            myLevel.setText(LEVEL_PROMPT + (theLevel - 1));
+        }
     }
 
-    public void setMoves(String theMoves) {
-        myMoves.setText(theMoves);
+    public void setMoves(int theMoves) {
+        myMoves.setText(MOVE_PROMPT + theMoves);
     }
 }

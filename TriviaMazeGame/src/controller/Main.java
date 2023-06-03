@@ -12,6 +12,7 @@ import javax.swing.*;
 import java.io.FileNotFoundException;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
@@ -19,10 +20,11 @@ import java.util.Random;
 public class Main {
 
 
-    public static void main(String[] theArgs) throws FileNotFoundException {
+    public static void main(String[] theArgs) throws IOException {
         Sound sound = new Sound();
 //        sound.playMusic();
        // setLookAndFeel();
+
         new GameLoop().start();
     }
 
