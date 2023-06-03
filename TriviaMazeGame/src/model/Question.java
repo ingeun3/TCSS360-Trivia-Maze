@@ -6,9 +6,6 @@ import java.util.Collections;
 
 public class Question {
     // Class Fields
-
-    // Image for the question.
-    private final ImageIcon myImage;
     // The question.
     private final String myQuestion;
     // The list of answers to the question.
@@ -21,8 +18,6 @@ public class Question {
     public Question(String theQuestion) {
         myQuestion = theQuestion;
         myAnswers = new ArrayList<String>();
-        myImage = null;
-
     }
 
     /**
@@ -33,7 +28,6 @@ public class Question {
     public Question(String theQuestion, String theImage) {
         myQuestion = theQuestion;
         myAnswers = new ArrayList<String>();
-        myImage = new ImageIcon(theImage);
     }
 
     /**
@@ -45,39 +39,12 @@ public class Question {
     }
 
     /**
-     * Adding answer to the Answer object.
-     * @param theAnswer
-     */
-
-
-    /**
      * Returns the question prompt.
      * @return the question prompt.
      */
     public String getQuestion() {
         return myQuestion;
     }
-
-    /**
-     * Returns the Image included in the question.
-     * @return the Image included in the question.
-     */
-    public ImageIcon getImage() {
-        return myImage;
-    }
-
-    /**
-     * True if the question has image, false otherwise.
-     * @return true if the question has image, false otherwise.
-     */
-    public boolean hasImage() {
-        boolean flag = true;
-        if (myImage == null) {
-            flag = false;
-        }
-        return flag;
-    }
-
     /**
      * Returns the ArrayList of answers this question has.
      * @return the lists of answers this question has.

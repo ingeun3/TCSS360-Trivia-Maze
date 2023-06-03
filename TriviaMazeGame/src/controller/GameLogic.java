@@ -279,8 +279,9 @@ public class GameLogic implements KeyListener {
                 String rightAnswer = rs1.getString("rightanswer");
                 String wrongAnswer1 = rs1.getString("wronganswer1");
                 String wrongAnswer2 = rs1.getString("wronganswer2");
-                String image = rs1.getString("image");
-                addMultipleChoiceQuestion(question, rightAnswer, wrongAnswer1, wrongAnswer2, image);
+                String wrongAnswer3 = rs1.getString("wronganswer3");
+
+                addMultipleChoiceQuestion(question, rightAnswer, wrongAnswer1, wrongAnswer2, wrongAnswer3);
             }
             ResultSet rs2 = stmt.executeQuery(query2);
             while (rs2.next()) {
@@ -302,18 +303,19 @@ public class GameLogic implements KeyListener {
      * @param theRightAnswer the Correct answer
      * @param theWrongAnswer1 the wrong answer
      * @param theWrongAnswer2 the wrong answer
-     * @param theImage the image of a question
+
      */
     private void addMultipleChoiceQuestion(String theQuestion, String theRightAnswer,
-                                           String theWrongAnswer1, String theWrongAnswer2,
-                                           String theImage) {
+                                           String theWrongAnswer1, String theWrongAnswer2, String theWrongAnswer3) {
 
-        Question question = initializeQuestion(theQuestion, theImage);
+        Question question = initializeQuestion(theQuestion);
         question.addAnswers(theRightAnswer);
         question.addAnswers(theWrongAnswer1);
         question.addAnswers(theWrongAnswer2);
+        question.addAnswers(theWrongAnswer3);
         myQuestions.add(question);
     }
+
 
     /**
      * Adds true or false question to myQuestion.
