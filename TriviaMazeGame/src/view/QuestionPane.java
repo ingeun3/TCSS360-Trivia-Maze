@@ -32,7 +32,7 @@ public class QuestionPane {
         myPrompt = theQuestion;
         myAnswers = theAnswers;
         Collections.shuffle(Arrays.asList(theAnswers));
-        myImage = new ImageIcon("questionmark.png");
+        myImage = new ImageIcon("down.png");
         myChosenAnswer = "";
     }
 
