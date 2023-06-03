@@ -31,7 +31,7 @@ public class GameLogic implements KeyListener {
 
     private String[] myQ;
 
-    private int myCurrentQ;
+    private int myCurrentQuestion;
 
     private int mySize;
 
@@ -60,9 +60,9 @@ public class GameLogic implements KeyListener {
         myGoToStage = false;
         myWin = false;
         myMove = theMove;
-        myQuestions = new ArrayList<Question>();
+        myQuestions = new ArrayList<>();
         myDataSource = new SQLiteDataSource();
-        myCurrentQ = 0;
+        //myCurrentQ = 0;
         myQnA = new HashMap<String, String[]>();
         connect();
         retrieveData();
@@ -82,11 +82,10 @@ public class GameLogic implements KeyListener {
         myLighting.setSize(350);
         myLighting.setup();
         //gets a random question
-        //Collections.shuffle(myQuestions);
+
 
 
         for (int i = 0; i < myQuestions.size(); i++) {
-           // Collections.shuffle(Collections.singletonList(myQuestions));
             Question askedQuestion = myQuestions.get(i);
 
             int ansLength = askedQuestion.getAnswers().size();
@@ -95,7 +94,6 @@ public class GameLogic implements KeyListener {
                 ansArray[j] = askedQuestion.getAnswers().get(j);
             }
             //puts it in map to send to questionpane
-            Collections.shuffle(Collections.singletonList(myQuestions));
             myQnA.put(askedQuestion.getQuestion(), ansArray);
         }
 
@@ -106,7 +104,9 @@ public class GameLogic implements KeyListener {
             myQ[counter] = entry.getKey();
             counter++;
         }
-        myQuestionPane = new QuestionPane(myQ[myCurrentQ], myQnA.get(myQ[myCurrentQ]).clone());
+        myCurrentQuestion = getRandomNumber(mySize);
+
+        myQuestionPane = new QuestionPane(myQ[myCurrentQuestion], myQnA.get(myQ[myCurrentQuestion]).clone());
     }
 
 
@@ -150,24 +150,24 @@ public class GameLogic implements KeyListener {
         if (pressedKeyCode == KeyEvent.VK_W && myPlayer.canMove(myPlayer.PlayerN())) {
             mySprite.setDirection("up");
             mySprite.setY(mySprite.getY() - mySprite.getSpeed());
-            myNorthPanel.setMoves(MOVE_PROMPT + myPlayer.getMyMove());
+            myNorthPanel.setMoves(myPlayer.getMyMove());
         } else if (pressedKeyCode == KeyEvent.VK_S && myPlayer.canMove(myPlayer.PlayerS())) {
             mySprite.setDirection("down");
             mySprite.setY(mySprite.getY() + mySprite.getSpeed());
-            myNorthPanel.setMoves(MOVE_PROMPT + myPlayer.getMyMove());
+            myNorthPanel.setMoves(myPlayer.getMyMove());
         } else if (pressedKeyCode == KeyEvent.VK_A && myPlayer.canMove(myPlayer.PlayerW())) {
             mySprite.setDirection("left");
             mySprite.setX(mySprite.getX() - mySprite.getSpeed());
-            myNorthPanel.setMoves(MOVE_PROMPT + myPlayer.getMyMove());
+            myNorthPanel.setMoves(myPlayer.getMyMove());
         } else if (pressedKeyCode == KeyEvent.VK_D && myPlayer.canMove(myPlayer.PlayerE())) {
             mySprite.setDirection("right");
             mySprite.setX(mySprite.getX() + mySprite.getSpeed());
-            myNorthPanel.setMoves(MOVE_PROMPT + myPlayer.getMyMove());
+            myNorthPanel.setMoves(myPlayer.getMyMove());
         }
 
         myLighting.setup();
       //
-        promptQuestions();
+          promptQuestions();
 
         checkFinish();
     }
@@ -193,7 +193,7 @@ public class GameLogic implements KeyListener {
                         mySprite.setY(myStartPoint.y * mySprite.getTileSize());
                         myPlayer.movePlayer(myStartPoint);
                         myPlayer.setMyMove(myMove);
-                        myNorthPanel.setMoves(MOVE_PROMPT + myMove);
+                        myNorthPanel.setMoves(myMove);
                         myPoint = myStartPoint;
                         myLighting.setSize(350);
                         myLighting.setup();
@@ -206,8 +206,7 @@ public class GameLogic implements KeyListener {
                     }
                 }
             });
-        }
-        else if (!myPlayer.isAlive() || myPlayer.getLocation().equals(myEndPoint) && myLevel == 4) {
+        } else if (!myPlayer.isAlive() || myPlayer.getLocation().equals(myEndPoint) && myLevel == 4) {
             EndingMessage endingMessage = new EndingMessage(false);
             endingMessage.setOptionSelectedListener(new EndingMessage.OptionSelectedListener() {
                 @Override
@@ -220,12 +219,12 @@ public class GameLogic implements KeyListener {
                         mySprite.setY(myStartPoint.y * mySprite.getTileSize());
                         myPlayer.movePlayer(myStartPoint);
                         myPlayer.setMyMove(myMove);
-                        myNorthPanel.setMoves(MOVE_PROMPT + myMove);
+                        myNorthPanel.setMoves(myMove);
                         myPoint = myStartPoint;
                         myLighting.setSize(350);
                         myLighting.setup();
                     } else if (option == 2) {
-                         //Go to levels
+                        // Go to levels
                         myGoToStage = true;
                     }
                 }
@@ -243,14 +242,15 @@ public class GameLogic implements KeyListener {
         if(myPlayer.isQuestionPoint()) {
             myQuestionPane.ask();
             isRightAnswer(myQuestionPane.getChoice());
-            myCurrentQ++;
-            myQuestionPane = new QuestionPane(myQ[myCurrentQ % mySize],
-                    myQnA.get(myQ[myCurrentQ % mySize]).clone());
+            myCurrentQuestion = getRandomNumber(mySize);
+
+            myQuestionPane = new QuestionPane(myQ[myCurrentQuestion],
+                    myQnA.get(myQ[myCurrentQuestion]).clone());
         }
     }
 
     private void isRightAnswer(String theChoice) {
-        if (theChoice.equals(myQnA.get(myQ[myCurrentQ % mySize])[0])) {
+        if (theChoice.equals(myQnA.get(myQ[myCurrentQuestion])[0])) {
             myPoint = myPlayer.getLocation();
             if(myLevel < 3) {
                 myLighting.increaseSize(150);
@@ -269,7 +269,8 @@ public class GameLogic implements KeyListener {
 
     private void setLocation(Point thePoint){
         myPlayer.movePlayer(thePoint);
-        mySprite.setX(thePoint.x * mySprite.getTileSize());
+        //System.out.println(mySprite.getGap());
+        mySprite.setX((thePoint.x * mySprite.getTileSize()));
         mySprite.setY(thePoint.y * mySprite.getTileSize());
     }
 
@@ -371,5 +372,11 @@ public class GameLogic implements KeyListener {
             question = new Question(theQuestion, theImage);
         }
         return question;
+    }
+    public static int getRandomNumber(int maxValue) {
+        Random rand = new Random();
+        int range = maxValue;
+        int randomNum = rand.nextInt(range);
+        return randomNum;
     }
 }
