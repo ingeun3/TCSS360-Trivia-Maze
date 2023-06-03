@@ -262,14 +262,13 @@ public class GameLogic implements KeyListener {
 
         } else {
             setLocation(myPoint);
-
         }
+        pressedKeyCode = -1;
         myLighting.setup();
     }
 
     private void setLocation(Point thePoint){
         myPlayer.movePlayer(thePoint);
-        //System.out.println(mySprite.getGap());
         mySprite.setX((thePoint.x * mySprite.getTileSize()));
         mySprite.setY(thePoint.y * mySprite.getTileSize());
     }

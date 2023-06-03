@@ -41,6 +41,7 @@ public class GUIPlayer {
 
     public GUIPlayer(Point theSpawnPoint, int theTileNum) {
         myGap = (int) (screenSize.getWidth() - (myTileSize *  myTileNumber)) /2;
+        System.out.println(myGap);
         myTileNumber = theTileNum;
         myTileSize = (int) screenSize.getWidth() / myTileNumber;
         mySpeed = myTileSize;

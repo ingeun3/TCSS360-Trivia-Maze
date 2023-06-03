@@ -130,7 +130,6 @@ public class GameLoop implements Serializable {
             level = false;
             title = true;
             levelSetup = false;
-            //titleSetup = false;
         }
     }
 
@@ -179,7 +178,7 @@ public class GameLoop implements Serializable {
         }
 
     }
-    public void save() throws IOException {
+    public void save() {
         GameState gameState = new GameState(myCompletedLevel, myCurrentCenterPanel);
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("save.dat")))) {
             oos.writeObject(gameState);
@@ -203,32 +202,4 @@ public class GameLoop implements Serializable {
             e.printStackTrace();
         }
     }
-//    public void save() throws IOException {
-//        GameState gameState = new GameState(myCompletedLevel, myCurrentCenterPanel);
-//        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("save.dat")))) {
-//            oos.writeObject(gameState);
-//            System.out.println("Game saved successfully.");
-//
-//            System.out.println("it's save");
-//
-//        } catch (IOException e) {
-//            System.out.println("Failed to save the game.");
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public void load() {
-//        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File("save.dat")))) {
-//            GameState gameState = (GameState) ois.readObject();
-//            myCompletedLevel = gameState.getCompletedLevel();
-//            myCurrentCenterPanel = gameState.getCurrentLevel();
-//            System.out.println("Game loaded successfully.");
-//        } catch (FileNotFoundException e) {
-//            // No save file found, continue with default values
-//        } catch (IOException | ClassNotFoundException e) {
-//            System.out.println("Failed to load the game.");
-//            e.printStackTrace();
-//        }
-//    }
-
 }
