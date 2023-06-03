@@ -36,11 +36,14 @@ public class QuestionPane {
         myChosenAnswer = "";
     }
 
+
+
     /**
      * Launching the question window to prompt the player with a question and store the answer
      * they chose.
      */
     public void ask() {
+
         // null will change to game panel when merging code
         int ans = JOptionPane.showOptionDialog(null, myPrompt, QUESTION_TITLE,
                 JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
@@ -52,6 +55,8 @@ public class QuestionPane {
         }
 
     }
+
+
 
     /**
      * Getters for myChosenAnswer.
