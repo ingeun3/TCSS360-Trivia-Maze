@@ -157,6 +157,8 @@ public class GameLoop implements Serializable {
             if(myCurrentCenterPanel == 1) {
                 myInitialMoves = 1000;
             } else {
+                // Clinton -> 422
+                // David -> 200
                 myInitialMoves = (int) Math.ceil(myCurrentMaze.getNumOfStr() / 10.0) * 10;
             }
 
@@ -171,7 +173,7 @@ public class GameLoop implements Serializable {
             myGameInterface.setNorthPanel(myCurrentNorthPanel);
             myGameInterface.setCenter(myCurrentGamePanel);
             if(myCurrentCenterPanel == 1) {
-                TutorialMessageFrame theInstruction = new TutorialMessageFrame();
+                TutorialInstructionFrame theInstruction = new TutorialInstructionFrame();
                 theInstruction.start();
             }
             gameSetup = true;

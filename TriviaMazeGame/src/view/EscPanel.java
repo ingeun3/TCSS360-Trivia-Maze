@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class EscPanel extends JFrame {
-
+    private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private Font myFont;
     public EscPanel() {
         try {

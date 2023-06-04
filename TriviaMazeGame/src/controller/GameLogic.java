@@ -139,7 +139,7 @@ public class GameLogic implements KeyListener {
                 mySprite.setDirection("down");
                 mySprite.setY((int) myEndPoint.getY() * mySprite.getSpeed() - mySprite.getSpeed());
                 mySprite.setX((int) myEndPoint.getX() * mySprite.getSpeed() + mySprite.getGap());
-                myLighting.setup();
+                myLighting.disableLight();
             }
         }
     }
