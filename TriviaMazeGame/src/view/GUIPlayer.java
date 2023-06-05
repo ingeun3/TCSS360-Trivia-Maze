@@ -44,7 +44,6 @@ public class GUIPlayer {
         myTileSize = (int) screenSize.getWidth() / myTileNumber;
         mySpeed = myTileSize;
         myGap = (int) (screenSize.getWidth() - (myTileSize * theTileNum)) / 2;
-        System.out.println("before return" + myGap);
         x = (int) theSpawnPoint.getX() * myTileSize + myGap;
         y = (int) theSpawnPoint.getY() * myTileSize;
         direction = "up";

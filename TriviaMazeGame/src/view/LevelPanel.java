@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class LevelInterface extends JPanel {
+public class LevelPanel extends JPanel {
 
     private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -36,7 +36,7 @@ public class LevelInterface extends JPanel {
 
     private Font myFont;
 
-    public LevelInterface(int theCompletedLevel) {
+    public LevelPanel(int theCompletedLevel) {
         myPanelNumber = 0;
         myCompletedLevel = theCompletedLevel;
         setLayout(new BorderLayout());
@@ -126,7 +126,6 @@ public class LevelInterface extends JPanel {
 
         myBackButton.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent theEvent) {
-                System.out.println("1 it clicked");
                 myPanelNumber = -1;
             }
         });

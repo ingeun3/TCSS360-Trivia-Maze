@@ -26,7 +26,6 @@ public class Lighting {
         mySprite = gp;
         myDiameter = circleSize;
 
-        System.out.println(mySprite.getGap());
         myW = (int) mySprite.getsize().getX();
         myH = (int) mySprite.getsize().getY();
 
@@ -92,7 +91,9 @@ public class Lighting {
         myGraphics.fill(myScreenArea);
         myGraphics.dispose();
     }
-
+    public void disableLight() {
+        darknessFilter = null;
+    }
     public void draw(Graphics2D g2){
         g2.drawImage(darknessFilter, 0, 0, null);
     }

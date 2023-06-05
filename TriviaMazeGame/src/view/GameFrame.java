@@ -5,9 +5,9 @@ import java.io.FileNotFoundException;
 
 import javax.swing.*;
 
-public class GameInterface extends JFrame{
+public class GameFrame extends JFrame{
     // Singleton instance
-    private static GameInterface instance;
+    private static GameFrame instance;
 
     // Class Constants
     private static final String LEVEL_PROMPT = "Level ";
@@ -32,7 +32,7 @@ public class GameInterface extends JFrame{
      * @param theMoves      the number of legal moves in this level.
      * @throws FileNotFoundException if the image file is not found
      */
-    private GameInterface(int theLevel, int theMoves)  {
+    private GameFrame(int theLevel, int theMoves)  {
         super("Trivia Maze");
         // myMazeArray = theMazeArray;
         myCenterPanel = new JPanel();
@@ -53,9 +53,9 @@ public class GameInterface extends JFrame{
      * @return the singleton instance
      * @throws FileNotFoundException if the image file is not found
      */
-    public static GameInterface getInstance(int theLevel, int theMoves) {
+    public static GameFrame getInstance(int theLevel, int theMoves) {
         if (instance == null) {
-            instance = new GameInterface(theLevel, theMoves);
+            instance = new GameFrame(theLevel, theMoves);
         }
         return instance;
     }

@@ -30,7 +30,7 @@ public class GameLogic implements KeyListener {
     // The SQL data source.
     private SQLiteDataSource myDataSource;
 
-    private QuestionPane myQuestionPane;
+    private QuestionDialog myQuestionPane;
 
     private String[] myQ;
 
@@ -49,7 +49,7 @@ public class GameLogic implements KeyListener {
 
     private boolean myWin;
 
-    private EscPanel myEscape;
+    private EscFrame myEscape;
 
     private boolean myGoToStage;
 
@@ -59,10 +59,10 @@ public class GameLogic implements KeyListener {
 
     private int keyCount;
 
-    public GameLogic(String theMapName, int theMove, int theLevel) throws FileNotFoundException {
+    public GameLogic(Maze theMaze, int theMove, int theLevel, Player thePlayer) throws FileNotFoundException {
         keyCount = 0;
         myLevel = theLevel;
-        myEscape = new EscPanel();
+        myEscape = new EscFrame();
         myGoToStage = false;
         myWin = false;
         myMove = theMove;
@@ -73,8 +73,8 @@ public class GameLogic implements KeyListener {
         retrieveData();
         mySize = myQuestions.size();
         myNorthPanel = NorthPanel.getInstance();
-        myMaze = new Maze(theMapName);
-        myPlayer = new Player(theMove, theMapName);
+        myMaze = theMaze;
+        myPlayer = thePlayer;
         myEndPoint = myMaze.getMyExit();
         myPoint = myPlayer.getLocation();
         myStartPoint = myPlayer.getLocation();
@@ -104,7 +104,7 @@ public class GameLogic implements KeyListener {
             counter++;
         }
         myCurrentQuestion = getRandomNumber(mySize);
-        myQuestionPane = new QuestionPane(myQ[myCurrentQuestion], myQnA.get(myQ[myCurrentQuestion]).clone());
+        myQuestionPane = new QuestionDialog(myQ[myCurrentQuestion], myQnA.get(myQ[myCurrentQuestion]).clone());
 
     }
 
@@ -136,14 +136,10 @@ public class GameLogic implements KeyListener {
         } else if (code == KeyEvent.VK_M) {
             myPressedCode = KeyEvent.VK_M;
             keyCount++;
-            if(keyCount >= 10 && myLevel == 4) {
-                System.out.println("hi");
-                myPlayer.canMove(new Point((int) myEndPoint.getX(), (int) myEndPoint.getY()-1));
-                mySprite.setDirection("down");
-                mySprite.setY((int) myEndPoint.getY() * mySprite.getSpeed() - mySprite.getSpeed());
-                mySprite.setX((int) myEndPoint.getX() * mySprite.getSpeed() + mySprite.getGap());
-                myLighting.setup();
+            if(keyCount >= 5) {
+                    cheat();
             }
+
         }
     }
 
@@ -261,7 +257,7 @@ public class GameLogic implements KeyListener {
             isRightAnswer(myQuestionPane.getChoice());
 
             myCurrentQuestion = getRandomNumber(mySize);
-            myQuestionPane = new QuestionPane(myQ[myCurrentQuestion],
+            myQuestionPane = new QuestionDialog(myQ[myCurrentQuestion],
                     myQnA.get(myQ[myCurrentQuestion]).clone());
         }
     }
@@ -289,6 +285,33 @@ public class GameLogic implements KeyListener {
         myPlayer.movePlayer(thePoint);
         mySprite.setX((thePoint.x * mySprite.getTileSize() + mySprite.getGap()));
         mySprite.setY(thePoint.y * mySprite.getTileSize());
+    }
+    private void cheat() {
+        if(((int) myEndPoint.getX() - 1 > 0) && (myMaze.charAt((int) myEndPoint.getX() - 1, (int) myEndPoint.getY()) == '+')) {
+            myPlayer.canMove(new Point((int) myEndPoint.getX() - 1, (int) myEndPoint.getY()));
+            mySprite.setDirection("right");
+            mySprite.setY((int) myEndPoint.getY() * mySprite.getSpeed());
+            mySprite.setX((int) myEndPoint.getX() * mySprite.getSpeed() + mySprite.getGap() - mySprite.getSpeed());
+            myLighting.disableLight();
+        } else if(((int) myEndPoint.getX() + 1 < myMaze.getArray()[0].length) && (myMaze.charAt((int) myEndPoint.getX() + 1, (int) myEndPoint.getY()) == '+')) {
+            myPlayer.canMove(new Point((int) myEndPoint.getX() + 1, (int) myEndPoint.getY()));
+            mySprite.setDirection("left");
+            mySprite.setY((int) myEndPoint.getY() * mySprite.getSpeed());
+            mySprite.setX((int) myEndPoint.getX() * mySprite.getSpeed() + mySprite.getGap() + mySprite.getSpeed());
+            myLighting.disableLight();
+        } else if(((int) myEndPoint.getY() - 1 > 0) && (myMaze.charAt((int) myEndPoint.getX(), (int) myEndPoint.getY() - 1) == '+')) {
+            myPlayer.canMove(new Point((int) myEndPoint.getX(), (int) myEndPoint.getY()-1));
+            mySprite.setDirection("down");
+            mySprite.setY((int) myEndPoint.getY() * mySprite.getSpeed() - mySprite.getSpeed());
+            mySprite.setX((int) myEndPoint.getX() * mySprite.getSpeed() + mySprite.getGap());
+            myLighting.disableLight();
+        } else if(((int) myEndPoint.getY() + 1 < myMaze.getArray().length) && (myMaze.charAt((int) myEndPoint.getX(), (int) myEndPoint.getY() + 1) == '+')) {
+            myPlayer.canMove(new Point((int) myEndPoint.getX(), (int) myEndPoint.getY() + 1));
+            mySprite.setDirection("up");
+            mySprite.setY((int) myEndPoint.getY() * mySprite.getSpeed() + mySprite.getSpeed());
+            mySprite.setX((int) myEndPoint.getX() * mySprite.getSpeed() + mySprite.getGap());
+            myLighting.disableLight();
+        }
     }
 
     /**

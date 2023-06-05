@@ -2,6 +2,7 @@ package controller;
 
 import model.Maze;
 import model.Player;
+import model.Sound;
 import view.*;
 
 import java.io.*;
@@ -22,8 +23,8 @@ public class GameLoop implements Serializable {
     private boolean title = true;
     private boolean level = false;
     private boolean game = false;
-    private GameInterface myGameInterface;
-    private LevelInterface myLevelInterface;
+    private GameFrame myGameInterface;
+    private LevelPanel myLevelInterface;
     private TitlePanel myTitlePanel;
     private GamePanel myCurrentGamePanel;
     private Maze myCurrentMaze;
@@ -42,7 +43,7 @@ public class GameLoop implements Serializable {
         load();
         myTitleSoundFlag = false;
         myTitlePanel = new TitlePanel();
-        myGameInterface = GameInterface.getInstance(1, 100);
+        myGameInterface = GameFrame.getInstance(1, 100);
         myCurrentGamePanel = null;
         myCurrentMaze = null;
         myCurrentPlayer = null;
@@ -107,10 +108,12 @@ public class GameLoop implements Serializable {
         }
         myCurrentCenterPanel = myTitlePanel.getMyNum();
         if (myCurrentCenterPanel == 0) {
+           // System.out.println("currentLeve" + myCurrentLevel);
             if(myTitlePanel.restartGame()) {
                 myCompletedLevel = 0;
             }
-            myLevelInterface = new LevelInterface(myCompletedLevel);
+            //System.out.println(myCompletedLevel);
+            myLevelInterface = new LevelPanel(myCompletedLevel);
             title = false;
             level = true;
             titleSetup = false;
@@ -147,15 +150,19 @@ public class GameLoop implements Serializable {
                 myGameSoundFlag = true;
                 myGameSound.loop();
             }
+
+
+
             myCurrentMaze = new Maze(myMazeFileName);
             if(myCurrentCenterPanel == 1) {
                 myInitialMoves = 1000;
             } else {
+                // Clinton -> 422
+                // David -> 200
                 myInitialMoves = (int) Math.ceil(myCurrentMaze.getNumOfStr() / 10.0) * 10;
             }
-
             myCurrentPlayer = new Player(myInitialMoves, myMazeFileName);
-            myCurrentGameLogic = new GameLogic(myMazeFileName, myInitialMoves, myCurrentCenterPanel);
+            myCurrentGameLogic = new GameLogic(myCurrentMaze, myInitialMoves, myCurrentCenterPanel, myCurrentPlayer);
             myCurrentGamePanel = new GamePanel(myCurrentMaze.getArray(), myCurrentPlayer);
             myCurrentNorthPanel = NorthPanel.getInstance(LEVEL_PROMPT + myCurrentCenterPanel, MOVE_PROMPT + myInitialMoves);
             myCurrentNorthPanel.setMoves(myInitialMoves);
@@ -165,7 +172,7 @@ public class GameLoop implements Serializable {
             myGameInterface.setNorthPanel(myCurrentNorthPanel);
             myGameInterface.setCenter(myCurrentGamePanel);
             if(myCurrentCenterPanel == 1) {
-                TutorialMessageFrame theInstruction = new TutorialMessageFrame();
+                TutorialInstructionFrame theInstruction = new TutorialInstructionFrame();
                 theInstruction.start();
             }
             gameSetup = true;

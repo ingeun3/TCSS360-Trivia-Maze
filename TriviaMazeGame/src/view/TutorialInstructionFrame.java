@@ -7,24 +7,34 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class TutorialMessageFrame extends JFrame {
+public class TutorialInstructionFrame extends JFrame {
     private static final String INSTRUCTION_PROMPT = "\n WELCOME TO TRIVIA MAZE!\n" +
-                                                    "\n instructions... \n" +
-                                                    "\n CONTROLS:" +
+                                                    "\n INSTRUCTIONS: " +
+                                                    "\n You are lost in a cave maze with only your torch and you " +
+                                                    "must escape! You need to find the exit but you only have a " +
+                                                    "LIMITED number of MOVES to do so. \n\n Throughout the maze, " +
+                                                    "you will need to answer trivia QUESTIONS to continue. Answer " +
+                                                    "right and the light from your torch will grow and you may move " +
+                                                    "along! Answer wrong and you will be penalized by getting " +
+                                                    "teleported back to the last spot you answered correctly OR " +
+                                                    "the start if you haven't gotten one right yet. \n\n " +
+                                                    "Choose your MOVES wisely! Good luck!" +
+                                                    "\n\n CONTROLS:" +
                                                     "\n PRESS  W -> UP" +
                                                     "\n PRESS  A -> LEFT" +
                                                     "\n PRESS  S -> RIGHT" +
-                                                    "\n PRESS  D -> DOWN";
+                                                    "\n PRESS  D -> DOWN" +
+            "\n PRESS  ESC -> QUIT";
     private Font myFont;
     private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    public TutorialMessageFrame() {
+    public TutorialInstructionFrame() {
         try {
             InputStream is = getClass().getResourceAsStream("smalle.ttf");
             myFont = Font.createFont(Font.TRUETYPE_FONT, is);
         } catch (FontFormatException | IOException e) {
             throw new RuntimeException(e);
         }
-        setSize(new Dimension((int) screenSize.getWidth(),(int) screenSize.getHeight() * 5 / 6));
+        setSize(new Dimension((int) screenSize.getWidth(),(int) screenSize.getHeight()));
 
         setUndecorated(true);
         setBackground(new Color(0, 0, 0, 250)); // Transparent black background
@@ -71,7 +81,7 @@ public class TutorialMessageFrame extends JFrame {
     }
 
     public static void start() {
-        TutorialMessageFrame frame = new TutorialMessageFrame();
+        TutorialInstructionFrame frame = new TutorialInstructionFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Center the frame on the screen
