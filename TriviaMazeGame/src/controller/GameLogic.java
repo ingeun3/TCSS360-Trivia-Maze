@@ -190,7 +190,7 @@ public class GameLogic implements KeyListener {
                         myPlayer.setMyMove(myMove);
                         myNorthPanel.setMoves(myMove);
                         myPoint = myStartPoint;
-                        myLighting.setSize(350);
+                        myLighting.setSize(200);
                         myLighting.setup();
                     } else if (option == 2) {
                         // Go to levels
@@ -266,11 +266,11 @@ public class GameLogic implements KeyListener {
         if (theChoice.equals(myQnA.get(myQ[myCurrentQuestion])[0])) {
             myPoint = myPlayer.getLocation();
             if(myLevel < 3) {
-                myLighting.increaseSize(110);
+                myLighting.increaseSize(100);
             } else if(myLevel == 3) {
-                myLighting.increaseSize(50);
+                myLighting.increaseSize(10);
             } else if(myLevel == 4) {
-                myLighting.increaseSize(25);
+                myLighting.increaseSize(5);
             }
 
         } else {

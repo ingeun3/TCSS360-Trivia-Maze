@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class TutorialInstructionFrame extends JFrame {
+
+    private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private static final String INSTRUCTION_PROMPT = "\n WELCOME TO TRIVIA MAZE!\n" +
                                                     "\n INSTRUCTIONS: " +
                                                     "\n You are lost in a cave maze with only your torch and you " +
@@ -24,9 +26,9 @@ public class TutorialInstructionFrame extends JFrame {
                                                     "\n PRESS  A -> LEFT" +
                                                     "\n PRESS  S -> RIGHT" +
                                                     "\n PRESS  D -> DOWN" +
-            "\n PRESS  ESC -> QUIT";
+                                                    "\n PRESS  ESC -> QUIT";
     private Font myFont;
-    private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
     public TutorialInstructionFrame() {
         try {
             InputStream is = getClass().getResourceAsStream("smalle.ttf");
@@ -34,7 +36,7 @@ public class TutorialInstructionFrame extends JFrame {
         } catch (FontFormatException | IOException e) {
             throw new RuntimeException(e);
         }
-        setSize(new Dimension((int) screenSize.getWidth(),(int) screenSize.getHeight()));
+        setSize(new Dimension((int) screenSize.getWidth(),(int) screenSize.getHeight() * 9 / 10));
 
         setUndecorated(true);
         setBackground(new Color(0, 0, 0, 250)); // Transparent black background
@@ -46,7 +48,7 @@ public class TutorialInstructionFrame extends JFrame {
         instructionsArea.setLineWrap(true);
         instructionsArea.setWrapStyleWord(true);
 
-        instructionsArea.setFont(myFont.deriveFont(Font.PLAIN, 45));
+        instructionsArea.setFont(myFont.deriveFont(Font.PLAIN, 30));
         instructionsArea.setForeground(new Color(255, 255, 255, 200));
         instructionsArea.setBackground(Color.black);
 
