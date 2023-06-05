@@ -161,7 +161,7 @@ public class GameLoop implements Serializable {
             }
             myCurrentPlayer = new Player(myInitialMoves, myMazeFileName);
             myCurrentGameLogic = new GameLogic(myCurrentMaze, myInitialMoves, myCurrentCenterPanel, myCurrentPlayer);
-            myCurrentGamePanel = new GamePanel(myCurrentMaze.getArray(), myCurrentPlayer);
+            myCurrentGamePanel = new GamePanel(myCurrentMaze.getArray(), myCurrentPlayer.getLocation());
             myCurrentNorthPanel = NorthPanel.getInstance(LEVEL_PROMPT + myCurrentCenterPanel, MOVE_PROMPT + myInitialMoves);
             myCurrentNorthPanel.setMoves(myInitialMoves);
             myCurrentNorthPanel.setLevel(myCurrentCenterPanel);
