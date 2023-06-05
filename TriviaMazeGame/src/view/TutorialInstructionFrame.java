@@ -24,7 +24,7 @@ public class TutorialInstructionFrame extends JFrame {
                                                     "\n PRESS  A -> LEFT" +
                                                     "\n PRESS  S -> RIGHT" +
                                                     "\n PRESS  D -> DOWN" +
-            "\n PRESS  ESC -> QUIT";
+                                                    "\n PRESS  ESC -> QUIT";
     private Font myFont;
     private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     public TutorialInstructionFrame() {
@@ -34,7 +34,7 @@ public class TutorialInstructionFrame extends JFrame {
         } catch (FontFormatException | IOException e) {
             throw new RuntimeException(e);
         }
-        setSize(new Dimension((int) screenSize.getWidth(),(int) screenSize.getHeight()));
+        setSize(new Dimension((int) screenSize.getWidth(),(int) screenSize.getHeight() * 9 / 10 ));
 
         setUndecorated(true);
         setBackground(new Color(0, 0, 0, 250)); // Transparent black background
@@ -42,11 +42,12 @@ public class TutorialInstructionFrame extends JFrame {
         JTextArea instructionsArea = new JTextArea(
                 INSTRUCTION_PROMPT
         );
+
         instructionsArea.setEditable(false);
         instructionsArea.setLineWrap(true);
         instructionsArea.setWrapStyleWord(true);
 
-        instructionsArea.setFont(myFont.deriveFont(Font.PLAIN, 45));
+        instructionsArea.setFont(myFont.deriveFont(Font.PLAIN, 30));
         instructionsArea.setForeground(new Color(255, 255, 255, 200));
         instructionsArea.setBackground(Color.black);
 
