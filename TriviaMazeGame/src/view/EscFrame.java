@@ -6,10 +6,10 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class EscPanel extends JFrame {
-
+public class EscFrame extends JFrame {
+    private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private Font myFont;
-    public EscPanel() {
+    public EscFrame() {
         try {
             InputStream is = getClass().getResourceAsStream("smalle.ttf");
             myFont = Font.createFont(Font.TRUETYPE_FONT, is);
@@ -78,7 +78,7 @@ public class EscPanel extends JFrame {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                EscPanel frame = new EscPanel();
+                EscFrame frame = new EscFrame();
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
                 // Center the frame on the screen

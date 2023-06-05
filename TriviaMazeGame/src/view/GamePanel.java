@@ -16,7 +16,7 @@ public class GamePanel extends JPanel {
 
     char[][] myMazeArray;
     // The Map Object that contains the graphic of the map
-    private final MazeMap myMazemap;
+    private final GUIMaze myMazemap;
 
 
 
@@ -25,18 +25,13 @@ public class GamePanel extends JPanel {
 
     Lighting myE;
 
-
-
-    // Singleton instance
-    private static GamePanel instance;
-
     public GamePanel(char[][] theArray, Player thePlayer) throws FileNotFoundException {
         // this.setPreferredSize(new Dimension((int) screenSize.getWidth(), (int) screenSize.getHeight()));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         myMazeArray = theArray;
         // The 2D Array of the map layout.
-        myMazemap = new MazeMap(myMazeArray, theArray[0].length);
+        myMazemap = new GUIMaze(myMazeArray, theArray[0].length);
         myPlayerGUI = new GUIPlayer(thePlayer.getLocation(), theArray[0].length);
         myE = Lighting.getInstance();
         myE.setup();
@@ -83,7 +78,7 @@ public class GamePanel extends JPanel {
         myMazemap.draw(g2);
         myPlayerGUI.draw(g2);
 
-        myE.draw(g2);
+       // myE.draw(g2);
 
         g2.dispose();
     }

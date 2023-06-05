@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class TutorialMessageFrame extends JFrame {
+public class TutorialInstructionFrame extends JFrame {
     private static final String INSTRUCTION_PROMPT = "\n WELCOME TO TRIVIA MAZE!\n" +
                                                     "\n instructions... \n" +
                                                     "\n CONTROLS:" +
@@ -17,7 +17,7 @@ public class TutorialMessageFrame extends JFrame {
                                                     "\n PRESS  D -> DOWN";
     private Font myFont;
     private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    public TutorialMessageFrame() {
+    public TutorialInstructionFrame() {
         try {
             InputStream is = getClass().getResourceAsStream("smalle.ttf");
             myFont = Font.createFont(Font.TRUETYPE_FONT, is);
@@ -71,7 +71,7 @@ public class TutorialMessageFrame extends JFrame {
     }
 
     public static void start() {
-        TutorialMessageFrame frame = new TutorialMessageFrame();
+        TutorialInstructionFrame frame = new TutorialInstructionFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Center the frame on the screen

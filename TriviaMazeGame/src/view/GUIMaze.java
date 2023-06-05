@@ -4,7 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 
 
-public class MazeMap {
+public class GUIMaze {
     // Class Constants
     private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -33,7 +33,7 @@ public class MazeMap {
      * Default constructor for MazeMap object.
      * @param theArray the 2D layout of the map we want to make graphic out of.
      */
-    public MazeMap(char[][] theArray, int theTileNum) {
+    public GUIMaze(char[][] theArray, int theTileNum) {
         myTileNumber = theTileNum;
         myTileSize = (int) screenSize.getWidth() / myTileNumber;
         myGap = (int) (screenSize.getWidth() - myTileSize *  myTileNumber) /2;

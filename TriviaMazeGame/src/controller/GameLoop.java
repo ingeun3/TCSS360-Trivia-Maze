@@ -2,6 +2,7 @@ package controller;
 
 import model.Maze;
 import model.Player;
+import model.Sound;
 import view.*;
 
 import java.io.*;
@@ -156,11 +157,12 @@ public class GameLoop implements Serializable {
             if(myCurrentCenterPanel == 1) {
                 myInitialMoves = 1000;
             } else {
+                // Clinton -> 422
+                // David -> 200
                 myInitialMoves = (int) Math.ceil(myCurrentMaze.getNumOfStr() / 10.0) * 10;
             }
-
             myCurrentPlayer = new Player(myInitialMoves, myMazeFileName);
-            myCurrentGameLogic = new GameLogic(myMazeFileName, myInitialMoves, myCurrentCenterPanel);
+            myCurrentGameLogic = new GameLogic(myCurrentMaze, myInitialMoves, myCurrentCenterPanel, myCurrentPlayer);
             myCurrentGamePanel = new GamePanel(myCurrentMaze.getArray(), myCurrentPlayer);
             myCurrentNorthPanel = NorthPanel.getInstance(LEVEL_PROMPT + myCurrentCenterPanel, MOVE_PROMPT + myInitialMoves);
             myCurrentNorthPanel.setMoves(myInitialMoves);
@@ -170,7 +172,7 @@ public class GameLoop implements Serializable {
             myGameInterface.setNorthPanel(myCurrentNorthPanel);
             myGameInterface.setCenter(myCurrentGamePanel);
             if(myCurrentCenterPanel == 1) {
-                TutorialMessageFrame theInstruction = new TutorialMessageFrame();
+                TutorialInstructionFrame theInstruction = new TutorialInstructionFrame();
                 theInstruction.start();
             }
             gameSetup = true;
