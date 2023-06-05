@@ -54,7 +54,10 @@ public class GameLogic implements KeyListener {
 
     private int myLevel;
 
+    private int keyCount;
+
     public GameLogic(String theMapName, int theMove, int theLevel) throws FileNotFoundException {
+        keyCount = 0;
         myLevel = theLevel;
         myEscape = new EscPanel();
         myGoToStage = false;
@@ -76,6 +79,7 @@ public class GameLogic implements KeyListener {
         myLighting = Lighting.getInstance(mySprite, 350);
         myLighting.setSize(350);
         myLighting.setup();
+
         //gets a random question
         for (int i = 0; i < myQuestions.size(); i++) {
             Question askedQuestion = myQuestions.get(i);
@@ -98,6 +102,7 @@ public class GameLogic implements KeyListener {
         }
         myCurrentQuestion = getRandomNumber(mySize);
         myQuestionPane = new QuestionPane(myQ[myCurrentQuestion], myQnA.get(myQ[myCurrentQuestion]).clone());
+
     }
 
 
@@ -125,6 +130,17 @@ public class GameLogic implements KeyListener {
         } else if (code == KeyEvent.VK_ESCAPE) {
             pressedKeyCode = KeyEvent.VK_ESCAPE;
             myEscape.start();
+        } else if (code == KeyEvent.VK_M) {
+            pressedKeyCode = KeyEvent.VK_M;
+            keyCount++;
+            if(keyCount >= 10 && myLevel == 4) {
+                System.out.println("hi");
+                myPlayer.canMove(new Point((int) myEndPoint.getX(), (int) myEndPoint.getY()-1));
+                mySprite.setDirection("down");
+                mySprite.setY((int) myEndPoint.getY() * mySprite.getSpeed() - mySprite.getSpeed());
+                mySprite.setX((int) myEndPoint.getX() * mySprite.getSpeed() + mySprite.getGap());
+                myLighting.setup();
+            }
         }
     }
 
@@ -154,14 +170,38 @@ public class GameLogic implements KeyListener {
             mySprite.setX(mySprite.getX() + mySprite.getSpeed());
             myNorthPanel.setMoves(myPlayer.getMyMove());
         }
+
         myLighting.setup();
         promptQuestions();
         checkFinish();
     }
 
     public void checkFinish() {
-        if (myPlayer.getLocation().equals(myEndPoint) && myLevel < 4) {
-            EndingMessage endingMessage = new EndingMessage(true);
+        if (myPlayer.getLocation().equals(myEndPoint) && myLevel >= 4) {
+            EndingMessage endingMessage = new EndingMessage(1);
+            endingMessage.setOptionSelectedListener(new EndingMessage.OptionSelectedListener() {
+                @Override
+                public void onOptionSelected(int option) {
+                    if (option == 1) {
+                        // Play again
+                        mySprite.setDirection("up");
+                        mySprite.setX(myStartPoint.x * mySprite.getTileSize() + mySprite.getGap());
+                        mySprite.setY(myStartPoint.y * mySprite.getTileSize());
+                        myPlayer.movePlayer(myStartPoint);
+                        myPlayer.setMyMove(myMove);
+                        myNorthPanel.setMoves(myMove);
+                        myPoint = myStartPoint;
+                        myLighting.setSize(350);
+                        myLighting.setup();
+                    } else if (option == 2) {
+                        // Go to levels
+                        myGoToStage = true;
+                    }
+                }
+            });
+        }
+        else if (myPlayer.getLocation().equals(myEndPoint) && myLevel < 4) {
+            EndingMessage endingMessage = new EndingMessage(2);
             endingMessage.setOptionSelectedListener(new EndingMessage.OptionSelectedListener() {
                 @Override
                 public void onOptionSelected(int option) {
@@ -182,7 +222,7 @@ public class GameLogic implements KeyListener {
                 }
             });
         } else if (!myPlayer.isAlive() || myPlayer.getLocation().equals(myEndPoint) && myLevel == 4) {
-            EndingMessage endingMessage = new EndingMessage(false);
+            EndingMessage endingMessage = new EndingMessage(3);
             endingMessage.setOptionSelectedListener(new EndingMessage.OptionSelectedListener() {
                 @Override
                 public void onOptionSelected(int option) {
@@ -227,7 +267,7 @@ public class GameLogic implements KeyListener {
         if (theChoice.equals(myQnA.get(myQ[myCurrentQuestion])[0])) {
             myPoint = myPlayer.getLocation();
             if(myLevel < 3) {
-                myLighting.increaseSize(150);
+                myLighting.increaseSize(110);
             } else if(myLevel == 3) {
                 myLighting.increaseSize(75);
             } else if(myLevel == 4) {

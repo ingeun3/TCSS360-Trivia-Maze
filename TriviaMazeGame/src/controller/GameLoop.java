@@ -33,10 +33,14 @@ public class GameLoop implements Serializable {
     private int myCurrentCenterPanel;
     private int myCompletedLevel;
     private String myMazeFileName;
+    private Sound myTitleSound;
+    private Sound myGameSound;
+    private boolean myTitleSoundFlag;
+    private boolean myGameSoundFlag;
 
     public GameLoop() throws IOException {
-      //  myCompletedLevel = 0;
         load();
+        myTitleSoundFlag = false;
         myTitlePanel = new TitlePanel();
         myGameInterface = GameInterface.getInstance(1, 100);
         myCurrentGamePanel = null;
@@ -44,6 +48,8 @@ public class GameLoop implements Serializable {
         myCurrentPlayer = null;
         myCurrentGameLogic = null;
         myCurrentCenterPanel = -2;
+        myTitleSound = new Sound("Title Sound.wav");
+        myGameSound = new Sound("Game Sound.wav");
         start();
     }
 
@@ -90,6 +96,12 @@ public class GameLoop implements Serializable {
         }
     public void runningTitleInterface() {
         if(!titleSetup) {
+            if(!myTitleSoundFlag) {
+                myGameSound.stop();
+                myTitleSound.play();
+                myTitleSound.loop();
+                myTitleSoundFlag = true;
+            }
             myGameInterface.setCenter(myTitlePanel);
             titleSetup = true;
         }
@@ -108,6 +120,12 @@ public class GameLoop implements Serializable {
     }
     public void runningLevelInterface() {
         if(!levelSetup) {
+            if(!myTitleSoundFlag) {
+                myGameSound.stop();
+                myTitleSound.play();
+                myTitleSound.loop();
+                myTitleSoundFlag = true;
+            }
             myGameInterface.setCenter(myLevelInterface);
             levelSetup = true;
         }
@@ -124,16 +142,23 @@ public class GameLoop implements Serializable {
     }
     private void runningGamePanel() throws IOException {
         if(!gameSetup) {
-            if(myCurrentCenterPanel == 1) {
-                myInitialMoves = 20;
-            } else if(myCurrentCenterPanel == 2) {
-                myInitialMoves = 25;
-            } else if(myCurrentCenterPanel == 3) {
-                myInitialMoves = 50;
-            } else if(myCurrentCenterPanel == 4) {
-                myInitialMoves = 200;
+            myTitleSoundFlag = false;
+            myTitleSound.stop();
+            if(!myGameSoundFlag) {
+                myGameSound = new Sound("Game Sound.wav");
+                myGameSoundFlag = true;
+                myGameSound.loop();
             }
+
+
+
             myCurrentMaze = new Maze(myMazeFileName);
+            if(myCurrentCenterPanel == 1) {
+                myInitialMoves = 1000;
+            } else {
+                myInitialMoves = (int) Math.ceil(myCurrentMaze.getNumOfStr() / 10.0) * 10;
+            }
+
             myCurrentPlayer = new Player(myInitialMoves, myMazeFileName);
             myCurrentGameLogic = new GameLogic(myMazeFileName, myInitialMoves, myCurrentCenterPanel);
             myCurrentGamePanel = new GamePanel(myCurrentMaze.getArray(), myCurrentPlayer);
@@ -144,6 +169,10 @@ public class GameLoop implements Serializable {
             myCurrentGamePanel.addKeyListener(myCurrentGameLogic);
             myGameInterface.setNorthPanel(myCurrentNorthPanel);
             myGameInterface.setCenter(myCurrentGamePanel);
+            if(myCurrentCenterPanel == 1) {
+                TutorialMessageFrame theInstruction = new TutorialMessageFrame();
+                theInstruction.start();
+            }
             gameSetup = true;
         }
         if(myCurrentNorthPanel.stageButton() || myCurrentGameLogic.goToStage()) {
@@ -152,7 +181,8 @@ public class GameLoop implements Serializable {
             gameSetup = false;
             myCurrentCenterPanel = 0;
             myGameInterface.removeNorthPanel();
-
+            myGameSound.stop();
+            myGameSoundFlag = false;
         } else if(myCurrentGameLogic.didWin() && myCurrentCenterPanel < 4) {
             myCurrentCenterPanel++;
             if (myCurrentCenterPanel > myCompletedLevel) {
@@ -161,7 +191,6 @@ public class GameLoop implements Serializable {
             }
             save();
             gameSetup = false;
-
         } else {
             myCurrentGamePanel.run();
         }

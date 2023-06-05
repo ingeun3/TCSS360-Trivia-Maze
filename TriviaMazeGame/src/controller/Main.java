@@ -21,7 +21,7 @@ public class Main {
 
 
     public static void main(String[] theArgs) throws IOException {
-        Sound sound = new Sound();
+//        Sound sound = new Sound();
 //        sound.playMusic();
        // setLookAndFeel();
 

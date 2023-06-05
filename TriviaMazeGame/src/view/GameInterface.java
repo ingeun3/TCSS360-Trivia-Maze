@@ -42,6 +42,7 @@ public class GameInterface extends JFrame{
         myNorthPanel =  NorthPanel.getInstance(level, moves);
         GraphicsEnvironment gEnviroment = GraphicsEnvironment.getLocalGraphicsEnvironment();
         mygDevice = gEnviroment.getDefaultScreenDevice();
+        setIconImage(new ImageIcon("up.png").getImage());
     }
 
     /**

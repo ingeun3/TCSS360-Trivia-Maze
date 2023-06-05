@@ -28,6 +28,7 @@ public class Maze {
     private final ArrayList<Point> myQuestionPoints;
     // initializing the location of the player.
     private Point myPlayerLocation;
+    private int myNumOfStr;
 
     /**
      * This is a default constructor for Maze class.
@@ -35,6 +36,7 @@ public class Maze {
      * @throws FileNotFoundException
      */
     public Maze(String mapName) throws FileNotFoundException {
+        myNumOfStr = 0;
         // For Program running purpose.
         myMazeMap = mapName;
         // For Program running purpose.
@@ -174,6 +176,7 @@ public class Maze {
                     if (counter > 2) {
                         intersectionsPoint.add(new Point(j, i));
                     }
+                    myNumOfStr++;
                 }
             }
         }
@@ -207,6 +210,10 @@ public class Maze {
      */
     public ArrayList<Point> getQuestionPoints() {
        return myQuestionPoints;
+    }
+
+    public int getNumOfStr() {
+        return myNumOfStr;
     }
     /**
      * For testing purpose.

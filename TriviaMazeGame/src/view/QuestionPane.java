@@ -1,6 +1,9 @@
 package view;
 
 import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
@@ -16,24 +19,36 @@ public class QuestionPane {
 
     // The question that was asked.
     private String myPrompt;
+
+    private JLabel myPromptLabel;
     // The Image that will be display in the question.
     private ImageIcon myImage;
     // The list of answers to the problem.
     private String[] myAnswers;
 
+    private JLabel myAnswersLabel;
+
     // The answer the player chose.
     private String myChosenAnswer;
+
+
+
 
     /**
      * Default constructor for QuestionPane.
      *
      */
     public QuestionPane(String theQuestion, String[] theAnswers) {
+
         myPrompt = theQuestion;
         myAnswers = theAnswers;
         Collections.shuffle(Arrays.asList(theAnswers));
         myImage = new ImageIcon("down.png");
         myChosenAnswer = "";
+
+        myPromptLabel = new JLabel();
+        myPromptLabel.setText(myPrompt);
+
     }
 
 
@@ -44,19 +59,52 @@ public class QuestionPane {
      */
     public void ask() {
 
-        // null will change to game panel when merging code
-        int ans = JOptionPane.showOptionDialog(null, myPrompt, QUESTION_TITLE,
-                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
-                myImage, myAnswers, myAnswers[0]);
-        if (ans == -1) {
-            myChosenAnswer = "Incorrect Answer";
-        } else {
-            myChosenAnswer = myAnswers[ans];
+        myPromptLabel = new JLabel();
+        myPromptLabel.setText(myPrompt);
+        myPromptLabel.setFont(new Font(
+                "Arial", Font.BOLD, 40));
+
+        // Create a panel to hold the buttons
+        JPanel buttonPanel = new JPanel();
+
+        buttonPanel.setLayout(new GridLayout(2,2));
+
+        for (String answer : myAnswers) {
+            JButton button = new JButton(answer);
+            button.setFont(new Font(
+                    "Arial", Font.BOLD, 20));
+            button.addActionListener(e -> {
+                myChosenAnswer = answer;
+                buttonPanel.getTopLevelAncestor().setVisible(false); // Hide the dialog
+            });
+          //  button.setPreferredSize(new Dimension(100,150));
+            button.setBackground(Color.WHITE);
+            buttonPanel.add(button);
+
         }
 
+        buttonPanel.setPreferredSize(new Dimension(1300,500));
+
+        // Create a panel to hold the prompt label and button panel
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new BorderLayout());
+        contentPanel.add(myPromptLabel, BorderLayout.NORTH);
+        contentPanel.add(buttonPanel, BorderLayout.CENTER);
+
+        // Create a custom dialog
+        JDialog dialog = new JDialog();
+        dialog.setIconImage(new ImageIcon("down.png").getImage());
+
+        dialog.setTitle(QUESTION_TITLE);
+        dialog.setModal(true);
+        dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        dialog.setContentPane(contentPanel);
+        dialog.pack();
+        dialog.setLocationRelativeTo(null);
+
+        // Show the dialog
+        dialog.setVisible(true);
     }
-
-
 
     /**
      * Getters for myChosenAnswer.
