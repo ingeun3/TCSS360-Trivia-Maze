@@ -46,7 +46,7 @@ public class GameLogic implements KeyListener {
 
     private boolean myWin;
 
-    private EscPanel myEscape;
+    private EscFrame myEscape;
 
     private boolean myGoToStage;
 
@@ -56,10 +56,10 @@ public class GameLogic implements KeyListener {
 
     private int keyCount;
 
-    public GameLogic(String theMapName, int theMove, int theLevel) throws FileNotFoundException {
+    public GameLogic(Maze theMaze, int theMove, int theLevel, Player thePlayer) throws FileNotFoundException {
         keyCount = 0;
         myLevel = theLevel;
-        myEscape = new EscPanel();
+        myEscape = new EscFrame();
         myGoToStage = false;
         myWin = false;
         myMove = theMove;
@@ -70,8 +70,8 @@ public class GameLogic implements KeyListener {
         retrieveData();
         mySize = myQuestions.size();
         myNorthPanel = NorthPanel.getInstance();
-        myMaze = new Maze(theMapName);
-        myPlayer = new Player(theMove, theMapName);
+        myMaze = theMaze;
+        myPlayer = thePlayer;
         myEndPoint = myMaze.getMyExit();
         myPoint = myPlayer.getLocation();
         myStartPoint = myPlayer.getLocation();
@@ -172,7 +172,7 @@ public class GameLogic implements KeyListener {
         }
 
         myLighting.setup();
-        promptQuestions();
+    //    promptQuestions();
         checkFinish();
     }
 
