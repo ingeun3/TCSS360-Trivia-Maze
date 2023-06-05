@@ -172,7 +172,7 @@ public class GameLogic implements KeyListener {
         }
 
         myLighting.setup();
-    //    promptQuestions();
+        promptQuestions();
         checkFinish();
     }
 
