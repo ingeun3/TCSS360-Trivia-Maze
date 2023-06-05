@@ -27,7 +27,7 @@ public class GameLogic implements KeyListener {
     // The SQL data source.
     private SQLiteDataSource myDataSource;
 
-    private QuestionPane myQuestionPane;
+    private QuestionDialog myQuestionPane;
 
     private String[] myQ;
 
@@ -101,7 +101,7 @@ public class GameLogic implements KeyListener {
             counter++;
         }
         myCurrentQuestion = getRandomNumber(mySize);
-        myQuestionPane = new QuestionPane(myQ[myCurrentQuestion], myQnA.get(myQ[myCurrentQuestion]).clone());
+        myQuestionPane = new QuestionDialog(myQ[myCurrentQuestion], myQnA.get(myQ[myCurrentQuestion]).clone());
 
     }
 
@@ -254,7 +254,7 @@ public class GameLogic implements KeyListener {
             isRightAnswer(myQuestionPane.getChoice());
 
             myCurrentQuestion = getRandomNumber(mySize);
-            myQuestionPane = new QuestionPane(myQ[myCurrentQuestion],
+            myQuestionPane = new QuestionDialog(myQ[myCurrentQuestion],
                     myQnA.get(myQ[myCurrentQuestion]).clone());
         }
     }

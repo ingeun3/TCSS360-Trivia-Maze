@@ -23,8 +23,8 @@ public class GameLoop implements Serializable {
     private boolean title = true;
     private boolean level = false;
     private boolean game = false;
-    private GameInterface myGameInterface;
-    private LevelInterface myLevelInterface;
+    private GameFrame myGameInterface;
+    private LevelPanel myLevelInterface;
     private TitlePanel myTitlePanel;
     private GamePanel myCurrentGamePanel;
     private Maze myCurrentMaze;
@@ -43,7 +43,7 @@ public class GameLoop implements Serializable {
         load();
         myTitleSoundFlag = false;
         myTitlePanel = new TitlePanel();
-        myGameInterface = GameInterface.getInstance(1, 100);
+        myGameInterface = GameFrame.getInstance(1, 100);
         myCurrentGamePanel = null;
         myCurrentMaze = null;
         myCurrentPlayer = null;
@@ -113,7 +113,7 @@ public class GameLoop implements Serializable {
                 myCompletedLevel = 0;
             }
             //System.out.println(myCompletedLevel);
-            myLevelInterface = new LevelInterface(myCompletedLevel);
+            myLevelInterface = new LevelPanel(myCompletedLevel);
             title = false;
             level = true;
             titleSetup = false;

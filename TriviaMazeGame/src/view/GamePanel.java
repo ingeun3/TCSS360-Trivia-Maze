@@ -36,7 +36,8 @@ public class GamePanel extends JPanel {
         myE = Lighting.getInstance();
         myE.setup();
         start();
-        System.out.println(myPlayerGUI.getGap());
+
+
 
     }
 

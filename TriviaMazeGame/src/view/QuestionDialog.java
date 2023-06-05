@@ -2,14 +2,10 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Map;
-import java.util.Random;
 
-public class QuestionPane {
+public class QuestionDialog {
     // Clas Constants
 
     // The default prompt for asking question.
@@ -38,7 +34,7 @@ public class QuestionPane {
      * Default constructor for QuestionPane.
      *
      */
-    public QuestionPane(String theQuestion, String[] theAnswers) {
+    public QuestionDialog(String theQuestion, String[] theAnswers) {
 
         myPrompt = theQuestion;
         myAnswers = theAnswers;

@@ -12,7 +12,6 @@ public class GameState implements Serializable {
     }
 
     public int getCompletedLevel() {
-        System.out.println(myCompletedLevel);
         return myCompletedLevel;
     }
 

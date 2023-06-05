@@ -26,7 +26,6 @@ public class Lighting {
         mySprite = gp;
         myDiameter = circleSize;
 
-        System.out.println(mySprite.getGap());
         myW = (int) mySprite.getsize().getX();
         myH = (int) mySprite.getsize().getY();
 
