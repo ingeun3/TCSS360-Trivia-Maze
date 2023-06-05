@@ -54,7 +54,9 @@ public class GameLogic implements KeyListener {
 
     private int myLevel;
 
-    private int keyCount;
+    private int myCheatKeyCount;
+
+    private int myFinishCheatCode;
 
     public GameLogic(Maze theMaze, int theMove, int theLevel, Player thePlayer) throws FileNotFoundException {
         myLevel = theLevel;
@@ -131,16 +133,16 @@ public class GameLogic implements KeyListener {
             myEscape.start();
         } else if (code == KeyEvent.VK_M) {
             pressedKeyCode = KeyEvent.VK_M;
-            keyCount++;
-            if(keyCount >= 5) {
+            myCheatKeyCount++;
+            if(myCheatKeyCount >= 5) {
                 cheat();
-                keyCount = 0;
+                myCheatKeyCount = 0;
             }
 
         } else if (code == KeyEvent.VK_N) {
         pressedKeyCode = KeyEvent.VK_N;
-        keyCount++;
-            if(keyCount >= 5) {
+            myFinishCheatCode++;
+            if(myFinishCheatCode >= 5) {
                 myPlayer.setMyMove(10);
                 myNorthPanel.setMoves(myPlayer.getMyMove());
             }
