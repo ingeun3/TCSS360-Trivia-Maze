@@ -108,11 +108,9 @@ public class GameLoop implements Serializable {
         }
         myCurrentCenterPanel = myTitlePanel.getMyNum();
         if (myCurrentCenterPanel == 0) {
-           // System.out.println("currentLeve" + myCurrentLevel);
             if(myTitlePanel.restartGame()) {
                 myCompletedLevel = 0;
             }
-            //System.out.println(myCompletedLevel);
             myLevelInterface = new LevelPanel(myCompletedLevel);
             title = false;
             level = true;

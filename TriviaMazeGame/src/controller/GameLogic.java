@@ -169,7 +169,6 @@ public class GameLogic implements KeyListener {
             mySprite.setX(mySprite.getX() + mySprite.getSpeed());
             myNorthPanel.setMoves(myPlayer.getMyMove());
         }
-
         myLighting.setup();
         promptQuestions();
         checkFinish();
