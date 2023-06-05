@@ -78,7 +78,7 @@ public class GamePanel extends JPanel {
         myMazemap.draw(g2);
         myPlayerGUI.draw(g2);
 
-       // myE.draw(g2);
+        myE.draw(g2);
 
         g2.dispose();
     }

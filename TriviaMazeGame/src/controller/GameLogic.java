@@ -133,14 +133,10 @@ public class GameLogic implements KeyListener {
         } else if (code == KeyEvent.VK_M) {
             pressedKeyCode = KeyEvent.VK_M;
             keyCount++;
-            if(keyCount >= 10 && myLevel == 4) {
-                System.out.println("hi");
-                myPlayer.canMove(new Point((int) myEndPoint.getX(), (int) myEndPoint.getY()-1));
-                mySprite.setDirection("down");
-                mySprite.setY((int) myEndPoint.getY() * mySprite.getSpeed() - mySprite.getSpeed());
-                mySprite.setX((int) myEndPoint.getX() * mySprite.getSpeed() + mySprite.getGap());
-                myLighting.disableLight();
+            if(keyCount >= 5) {
+                    cheat();
             }
+
         }
     }
 
@@ -286,6 +282,33 @@ public class GameLogic implements KeyListener {
         myPlayer.movePlayer(thePoint);
         mySprite.setX((thePoint.x * mySprite.getTileSize() + mySprite.getGap()));
         mySprite.setY(thePoint.y * mySprite.getTileSize());
+    }
+    private void cheat() {
+        if(((int) myEndPoint.getX() - 1 > 0) && (myMaze.charAt((int) myEndPoint.getX() - 1, (int) myEndPoint.getY()) == '+')) {
+            myPlayer.canMove(new Point((int) myEndPoint.getX() - 1, (int) myEndPoint.getY()));
+            mySprite.setDirection("right");
+            mySprite.setY((int) myEndPoint.getY() * mySprite.getSpeed());
+            mySprite.setX((int) myEndPoint.getX() * mySprite.getSpeed() + mySprite.getGap() - mySprite.getSpeed());
+            myLighting.disableLight();
+        } else if(((int) myEndPoint.getX() + 1 < myMaze.getArray()[0].length) && (myMaze.charAt((int) myEndPoint.getX() + 1, (int) myEndPoint.getY()) == '+')) {
+            myPlayer.canMove(new Point((int) myEndPoint.getX() + 1, (int) myEndPoint.getY()));
+            mySprite.setDirection("left");
+            mySprite.setY((int) myEndPoint.getY() * mySprite.getSpeed());
+            mySprite.setX((int) myEndPoint.getX() * mySprite.getSpeed() + mySprite.getGap() + mySprite.getSpeed());
+            myLighting.disableLight();
+        } else if(((int) myEndPoint.getY() - 1 > 0) && (myMaze.charAt((int) myEndPoint.getX(), (int) myEndPoint.getY() - 1) == '+')) {
+            myPlayer.canMove(new Point((int) myEndPoint.getX(), (int) myEndPoint.getY()-1));
+            mySprite.setDirection("down");
+            mySprite.setY((int) myEndPoint.getY() * mySprite.getSpeed() - mySprite.getSpeed());
+            mySprite.setX((int) myEndPoint.getX() * mySprite.getSpeed() + mySprite.getGap());
+            myLighting.disableLight();
+        } else if(((int) myEndPoint.getY() + 1 < myMaze.getArray().length) && (myMaze.charAt((int) myEndPoint.getX(), (int) myEndPoint.getY() + 1) == '+')) {
+            myPlayer.canMove(new Point((int) myEndPoint.getX(), (int) myEndPoint.getY() + 1));
+            mySprite.setDirection("up");
+            mySprite.setY((int) myEndPoint.getY() * mySprite.getSpeed() + mySprite.getSpeed());
+            mySprite.setX((int) myEndPoint.getX() * mySprite.getSpeed() + mySprite.getGap());
+            myLighting.disableLight();
+        }
     }
 
     /**
