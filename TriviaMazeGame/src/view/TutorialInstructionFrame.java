@@ -9,12 +9,22 @@ import java.io.InputStream;
 
 public class TutorialInstructionFrame extends JFrame {
     private static final String INSTRUCTION_PROMPT = "\n WELCOME TO TRIVIA MAZE!\n" +
-                                                    "\n instructions... \n" +
-                                                    "\n CONTROLS:" +
+                                                    "\n INSTRUCTIONS: " +
+                                                    "\n You are lost in a cave maze with only your torch and you " +
+                                                    "must escape! You need to find the exit but you only have a " +
+                                                    "LIMITED number of MOVES to do so. \n\n Throughout the maze, " +
+                                                    "you will need to answer trivia QUESTIONS to continue. Answer " +
+                                                    "right and the light from your torch will grow and you may move " +
+                                                    "along! Answer wrong and you will be penalized by getting " +
+                                                    "teleported back to the last spot you answered correctly OR " +
+                                                    "the start if you haven't gotten one right yet. \n\n " +
+                                                    "Choose your MOVES wisely! Good luck!" +
+                                                    "\n\n CONTROLS:" +
                                                     "\n PRESS  W -> UP" +
                                                     "\n PRESS  A -> LEFT" +
                                                     "\n PRESS  S -> RIGHT" +
-                                                    "\n PRESS  D -> DOWN";
+                                                    "\n PRESS  D -> DOWN" +
+            "\n PRESS  ESC -> QUIT";
     private Font myFont;
     private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     public TutorialInstructionFrame() {
