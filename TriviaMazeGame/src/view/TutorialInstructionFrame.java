@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class TutorialInstructionFrame extends JFrame {
-
-    private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private static final String INSTRUCTION_PROMPT = "\n WELCOME TO TRIVIA MAZE!\n" +
                                                     "\n INSTRUCTIONS: " +
                                                     "\n You are lost in a cave maze with only your torch and you " +
@@ -28,7 +26,7 @@ public class TutorialInstructionFrame extends JFrame {
                                                     "\n PRESS  D -> DOWN" +
                                                     "\n PRESS  ESC -> QUIT";
     private Font myFont;
-
+    private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     public TutorialInstructionFrame() {
         try {
             InputStream is = getClass().getResourceAsStream("smalle.ttf");
@@ -36,7 +34,7 @@ public class TutorialInstructionFrame extends JFrame {
         } catch (FontFormatException | IOException e) {
             throw new RuntimeException(e);
         }
-        setSize(new Dimension((int) screenSize.getWidth(),(int) screenSize.getHeight() * 9 / 10));
+        setSize(new Dimension((int) screenSize.getWidth(),(int) screenSize.getHeight() * 9 / 10 ));
 
         setUndecorated(true);
         setBackground(new Color(0, 0, 0, 250)); // Transparent black background
@@ -44,6 +42,7 @@ public class TutorialInstructionFrame extends JFrame {
         JTextArea instructionsArea = new JTextArea(
                 INSTRUCTION_PROMPT
         );
+
         instructionsArea.setEditable(false);
         instructionsArea.setLineWrap(true);
         instructionsArea.setWrapStyleWord(true);
