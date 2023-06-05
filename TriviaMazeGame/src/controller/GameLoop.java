@@ -107,11 +107,9 @@ public class GameLoop implements Serializable {
         }
         myCurrentCenterPanel = myTitlePanel.getMyNum();
         if (myCurrentCenterPanel == 0) {
-           // System.out.println("currentLeve" + myCurrentLevel);
             if(myTitlePanel.restartGame()) {
                 myCompletedLevel = 0;
             }
-            //System.out.println(myCompletedLevel);
             myLevelInterface = new LevelInterface(myCompletedLevel);
             title = false;
             level = true;
@@ -149,9 +147,6 @@ public class GameLoop implements Serializable {
                 myGameSoundFlag = true;
                 myGameSound.loop();
             }
-
-
-
             myCurrentMaze = new Maze(myMazeFileName);
             if(myCurrentCenterPanel == 1) {
                 myInitialMoves = 1000;

@@ -18,7 +18,7 @@ public class Maze {
     // initializing the 2D maze.
     private final char[][] myMaze;
     // the default map file for maze.
-    private static String myMazeMap;
+    private String myMazeMap;
 
     private Point myExit;
 
@@ -35,10 +35,10 @@ public class Maze {
      *
      * @throws FileNotFoundException
      */
-    public Maze(String mapName) throws FileNotFoundException {
+    public Maze(String theMapName) throws FileNotFoundException {
         myNumOfStr = 0;
         // For Program running purpose.
-        myMazeMap = mapName;
+        myMazeMap = theMapName;
         // For Program running purpose.
         myMaze = createMaze(myMazeMap);
         // Assign the instance variable myIntersections to the creates Maze.
@@ -65,7 +65,6 @@ public class Maze {
      * @param thePoint The point player wants to move.
      */
     public void setArray(Point thePoint) {
-
         if(thePoint.x >= 0 && thePoint.x <= myMaze.length - 1 && thePoint.y >= 0 && thePoint.y <= myMaze[0].length - 1) {
             if (myMaze[thePoint.y][thePoint.x] != '@') {
                 myMaze[myPlayerLocation.y][myPlayerLocation.x] = '+';
@@ -73,8 +72,6 @@ public class Maze {
                 myPlayerLocation = new Point(thePoint.x,thePoint.y);
             }
         }
-
-
     }
     public Point getMyExit() {
         return myExit;
@@ -211,21 +208,7 @@ public class Maze {
     public ArrayList<Point> getQuestionPoints() {
        return myQuestionPoints;
     }
-
     public int getNumOfStr() {
         return myNumOfStr;
-    }
-    /**
-     * For testing purpose.
-     */
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < myMaze.length; i++) {
-            for (int j = 0; j < myMaze[i].length; j++) {
-                sb.append(myMaze[i][j]);
-            }
-            sb.append('\n');
-        }
-        return sb.toString();
     }
 }

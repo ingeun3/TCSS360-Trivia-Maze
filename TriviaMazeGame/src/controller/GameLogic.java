@@ -18,10 +18,13 @@ import view.*;
 
 public class GameLogic implements KeyListener {
     private static final String MOVE_PROMPT = "Remaining Moves: ";
+
+    private int myPressedCode = -1;
     private Player myPlayer;
     private GUIPlayer mySprite;
     private Lighting myLighting;
     private ArrayList<Question> myQuestions;
+
     // The map that stores current question in key and answers as a value.
     private Map<String, String[]> myQnA;
     // The SQL data source.
@@ -110,28 +113,28 @@ public class GameLogic implements KeyListener {
     public void keyTyped(KeyEvent e) {
     }
 
-    private int pressedKeyCode = -1;
+
 
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
-        if (code == KeyEvent.VK_W && pressedKeyCode != KeyEvent.VK_W && myPlayer.isAlive()) {
-            pressedKeyCode = KeyEvent.VK_W;
+        if (code == KeyEvent.VK_W && myPressedCode != KeyEvent.VK_W && myPlayer.isAlive()) {
+            myPressedCode = KeyEvent.VK_W;
             update();
-        } else if (code == KeyEvent.VK_S && pressedKeyCode != KeyEvent.VK_S && myPlayer.isAlive()) {
-            pressedKeyCode = KeyEvent.VK_S;
+        } else if (code == KeyEvent.VK_S && myPressedCode != KeyEvent.VK_S && myPlayer.isAlive()) {
+            myPressedCode = KeyEvent.VK_S;
             update();
-        } else if (code == KeyEvent.VK_A && pressedKeyCode != KeyEvent.VK_A && myPlayer.isAlive()) {
-            pressedKeyCode = KeyEvent.VK_A;
+        } else if (code == KeyEvent.VK_A && myPressedCode != KeyEvent.VK_A && myPlayer.isAlive()) {
+            myPressedCode = KeyEvent.VK_A;
             update();
-        } else if (code == KeyEvent.VK_D && pressedKeyCode != KeyEvent.VK_D && myPlayer.isAlive()) {
-            pressedKeyCode = KeyEvent.VK_D;
+        } else if (code == KeyEvent.VK_D && myPressedCode != KeyEvent.VK_D && myPlayer.isAlive()) {
+            myPressedCode = KeyEvent.VK_D;
             update();
         } else if (code == KeyEvent.VK_ESCAPE) {
-            pressedKeyCode = KeyEvent.VK_ESCAPE;
+            myPressedCode = KeyEvent.VK_ESCAPE;
             myEscape.start();
         } else if (code == KeyEvent.VK_M) {
-            pressedKeyCode = KeyEvent.VK_M;
+            myPressedCode = KeyEvent.VK_M;
             keyCount++;
             if(keyCount >= 10 && myLevel == 4) {
                 System.out.println("hi");
@@ -147,25 +150,25 @@ public class GameLogic implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
-        if (code == pressedKeyCode) {
-            pressedKeyCode = -1;
+        if (code == myPressedCode) {
+            myPressedCode = -1;
         }
     }
 
     public void update() {
-        if (pressedKeyCode == KeyEvent.VK_W && myPlayer.canMove(myPlayer.PlayerN())) {
+        if (myPressedCode == KeyEvent.VK_W && myPlayer.canMove(myPlayer.PlayerN())) {
             mySprite.setDirection("up");
             mySprite.setY(mySprite.getY() - mySprite.getSpeed());
             myNorthPanel.setMoves(myPlayer.getMyMove());
-        } else if (pressedKeyCode == KeyEvent.VK_S && myPlayer.canMove(myPlayer.PlayerS())) {
+        } else if (myPressedCode == KeyEvent.VK_S && myPlayer.canMove(myPlayer.PlayerS())) {
             mySprite.setDirection("down");
             mySprite.setY(mySprite.getY() + mySprite.getSpeed());
             myNorthPanel.setMoves(myPlayer.getMyMove());
-        } else if (pressedKeyCode == KeyEvent.VK_A && myPlayer.canMove(myPlayer.PlayerW())) {
+        } else if (myPressedCode == KeyEvent.VK_A && myPlayer.canMove(myPlayer.PlayerW())) {
             mySprite.setDirection("left");
             mySprite.setX(mySprite.getX() - mySprite.getSpeed());
             myNorthPanel.setMoves(myPlayer.getMyMove());
-        } else if (pressedKeyCode == KeyEvent.VK_D && myPlayer.canMove(myPlayer.PlayerE())) {
+        } else if (myPressedCode == KeyEvent.VK_D && myPlayer.canMove(myPlayer.PlayerE())) {
             mySprite.setDirection("right");
             mySprite.setX(mySprite.getX() + mySprite.getSpeed());
             myNorthPanel.setMoves(myPlayer.getMyMove());
@@ -214,7 +217,7 @@ public class GameLogic implements KeyListener {
                         myPlayer.setMyMove(myMove);
                         myNorthPanel.setMoves(myMove);
                         myPoint = myStartPoint;
-                        myLighting.setSize(350);
+                        myLighting.setSize(200);
                         myLighting.setup();
                     } else if (option == 3) {
                         myWin = true;
@@ -235,7 +238,7 @@ public class GameLogic implements KeyListener {
                         myPlayer.setMyMove(myMove);
                         myNorthPanel.setMoves(myMove);
                         myPoint = myStartPoint;
-                        myLighting.setSize(350);
+                        myLighting.setSize(200);
                         myLighting.setup();
                     } else if (option == 2) {
                         // Go to levels
@@ -269,16 +272,16 @@ public class GameLogic implements KeyListener {
             if(myLevel < 3) {
                 myLighting.increaseSize(110);
             } else if(myLevel == 3) {
-                myLighting.increaseSize(75);
-            } else if(myLevel == 4) {
                 myLighting.increaseSize(50);
+            } else if(myLevel == 4) {
+                myLighting.increaseSize(25);
             }
 
         } else {
-            pressedKeyCode = -1;
+            myPressedCode = -1;
             setLocation(myPoint);
         }
-        pressedKeyCode = -1;
+        myPressedCode = -1;
         myLighting.setup();
     }
 
