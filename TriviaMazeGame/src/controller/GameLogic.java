@@ -42,6 +42,7 @@ public class GameLogic implements KeyListener {
     private Point myStartPoint;
 
     private NorthPanel myNorthPanel;
+    
     private Maze myMaze;
 
     private boolean myWin;
