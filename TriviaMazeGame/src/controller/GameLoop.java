@@ -1,6 +1,6 @@
 package controller;
 
-/**
+/*
  *
  * This class is the Game Loop class that controls all the classes.
  *
@@ -26,65 +26,67 @@ public class GameLoop implements Serializable {
     private static final String MAP2 = "maze_map1.txt";
     private static final String MAP3 = "maze_map2.txt";
     private static final String MAP4 = "maze_map3.txt";
-    private int myInitialMoves = 0;
 
-    // Initialized the Level Interface flag to false.
-    private boolean levelSetup = false;
+    /** Initialized the Level Interface flag to false.*/
+    private boolean myLevelSetup = false;
 
-    // Initialized the Game Interface flag to false.
-    private boolean gameSetup = false;
+    /** Initialized the Game Interface flag to false. */
+    private boolean myGameSetup = false;
 
-    // Initialized the Title Interface flag to false.
-    private boolean titleSetup = false;
+    /** Initialized the Title Interface flag to false. */
+    private boolean myTitleSetup = false;
 
-    // set the title, level, game booleans to flase.
-    private boolean title = true;
-    private boolean level = false;
-    private boolean game = false;
+    /** set the title, level, game booleans to false. */
+    private boolean myTitle = true;
+    private boolean myLevel = false;
+    private boolean myGame = false;
 
-    //Initialized the GameInterface.
-    private GameFrame myGameInterface;
+    /** Initialized the GameInterface.*/
+    private final GameFrame myGameInterface;
 
-    //Initialized the LevelInterface.
+    /** Initialized the LevelInterface.*/
     private LevelPanel myLevelInterface;
 
-    //Initialized the Title Interface.
-    private TitlePanel myTitlePanel;
+    /** Initialized the Title Interface.*/
+    private final TitlePanel myTitlePanel;
 
-    //Initialized the Game Panel.
+    /** Initialized the Game Panel*/
     private GamePanel myCurrentGamePanel;
 
-    //Initialized the Maze.
+    /** Initialized the Maze. */
     private Maze myCurrentMaze;
 
-    //Initialized the Player.
+    /** Initialized the Player. */
     private Player myCurrentPlayer;
 
-    //Initialized the GameLogic.
+    /** Initialized the GameLogic*/
     private GameLogic myCurrentGameLogic;
 
-    //Initialized the NorthPanel.
+    /** Initialized the NorthPanel.*/
     private NorthPanel myCurrentNorthPanel;
 
-    // Initialized the myCurrentCenterPanel that keeps track of which Panel currently Player in.
+    /** Initialized the myCurrentCenterPanel that keeps track of which Panel currently Player in. */
     private int myCurrentCenterPanel;
 
-    //Initialized the Player Completed Level.
+    /** Initialized the Player Completed Level. */
     private int myCompletedLevel;
 
-    //Initialized the maze File Name.
+    /** Initialized the initial moves. */
+    private int myInitialMoves;
+
+    /** Initialized the maze File Name.*/
     private String myMazeFileName;
 
-    // Initialized the Title Sound.
-    private Sound myTitleSound;
+    /** Initialized the Title Sound. */
+    private final Sound myTitleSound;
 
-    // Initialized the Game Sound.
+    /** Initialized the Game Sound. */
     private Sound myGameSound;
 
-    // Initialized the boolean Flag for Title Sound.
+    /** Initialized the boolean Flag for Title Sound. */
     private boolean myTitleSoundFlag;
 
-    // Initialized the boolean Flag for myGameSound.
+    /** Initialized the boolean Flag for myGameSound. */
     private boolean myGameSoundFlag;
 
     public GameLoop() throws IOException {
@@ -100,8 +102,15 @@ public class GameLoop implements Serializable {
         myCurrentCenterPanel = -2;
         myTitleSound = new Sound("Title Sound.wav");
         myGameSound = new Sound("Game Sound.wav");
+        myInitialMoves = 0;
+
         start();
     }
+
+    /**
+     * This method run the Game in a loop by using FPS.
+     * @throws IOException
+     */
 
     public void start() throws IOException {
             // Variables for tracking time
@@ -115,13 +124,13 @@ public class GameLoop implements Serializable {
             while (running) {
                 startTime = System.currentTimeMillis();
                 // if Title is true then run the title Interface Panel.
-                if (title) {
+                if (myTitle) {
                     runningTitleInterface();
                     // if level is true then run the Level Interface Panel.
-                } else if (level) {
+                } else if (myLevel) {
                     runningLevelInterface();
                     // run the GamePanel.
-                } else if (game) {
+                } else if (myGame) {
                     // generate the MAZE MAP 1 if myCurrentCenterPanel = 1.
                     if (myCurrentCenterPanel == 1) {
                         myMazeFileName = MAP1;
@@ -159,7 +168,7 @@ public class GameLoop implements Serializable {
       */
     public void runningTitleInterface() {
         //check the TitleSetup condition.
-        if(!titleSetup) {
+        if(!myTitleSetup) {
             //check the Title Sound Flag condition.
             if(!myTitleSoundFlag) {
                 // If these condition meets
@@ -172,19 +181,19 @@ public class GameLoop implements Serializable {
             }
             // set the Title Interface into the GameInterface Frame.
             myGameInterface.setCenter(myTitlePanel);
-            titleSetup = true;
+            myTitleSetup = true;
         }
         // gets the Title Interface button number that user clicks
         myCurrentCenterPanel = myTitlePanel.getMyNum();
-        // if it's zero, restart the TitlePanel.
+        // If it's zero, restart the TitlePanel.
         if (myCurrentCenterPanel == 0) {
             if(myTitlePanel.restartGame()) {
                 myCompletedLevel = 0;
             }
             myLevelInterface = new LevelPanel(myCompletedLevel);
-            title = false;
-            level = true;
-            titleSetup = false;
+            myTitle = false;
+            myLevel = true;
+            myTitleSetup = false;
         }
     }
 
@@ -193,7 +202,7 @@ public class GameLoop implements Serializable {
      */
     public void runningLevelInterface() {
         //check the LevelSetup condition.
-        if(!levelSetup) {
+        if(!myLevelSetup) {
             if(!myTitleSoundFlag) {
                 myGameSound.stop();
                 myTitleSound.play();
@@ -202,22 +211,30 @@ public class GameLoop implements Serializable {
             }
             // set the LevelInterface Panel.
             myGameInterface.setCenter(myLevelInterface);
-            levelSetup = true;
+            myLevelSetup = true;
         }
-        //
+        // get a J button number from a level interface.
         myCurrentCenterPanel = myLevelInterface.getMyNum();
+        // if it's greater than zero, show the Level Interface.
         if (myCurrentCenterPanel > 0) {
-            level = false;
-            game = true;
-            levelSetup = false;
+            myLevel = false;
+            myGame = true;
+            myLevelSetup = false;
+            // if it's less than zero, show the Title Interface.
         } else if (myCurrentCenterPanel < 0) {
-            level = false;
-            title = true;
-            levelSetup = false;
+            myLevel = false;
+            myTitle = true;
+            myLevelSetup = false;
         }
     }
+
+    /**
+     * This method run the Game Panel.
+     * @throws IOException
+     */
     private void runningGamePanel() throws IOException {
-        if(!gameSetup) {
+        // If the GameSetup is false, run the Game Interface.
+        if(!myGameSetup) {
             myTitleSoundFlag = false;
             myTitleSound.stop();
             if(!myGameSoundFlag) {
@@ -225,16 +242,14 @@ public class GameLoop implements Serializable {
                 myGameSoundFlag = true;
                 myGameSound.loop();
             }
-
-
-
+            // pass the maze map.
             myCurrentMaze = new Maze(myMazeFileName);
             if(myCurrentCenterPanel == 1) {
+                // set the initial moves 1000 when a player in Tutorial Level.
                 myInitialMoves = 1000;
             } else {
-                // Clinton -> 422
-                // David -> 200
-                myInitialMoves = (int) Math.ceil(myCurrentMaze.getNumOfPaths() / 10.0) * 10;
+                // based on the level that player currently in , we set the initial moves.
+                myInitialMoves = (int) Math.ceil(myCurrentMaze.getNumOfStr() / 10.0) * 10;
             }
             myCurrentPlayer = new Player(myInitialMoves, myCurrentMaze);
             myCurrentGameLogic = new GameLogic(myCurrentMaze, myInitialMoves, myCurrentCenterPanel, myCurrentPlayer);
@@ -246,16 +261,18 @@ public class GameLoop implements Serializable {
             myCurrentGamePanel.addKeyListener(myCurrentGameLogic);
             myGameInterface.setNorthPanel(myCurrentNorthPanel);
             myGameInterface.setCenter(myCurrentGamePanel);
+            // if a player is in the level 0, Instruction will pop up.
             if(myCurrentCenterPanel == 1) {
                 TutorialInstructionFrame theInstruction = new TutorialInstructionFrame();
                 theInstruction.start();
             }
-            gameSetup = true;
+            myGameSetup = true;
         }
+        // if a player clicks the stageButton or go to levels then it will show Level Interface.
         if(myCurrentNorthPanel.stageButton() || myCurrentGameLogic.goToStage()) {
-            level = true;
-            game = false;
-            gameSetup = false;
+            myLevel = true;
+            myGame = false;
+            myGameSetup = false;
             myCurrentCenterPanel = 0;
             myGameInterface.removeNorthPanel();
             myGameSound.stop();
@@ -267,12 +284,15 @@ public class GameLoop implements Serializable {
                 myLevelInterface.unLockLevel();
             }
             save();
-            gameSetup = false;
+            myGameSetup = false;
         } else {
             myCurrentGamePanel.run();
         }
-
     }
+
+    /**
+     * This method saves the game status.
+     */
     public void save() {
         GameState gameState = new GameState(myCompletedLevel, myCurrentCenterPanel);
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("save.dat")))) {
@@ -281,6 +301,10 @@ public class GameLoop implements Serializable {
             e.printStackTrace();
         }
     }
+
+    /**
+     * This method load the game status.
+     */
 
     public void load() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File("save.dat")))) {

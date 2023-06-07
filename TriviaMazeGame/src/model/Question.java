@@ -1,25 +1,28 @@
 package model;
-
-import javax.swing.*;
+/*
+ *
+ * This class is the Question class that creates the Questions for Player.
+ *
+ * @author Kevin Truong, Ingeun Hwang, Khin Win
+ *
+ */
 import java.util.ArrayList;
 
 public class Question {
-    // Class Fields
 
-
-    // The question.
+    /** Initialized the question. */
     private final String myQuestion;
-    // The list of answers to the question.
+
+    /** The list of answers to the question. */
     private final ArrayList<String> myAnswers;
 
     /**
      * The default constructor for Question object.
      * @param theQuestion the question prompt for making Question object.
      */
-    public Question(String theQuestion) {
+    public Question(final String theQuestion) {
         myQuestion = theQuestion;
-        myAnswers = new ArrayList<String>();
-
+        myAnswers = new ArrayList<>();
     }
 
 
@@ -31,12 +34,6 @@ public class Question {
     public void addAnswers(String theAnswer) {
         myAnswers.add(theAnswer);
     }
-
-    /**
-     * Adding answer to the Answer object.
-     * @param theAnswer
-     */
-
 
     /**
      * Returns the question prompt.
@@ -54,6 +51,5 @@ public class Question {
      */
     public ArrayList<String> getAnswers() {
         return myAnswers;
-        //should clone?
     }
 }

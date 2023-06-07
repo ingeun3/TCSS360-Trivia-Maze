@@ -1,20 +1,20 @@
 package model;
 
-import model.Maze;
-
+/*
+ *
+ * This class is the Player.
+ *
+ * @author Kevin Truong, Ingeun Hwang, Khin Win
+ *
+ */
 import javax.swing.*;
 import java.awt.*;
 
 public class Player {
-	// Class constant
 
-	// Image of a player icon.
-	private static final ImageIcon myImage = new ImageIcon("playerIcon.jpg");
-
-	// Class field
-
-	// Number of available moves on a player object.
+	/** Number of available moves on a player object. */
 	private static int myMove;
+
 
 	private Maze myMaze;
 
