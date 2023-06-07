@@ -8,59 +8,80 @@ import java.util.Random;
 import java.util.Scanner;
 
 /**
- * This is the logic for the maze class.
+ * This is the logic for the maze class that reads a 2D array and creates.
  * @author Kevin Truong, Khin Win, Ingeun Hwang
  */
 public class Maze {
-    // Class constant
 
-    // the final Random.
+    /**
+     * The final Random.
+     */
     private static final Random RANDOM_POINTS = new Random();
 
-    // Class field
-
-    // initializing the 2D maze.
+    /**
+     * The 2D maze.
+     */
     private final char[][] myMaze;
-    // the default map file for maze.
+
+    /**
+     * The default map file for maze.
+     */
     private static String myMazeMap;
 
-    private Point myExit;
+    /**
+     * The location of the exit.
+     */
+    private final Point myExit;
 
-    //initializing the intersection points
+    /**
+     * ArrayList of all intersection
+     */
     private final ArrayList<Point> myIntersections;
     //initializing the intersection points
+
+    /**
+     * ArrayList of all QuestionPoints
+     */
     private final ArrayList<Point> myQuestionPoints;
-    // initializing the location of the player.
+
+    /**
+     * The location of the player.
+     */
     private Point myPlayerLocation;
-    private int myNumOfStr;
+
+    /**
+     * The number of paths in the maze.
+     */
+    private int myNumOfPaths;
 
     /**
      * This is a default constructor for Maze class.
-     *
+     * @param theMapName the name of the map file.
      * @throws FileNotFoundException
      */
-    public Maze(String mapName) throws FileNotFoundException {
-        myNumOfStr = 0;
+    public Maze(final String theMapName) throws FileNotFoundException {
+        myNumOfPaths = 0;
         // For Program running purpose.
-        myMazeMap = mapName;
+        myMazeMap = theMapName;
         // For Program running purpose.
-        myMaze = createMaze(myMazeMap);
+        myMaze = createMaze(theMapName);
         // Assign the instance variable myIntersections to the creates Maze.
         myIntersections = intersections(myMaze);
-        myQuestionPoints = questionPointgenerator();
+        myQuestionPoints = questionPointGenerator();
         myPlayerLocation = playerLocation();
         myExit = exitLocation();
     }
 
 
-    public char charAt(int x, int y) {
-        return myMaze[y][x];
-    }
     /**
-     * Updates the map whenever player makes a move.
-     * @param thePoint The point player wants to move.
+     * Gets a location of the maze.
+     * @param theX x value.
+     * @param theY y value.
+     * @return a character from the maze.
      */
-
+    public char charAt(final int theX, final int theY) {
+        return myMaze[theY][theX];
+    }
     /**
      * This method returns the location of the player in Point object.
      * @return the location of the player.
@@ -76,6 +97,10 @@ public class Maze {
         return null;
     }
 
+    /**
+     * Finds and returns the exit point.
+     * @return Point the exit location.
+     */
     private Point exitLocation() {
         for (int i = 0; i < myMaze.length; i++) {
             for (int j = 0; j < myMaze[0].length; j++) {
@@ -95,7 +120,7 @@ public class Maze {
      * @return the 2D array representation of the maze.
      * @throws FileNotFoundException when the file is not found.
      */
-    public char[][] createMaze(String theMapName) throws FileNotFoundException {
+    public char[][] createMaze(final String theMapName) throws FileNotFoundException {
 
         File mazeMapFile = new File(theMapName);
         // read the map file from scanner.
@@ -125,7 +150,7 @@ public class Maze {
      * @param theMaze the 2D array representation of the map.
      * @return the lists of intersections.
      */
-    public ArrayList<Point> intersections(char[][] theMaze) {
+    public ArrayList<Point> intersections(final char[][] theMaze) {
         ArrayList<Point> intersectionsPoint = new ArrayList<Point>();
         for (int i = 0; i < theMaze.length; i++) {
             for (int j = 0; j < theMaze[0].length; j++) {
@@ -155,7 +180,7 @@ public class Maze {
                     if (counter > 2) {
                         intersectionsPoint.add(new Point(j, i));
                     }
-                    myNumOfStr++;
+                    myNumOfPaths++;
                 }
             }
         }
@@ -165,15 +190,15 @@ public class Maze {
 
     /**
      * Randomly assigns 50 percent of the intersection points to become a question points.
-     * @return the lists of question points.
+     * @return the list of question points.
      */
-    public ArrayList<Point> questionPointgenerator() {
+    public ArrayList<Point> questionPointGenerator() {
         // initialize how many question will have in the map.
         int number = myIntersections.size() / 2;
         int all = myIntersections.size();
         ArrayList<Point> questionPoint = new ArrayList<Point>();
         for (int i = 0; i < all; i++) {
-            //initailize the ranPoints.
+            //initialize the ranPoints.
             int ranPoints = RANDOM_POINTS.nextInt(myIntersections.size());
             // Get the intersections Point from the ranPoints.
             Point randomIntersection = myIntersections.get(ranPoints);
@@ -191,14 +216,22 @@ public class Maze {
        return myQuestionPoints;
     }
 
+    public int getNumOfPaths() {
+        return myNumOfPaths;
+    }
+
+    /**
+     * Getter for the location of the player.
+     * @return Point myPlayerLocation.
+     */
     public Point getMyPlayerLocation() {
         return myPlayerLocation;
     }
 
-    public int getNumOfStr() {
-        return myNumOfStr;
-    }
-
+    /**
+     * Getter for exit location.
+     * @return Point myExit.
+     */
     public Point getMyExit() {
         return myExit;
     }
@@ -212,7 +245,11 @@ public class Maze {
         return myMaze;
     }
 
-    public void setArray(Point thePoint) {
+    /**
+     * Set method for player character in myMaze and myPlayerLocation point.
+     * @param thePoint the new location.
+     */
+    public void setPlayerLocation(Point thePoint) {
         if(thePoint.x >= 0 && thePoint.x <= myMaze.length - 1 && thePoint.y >= 0 && thePoint.y <= myMaze[0].length - 1) {
             if (myMaze[thePoint.y][thePoint.x] != '@') {
                 myMaze[myPlayerLocation.y][myPlayerLocation.x] = '+';

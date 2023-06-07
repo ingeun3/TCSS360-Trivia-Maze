@@ -234,7 +234,7 @@ public class GameLoop implements Serializable {
             } else {
                 // Clinton -> 422
                 // David -> 200
-                myInitialMoves = (int) Math.ceil(myCurrentMaze.getNumOfStr() / 10.0) * 10;
+                myInitialMoves = (int) Math.ceil(myCurrentMaze.getNumOfPaths() / 10.0) * 10;
             }
             myCurrentPlayer = new Player(myInitialMoves, myCurrentMaze);
             myCurrentGameLogic = new GameLogic(myCurrentMaze, myInitialMoves, myCurrentCenterPanel, myCurrentPlayer);

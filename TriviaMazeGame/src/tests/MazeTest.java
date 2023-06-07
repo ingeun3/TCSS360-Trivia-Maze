@@ -163,7 +163,7 @@ class MazeTest {
 							{'@','+','@','+','@','+','@','@','@','+','@','+','@'},
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','@','@','@','@','@','M','@','@','@','@','@','@'}};
-		myMaze.setArray(new Point(0,0));
+		myMaze.setPlayerLocation(new Point(0,0));
 		char[][] actual = myMaze.getArray();
 
 		String expectedMap = "";
@@ -195,7 +195,7 @@ class MazeTest {
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','@','@','@','@','@','M','@','@','@','@','@','@'}};
 
-		myMaze.setArray(new Point(12,0));
+		myMaze.setPlayerLocation(new Point(12,0));
 		char[][] actual = myMaze.getArray();
 
 		String expectedMap = "";
@@ -227,7 +227,7 @@ class MazeTest {
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','@','@','@','@','@','M','@','@','@','@','@','@'}};
 
-		myMaze.setArray(new Point(0,12));
+		myMaze.setPlayerLocation(new Point(0,12));
 		char[][] actual = myMaze.getArray();
 
 		String expectedMap = "";
@@ -259,7 +259,7 @@ class MazeTest {
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','@','@','@','@','@','M','@','@','@','@','@','@'}};
 
-		myMaze.setArray(new Point(12,12));
+		myMaze.setPlayerLocation(new Point(12,12));
 		char[][] actual = myMaze.getArray();
 
 		String expectedMap = "";
@@ -291,7 +291,7 @@ class MazeTest {
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','@','@','@','@','@','+','@','@','@','@','@','@'}};
 
-		myMaze.setArray(new Point(1,1));
+		myMaze.setPlayerLocation(new Point(1,1));
 		char[][] actual = myMaze.getArray();
 
 		String expectedMap = "";
@@ -324,7 +324,7 @@ class MazeTest {
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','@','@','@','@','@','+','@','@','@','@','@','@'}};
 
-		myMaze.setArray(new Point(11,1));
+		myMaze.setPlayerLocation(new Point(11,1));
 		char[][] actual = myMaze.getArray();
 
 		String expectedMap = "";
@@ -356,7 +356,7 @@ class MazeTest {
 							{'@','M','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','@','@','@','@','@','+','@','@','@','@','@','@'}};
 
-		myMaze.setArray(new Point(1,11));
+		myMaze.setPlayerLocation(new Point(1,11));
 		char[][] actual = myMaze.getArray();
 
 		String expectedMap = "";
@@ -388,7 +388,7 @@ class MazeTest {
 							{'@','+','+','+','@','+','+','+','+','+','+','M','@'},
 							{'@','@','@','@','@','@','+','@','@','@','@','@','@'}};
 
-		myMaze.setArray(new Point(11,11));
+		myMaze.setPlayerLocation(new Point(11,11));
 		char[][] actual = myMaze.getArray();
 
 		String expectedMap = "";
@@ -420,8 +420,8 @@ class MazeTest {
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','@','@','@','@','@','+','@','@','@','@','@','@'}};
 
-		myMaze.setArray(new Point(1,1));
-		myMaze.setArray(new Point(2,1));
+		myMaze.setPlayerLocation(new Point(1,1));
+		myMaze.setPlayerLocation(new Point(2,1));
 		char[][] actual = myMaze.getArray();
 
 		String expectedMap = "";
@@ -453,7 +453,7 @@ class MazeTest {
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','@','@','@','@','@','M','@','@','@','@','@','@'}};
 
-		myMaze.setArray(new Point(6,12));
+		myMaze.setPlayerLocation(new Point(6,12));
 		char[][] actual = myMaze.getArray();
 
 		String expectedMap = "";
@@ -485,7 +485,7 @@ class MazeTest {
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','@','@','@','@','@','+','@','@','@','@','@','@'}};
 
-		myMaze.setArray(new Point(6,0));
+		myMaze.setPlayerLocation(new Point(6,0));
 		char[][] actual = myMaze.getArray();
 
 		String expectedMap = "";
