@@ -1,6 +1,7 @@
 package tests;
 
 import model.Maze;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
@@ -13,12 +14,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MazeTest {
 	// The maze object that will be used for testing.
-	private Maze testMaze;
+	private Maze myMaze;
+
+	@BeforeEach
+	void setUp() throws FileNotFoundException {
+		myMaze = new Maze("testing_map.txt");
+	}
 
 	// Tests createMaze method on one of the maps.
 	@Test
 	void createMazeActualMapTest() throws FileNotFoundException {
-		testMaze = new Maze("maze_map1.txt");
 		char[][] expected = {{'@','@','@','@','@','@','E','@','@','@','@','@','@'},
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','+','@','+','+','+','@','@','@','@','@','+','@'},
@@ -32,7 +37,7 @@ class MazeTest {
 							{'@','+','@','+','@','+','@','@','@','+','@','+','@'},
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','@','@','@','@','@','M','@','@','@','@','@','@'}};
-		char[][] actual = testMaze.createMaze("maze_map1.txt");
+		char[][] actual = myMaze.createMaze("testing_map.txt");
 		String expectedMap = "";
 		String actualMap = "";
 		for (int i = 0; i < expected.length; i++) {
@@ -50,12 +55,12 @@ class MazeTest {
 	// Tests createMaze method on the 4x4 map with all walls.
 	@Test
 	void createMaze4x4AllWallTest() throws FileNotFoundException {
-		testMaze = new Maze("4x4AllWallTest.txt");
+		myMaze = new Maze("4x4AllWallTest.txt");
 		char[][] expected = {{'@','@','@','@'},
 							{'@','@','@','@'},
 							{'@','@','@','@'},
 							{'@','@','@','@'}};
-		char[][] actual = testMaze.createMaze("4x4AllWallTest.txt");
+		char[][] actual = myMaze.createMaze("4x4AllWallTest.txt");
 		String expectedMap = "";
 		String actualMap = "";
 		for (int i = 0; i < expected.length; i++) {
@@ -71,12 +76,12 @@ class MazeTest {
 	// Tests createMaze method on the 4x4 map with all roads.
 	@Test
 	void createMaze4x4AllRoadTest() throws FileNotFoundException {
-		testMaze = new Maze("4x4AllRoadTest.txt");
+		myMaze = new Maze("4x4AllRoadTest.txt");
 		char[][] expected = {{'+','+','+','+'},
 							{'+','+','+','+'},
 							{'+','+','+','+'},
 							{'+','+','+','+'}};
-		char[][] actual = testMaze.createMaze("4x4AllRoadTest.txt");
+		char[][] actual = myMaze.createMaze("4x4AllRoadTest.txt");
 		String expectedMap = "";
 		String actualMap = "";
 		for (int i = 0; i < expected.length; i++) {
@@ -92,8 +97,8 @@ class MazeTest {
 	// Tests createMaze method on the 1x1 map with all walls.
 	@Test
 	void createMaze1x1AllWallTest() throws FileNotFoundException {
-		testMaze = new Maze("1x1AllWallTest.txt");
-		char[][] actual = testMaze.createMaze("1x1AllWallTest.txt");
+		myMaze = new Maze("1x1AllWallTest.txt");
+		char[][] actual = myMaze.createMaze("1x1AllWallTest.txt");
 		String expectedMap = "@";
 		String actualMap = "";
 		for (int i = 0; i < actual.length; i++) {
@@ -106,8 +111,8 @@ class MazeTest {
 	// Tests createMaze method on the 1x1 map with all roads.
 	@Test
 	void createMaze1x1AllRoadTest() throws FileNotFoundException {
-		testMaze = new Maze("1x1AllRoadTest.txt");
-		char[][] actual = testMaze.createMaze("1x1AllRoadTest.txt");
+		myMaze = new Maze("1x1AllRoadTest.txt");
+		char[][] actual = myMaze.createMaze("1x1AllRoadTest.txt");
 		String expectedMap = "+";
 		String actualMap = "";
 		for (int i = 0; i < actual.length; i++) {
@@ -121,8 +126,8 @@ class MazeTest {
 	@Test
 	void createMaze10x10Test() throws FileNotFoundException {
 		String expectedMap = "";
-		testMaze = new Maze("10x10Test.txt");
-		char[][] actual = testMaze.createMaze("10x10Test.txt");
+		myMaze = new Maze("10x10Test.txt");
+		char[][] actual = myMaze.createMaze("10x10Test.txt");
 		String actualMap = "";
 		for(int i = 0; i < actual.length; i++) {
 			for(int j = 0; j < actual.length; j++) {
@@ -144,7 +149,7 @@ class MazeTest {
 	}
 	// Setting player on a top left wall.
 	@Test
-	void setArrayOnWallNWTest() throws FileNotFoundException {
+	void setArrayOnWallNWTest() {
 		char[][] expected = {{'@','@','@','@','@','@','E','@','@','@','@','@','@'},
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','+','@','+','+','+','@','@','@','@','@','+','@'},
@@ -158,9 +163,8 @@ class MazeTest {
 							{'@','+','@','+','@','+','@','@','@','+','@','+','@'},
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','@','@','@','@','@','M','@','@','@','@','@','@'}};
-		testMaze = new Maze("maze_map1.txt");
-		testMaze.setArray(new Point(0,0));
-		char[][] actual = testMaze.getArray();
+		myMaze.setArray(new Point(0,0));
+		char[][] actual = myMaze.getArray();
 
 		String expectedMap = "";
 		String actualMap = "";
@@ -176,7 +180,7 @@ class MazeTest {
 	}
 	// Setting player on a top right wall.
 	@Test
-	void setArrayOnWallNETest() throws FileNotFoundException {
+	void setArrayOnWallNETest() {
 		char[][] expected = {{'@','@','@','@','@','@','E','@','@','@','@','@','@'},
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','+','@','+','+','+','@','@','@','@','@','+','@'},
@@ -190,9 +194,9 @@ class MazeTest {
 							{'@','+','@','+','@','+','@','@','@','+','@','+','@'},
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','@','@','@','@','@','M','@','@','@','@','@','@'}};
-		testMaze = new Maze("maze_map1.txt");
-		testMaze.setArray(new Point(12,0));
-		char[][] actual = testMaze.getArray();
+
+		myMaze.setArray(new Point(12,0));
+		char[][] actual = myMaze.getArray();
 
 		String expectedMap = "";
 		String actualMap = "";
@@ -208,7 +212,7 @@ class MazeTest {
 	}
 	// Setting player on a bottom left wall.
 	@Test
-	void setArrayOnWallSWTest() throws FileNotFoundException {
+	void setArrayOnWallSWTest() {
 		char[][] expected = {{'@','@','@','@','@','@','E','@','@','@','@','@','@'},
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','+','@','+','+','+','@','@','@','@','@','+','@'},
@@ -222,9 +226,9 @@ class MazeTest {
 							{'@','+','@','+','@','+','@','@','@','+','@','+','@'},
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','@','@','@','@','@','M','@','@','@','@','@','@'}};
-		testMaze = new Maze("maze_map1.txt");
-		testMaze.setArray(new Point(0,12));
-		char[][] actual = testMaze.getArray();
+
+		myMaze.setArray(new Point(0,12));
+		char[][] actual = myMaze.getArray();
 
 		String expectedMap = "";
 		String actualMap = "";
@@ -240,7 +244,7 @@ class MazeTest {
 	}
 	// Setting player on a bottom right wall.
 	@Test
-	void setArrayOnWallSETest() throws FileNotFoundException {
+	void setArrayOnWallSETest() {
 		char[][] expected = {{'@','@','@','@','@','@','E','@','@','@','@','@','@'},
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','+','@','+','+','+','@','@','@','@','@','+','@'},
@@ -254,9 +258,9 @@ class MazeTest {
 							{'@','+','@','+','@','+','@','@','@','+','@','+','@'},
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','@','@','@','@','@','M','@','@','@','@','@','@'}};
-		testMaze = new Maze("maze_map1.txt");
-		testMaze.setArray(new Point(12,12));
-		char[][] actual = testMaze.getArray();
+
+		myMaze.setArray(new Point(12,12));
+		char[][] actual = myMaze.getArray();
 
 		String expectedMap = "";
 		String actualMap = "";
@@ -272,7 +276,7 @@ class MazeTest {
 	}
 	// Setting player on top left most road of the map.
 	@Test
-	void setArrayOnRoadNWTest() throws FileNotFoundException {
+	void setArrayOnRoadNWTest() {
 		char[][] expected = {{'@','@','@','@','@','@','E','@','@','@','@','@','@'},
 							{'@','M','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','+','@','+','+','+','@','@','@','@','@','+','@'},
@@ -286,9 +290,9 @@ class MazeTest {
 							{'@','+','@','+','@','+','@','@','@','+','@','+','@'},
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','@','@','@','@','@','+','@','@','@','@','@','@'}};
-		testMaze = new Maze("maze_map1.txt");
-		testMaze.setArray(new Point(1,1));
-		char[][] actual = testMaze.getArray();
+
+		myMaze.setArray(new Point(1,1));
+		char[][] actual = myMaze.getArray();
 
 		String expectedMap = "";
 		String actualMap = "";
@@ -302,9 +306,10 @@ class MazeTest {
 		}
 		assertEquals(expectedMap, actualMap);
 	}
+
 	// Setting player on top right most road of the map.
 	@Test
-	void setArrayOnRoadNETest() throws FileNotFoundException {
+	void setArrayOnRoadNETest() {
 		char[][] expected = {{'@','@','@','@','@','@','E','@','@','@','@','@','@'},
 							{'@','+','+','+','@','+','+','+','+','+','+','M','@'},
 							{'@','+','@','+','+','+','@','@','@','@','@','+','@'},
@@ -318,9 +323,9 @@ class MazeTest {
 							{'@','+','@','+','@','+','@','@','@','+','@','+','@'},
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','@','@','@','@','@','+','@','@','@','@','@','@'}};
-		testMaze = new Maze("maze_map1.txt");
-		testMaze.setArray(new Point(11,1));
-		char[][] actual = testMaze.getArray();
+
+		myMaze.setArray(new Point(11,1));
+		char[][] actual = myMaze.getArray();
 
 		String expectedMap = "";
 		String actualMap = "";
@@ -336,7 +341,7 @@ class MazeTest {
 	}
 	// Setting player on bottom left most road of the map.
 	@Test
-	void setArrayOnRoadSWTest() throws FileNotFoundException {
+	void setArrayOnRoadSWTest() {
 		char[][] expected = {{'@','@','@','@','@','@','E','@','@','@','@','@','@'},
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','+','@','+','+','+','@','@','@','@','@','+','@'},
@@ -350,9 +355,9 @@ class MazeTest {
 							{'@','+','@','+','@','+','@','@','@','+','@','+','@'},
 							{'@','M','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','@','@','@','@','@','+','@','@','@','@','@','@'}};
-		testMaze = new Maze("maze_map1.txt");
-		testMaze.setArray(new Point(1,11));
-		char[][] actual = testMaze.getArray();
+
+		myMaze.setArray(new Point(1,11));
+		char[][] actual = myMaze.getArray();
 
 		String expectedMap = "";
 		String actualMap = "";
@@ -368,7 +373,7 @@ class MazeTest {
 	}
 	// Setting player on bottom right most road of the map.
 	@Test
-	void setArrayOnRoadSETest() throws FileNotFoundException {
+	void setArrayOnRoadSETest() {
 		char[][] expected = {{'@','@','@','@','@','@','E','@','@','@','@','@','@'},
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','+','@','+','+','+','@','@','@','@','@','+','@'},
@@ -382,9 +387,9 @@ class MazeTest {
 							{'@','+','@','+','@','+','@','@','@','+','@','+','@'},
 							{'@','+','+','+','@','+','+','+','+','+','+','M','@'},
 							{'@','@','@','@','@','@','+','@','@','@','@','@','@'}};
-		testMaze = new Maze("maze_map1.txt");
-		testMaze.setArray(new Point(11,11));
-		char[][] actual = testMaze.getArray();
+
+		myMaze.setArray(new Point(11,11));
+		char[][] actual = myMaze.getArray();
 
 		String expectedMap = "";
 		String actualMap = "";
@@ -400,7 +405,7 @@ class MazeTest {
 	}
 	// Moving player road to road twice.
 	@Test
-	void setArrayTwiceTest() throws FileNotFoundException {
+	void setArrayTwiceTest() {
 		char[][] expected = {{'@','@','@','@','@','@','E','@','@','@','@','@','@'},
 							{'@','+','M','+','@','+','+','+','+','+','+','+','@'},
 							{'@','+','@','+','+','+','@','@','@','@','@','+','@'},
@@ -414,10 +419,10 @@ class MazeTest {
 							{'@','+','@','+','@','+','@','@','@','+','@','+','@'},
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','@','@','@','@','@','+','@','@','@','@','@','@'}};
-		testMaze = new Maze("maze_map1.txt");
-		testMaze.setArray(new Point(1,1));
-		testMaze.setArray(new Point(2,1));
-		char[][] actual = testMaze.getArray();
+
+		myMaze.setArray(new Point(1,1));
+		myMaze.setArray(new Point(2,1));
+		char[][] actual = myMaze.getArray();
 
 		String expectedMap = "";
 		String actualMap = "";
@@ -433,7 +438,7 @@ class MazeTest {
 	}
 	// Setting player on the starting location of the map.
 	@Test
-	void setArrayStartTest() throws FileNotFoundException {
+	void setArrayStartTest() {
 		char[][] expected = {{'@','@','@','@','@','@','E','@','@','@','@','@','@'},
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','+','@','+','+','+','@','@','@','@','@','+','@'},
@@ -447,9 +452,9 @@ class MazeTest {
 							{'@','+','@','+','@','+','@','@','@','+','@','+','@'},
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','@','@','@','@','@','M','@','@','@','@','@','@'}};
-		testMaze = new Maze("maze_map1.txt");
-		testMaze.setArray(new Point(6,12));
-		char[][] actual = testMaze.getArray();
+
+		myMaze.setArray(new Point(6,12));
+		char[][] actual = myMaze.getArray();
 
 		String expectedMap = "";
 		String actualMap = "";
@@ -465,7 +470,7 @@ class MazeTest {
 	}
 	// Setting player on the end location of the map.
 	@Test
-	void setArrayEndTest() throws FileNotFoundException {
+	void setArrayEndTest() {
 		char[][] expected = {{'@','@','@','@','@','@','M','@','@','@','@','@','@'},
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','+','@','+','+','+','@','@','@','@','@','+','@'},
@@ -479,9 +484,9 @@ class MazeTest {
 							{'@','+','@','+','@','+','@','@','@','+','@','+','@'},
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','@','@','@','@','@','+','@','@','@','@','@','@'}};
-		testMaze = new Maze("maze_map1.txt");
-		testMaze.setArray(new Point(6,0));
-		char[][] actual = testMaze.getArray();
+
+		myMaze.setArray(new Point(6,0));
+		char[][] actual = myMaze.getArray();
 
 		String expectedMap = "";
 		String actualMap = "";
@@ -495,6 +500,55 @@ class MazeTest {
 		}
 		assertEquals(expectedMap, actualMap);
 	}
+	// Testing charAt method on a top left corner wall
+	@Test
+	void charAtNWWallTest() {
+		char expected = '@';
+		assertEquals(expected, myMaze.charAt(0,0));
+	}
+	// Testing charAt method on a top right corner wall
+	@Test
+	void charAtNEWallTest() {
+		char expected = '@';
+		assertEquals(expected, myMaze.charAt(12,0));
+	}
+	// Testing charAt method on a bottom left corner wall
+	@Test
+	void charAtSWWallTest() {
+		char expected = '@';
+		assertEquals(expected, myMaze.charAt(0,12));
+	}
+	// Testing charAt method on a bottom right corner wall
+	@Test
+	void charAtSEWallTest() {
+		char expected = '@';
+		assertEquals(expected, myMaze.charAt(12,12));
+	}
+	// Testing charAt method on a top left corner road
+	@Test
+	void charAtNWRoadTest() {
+		char expected = '+';
+		assertEquals(expected, myMaze.charAt(1,1));
+	}
+	// Testing charAt method on a top right corner road
+	@Test
+	void charAtNERoadTest() {
+		char expected = '+';
+		assertEquals(expected, myMaze.charAt(1,11));
+	}
+	// Testing charAt method on a bottom left corner road
+	@Test
+	void charAtSWRoadTest() {
+		char expected = '+';
+		assertEquals(expected, myMaze.charAt(11,1));
+	}
+	// Testing charAt method on a bottom right corner road
+	@Test
+	void charAtSERoadTest() {
+		char expected = '+';
+		assertEquals(expected, myMaze.charAt(11,11));
+	}
+
 	// Testing intersections method on maze_map1.
 	@Test
 	void intersectionsTest() throws FileNotFoundException {
@@ -507,9 +561,8 @@ class MazeTest {
 		expected.add(new Point(5,9));
 		expected.add(new Point(6,11));
 		expected.add(new Point(9,11));
-		Maze testMaze = new Maze("maze_map1.txt");
-		char[][] map = testMaze.createMaze("maze_map1.txt");
-		List<Point> actual = testMaze.intersections(map);
+		char[][] map = myMaze.createMaze("testing_map.txt");
+		List<Point> actual = myMaze.intersections(map);
 		assertEquals(expected, actual);
 	}
 }

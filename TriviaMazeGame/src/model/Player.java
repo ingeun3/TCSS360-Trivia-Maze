@@ -1,8 +1,9 @@
 package model;
 
+import model.Maze;
+
 import javax.swing.*;
 import java.awt.*;
-import java.io.FileNotFoundException;
 
 public class Player {
 	// Class constant
@@ -23,8 +24,8 @@ public class Player {
 	 * Default constructor of a player object
 	 * @param theMove the number of available moves on a player.
 	 */
-	public Player(final int theMove, final String theMapName) throws FileNotFoundException {
-		myMaze = new Maze(theMapName);
+	public Player(final int theMove, final Maze theMaze) {
+		myMaze = theMaze;
 		myPlayerLocation = myMaze.getMyPlayerLocation();
 		myMove = theMove;
 
@@ -58,18 +59,21 @@ public class Player {
 			if (myMaze.charAt(theTargetPoint.x, theTargetPoint.y) != '@') {
 				movePlayer(theTargetPoint);
 				canPass = true;
+				myMove--;
 			}
 		}
-			myMove--;
 		return canPass;
 	}
-	public int getMazeLength() {
-		return myMaze.getArray()[0].length;
-	}
-	public void movePlayer(Point thePoint) {
 
-		myMaze.setArray(thePoint);
-		myPlayerLocation = thePoint;
+	/**
+	 * Checks if player is alive.
+	 */
+	public boolean isAlive() {
+		boolean livingStatus = true;
+		if(myMove <= 0) {
+			livingStatus = false;
+		}
+		return livingStatus;
 	}
 
 	public boolean isQuestionPoint() {
@@ -84,31 +88,22 @@ public class Player {
 		return myMove;
 	}
 
-	public void setMyMove(final int theMove) {
-		myMove = theMove;
-	}
-
-	/**
-	 * Checks if player is alive.
-	 */
-	public boolean isAlive() {
-		boolean livingStatus = true;
-		if(myMove <= 0) {
-			livingStatus = false;
-		}
-		return livingStatus;
+	public int getMazeLength() {
+		return myMaze.getArray()[0].length;
 	}
 
 	public Point getLocation() {
 		return myPlayerLocation;
 	}
-	/**
-	 * Overrides the toString method.
-	 */
-	@Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder(128);
-        sb.append(getClass().getSimpleName());
-        return sb.toString();
-    }
+
+	public void setMyMove(final int theMove) {
+		myMove = theMove;
+	}
+
+	public void movePlayer(Point thePoint) {
+		myMaze.setArray(thePoint);
+		myPlayerLocation = thePoint;
+	}
+
+
 }

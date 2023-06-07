@@ -11,10 +11,10 @@ public class GameLoop implements Serializable {
     private static final String MOVE_PROMPT = "Remaining Moves: ";
     private static final String LEVEL_PROMPT = "Level ";
 
-    private static final String MAP1 = "maze_map3.txt";
-    private static final String MAP2 = "maze_map4.txt";
-    private static final String MAP3 = "maze_map5.txt";
-    private static final String MAP4 = "maze_map6.txt";
+    private static final String MAP1 = "maze_map0.txt";
+    private static final String MAP2 = "maze_map1.txt";
+    private static final String MAP3 = "maze_map2.txt";
+    private static final String MAP4 = "maze_map3.txt";
     private int myInitialMoves = 0;
     private boolean levelSetup = false;
     private boolean gameSetup = false;
@@ -161,7 +161,7 @@ public class GameLoop implements Serializable {
                 // David -> 200
                 myInitialMoves = (int) Math.ceil(myCurrentMaze.getNumOfStr() / 10.0) * 10;
             }
-            myCurrentPlayer = new Player(myInitialMoves, myMazeFileName);
+            myCurrentPlayer = new Player(myInitialMoves, myCurrentMaze);
             myCurrentGameLogic = new GameLogic(myCurrentMaze, myInitialMoves, myCurrentCenterPanel, myCurrentPlayer);
             myCurrentGamePanel = new GamePanel(myCurrentMaze.getArray(), myCurrentPlayer);
             myCurrentNorthPanel = NorthPanel.getInstance(LEVEL_PROMPT + myCurrentCenterPanel, MOVE_PROMPT + myInitialMoves);
