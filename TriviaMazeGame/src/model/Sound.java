@@ -11,8 +11,6 @@ public class Sound {
 
 
     Clip clip;
-  //  URL soundURL[] = new URL[30];
-
     public Sound(String songName) {
         try {
             File titleSound = new File(songName);

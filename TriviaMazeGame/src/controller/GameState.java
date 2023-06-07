@@ -6,9 +6,9 @@ public class GameState implements Serializable {
     private int myCompletedLevel;
     private int myCurrentLevel;
 
-    public GameState(int completedLevel, int currentLevel) {
-        myCompletedLevel = completedLevel;
-        myCurrentLevel = currentLevel;
+    public GameState(int theCompletedLevel, int theCurrentLevel) {
+        myCompletedLevel = theCompletedLevel;
+        myCurrentLevel = theCurrentLevel;
     }
 
     public int getCompletedLevel() {

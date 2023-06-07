@@ -52,14 +52,6 @@ public class Maze {
         myExit = exitLocation();
     }
 
-    /**
-     * This method return the 2D array representation of the maze.
-     *
-     * @return the 2D list.
-     */
-    public char[][] getArray() {
-        return myMaze;
-    }
 
     public char charAt(int x, int y) {
         return myMaze[y][x];
@@ -68,21 +60,7 @@ public class Maze {
      * Updates the map whenever player makes a move.
      * @param thePoint The point player wants to move.
      */
-    public void setArray(Point thePoint) {
 
-        if(thePoint.x >= 0 && thePoint.x <= myMaze.length - 1 && thePoint.y >= 0 && thePoint.y <= myMaze[0].length - 1) {
-            if (myMaze[thePoint.y][thePoint.x] != '@') {
-                myMaze[myPlayerLocation.y][myPlayerLocation.x] = '+';
-                myMaze[thePoint.y][thePoint.x] = 'M';
-                myPlayerLocation = new Point(thePoint.x,thePoint.y);
-            }
-        }
-
-
-    }
-    public Point getMyExit() {
-        return myExit;
-    }
     /**
      * This method returns the location of the player in Point object.
      * @return the location of the player.
@@ -109,9 +87,6 @@ public class Maze {
         return null;
     }
 
-    public Point getMyPlayerLocation() {
-        return myPlayerLocation;
-    }
 
     /**
      * This method reads the character from the map.
@@ -216,20 +191,36 @@ public class Maze {
        return myQuestionPoints;
     }
 
+    public Point getMyPlayerLocation() {
+        return myPlayerLocation;
+    }
+
     public int getNumOfStr() {
         return myNumOfStr;
     }
-    /**
-     * For testing purpose.
-     */
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < myMaze.length; i++) {
-            for (int j = 0; j < myMaze[i].length; j++) {
-                sb.append(myMaze[i][j]);
-            }
-            sb.append('\n');
-        }
-        return sb.toString();
+
+    public Point getMyExit() {
+        return myExit;
     }
+
+    /**
+     * This method return the 2D array representation of the maze.
+     *
+     * @return the 2D list.
+     */
+    public char[][] getArray() {
+        return myMaze;
+    }
+
+    public void setArray(Point thePoint) {
+        if(thePoint.x >= 0 && thePoint.x <= myMaze.length - 1 && thePoint.y >= 0 && thePoint.y <= myMaze[0].length - 1) {
+            if (myMaze[thePoint.y][thePoint.x] != '@') {
+                myMaze[myPlayerLocation.y][myPlayerLocation.x] = '+';
+                myMaze[thePoint.y][thePoint.x] = 'M';
+                myPlayerLocation = new Point(thePoint.x,thePoint.y);
+            }
+        }
+
+    }
+
 }
