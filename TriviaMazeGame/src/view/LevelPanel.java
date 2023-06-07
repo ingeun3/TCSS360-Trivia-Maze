@@ -7,36 +7,68 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * This class displays the levels of different playable maps.
+ * @author Kevin Truong, Ingeun Hwang, Khin Win.
+ */
+
 public class LevelPanel extends JPanel {
 
+    /**
+     * The screen size.
+     */
     private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-    private final int SCREEN_WIDTH = (int) screenSize.getWidth();
-
-    private final int SCREEN_HEIGHT = (int) screenSize.getHeight();
-
+    /**
+     * Tutorial level button.
+     */
     private final JButton myLevel0;
 
-    // The JButton object for level1.
+    /**
+     * Level 1 button.
+     */
     private final JButton myLevel1;
 
-    // The JButton object for level2.
+    /**
+     * Level 2 button.
+     */
     private final JButton myLevel2;
 
-    // The JButton object for level3.
+    /**
+     * Level 3 button.
+     */
     private final JButton myLevel3;
 
+    /**
+     * Back button to TitlePanel.
+     */
     private final JButton myBackButton;
 
+    /**
+     * Current panel number to display.
+     */
     private int myPanelNumber ;
 
+    /**
+     * How many complete levels.
+     */
     private int myCompletedLevel ;
 
+    /**
+     * Label for level panel.
+     */
     private JLabel myStageTitle;
 
+    /**
+     * Retro font.
+     */
     private Font myFont;
 
-    public LevelPanel(int theCompletedLevel) {
+    /**
+     * Constructor for LevelPanel.
+     * @param theCompletedLevel the level that was completed.
+     */
+    public LevelPanel(final int theCompletedLevel) {
         myPanelNumber = 0;
         myCompletedLevel = theCompletedLevel;
         setLayout(new BorderLayout());
@@ -50,6 +82,9 @@ public class LevelPanel extends JPanel {
         start();
     }
 
+    /**
+     * Initializing method for button visuals and listeners.
+     */
     private void start() {
         setBackground(new Color(0, 0, 0));
         myLevel0.setEnabled(false);
@@ -153,12 +188,20 @@ public class LevelPanel extends JPanel {
         });
     }
 
+
+    /**
+     * Getter for the current panel number.
+     * @return int myPanelNumber.
+     */
     public int getMyNum(){
         int temp = myPanelNumber;
         myPanelNumber = 0;
         return temp;
     }
 
+    /**
+     * Method to unlock level depending on myCompletedLevel.
+     */
     public void unLockLevel(){
         if (myCompletedLevel == 0){
             myLevel0.setEnabled(true);

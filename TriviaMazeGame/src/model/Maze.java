@@ -1,11 +1,4 @@
 package model;
-/*
- *
- * This class is the Maze class that creates the Maze Map.
- *
- * @author Kevin Truong, Ingeun Hwang, Khin Win
- *
- */
 import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -222,6 +215,11 @@ public class Maze {
        return myQuestionPoints;
     }
 
+    /**
+     * Getter for number of paths in a map for move calculation.
+     *
+     * @return int myNumOfPaths.
+     */
     public int getNumOfPaths() {
         return myNumOfPaths;
     }
@@ -255,7 +253,7 @@ public class Maze {
      * Set method for player character in myMaze and myPlayerLocation point.
      * @param thePoint the new location.
      */
-    public void setPlayerLocation(Point thePoint) {
+    public void setPlayerLocation(final Point thePoint) {
         if(thePoint.x >= 0 && thePoint.x <= myMaze.length - 1 && thePoint.y >= 0 && thePoint.y <= myMaze[0].length - 1) {
             if (myMaze[thePoint.y][thePoint.x] != '@') {
                 myMaze[myPlayerLocation.y][myPlayerLocation.x] = '+';
