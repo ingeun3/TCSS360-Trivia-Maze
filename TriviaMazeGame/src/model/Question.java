@@ -1,5 +1,5 @@
 package model;
-/*
+/**
  *
  * This class is the Question class that creates the Questions for Player.
  *

@@ -1,5 +1,5 @@
 package view;
-/*
+/**
  *
  * This class is the making the Title Panel.
  *

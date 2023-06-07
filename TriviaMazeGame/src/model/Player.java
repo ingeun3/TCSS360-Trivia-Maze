@@ -1,6 +1,6 @@
 package model;
 
-/*
+/**
  *
  * This class is the Player.
  *

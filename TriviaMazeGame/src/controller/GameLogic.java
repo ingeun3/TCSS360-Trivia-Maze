@@ -1,5 +1,5 @@
 package controller;
-/*
+/**
  * This class is the Game Logic class that controls questions and key listener.
  * @author Kevin Truong, Ingeun Hwang, Khin Win
  *

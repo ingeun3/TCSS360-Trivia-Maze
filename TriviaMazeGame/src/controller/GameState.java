@@ -1,5 +1,5 @@
 package controller;
-/*
+/**
  *
  * This class is the Game State class that serialized with the GameLoop.
  *

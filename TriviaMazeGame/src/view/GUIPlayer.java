@@ -3,7 +3,7 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
-/*
+/**
  * The GUIMaze object that will visualize the array representation of the map.
  * @author Kevin Truong, Ingeun Hwang, Khin Win
  */

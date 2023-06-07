@@ -6,7 +6,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
-/*
+/**
  * The Lighting object that will create dark and only light around the player.
  * @author Kevin Truong, Ingeun Hwang, Khin Win
  */

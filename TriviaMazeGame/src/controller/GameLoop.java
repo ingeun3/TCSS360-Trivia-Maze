@@ -1,6 +1,6 @@
 package controller;
 
-/*
+/**
  *
  * This class is the Game Loop class that controls all the classes.
  *
