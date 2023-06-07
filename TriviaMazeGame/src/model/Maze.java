@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * This is the logic for the maze class.
+ * @author Kevin Truong, Khin Win, Ingeun Hwang
+ */
 public class Maze {
     // Class constant
 
