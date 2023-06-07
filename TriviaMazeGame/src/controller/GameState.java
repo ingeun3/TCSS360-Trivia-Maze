@@ -1,20 +1,44 @@
 package controller;
+/*
+ *
+ * This class is the Game State class that serialized with the GameLoop.
+ *
+ * @author Kevin Truong, Ingeun Hwang, Khin Win
+ *
+ */
 
 import java.io.Serializable;
 
 public class GameState implements Serializable {
-    private int myCompletedLevel;
-    private int myCurrentLevel;
 
-    public GameState(int theCompletedLevel, int theCurrentLevel) {
+    /** Initialized a player completed Level. */
+    private final int myCompletedLevel;
+
+    /** Initialized a player current Level. */
+    private final int myCurrentLevel;
+
+    /**
+     *
+     * @param theCompletedLevel The Player completed Level.
+     * @param theCurrentLevel   The Player Current Level.
+     */
+    public GameState(final int theCompletedLevel, final int theCurrentLevel) {
         myCompletedLevel = theCompletedLevel;
         myCurrentLevel = theCurrentLevel;
     }
 
+    /**
+     * This method return a player completed level.
+     * @return myCompletedLevel.
+     */
     public int getCompletedLevel() {
         return myCompletedLevel;
     }
 
+    /**
+     * This method return a player current level.
+     * @return myCurrentLevel.
+     */
     public int getCurrentLevel() {
         return myCurrentLevel;
     }

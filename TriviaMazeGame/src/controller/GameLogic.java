@@ -1,5 +1,5 @@
 package controller;
-/**
+/*
  * This class is the Game Logic class that controls questions and key listener.
  * @author Kevin Truong, Ingeun Hwang, Khin Win
  *
@@ -8,7 +8,6 @@ package controller;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,82 +24,86 @@ import view.*;
  * This Game Logic class listen the Key Listener and Player movement.
  */
 public class GameLogic implements KeyListener {
-    //static string for title.
-    private static final String MOVE_PROMPT = "Remaining Moves: ";
 
-    // The value that keeps track the Key Listener.
+    /** The value that keeps track the Key Listener. */
     private int pressedKeyCode = -1;
 
-    // Initialized the Player.
-    private Player myPlayer;
+    /** Initialized the Player. */
+    private final Player myPlayer;
 
-    // Initialized the GUIPlayer.
-    private GUIPlayer mySprite;
+    /** Initialized the GUIPlayer. */
+    private final GUIPlayer mySprite;
 
-    // Initialized the Lighting.
-    private Lighting myLighting;
+    /** Initialized the Lighting. */
+    private final Lighting myLighting;
 
-    // Initialized the ArrayList for Questions.
-    private ArrayList<Question> myQuestions;
+    /** Initialized the ArrayList for Questions. */
+    private final ArrayList<Question> myQuestions;
 
-    // Initialized the map that stores current question in key and answers as a value.
-    private Map<String, String[]> myQnA;
+    /** Initialized the map that stores current question in key and answers as a value. */
+    private final Map<String, String[]> myQnA;
 
-    // The SQL data source.
+    /**  The SQL data source. */
     private SQLiteDataSource myDataSource;
 
-    // Initialized the Question Dialog.
+    /** Initialized the Question Dialog. */
     private QuestionDialog myQuestionPane;
 
-    // Initialized the questions Array.
-    private String[] myQ;
+    /** Initialized the questions Array. */
+    private final String[] myQ;
 
-    // Initialized the current question.
+    /** Initialized the current question. */
 
     private int myCurrentQuestion;
 
-    // Initialized the Question Array Size .
-    private int mySize;
+    /** Initialized the Question Array Size . */
+    private final int mySize;
 
-    // Initialized the myPoint for Player Location.
+    /** Initialized the myPoint for Player Location. */
     private Point myPoint;
 
-    //Initialized the myEndPoint for Exist Point that has on the map.
-    private Point myEndPoint;
+    /** Initialized the myEndPoint for Exist Point that has on the map. */
+    private final Point myEndPoint;
 
-    //Initialized the myStartPoint for Player Start Point that has on the map.
+    /** Initialized the myStartPoint for Player Start Point that has on the map. */
 
-    private Point myStartPoint;
+    private final Point myStartPoint;
 
-    //Initialized the NorthPanel.
+    /** Initialized the NorthPanel. */
 
-    private NorthPanel myNorthPanel;
+    private final NorthPanel myNorthPanel;
 
-    //Initialized the Maze.
-    private Maze myMaze;
+    /** Initialized the Maze. */
+    private final Maze myMaze;
 
-    // Initialized the boolean flag for winning.
+    /** Initialized the Question. */
+    private Question myQuestion;
+
+    /** Initialized the Random Number. */
+    private static int myRandomNum;
+
+    /** Initialized the boolean flag for winning. */
     private boolean myWin;
 
-    //Initialized the EscapeFrame
+    /** Initialized the EscapeFrame. */
 
-    private EscFrame myEscape;
+    private final EscFrame myEscape;
 
-    //Initialized the boolean flag for level panel.
+    /** Initialized the boolean flag for level panel. */
 
     private boolean myGoToStage;
 
-    // Initialized the initial move for Player.
+    /** Initialized the initial move for Player. */
 
-    private int myMove;
+    private final int myMove;
 
-    // Initialized the current level.
-    private int myLevel;
+    /** Initialized the current level. */
+    private final int myLevel;
 
-    // Initialized the key count for cheat code.
+    /** Initialized the key count for cheat code. */
     private int myCheatKeyCount;
 
-    // Initialized the cheat code that send player to exist.
+    /** Initialized the cheat code that send player to exist. */
     private int myFinishCheatCode;
 
     /**
@@ -109,15 +112,14 @@ public class GameLogic implements KeyListener {
      * @param theMove The  initial move for Player.
      * @param theLevel The current Level.
      * @param thePlayer The Player class.
-     * @throws FileNotFoundException
      */
 
-    public GameLogic(Maze theMaze, int theMove, int theLevel, Player thePlayer) throws FileNotFoundException {
+    public GameLogic(final Maze theMaze, final int theMove, final int theLevel, final Player thePlayer) {
         myLevel = theLevel;
         myEscape = new EscFrame();
         // initialized the level interface flag to false.
         myGoToStage = false;
-        //// initialized the winning state flag to false.
+        //initialized the winning state flag to false.
         myWin = false;
         myMove = theMove;
         myQuestions = new ArrayList<>();
@@ -169,17 +171,17 @@ public class GameLogic implements KeyListener {
         myQuestionPane = new QuestionDialog(myQ[myCurrentQuestion], myQnA.get(myQ[myCurrentQuestion]).clone());
     }
     @Override
-    public void keyTyped(KeyEvent e) {
+    public void keyTyped(final KeyEvent theE) {
     }
 
     /**
      * This class update when the Player pressed the Key.
-     * @param e the event to be processed
+     * @param theE the event to be processed
      */
     @Override
-    public void keyPressed(KeyEvent e) {
+    public void keyPressed(final KeyEvent theE) {
         // get a key code that player pressed.
-        int code = e.getKeyCode();
+        int code = theE.getKeyCode();
         /*
          * These "if" statements check the following three conditions :
          * Player pressed the key (W, A, S, D) or not.
@@ -222,11 +224,11 @@ public class GameLogic implements KeyListener {
 
     /**
      * This method set the pressed key code to be -1 again.
-     * @param e the event to be processed
+     * @param theE the event to be processed
      */
     @Override
-    public void keyReleased(KeyEvent e) {
-        int code = e.getKeyCode();
+    public void keyReleased(final KeyEvent theE) {
+        int code = theE.getKeyCode();
         if (code == pressedKeyCode) {
             pressedKeyCode = -1;
         }
@@ -398,7 +400,7 @@ public class GameLogic implements KeyListener {
      *
      * @param theChoice The answer that Player choose.
      */
-    private void isRightAnswer(String theChoice) {
+    private void isRightAnswer(final String theChoice) {
         //check player chooses the right answer or not.
         if (theChoice.equals(myQnA.get(myQ[myCurrentQuestion])[0])) {
             myPoint = myPlayer.getLocation();
@@ -428,9 +430,9 @@ public class GameLogic implements KeyListener {
     /**
      * This method Teleport back to the Player Location that
      * player gets it right last time.
-     * @param thePoint
+     * @param thePoint The Player Point.
      */
-    private void setLocation(Point thePoint){
+    private void setLocation(final Point thePoint){
         myPlayer.movePlayer(thePoint);
         mySprite.setX((thePoint.x * mySprite.getTileSize() + mySprite.getGap()));
         mySprite.setY(thePoint.y * mySprite.getTileSize());
@@ -484,11 +486,11 @@ public class GameLogic implements KeyListener {
      * Receives data from data source.
      */
     private void retrieveData() {
-        String query1 = "SELECT * FROM funquestions";
+        String query1 = "SELECT * FROM multiplechoicequestions";
         String query2 = "SELECT * FROM booleanquestions";
 
         try (Connection conn = myDataSource.getConnection();
-             Statement stmt = conn.createStatement(); ) {
+             Statement stmt = conn.createStatement()) {
             ResultSet rs1 = stmt.executeQuery(query1);
 
             //walk through each 'row' of results, grab data by column/field name
@@ -502,12 +504,12 @@ public class GameLogic implements KeyListener {
                 addMultipleChoiceQuestion(question, rightAnswer, wrongAnswer1, wrongAnswer2, wrongAnswer3);
             }
             ResultSet rs2 = stmt.executeQuery(query2);
-//            while (rs2.next()) {
-//                String question = rs2.getString("question");
-//                String rightAnswer = rs2.getString("rightanswer");
-//                String wrongAnswer = rs2.getString("wronganswer");
-//                addBooleanQuestion(question, rightAnswer, wrongAnswer);
-//            }
+            while (rs2.next()) {
+                String question = rs2.getString("question");
+                String rightAnswer = rs2.getString("rightanswer");
+                String wrongAnswer = rs2.getString("wronganswer");
+                addBooleanQuestion(question, rightAnswer, wrongAnswer);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(0);
@@ -521,8 +523,8 @@ public class GameLogic implements KeyListener {
      * @param theWrongAnswer1 the wrong answer
      * @param theWrongAnswer2 the wrong answer
      */
-    private void addMultipleChoiceQuestion(String theQuestion, String theRightAnswer,
-                                           String theWrongAnswer1, String theWrongAnswer2, String theWrongAnswer3) {
+    private void addMultipleChoiceQuestion(final String theQuestion, final String theRightAnswer,
+                                           final String theWrongAnswer1, final String theWrongAnswer2, final String theWrongAnswer3) {
 
         Question question = initializeQuestion(theQuestion);
         question.addAnswers(theRightAnswer);
@@ -538,8 +540,8 @@ public class GameLogic implements KeyListener {
      * @param theRightAnswer the Correct answer
      * @param theWrongAnswer the wrong answer
      */
-    private void addBooleanQuestion(String theQuestion, String theRightAnswer,
-                                    String theWrongAnswer) {
+    private void addBooleanQuestion(final String theQuestion, final String theRightAnswer,
+                                    final String theWrongAnswer) {
 
         Question question = initializeQuestion(theQuestion);
         question.addAnswers(theRightAnswer);
@@ -553,21 +555,19 @@ public class GameLogic implements KeyListener {
      * @param theQuestion the Question prompt
      * @return the Question object initiated
      */
-    private Question initializeQuestion(String theQuestion) {
-        Question question = new Question(theQuestion);
+    private Question initializeQuestion(final String theQuestion) {
+        myQuestion = new Question(theQuestion);
 
-        return question;
+        return myQuestion;
     }
 
     /**
-     *
-     * @param maxValue This Question size.
+     * @param theMaxValue This Question size.
      * @return The random number.
      */
-    public static int getRandomNumber(int maxValue) {
+    public static int getRandomNumber(final int theMaxValue) {
         Random rand = new Random();
-        int range = maxValue;
-        int randomNum = rand.nextInt(range);
-        return randomNum;
+        myRandomNum = rand.nextInt(theMaxValue);
+        return myRandomNum;
     }
 }
