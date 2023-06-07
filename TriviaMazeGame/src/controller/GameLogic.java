@@ -246,19 +246,19 @@ public class GameLogic implements KeyListener {
          */
         if (pressedKeyCode == KeyEvent.VK_W && myPlayer.canMove(myPlayer.PlayerN())) {
             mySprite.setDirection("up");
-            mySprite.setY(mySprite.getY() - mySprite.getSpeed());
+            mySprite.setY(mySprite.getY() - mySprite.getTileSize());
             myNorthPanel.setMoves(myPlayer.getMyMove());
         } else if (pressedKeyCode == KeyEvent.VK_S && myPlayer.canMove(myPlayer.PlayerS())) {
             mySprite.setDirection("down");
-            mySprite.setY(mySprite.getY() + mySprite.getSpeed());
+            mySprite.setY(mySprite.getY() + mySprite.getTileSize());
             myNorthPanel.setMoves(myPlayer.getMyMove());
         } else if (pressedKeyCode == KeyEvent.VK_A && myPlayer.canMove(myPlayer.PlayerW())) {
             mySprite.setDirection("left");
-            mySprite.setX(mySprite.getX() - mySprite.getSpeed());
+            mySprite.setX(mySprite.getX() - mySprite.getTileSize());
             myNorthPanel.setMoves(myPlayer.getMyMove());
         } else if (pressedKeyCode == KeyEvent.VK_D && myPlayer.canMove(myPlayer.PlayerE())) {
             mySprite.setDirection("right");
-            mySprite.setX(mySprite.getX() + mySprite.getSpeed());
+            mySprite.setX(mySprite.getX() + mySprite.getTileSize());
             myNorthPanel.setMoves(myPlayer.getMyMove());
         }
         // set the lighting.
@@ -445,26 +445,26 @@ public class GameLogic implements KeyListener {
         if(((int) myEndPoint.getX() - 1 > 0) && (myMaze.charAt((int) myEndPoint.getX() - 1, (int) myEndPoint.getY()) == '+')) {
             myPlayer.canMove(new Point((int) myEndPoint.getX() - 1, (int) myEndPoint.getY()));
             mySprite.setDirection("right");
-            mySprite.setY((int) myEndPoint.getY() * mySprite.getSpeed());
-            mySprite.setX((int) myEndPoint.getX() * mySprite.getSpeed() + mySprite.getGap() - mySprite.getSpeed());
+            mySprite.setY((int) myEndPoint.getY() * mySprite.getTileSize());
+            mySprite.setX((int) myEndPoint.getX() * mySprite.getTileSize() + mySprite.getGap() - mySprite.getTileSize());
             myLighting.disableLight();
         } else if(((int) myEndPoint.getX() + 1 < myMaze.getArray()[0].length) && (myMaze.charAt((int) myEndPoint.getX() + 1, (int) myEndPoint.getY()) == '+')) {
             myPlayer.canMove(new Point((int) myEndPoint.getX() + 1, (int) myEndPoint.getY()));
             mySprite.setDirection("left");
-            mySprite.setY((int) myEndPoint.getY() * mySprite.getSpeed());
-            mySprite.setX((int) myEndPoint.getX() * mySprite.getSpeed() + mySprite.getGap() + mySprite.getSpeed());
+            mySprite.setY((int) myEndPoint.getY() * mySprite.getTileSize());
+            mySprite.setX((int) myEndPoint.getX() * mySprite.getTileSize() + mySprite.getGap() + mySprite.getTileSize());
             myLighting.disableLight();
         } else if(((int) myEndPoint.getY() - 1 > 0) && (myMaze.charAt((int) myEndPoint.getX(), (int) myEndPoint.getY() - 1) == '+')) {
             myPlayer.canMove(new Point((int) myEndPoint.getX(), (int) myEndPoint.getY()-1));
             mySprite.setDirection("down");
-            mySprite.setY((int) myEndPoint.getY() * mySprite.getSpeed() - mySprite.getSpeed());
-            mySprite.setX((int) myEndPoint.getX() * mySprite.getSpeed() + mySprite.getGap());
+            mySprite.setY((int) myEndPoint.getY() * mySprite.getTileSize() - mySprite.getTileSize());
+            mySprite.setX((int) myEndPoint.getX() * mySprite.getTileSize() + mySprite.getGap());
             myLighting.disableLight();
         } else if(((int) myEndPoint.getY() + 1 < myMaze.getArray().length) && (myMaze.charAt((int) myEndPoint.getX(), (int) myEndPoint.getY() + 1) == '+')) {
             myPlayer.canMove(new Point((int) myEndPoint.getX(), (int) myEndPoint.getY() + 1));
             mySprite.setDirection("up");
-            mySprite.setY((int) myEndPoint.getY() * mySprite.getSpeed() + mySprite.getSpeed());
-            mySprite.setX((int) myEndPoint.getX() * mySprite.getSpeed() + mySprite.getGap());
+            mySprite.setY((int) myEndPoint.getY() * mySprite.getTileSize() + mySprite.getTileSize());
+            mySprite.setX((int) myEndPoint.getX() * mySprite.getTileSize() + mySprite.getGap());
             myLighting.disableLight();
         }
     }

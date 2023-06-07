@@ -18,24 +18,20 @@ public class GUIMaze {
      * Image of the Wall.
      */
     private static final ImageIcon wall = new ImageIcon("wall.png");
-
     /**
      * Array representation of the map.
      */
     private final char[][] myArray;
-
     /**
      * The Size of each tile.
      */
     private final int myTileSize;
-
     /**
      * The Size of the gap on the width if the map doesn't fit perfectly to the computer screen.
      */
     private final int myGap;
-
     /**
-     * Default constructor for MazeMap object.
+     * Default constructor for GUIMaze object.
      * @param theArray the 2D layout of the map we want to make graphic out of.
      */
     public GUIMaze(final char[][] theArray, final int theTileNum) {

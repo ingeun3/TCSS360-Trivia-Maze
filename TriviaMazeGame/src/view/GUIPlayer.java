@@ -19,33 +19,54 @@ public class GUIPlayer {
      * The size of each tile.
      */
     private static int myTileSize;
-
-    // The Image of a player facing up.
+    /**
+     * The image of player facing upward.
+     */
     private static final ImageIcon up = new ImageIcon("up.png");
-    // The Image of a player facing down.
+    /**
+     * The image of player facing downward.
+     */
     private static final ImageIcon down = new ImageIcon("down.png");
-    // The Image of a player facing left.
+    /**
+     * The image of player facing left.
+     */
     private static final ImageIcon left = new ImageIcon("left.png");
-    // The Image of a player facing right.
+    /**
+     * The image of player facing right.
+     */
     private static final ImageIcon right = new ImageIcon("right.png");
-
+    /**
+     * The Size of the gap on the width if the map doesn't fit perfectly to the computer screen.
+     */
     private final int myGap;
-
-    // The x, and y location of the player.
-    private static int x;
-    private static int y;
-    // The direction the player is facing.
+    /**
+     * The X location of the Player.
+     */
+    private static int myX;
+    /**
+     * The Y location of the Player.
+     */
+    private static int myY;
+    /**
+     * The direction player is facing.
+     */
     private static String direction;
-    // The current image of a player.
+    /**
+     * The current image of a Player.
+     */
     private static ImageIcon myImage;
 
-
+    /**
+     * Default constructor for GUIPlayer object.
+     * @param theSpawnPoint the starting point of the player.
+     * @param theTileNum the Number of Total tiles in the map.
+     */
     public GUIPlayer(Point theSpawnPoint, int theTileNum) {
         myTileNumber = theTileNum;
         myTileSize = (int) screenSize.getWidth() / myTileNumber;
         myGap = (int) (screenSize.getWidth() - (myTileSize * theTileNum)) / 2;
-        x = (int) theSpawnPoint.getX() * myTileSize + myGap;
-        y = (int) theSpawnPoint.getY() * myTileSize;
+        myX = (int) theSpawnPoint.getX() * myTileSize + myGap;
+        myY = (int) theSpawnPoint.getY() * myTileSize;
         direction = "up";
         myImage = new ImageIcon("up.png");
     }
@@ -56,19 +77,19 @@ public class GUIPlayer {
     }
 
     public void setY(int theY) {
-        y = theY;
+        myY = theY;
     }
 
     public void setX(int theX) {
-        x = theX;
+        myX = theX;
     }
 
     public int getY() {
-        return y;
+        return myY;
     }
 
     public int getX() {
-        return x;
+        return myX;
     }
 
     public int getTileSize() {
@@ -106,6 +127,6 @@ public class GUIPlayer {
                 myImage = right;
                 break;
         }
-        theGraphics.drawImage(myImage.getImage(), x, y, myTileSize , myTileSize, null);
+        theGraphics.drawImage(myImage.getImage(), myX, myY, myTileSize , myTileSize, null);
     }
 }
