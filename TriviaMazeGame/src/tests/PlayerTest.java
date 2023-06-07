@@ -18,7 +18,7 @@ public class PlayerTest {
     // Initialize myPlayer object with 5 moves before each test.
     @BeforeEach
     void setUp() throws FileNotFoundException {
-        myMaze = new Maze("testing_map.txt");
+        myMaze = new Maze("./resources/maps/testing_map.txt");
             myPlayer = new Player(5, myMaze);
     }
 

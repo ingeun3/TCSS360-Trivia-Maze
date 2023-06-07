@@ -35,7 +35,7 @@ public class GameFrame extends JFrame{
         String level = LEVEL_PROMPT + theLevel;
         String moves = MOVE_PROMPT + theMoves;
         myNorthPanel =  NorthPanel.getInstance(level, moves);
-        setIconImage(new ImageIcon("up.png").getImage());
+        setIconImage(new ImageIcon("./resources/visuals/up.png").getImage());
     }
 
     /**

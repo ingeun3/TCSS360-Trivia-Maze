@@ -3,7 +3,7 @@ package view;
 import java.awt.*;
 import javax.swing.*;
 
-/*
+/**
  * The GUIMaze object that will visualize the array representation of the map.
  * @author Kevin Truong, Ingeun Hwang, Khin Win
  */
@@ -13,11 +13,11 @@ public class GUIMaze {
     /**
      * Image of the Road.
      */
-    private static final ImageIcon road = new ImageIcon("road.png");
+    private static final ImageIcon road = new ImageIcon("./resources/visuals/road.png");
     /**
      * Image of the Wall.
      */
-    private static final ImageIcon wall = new ImageIcon("wall.png");
+    private static final ImageIcon wall = new ImageIcon("./resources/visuals/wall.png");
     /**
      * Array representation of the map.
      */

@@ -1,12 +1,6 @@
 package controller;
 
-/*
- *
- * This class is the Game Loop class that controls all the classes.
- *
- * @author Kevin Truong, Ingeun Hwang, Khin Win
- *
- */
+
 
 import model.Maze;
 import model.Player;
@@ -15,17 +9,23 @@ import view.*;
 
 import java.io.*;
 
-// This Game Loop class that controls all classes.
+/**
+ *
+ * This class is the Game Loop class that controls all the classes.
+ *
+ * @author Kevin Truong, Ingeun Hwang, Khin Win
+ *
+ */
 
 public class GameLoop implements Serializable {
 
     private static final String MOVE_PROMPT = "Remaining Moves: ";
     private static final String LEVEL_PROMPT = "Level ";
 
-    private static final String MAP1 = "maze_map0.txt";
-    private static final String MAP2 = "maze_map1.txt";
-    private static final String MAP3 = "maze_map2.txt";
-    private static final String MAP4 = "maze_map3.txt";
+    private static final String MAP1 = "./resources/maps/maze_map0.txt";
+    private static final String MAP2 = "./resources/maps/maze_map1.txt";
+    private static final String MAP3 = "./resources/maps/maze_map2.txt";
+    private static final String MAP4 = "./resources/maps/maze_map3.txt";
 
     /** Initialized the Level Interface flag to false.*/
     private boolean myLevelSetup = false;
@@ -100,8 +100,8 @@ public class GameLoop implements Serializable {
         myCurrentPlayer = null;
         myCurrentGameLogic = null;
         myCurrentCenterPanel = -2;
-        myTitleSound = new Sound("Title Sound.wav");
-        myGameSound = new Sound("Game Sound.wav");
+        myTitleSound = new Sound("./resources/sounds/Title Sound.wav");
+        myGameSound = new Sound("./resources/sounds/Game Sound.wav");
         myInitialMoves = 0;
 
         start();
@@ -238,7 +238,7 @@ public class GameLoop implements Serializable {
             myTitleSoundFlag = false;
             myTitleSound.stop();
             if(!myGameSoundFlag) {
-                myGameSound = new Sound("Game Sound.wav");
+                myGameSound = new Sound("./resources/sounds/Game Sound.wav");
                 myGameSoundFlag = true;
                 myGameSound.loop();
             }

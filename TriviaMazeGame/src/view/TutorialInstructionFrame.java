@@ -1,18 +1,18 @@
 package view;
-/*
- *
- * This class is the making the Instruction Frame.
- *
- * @author Kevin Truong, Ingeun Hwang, Khin Win
- *
- */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
-// This is the Instruction class that extend JFrame.
+/**
+ *
+ * This class is the making the Instruction Frame.
+ *
+ * @author Kevin Truong, Ingeun Hwang, Khin Win
+ *
+ */
 public class TutorialInstructionFrame extends JFrame {
 
     /** static for screenSize. */

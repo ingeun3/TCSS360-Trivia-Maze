@@ -139,33 +139,17 @@ public class GameLogic implements KeyListener {
         connect();
         // retrieve the Data.
         retrieveData();
-
-        //gets a random question for question point.
-        for (int i = 0; i < myQuestions.size(); i++) {
-            Question askedQuestion = myQuestions.get(i);
-            // initialized the answer length.
-            int ansLength = askedQuestion.getAnswers().size();
-            String[] ansArray = new String[ansLength];
-            for (int j = 0; j < ansLength; j++) {
-                ansArray[j] = askedQuestion.getAnswers().get(j);
-            }
-            //puts it in map to send to question pane
-            myQnA.put(askedQuestion.getQuestion(), ansArray);
-        }
-        // initialized myQ String Array with Questions size.
+        createRandQuestion();
         myQ = new String[myQuestions.size()];
-        int counter = 0;
-        // loop through the myQnA map.
-        for (Map.Entry<String, String[]> entry : myQnA.entrySet()) {
-            myQ[counter] = entry.getKey();
-            // increase the counter.
-            counter++;
-        }
+        createMyQ();
+
         // get a random number for question.
         myCurrentQuestion = getRandomNumber(myQuestions.size());
         // Clone the Question to avoid encapsulation and add the question in the question pane.
         myQuestionPane = new QuestionDialog(myQ[myCurrentQuestion], myQnA.get(myQ[myCurrentQuestion]).clone());
     }
+
+
     @Override
     public void keyTyped(final KeyEvent theE) {
     }
@@ -512,6 +496,8 @@ public class GameLogic implements KeyListener {
         }
     }
 
+
+
     /**
      * Adds multiple choice question to the myQuestion.
      * @param theQuestion the Question prompt
@@ -546,6 +532,17 @@ public class GameLogic implements KeyListener {
     }
 
     /**
+     * @param theMaxValue This Question size.
+     * @return The random number.
+     */
+    public static int getRandomNumber(final int theMaxValue) {
+        Random rand = new Random();
+        int range = theMaxValue;
+        myRandomNum = rand.nextInt(range);
+        return myRandomNum;
+    }
+
+    /**
      * Initiating the Question.
      *
      * @param theQuestion the Question prompt
@@ -558,13 +555,34 @@ public class GameLogic implements KeyListener {
     }
 
     /**
-     * @param theMaxValue This Question size.
-     * @return The random number.
+     * Setup method to get a random question.
      */
-    public static int getRandomNumber(final int theMaxValue) {
-        Random rand = new Random();
-        int range = theMaxValue;
-        myRandomNum = rand.nextInt(range);
-        return myRandomNum;
+    private void createRandQuestion() {
+        for (int i = 0; i < myQuestions.size(); i++) {
+            Question askedQuestion = myQuestions.get(i);
+            // initialized the answer length.
+            int ansLength = askedQuestion.getAnswers().size();
+            String[] ansArray = new String[ansLength];
+            for (int j = 0; j < ansLength; j++) {
+                ansArray[j] = askedQuestion.getAnswers().get(j);
+            }
+            //puts it in map to send to question pane
+            myQnA.put(askedQuestion.getQuestion(), ansArray);
+        }
     }
+
+    /**
+     * Setup to initialize myQ.
+     */
+    private void createMyQ() {
+        int counter = 0;
+        // loop through the myQnA map.
+        for (Map.Entry<String, String[]> entry : myQnA.entrySet()) {
+            myQ[counter] = entry.getKey();
+            // increase the counter.
+            counter++;
+        }
+    }
+
+
 }

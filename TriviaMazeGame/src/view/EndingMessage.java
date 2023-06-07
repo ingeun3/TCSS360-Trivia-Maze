@@ -5,7 +5,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 
-/*
+/**
  * This EndingMessage object is a JFrame that will appear when ending condition for the game is met.
  * @author Kevin Truong, Ingeun Hwang, Khin Win
  */

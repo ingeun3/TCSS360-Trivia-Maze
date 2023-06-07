@@ -28,7 +28,7 @@ public class Sound {
                 myClip.open(audioInputStream);
                 FloatControl gainControl =
                         (FloatControl) myClip.getControl(FloatControl.Type.MASTER_GAIN);
-                if (theSongName == "Title Sound.wav") {
+                if (theSongName == "./resources/sounds/Title Sound.wav") {
                     gainControl.setValue(-30.0f);
                 } else {
                     gainControl.setValue(-20.0f);

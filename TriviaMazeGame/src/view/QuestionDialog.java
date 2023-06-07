@@ -1,18 +1,18 @@
 package view;
 
-/*
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.Arrays;
+import java.util.Collections;
+
+/**
  *
  * This class is the making the Instruction Frame.
  *
  * @author Kevin Truong, Ingeun Hwang, Khin Win
  *
  */
-import javax.swing.*;
-import java.awt.*;
-import java.util.Arrays;
-import java.util.Collections;
-
-// This is the QuestionDialog class that creates Question Dialog.
 
 public class QuestionDialog {
     /** The default prompt for asking question. */

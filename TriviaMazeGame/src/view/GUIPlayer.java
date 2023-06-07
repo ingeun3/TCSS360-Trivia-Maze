@@ -3,7 +3,7 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
-/*
+/**
  * The GUIMaze object that will visualize the array representation of the map.
  * @author Kevin Truong, Ingeun Hwang, Khin Win
  */
@@ -18,19 +18,19 @@ public class GUIPlayer {
     /**
      * The image of player facing upward.
      */
-    private static final ImageIcon up = new ImageIcon("up.png");
+    private static final ImageIcon up = new ImageIcon("./resources/visuals/up.png");
     /**
      * The image of player facing downward.
      */
-    private static final ImageIcon down = new ImageIcon("down.png");
+    private static final ImageIcon down = new ImageIcon("./resources/visuals/down.png");
     /**
      * The image of player facing left.
      */
-    private static final ImageIcon left = new ImageIcon("left.png");
+    private static final ImageIcon left = new ImageIcon("./resources/visuals/left.png");
     /**
      * The image of player facing right.
      */
-    private static final ImageIcon right = new ImageIcon("right.png");
+    private static final ImageIcon right = new ImageIcon("./resources/visuals/right.png");
     /**
      * The Size of the gap on the width if the map doesn't fit perfectly to the computer screen.
      */
@@ -63,7 +63,7 @@ public class GUIPlayer {
         myX = (int) theSpawnPoint.getX() * myTileSize + myGap;
         myY = (int) theSpawnPoint.getY() * myTileSize;
         direction = "up";
-        myImage = new ImageIcon("up.png");
+        myImage = new ImageIcon("./resources/visuals/up.png");
     }
 
     /**

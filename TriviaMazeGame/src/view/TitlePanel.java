@@ -1,11 +1,5 @@
 package view;
-/*
- *
- * This class is the making the Title Panel.
- *
- * @author Kevin Truong, Ingeun Hwang, Khin Win
- *
- */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,11 +7,25 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
 
-// This class is making Title Panel and extend the JPanel.
+/**
+ *
+ * This class is the making the Title Panel.
+ *
+ * @author Kevin Truong, Ingeun Hwang, Khin Win
+ *
+ */
 public class TitlePanel extends JPanel {
 
+    private static final Color WHITE = new Color(255, 255, 255);
+
+    private static final Color BLACK = new Color(0, 0, 0);
+
+    private static final int BUTTON_SIZE = 45;
+
+    private static final Dimension PREFERRED_SIZE = new Dimension(120, 60);
+
     /** Static for Image Icon. */
-    private static final ImageIcon icon = new ImageIcon("titlename.png");
+    private static final ImageIcon icon = new ImageIcon("./resources/visuals/titlename.png");
 
     /** Initialized the JLabel Title Name. */
     private final JLabel myTitle;
@@ -44,9 +52,16 @@ public class TitlePanel extends JPanel {
         // set the Reset Flag to false.
         myReset = false;
         myPanelNumber = -3;
-        myStartButton = new JButton("START");
-        myResetButton = new JButton("RESTART");
-        myQuitButton = new JButton("Quit");
+
+        try {
+            InputStream is = getClass().getResourceAsStream("smalle.ttf");
+            myFont = Font.createFont(Font.TRUETYPE_FONT, is);
+        } catch (FontFormatException | IOException e) {
+            throw new RuntimeException(e);
+        }
+        myStartButton = setupButtons("Start");
+        myResetButton = setupButtons("Reset");
+        myQuitButton = setupButtons("Quit");
         myTitle = new JLabel(icon);
         myButtonPanel = new JPanel();
         setup();
@@ -57,33 +72,9 @@ public class TitlePanel extends JPanel {
      * This method creates the J Buttons and J Labels.
      */
     public void setup() {
-        try {
-            InputStream is = getClass().getResourceAsStream("smalle.ttf");
-            myFont = Font.createFont(Font.TRUETYPE_FONT, is);
-        } catch (FontFormatException | IOException e) {
-            throw new RuntimeException(e);
-        }
+
         setBackground(new Color(0, 0, 0)); // Transparent black background
         myButtonPanel.setBackground(new Color(0, 0, 0)); // Set the panel's background same as frame
-
-        myStartButton.setPreferredSize(new Dimension(120, 60));
-        myStartButton.setFont(myFont.deriveFont(Font.PLAIN, 45));
-        myStartButton.setForeground(Color.WHITE);
-        myStartButton.setBackground(new Color(0, 0, 0));
-        myStartButton.setBorderPainted(false);
-
-        myResetButton.setPreferredSize(new Dimension(120, 60));
-        myResetButton.setFont(myFont.deriveFont(Font.PLAIN, 45));
-        myResetButton.setForeground(Color.WHITE);
-        myResetButton.setBackground(new Color(0, 0, 0));
-        myResetButton.setBorderPainted(false);
-
-        myQuitButton.setPreferredSize(new Dimension(120, 60));
-        myQuitButton.setFont(myFont.deriveFont(Font.PLAIN, 45));
-        myQuitButton.setForeground(Color.WHITE);
-        myQuitButton.setBackground(new Color(0, 0, 0));
-        myQuitButton.setBorderPainted(false);
-
         myButtonPanel.add(myStartButton);
         myButtonPanel.add(myResetButton);
         myButtonPanel.add(myQuitButton);
@@ -141,5 +132,20 @@ public class TitlePanel extends JPanel {
         // reset the myPanelNumber.
         myPanelNumber = -1;
         return temp;
+    }
+
+    /**
+     * Setup title buttons.
+     * @param theName the name of the button.
+     * @return an instantiated button.
+     */
+    private JButton setupButtons(final String theName) {
+        JButton button = new JButton(theName);
+        button.setForeground(WHITE);
+        button.setBackground(BLACK);
+        button.setBorderPainted(false);
+        button.setFont(myFont.deriveFont(Font.PLAIN, BUTTON_SIZE));
+        button.setPreferredSize(PREFERRED_SIZE);
+        return button;
     }
 }

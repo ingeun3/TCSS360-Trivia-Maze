@@ -5,7 +5,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 
-/*
+/**
  * The main JPanel that will display the game.
  * @author Kevin Truong, Ingeun Hwang, Khin Win
  */

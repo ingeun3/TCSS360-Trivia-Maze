@@ -18,7 +18,7 @@ class MazeTest {
 
 	@BeforeEach
 	void setUp() throws FileNotFoundException {
-		myMaze = new Maze("testing_map.txt");
+		myMaze = new Maze("./resources/maps/testing_map.txt");
 	}
 
 	// Tests createMaze method on one of the maps.
@@ -37,7 +37,7 @@ class MazeTest {
 							{'@','+','@','+','@','+','@','@','@','+','@','+','@'},
 							{'@','+','+','+','@','+','+','+','+','+','+','+','@'},
 							{'@','@','@','@','@','@','M','@','@','@','@','@','@'}};
-		char[][] actual = myMaze.createMaze("testing_map.txt");
+		char[][] actual = myMaze.createMaze("./resources/maps/testing_map.txt");
 		String expectedMap = "";
 		String actualMap = "";
 		for (int i = 0; i < expected.length; i++) {
@@ -55,12 +55,12 @@ class MazeTest {
 	// Tests createMaze method on the 4x4 map with all walls.
 	@Test
 	void createMaze4x4AllWallTest() throws FileNotFoundException {
-		myMaze = new Maze("4x4AllWallTest.txt");
+		myMaze = new Maze("./resources/maps/4x4AllWallTest.txt");
 		char[][] expected = {{'@','@','@','@'},
 							{'@','@','@','@'},
 							{'@','@','@','@'},
 							{'@','@','@','@'}};
-		char[][] actual = myMaze.createMaze("4x4AllWallTest.txt");
+		char[][] actual = myMaze.createMaze("./resources/maps/4x4AllWallTest.txt");
 		String expectedMap = "";
 		String actualMap = "";
 		for (int i = 0; i < expected.length; i++) {
@@ -76,12 +76,12 @@ class MazeTest {
 	// Tests createMaze method on the 4x4 map with all roads.
 	@Test
 	void createMaze4x4AllRoadTest() throws FileNotFoundException {
-		myMaze = new Maze("4x4AllRoadTest.txt");
+		myMaze = new Maze("./resources/maps/4x4AllRoadTest.txt");
 		char[][] expected = {{'+','+','+','+'},
 							{'+','+','+','+'},
 							{'+','+','+','+'},
 							{'+','+','+','+'}};
-		char[][] actual = myMaze.createMaze("4x4AllRoadTest.txt");
+		char[][] actual = myMaze.createMaze("./resources/maps/4x4AllRoadTest.txt");
 		String expectedMap = "";
 		String actualMap = "";
 		for (int i = 0; i < expected.length; i++) {
@@ -97,8 +97,8 @@ class MazeTest {
 	// Tests createMaze method on the 1x1 map with all walls.
 	@Test
 	void createMaze1x1AllWallTest() throws FileNotFoundException {
-		myMaze = new Maze("1x1AllWallTest.txt");
-		char[][] actual = myMaze.createMaze("1x1AllWallTest.txt");
+		myMaze = new Maze("./resources/maps/1x1AllWallTest.txt");
+		char[][] actual = myMaze.createMaze("./resources/maps/1x1AllWallTest.txt");
 		String expectedMap = "@";
 		String actualMap = "";
 		for (int i = 0; i < actual.length; i++) {
@@ -111,8 +111,8 @@ class MazeTest {
 	// Tests createMaze method on the 1x1 map with all roads.
 	@Test
 	void createMaze1x1AllRoadTest() throws FileNotFoundException {
-		myMaze = new Maze("1x1AllRoadTest.txt");
-		char[][] actual = myMaze.createMaze("1x1AllRoadTest.txt");
+		myMaze = new Maze("./resources/maps/1x1AllRoadTest.txt");
+		char[][] actual = myMaze.createMaze("./resources/maps/1x1AllRoadTest.txt");
 		String expectedMap = "+";
 		String actualMap = "";
 		for (int i = 0; i < actual.length; i++) {
@@ -126,8 +126,8 @@ class MazeTest {
 	@Test
 	void createMaze10x10Test() throws FileNotFoundException {
 		String expectedMap = "";
-		myMaze = new Maze("10x10Test.txt");
-		char[][] actual = myMaze.createMaze("10x10Test.txt");
+		myMaze = new Maze("./resources/maps/10x10Test.txt");
+		char[][] actual = myMaze.createMaze("./resources/maps/10x10Test.txt");
 		String actualMap = "";
 		for(int i = 0; i < actual.length; i++) {
 			for(int j = 0; j < actual.length; j++) {
@@ -561,7 +561,7 @@ class MazeTest {
 		expected.add(new Point(5,9));
 		expected.add(new Point(6,11));
 		expected.add(new Point(9,11));
-		char[][] map = myMaze.createMaze("testing_map.txt");
+		char[][] map = myMaze.createMaze("./resources/maps/testing_map.txt");
 		List<Point> actual = myMaze.intersections(map);
 		assertEquals(expected, actual);
 	}

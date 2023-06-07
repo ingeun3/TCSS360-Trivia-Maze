@@ -14,10 +14,12 @@ import java.io.InputStream;
 
 public class LevelPanel extends JPanel {
 
-    /**
-     * The screen size.
-     */
-    private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private static final Color WHITE = new Color(255, 255, 255);
+
+    private static final Color BLACK = new Color(0, 0, 0);
+
+    private static final int BUTTON_SIZE = 45;
+
 
     /**
      * Tutorial level button.
@@ -69,13 +71,20 @@ public class LevelPanel extends JPanel {
      * @param theCompletedLevel the level that was completed.
      */
     public LevelPanel(final int theCompletedLevel) {
+        try {
+            InputStream is = getClass().getResourceAsStream("smalle.ttf");
+            myFont = Font.createFont(Font.TRUETYPE_FONT, is);
+        } catch (FontFormatException | IOException e) {
+            throw new RuntimeException(e);
+        }
+
         myPanelNumber = 0;
         myCompletedLevel = theCompletedLevel;
         setLayout(new BorderLayout());
-        myLevel0 = new JButton("LVL      0");
-        myLevel1 = new JButton("LVL      1");
-        myLevel2 = new JButton("LVL      2");
-        myLevel3 = new JButton("LVL      3");
+        myLevel0 = setupButtons(1);
+        myLevel1 = setupButtons(2);
+        myLevel2 = setupButtons(3);
+        myLevel3 = setupButtons(4);
         myBackButton = new JButton("<-");
         myStageTitle = new JLabel("SELECT LEVEL", SwingConstants.CENTER);
 
@@ -87,17 +96,9 @@ public class LevelPanel extends JPanel {
      */
     private void start() {
         setBackground(new Color(0, 0, 0));
-        myLevel0.setEnabled(false);
-        myLevel1.setEnabled(false);
-        myLevel2.setEnabled(false);
-        myLevel3.setEnabled(false);
+
         myBackButton.setEnabled(true);
-        try {
-            InputStream is = getClass().getResourceAsStream("smalle.ttf");
-            myFont = Font.createFont(Font.TRUETYPE_FONT, is);
-        } catch (FontFormatException | IOException e) {
-            throw new RuntimeException(e);
-        }
+
 
         unLockLevel();
 
@@ -108,23 +109,6 @@ public class LevelPanel extends JPanel {
         buttonPanel.setBackground(new Color(0, 0, 0));
         backPanel.setBackground(new Color(0, 0, 0));
 
-
-        myLevel0.setForeground(Color.WHITE);
-        myLevel0.setBackground(new Color(0, 0, 0));
-        myLevel0.setBorderPainted(false);
-
-        myLevel1.setForeground(Color.WHITE);
-        myLevel1.setBackground(new Color(0, 0, 0));
-        myLevel1.setBorderPainted(false);
-
-        myLevel2.setForeground(Color.WHITE);
-        myLevel2.setBackground(new Color(0, 0, 0));
-        myLevel2.setBorderPainted(false);
-
-        myLevel3.setForeground(Color.WHITE);
-        myLevel3.setBackground(new Color(0, 0, 0));
-        myLevel3.setBorderPainted(false);
-
         buttonPanel.setOpaque(false);
 
         myBackButton.setForeground(Color.WHITE);
@@ -132,11 +116,6 @@ public class LevelPanel extends JPanel {
         myBackButton.setBorderPainted(false);
 
         backPanel.setOpaque(false);
-
-        myLevel0.setFont(myFont.deriveFont(Font.PLAIN, 45));
-        myLevel1.setFont(myFont.deriveFont(Font.PLAIN, 45));
-        myLevel2.setFont(myFont.deriveFont(Font.PLAIN, 45));
-        myLevel3.setFont(myFont.deriveFont(Font.PLAIN, 45));
 
         myBackButton.setFont(myFont.deriveFont(Font.PLAIN, 40));
         myStageTitle.setFont(myFont.deriveFont(Font.PLAIN, 60));
@@ -164,29 +143,30 @@ public class LevelPanel extends JPanel {
                 myPanelNumber = -1;
             }
         });
-        myLevel0.addActionListener(new ActionListener() {
-            public void actionPerformed(final ActionEvent theEvent) {
-                myPanelNumber = 1;
-            }
-        });
-        myLevel1.addActionListener(new ActionListener() {
-            public void actionPerformed(final ActionEvent theEvent) {
-                myPanelNumber = 2;
-            }
-        });
-        myLevel2.addActionListener(new ActionListener() {
-            public void actionPerformed(final ActionEvent theEvent) {
-                myPanelNumber = 3;
-            }
-
-        });
-        myLevel3.addActionListener(new ActionListener() {
-            public void actionPerformed(final ActionEvent theEvent) {
-                myPanelNumber = 4;
-            }
-        });
     }
 
+
+    /**
+     * Setup level buttons.
+     * @param thePanelNum the panel number to display.
+     * @return an instantiated button.
+     */
+    private JButton setupButtons(final int thePanelNum) {
+        JButton button = new JButton("LVL      " + (thePanelNum - 1));
+        button.setEnabled(false);
+        button.setForeground(WHITE);
+        button.setBackground(BLACK);
+        button.setBorderPainted(false);
+        button.setFont(myFont.deriveFont(Font.PLAIN, BUTTON_SIZE));
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                myPanelNumber = thePanelNum;
+            }
+        });
+
+        return button;
+    }
 
     /**
      * Getter for the current panel number.
