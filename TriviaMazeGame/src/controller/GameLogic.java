@@ -338,7 +338,7 @@ public class GameLogic implements KeyListener {
      * Receives data from data source.
      */
     private void retrieveData() {
-        String query1 = "SELECT * FROM multiplechoicequestions";
+        String query1 = "SELECT * FROM funquestions";
         String query2 = "SELECT * FROM booleanquestions";
 
         try (Connection conn = myDataSource.getConnection();
@@ -356,12 +356,12 @@ public class GameLogic implements KeyListener {
                 addMultipleChoiceQuestion(question, rightAnswer, wrongAnswer1, wrongAnswer2, wrongAnswer3);
             }
             ResultSet rs2 = stmt.executeQuery(query2);
-            while (rs2.next()) {
-                String question = rs2.getString("question");
-                String rightAnswer = rs2.getString("rightanswer");
-                String wrongAnswer = rs2.getString("wronganswer");
-                addBooleanQuestion(question, rightAnswer, wrongAnswer);
-            }
+//            while (rs2.next()) {
+//                String question = rs2.getString("question");
+//                String rightAnswer = rs2.getString("rightanswer");
+//                String wrongAnswer = rs2.getString("wronganswer");
+//                addBooleanQuestion(question, rightAnswer, wrongAnswer);
+//            }
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(0);

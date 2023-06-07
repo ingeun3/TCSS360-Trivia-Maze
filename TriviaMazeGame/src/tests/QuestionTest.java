@@ -1,15 +1,10 @@
 package tests;
 
 import model.Question;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.sqlite.SQLiteDataSource;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,6 +15,30 @@ class QuestionTest {
     private SQLiteDataSource myDataSource;
 
     private ArrayList<Question> myQuestions;
+
+    @Test
+    void testQuestionConstructor() {
+        String expectedOutput = "Tom is cool.";
+        Question question = new Question(expectedOutput);
+        String actualOutput = question.getQuestion();
+        assertEquals(expectedOutput, actualOutput);
+    }
+
+    @Test
+    void testAddAnswers() {
+        Question question = new Question("Is Tom cool?");
+        ArrayList<String> list = new ArrayList<>();
+        String yes = "yes";
+        String no = "No";
+        String maybe = "Maybe";
+        question.addAnswers(yes);
+        question.addAnswers(no);
+        question.addAnswers(maybe);
+        list.add(yes);
+        list.add(no);
+        list.add(maybe);
+        assertEquals(question.getAnswers(), list);
+    }
 
    // @BeforeAll
 //    void setUp() {
