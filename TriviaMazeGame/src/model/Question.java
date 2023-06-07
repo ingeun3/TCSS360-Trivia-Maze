@@ -1,13 +1,13 @@
 package model;
-/*
+
+import java.util.ArrayList;
+/**
  *
  * This class is the Question class that creates the Questions for Player.
  *
  * @author Kevin Truong, Ingeun Hwang, Khin Win
  *
  */
-import java.util.ArrayList;
-
 public class Question {
 
     /** Initialized the question. */
@@ -31,7 +31,7 @@ public class Question {
      * Constructs answer for the question.
      * @param theAnswer the answer to include in the question.
      */
-    public void addAnswers(String theAnswer) {
+    public void addAnswers(final String theAnswer) {
         myAnswers.add(theAnswer);
     }
 
