@@ -12,17 +12,17 @@ import java.io.Serializable;
 public class GameState implements Serializable {
 
     /** Initialized a player completed Level. */
-    private final int myCompletedLevel;
+    private int myCompletedLevel;
 
     /** Initialized a player current Level. */
-    private final int myCurrentLevel;
+    private int myCurrentLevel;
 
     /**
      *
      * @param theCompletedLevel The Player completed Level.
      * @param theCurrentLevel   The Player Current Level.
      */
-    public GameState(final int theCompletedLevel, final int theCurrentLevel) {
+    public GameState(int theCompletedLevel, int theCurrentLevel) {
         myCompletedLevel = theCompletedLevel;
         myCurrentLevel = theCurrentLevel;
     }
