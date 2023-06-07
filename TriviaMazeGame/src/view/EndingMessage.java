@@ -2,26 +2,47 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * This EndingMessage object is a JFrame that will appear when ending condition for the game is met.
+ * @author Kevin Truong, Ingeun Hwang, Khin Win
+ */
 public class EndingMessage extends JFrame {
+    /**
+     * Dimension of a screen.
+     */
     private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
+    /**
+     * Prompt for Winning message.
+     */
     private static final String WINNING_MESSAGE = "GOOD JOB";
+    /**
+     * Prompt for Losing message.
+     */
     private static final String LOSING_MESSAGE = "LOL YOU SUCK";
+    /**
+     * Prompt for Completing all the levels.
+     */
     private static final String COMPLETE_MESSAGE = "CONGRATS!";
-    private Font myFont;
+    /**
+     * Initialize OptionSelectedListener that listens for the user's input.
+     */
     private OptionSelectedListener optionSelectedListener;
 
-    public EndingMessage(int theResult) {
+    /**
+     * Constructor for to EndingMessage object
+     * @param theResult the integer value that represents one of the 3 ending condition.
+     */
+    public EndingMessage(final int theResult) {
         super();
 
+        Font messageFont;
         try {
             InputStream is = getClass().getResourceAsStream("smalle.ttf");
-            myFont = Font.createFont(Font.TRUETYPE_FONT, is);
+            assert is != null;
+            messageFont = Font.createFont(Font.TRUETYPE_FONT, is);
         } catch (FontFormatException | IOException e) {
             throw new RuntimeException(e);
         }
@@ -35,19 +56,19 @@ public class EndingMessage extends JFrame {
         JButton levelButton = new JButton("GO TO LEVELS");
         JButton nextButton = new JButton("NEXT LEVEL");
 
-        playButton.setFont(myFont.deriveFont(Font.PLAIN, 45));
+        playButton.setFont(messageFont.deriveFont(Font.PLAIN, 45));
         playButton.setForeground(Color.WHITE);
         playButton.setBorderPainted(false);
         playButton.setOpaque(true);
         playButton.setBackground(new Color(0, 0, 0));
 
-        levelButton.setFont(myFont.deriveFont(Font.PLAIN, 45));
+        levelButton.setFont(messageFont.deriveFont(Font.PLAIN, 45));
         levelButton.setForeground(Color.WHITE);
         levelButton.setOpaque(true);
         levelButton.setBorderPainted(false);
         levelButton.setBackground(new Color(0, 0, 0));
 
-        nextButton.setFont(myFont.deriveFont(Font.PLAIN, 45));
+        nextButton.setFont(messageFont.deriveFont(Font.PLAIN, 45));
         nextButton.setForeground(Color.WHITE);
         nextButton.setOpaque(true);
         nextButton.setBorderPainted(false);
@@ -67,38 +88,29 @@ public class EndingMessage extends JFrame {
             buttonPanel.add(levelButton);
         }
 
-        label.setFont(myFont.deriveFont(Font.PLAIN, 45));
+        label.setFont(messageFont.deriveFont(Font.PLAIN, 45));
         label.setForeground(new Color(255, 255, 255, 200));
         label.setHorizontalAlignment(SwingConstants.CENTER);
 
-        playButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (optionSelectedListener != null) {
-                    optionSelectedListener.onOptionSelected(1);
-                }
-                dispose(); // Close the window
+        playButton.addActionListener(e -> {
+            if (optionSelectedListener != null) {
+                optionSelectedListener.onOptionSelected(1);
             }
+            dispose();
         });
 
-        levelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (optionSelectedListener != null) {
-                    optionSelectedListener.onOptionSelected(2);
-                }
-                dispose(); // Close the window
+        levelButton.addActionListener(e -> {
+            if (optionSelectedListener != null) {
+                optionSelectedListener.onOptionSelected(2);
             }
+            dispose();
         });
 
-        nextButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (optionSelectedListener != null) {
-                    optionSelectedListener.onOptionSelected(3);
-                }
-                dispose(); // Close the window
+        nextButton.addActionListener(e -> {
+            if (optionSelectedListener != null) {
+                optionSelectedListener.onOptionSelected(3);
             }
+            dispose();
         });
 
         add(label, BorderLayout.CENTER);
@@ -113,15 +125,22 @@ public class EndingMessage extends JFrame {
         setBackground(new Color(0, 0, 0, 200)); // Transparent black background
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        pack(); // Pack the components
+        pack();
         setVisible(true);
         setLocationRelativeTo(null);
     }
 
+    /**
+     * Sets the optionSelectedListener to the button that Player clicked.
+     * @param listener the Listener that will listen for the Player's input.
+     */
     public void setOptionSelectedListener(OptionSelectedListener listener) {
         this.optionSelectedListener = listener;
     }
 
+    /**
+     * Interface for OptionSelectedListener.
+     */
     public interface OptionSelectedListener {
         void onOptionSelected(int option);
     }

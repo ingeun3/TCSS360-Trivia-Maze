@@ -3,18 +3,23 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The GUIMaze object that will visualize the array representation of the map.
+ * @author Kevin Truong, Ingeun Hwang, Khin Win
+ */
+
 public class GUIPlayer {
-    // Class Constants
-
     private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    // Tile size is set for 48x48.
 
+    /**
+     * The number of total tiles in the map.
+     */
     private static int myTileNumber;
-    // Tile size is set for 48x48.
+    /**
+     * The size of each tile.
+     */
     private static int myTileSize;
 
-    // The movement speed of the player.
-    private static int mySpeed;
     // The Image of a player facing up.
     private static final ImageIcon up = new ImageIcon("up.png");
     // The Image of a player facing down.
@@ -25,10 +30,6 @@ public class GUIPlayer {
     private static final ImageIcon right = new ImageIcon("right.png");
 
     private final int myGap;
-
-
-
-    // Class Fields
 
     // The x, and y location of the player.
     private static int x;
@@ -42,7 +43,6 @@ public class GUIPlayer {
     public GUIPlayer(Point theSpawnPoint, int theTileNum) {
         myTileNumber = theTileNum;
         myTileSize = (int) screenSize.getWidth() / myTileNumber;
-        mySpeed = myTileSize;
         myGap = (int) (screenSize.getWidth() - (myTileSize * theTileNum)) / 2;
         x = (int) theSpawnPoint.getX() * myTileSize + myGap;
         y = (int) theSpawnPoint.getY() * myTileSize;
@@ -62,16 +62,13 @@ public class GUIPlayer {
     public void setX(int theX) {
         x = theX;
     }
+
     public int getY() {
         return y;
     }
 
     public int getX() {
         return x;
-    }
-
-    public int getSpeed() {
-        return mySpeed;
     }
 
     public int getTileSize() {

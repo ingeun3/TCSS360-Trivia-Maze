@@ -3,40 +3,44 @@ package view;
 import java.awt.*;
 import javax.swing.*;
 
-
+/**
+ * The GUIMaze object that will visualize the array representation of the map.
+ * @author Kevin Truong, Ingeun Hwang, Khin Win
+ */
 public class GUIMaze {
-    // Class Constants
+
     private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
-
-
-    // The serial Version ID.
-    private static final long serialVersionUID = 1L;
-    // Image of the Road.
+    /**
+     * Image of the Road.
+     */
     private static final ImageIcon road = new ImageIcon("road.png");
-    // Image of the Wall.
+    /**
+     * Image of the Wall.
+     */
     private static final ImageIcon wall = new ImageIcon("wall.png");
 
-    private static final ImageIcon up = new ImageIcon("up.png");
-
-    // Class Fields
-
-    // The 2D layout of the maze map.
+    /**
+     * Array representation of the map.
+     */
     private final char[][] myArray;
-    private final int myTileNumber;
-    // Tile size is set for 48x48.
+
+    /**
+     * The Size of each tile.
+     */
     private final int myTileSize;
 
+    /**
+     * The Size of the gap on the width if the map doesn't fit perfectly to the computer screen.
+     */
     private final int myGap;
 
     /**
      * Default constructor for MazeMap object.
      * @param theArray the 2D layout of the map we want to make graphic out of.
      */
-    public GUIMaze(char[][] theArray, int theTileNum) {
-        myTileNumber = theTileNum;
-        myTileSize = (int) screenSize.getWidth() / myTileNumber;
-        myGap = (int) (screenSize.getWidth() - myTileSize *  myTileNumber) /2;
+    public GUIMaze(final char[][] theArray, final int theTileNum) {
+        myTileSize = (int) screenSize.getWidth() / theTileNum;
+        myGap = (int) (screenSize.getWidth() - myTileSize * theTileNum) /2;
         myArray = theArray;
     }
 
@@ -47,16 +51,15 @@ public class GUIMaze {
     public void draw(final Graphics2D theGraphics) {
         int topy = -myTileSize;
 
-        for (int y = 0; y < myArray.length; y++) {
+        for (char[] chars : myArray) {
             topy = topy + myTileSize;
             int leftx = -myTileSize + myGap;
-            for (int x = 0; x < myArray[y].length; x++) {
+            for (char aChar : chars) {
                 leftx = leftx + myTileSize;
-
-                if (myArray[y][x] == '@') {
-                        theGraphics.drawImage(wall.getImage(), leftx, topy, myTileSize, myTileSize , null);
+                if (aChar == '@') {
+                    theGraphics.drawImage(wall.getImage(), leftx, topy, myTileSize, myTileSize, null);
                 } else {
-                        theGraphics.drawImage(road.getImage(), leftx, topy, myTileSize, myTileSize, null);
+                    theGraphics.drawImage(road.getImage(), leftx, topy, myTileSize, myTileSize, null);
                 }
 
             }

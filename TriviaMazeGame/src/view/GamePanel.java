@@ -1,84 +1,81 @@
 package view;
 
-import model.Player;
-
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.FileNotFoundException;
 import javax.swing.JPanel;
 
+/**
+ * The main JPanel that will display the game.
+ * @author Kevin Truong, Ingeun Hwang, Khin Win
+ */
+
 public class GamePanel extends JPanel {
-    // The serial Version ID.
-    private static final long serialVersionUID = 1L;
-
-    // Class Fields
-
+    /**
+     * The char array that will contain the array version of the map.
+     */
     char[][] myMazeArray;
-    // The Map Object that contains the graphic of the map
-    private final GUIMaze myMazemap;
+    /**
+     * The GUIMaze object that will make visual representation of the array map.
+     */
+    private final GUIMaze myMazeMap;
+    /**
+     * The GUIPlayer object that will make visual representation of the player.
+     */
+    private final GUIPlayer mySprite;
+    /**
+     * The Lighting object that will light around the player.
+     */
+    private final Lighting myLighting;
 
-
-
-    // The Player object that contains graphic of the player.
-    GUIPlayer myPlayerGUI;
-
-    Lighting myE;
-
-    public GamePanel(char[][] theArray, Point thePlayerLocation) throws FileNotFoundException {
-        // this.setPreferredSize(new Dimension((int) screenSize.getWidth(), (int) screenSize.getHeight()));
+    /**
+     * Constructor for to GamePanel object.
+     * @param theArray the char array representation of the mpa.
+     * @param thePlayerLocation the Starting location of the Player.
+     */
+    public GamePanel(final char[][] theArray, final Point thePlayerLocation) {
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         myMazeArray = theArray;
-        // The 2D Array of the map layout.
-        myMazemap = new GUIMaze(myMazeArray, theArray[0].length);
-        myPlayerGUI = new GUIPlayer(thePlayerLocation, theArray[0].length);
-        myE = Lighting.getInstance();
-        myE.setup();
+        myMazeMap = new GUIMaze(myMazeArray, theArray[0].length);
+        mySprite = new GUIPlayer(thePlayerLocation, theArray[0].length);
+        myLighting = Lighting.getInstance();
+        myLighting.setup();
         start();
-
-
-
     }
 
     /**
-     * Initializing GamePanel object.
+     * Start the GamePanel.
      */
     public void start() {
-
         this.setFocusable(true);
         run();
-        myE.setup();
+        myLighting.setup();
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                // Request focus when the panel is clicked
                 requestFocusInWindow();
             }
         });
-
-
     }
 
     /**
-     * The main logic that updates the GamePanel.
+     * The updates the GamePanel whenever player makes move.
      */
     public void run() {
         repaint();
     }
 
     /**
-     * paintComponent method that draws the player.
+     * paintComponent method that draws the player and map.
      * @param theGraphics the Graphics object to draw on the JPanel.
      */
-    public void paintComponent(Graphics theGraphics) {
-        super.paintComponent(theGraphics);// you need to type i this whenever you do it
-        Graphics2D g2 = (Graphics2D) theGraphics; // graphics to graphics 2D
-        myMazemap.draw(g2);
-        myPlayerGUI.draw(g2);
-
-        myE.draw(g2);
-
+    public void paintComponent(final Graphics theGraphics) {
+        super.paintComponent(theGraphics);
+        Graphics2D g2 = (Graphics2D) theGraphics;
+        myMazeMap.draw(g2);
+        mySprite.draw(g2);
+        myLighting.draw(g2);
         g2.dispose();
     }
 }
