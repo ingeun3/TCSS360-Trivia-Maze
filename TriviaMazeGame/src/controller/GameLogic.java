@@ -567,7 +567,7 @@ public class GameLogic implements KeyListener {
      */
     public static int getRandomNumber(final int theMaxValue) {
         Random rand = new Random();
-        myRandomNum = rand.nextInt(theMaxValue);
+        myRandomNum = rand.nextInt(0, theMaxValue);
         return myRandomNum;
     }
 }
