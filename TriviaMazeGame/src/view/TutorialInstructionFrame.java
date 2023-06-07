@@ -1,13 +1,24 @@
 package view;
-
+/*
+ *
+ * This class is the making the Instruction Frame.
+ *
+ * @author Kevin Truong, Ingeun Hwang, Khin Win
+ *
+ */
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
-
+// This is the Instruction class that extend JFrame.
 public class TutorialInstructionFrame extends JFrame {
+
+    /** static for screenSize. */
+    private static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+
+    /** Static String for Instructions. */
     private static final String INSTRUCTION_PROMPT = "\n WELCOME TO TRIVIA MAZE!\n" +
                                                     "\n INSTRUCTIONS: " +
                                                     "\n You are lost in a cave maze with only your torch and you " +
@@ -25,16 +36,20 @@ public class TutorialInstructionFrame extends JFrame {
                                                     "\n PRESS  S -> RIGHT" +
                                                     "\n PRESS  D -> DOWN" +
                                                     "\n PRESS  ESC -> QUIT";
-    private Font myFont;
-    private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    /** Initialized the Font. */
+    private final Font myFont;
+
+    // Instruction frame.
     public TutorialInstructionFrame() {
+        // This reads the custom font.
         try {
             InputStream is = getClass().getResourceAsStream("smalle.ttf");
             myFont = Font.createFont(Font.TRUETYPE_FONT, is);
         } catch (FontFormatException | IOException e) {
             throw new RuntimeException(e);
         }
-        setSize(new Dimension((int) screenSize.getWidth(),(int) screenSize.getHeight() * 9 / 10 ));
+        // set Size for the screen.
+        setSize(new Dimension((int) SCREEN_SIZE.getWidth(),(int) SCREEN_SIZE.getHeight() * 9 / 10 ));
 
         setUndecorated(true);
         setBackground(new Color(0, 0, 0, 250)); // Transparent black background
@@ -56,7 +71,7 @@ public class TutorialInstructionFrame extends JFrame {
         buttonPanel.setBackground(new Color(0, 0, 0, 0)); // Set the panel's background same as frame
 
         JButton okButton = new JButton("OK");
-
+        // add the action listener for "OK" button.
         okButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -81,6 +96,9 @@ public class TutorialInstructionFrame extends JFrame {
         okButton.setFocusable(false);
     }
 
+    /**
+     * This method creates the Frame for Instruction.
+     */
     public static void start() {
         TutorialInstructionFrame frame = new TutorialInstructionFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
