@@ -1,5 +1,11 @@
 package model;
-
+/*
+ *
+ * This class is the Maze class that creates the Maze Map.
+ *
+ * @author Kevin Truong, Ingeun Hwang, Khin Win
+ *
+ */
 import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;

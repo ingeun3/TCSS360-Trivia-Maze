@@ -1,5 +1,11 @@
 package model;
-
+/*
+ *
+ * This class is the Sou class that creates the Maze Map.
+ *
+ * @author Kevin Truong, Ingeun Hwang, Khin Win
+ *
+ */
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
