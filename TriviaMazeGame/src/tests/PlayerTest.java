@@ -140,7 +140,6 @@ public class PlayerTest {
     void isNotQuestionPoint() {
         Point testPoint = new Point(1,1);
         myPlayer.movePlayer(testPoint);
-
         assertEquals(false, myPlayer.isQuestionPoint());
     }
     // Checks if it's a question point on a location that shouldn't be a question point

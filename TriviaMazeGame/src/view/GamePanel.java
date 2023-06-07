@@ -25,14 +25,14 @@ public class GamePanel extends JPanel {
 
     Lighting myE;
 
-    public GamePanel(char[][] theArray, Player thePlayer) throws FileNotFoundException {
+    public GamePanel(char[][] theArray, Point thePlayerLocation) throws FileNotFoundException {
         // this.setPreferredSize(new Dimension((int) screenSize.getWidth(), (int) screenSize.getHeight()));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         myMazeArray = theArray;
         // The 2D Array of the map layout.
         myMazemap = new GUIMaze(myMazeArray, theArray[0].length);
-        myPlayerGUI = new GUIPlayer(thePlayer.getLocation(), theArray[0].length);
+        myPlayerGUI = new GUIPlayer(thePlayerLocation, theArray[0].length);
         myE = Lighting.getInstance();
         myE.setup();
         start();
@@ -49,8 +49,6 @@ public class GamePanel extends JPanel {
         this.setFocusable(true);
         run();
         myE.setup();
-        //playMusic(0);
-
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
