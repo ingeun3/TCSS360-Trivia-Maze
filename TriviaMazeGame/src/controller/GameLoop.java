@@ -174,8 +174,9 @@ public class GameLoop implements Serializable {
             myGameInterface.setCenter(myTitlePanel);
             titleSetup = true;
         }
-        // gets the Title Interface
+        // gets the Title Interface button number that user clicks
         myCurrentCenterPanel = myTitlePanel.getMyNum();
+        // if it's zero, restart the TitlePanel.
         if (myCurrentCenterPanel == 0) {
             if(myTitlePanel.restartGame()) {
                 myCompletedLevel = 0;
@@ -186,7 +187,12 @@ public class GameLoop implements Serializable {
             titleSetup = false;
         }
     }
+
+    /**
+     * This method run the Level Interface.
+     */
     public void runningLevelInterface() {
+        //check the LevelSetup condition.
         if(!levelSetup) {
             if(!myTitleSoundFlag) {
                 myGameSound.stop();
@@ -194,9 +200,11 @@ public class GameLoop implements Serializable {
                 myTitleSound.loop();
                 myTitleSoundFlag = true;
             }
+            // set the LevelInterface Panel.
             myGameInterface.setCenter(myLevelInterface);
             levelSetup = true;
         }
+        //
         myCurrentCenterPanel = myLevelInterface.getMyNum();
         if (myCurrentCenterPanel > 0) {
             level = false;
