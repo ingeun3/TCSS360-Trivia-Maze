@@ -18,7 +18,7 @@ public class Maze {
     // initializing the 2D maze.
     private final char[][] myMaze;
     // the default map file for maze.
-    private String myMazeMap;
+    private static String myMazeMap;
 
     private Point myExit;
 
@@ -35,10 +35,10 @@ public class Maze {
      *
      * @throws FileNotFoundException
      */
-    public Maze(String theMapName) throws FileNotFoundException {
+    public Maze(String mapName) throws FileNotFoundException {
         myNumOfStr = 0;
         // For Program running purpose.
-        myMazeMap = theMapName;
+        myMazeMap = mapName;
         // For Program running purpose.
         myMaze = createMaze(myMazeMap);
         // Assign the instance variable myIntersections to the creates Maze.
@@ -48,14 +48,6 @@ public class Maze {
         myExit = exitLocation();
     }
 
-    /**
-     * This method return the 2D array representation of the maze.
-     *
-     * @return the 2D list.
-     */
-    public char[][] getArray() {
-        return myMaze;
-    }
 
     public char charAt(int x, int y) {
         return myMaze[y][x];
@@ -64,18 +56,7 @@ public class Maze {
      * Updates the map whenever player makes a move.
      * @param thePoint The point player wants to move.
      */
-    public void setArray(Point thePoint) {
-        if(thePoint.x >= 0 && thePoint.x <= myMaze.length - 1 && thePoint.y >= 0 && thePoint.y <= myMaze[0].length - 1) {
-            if (myMaze[thePoint.y][thePoint.x] != '@') {
-                myMaze[myPlayerLocation.y][myPlayerLocation.x] = '+';
-                myMaze[thePoint.y][thePoint.x] = 'M';
-                myPlayerLocation = new Point(thePoint.x,thePoint.y);
-            }
-        }
-    }
-    public Point getMyExit() {
-        return myExit;
-    }
+
     /**
      * This method returns the location of the player in Point object.
      * @return the location of the player.
@@ -102,9 +83,6 @@ public class Maze {
         return null;
     }
 
-    public Point getMyPlayerLocation() {
-        return myPlayerLocation;
-    }
 
     /**
      * This method reads the character from the map.
@@ -208,7 +186,37 @@ public class Maze {
     public ArrayList<Point> getQuestionPoints() {
        return myQuestionPoints;
     }
+
+    public Point getMyPlayerLocation() {
+        return myPlayerLocation;
+    }
+
     public int getNumOfStr() {
         return myNumOfStr;
     }
+
+    public Point getMyExit() {
+        return myExit;
+    }
+
+    /**
+     * This method return the 2D array representation of the maze.
+     *
+     * @return the 2D list.
+     */
+    public char[][] getArray() {
+        return myMaze;
+    }
+
+    public void setArray(Point thePoint) {
+        if(thePoint.x >= 0 && thePoint.x <= myMaze.length - 1 && thePoint.y >= 0 && thePoint.y <= myMaze[0].length - 1) {
+            if (myMaze[thePoint.y][thePoint.x] != '@') {
+                myMaze[myPlayerLocation.y][myPlayerLocation.x] = '+';
+                myMaze[thePoint.y][thePoint.x] = 'M';
+                myPlayerLocation = new Point(thePoint.x,thePoint.y);
+            }
+        }
+
+    }
+
 }
