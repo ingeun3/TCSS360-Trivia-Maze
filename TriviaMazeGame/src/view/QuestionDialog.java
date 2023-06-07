@@ -1,60 +1,56 @@
 package view;
 
+/*
+ *
+ * This class is the making the Instruction Frame.
+ *
+ * @author Kevin Truong, Ingeun Hwang, Khin Win
+ *
+ */
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class QuestionDialog {
-    // Clas Constants
+// This is the QuestionDialog class that creates Question Dialog.
 
-    // The default prompt for asking question.
+public class QuestionDialog {
+    /** The default prompt for asking question. */
     private static final String QUESTION_TITLE = "Answer the question";
 
-    //Class Fields
+    /**The question that was asked. */
+    private final String myPrompt;
 
-    // The question that was asked.
-    private String myPrompt;
-
+    /** Initialized the Prompt Label. */
     private JLabel myPromptLabel;
-    // The Image that will be display in the question.
-    private ImageIcon myImage;
-    // The list of answers to the problem.
-    private String[] myAnswers;
 
-    private JLabel myAnswersLabel;
+    /** The list of answers to the problem. */
+    private final String[] myAnswers;
 
-    // The answer the player chose.
+    /** The answer the player chose. */
     private String myChosenAnswer;
 
-
-
-
     /**
-     * Default constructor for QuestionPane.
      *
+     * @param theQuestion Receive the Current Questions.
+     * @param theAnswers Receive the Answers Array.
      */
     public QuestionDialog(String theQuestion, String[] theAnswers) {
-
         myPrompt = theQuestion;
         myAnswers = theAnswers;
+        // we shuffle the answer.
         Collections.shuffle(Arrays.asList(theAnswers));
-        myImage = new ImageIcon("down.png");
         myChosenAnswer = "";
-
         myPromptLabel = new JLabel();
         myPromptLabel.setText(myPrompt);
-
     }
-
-
 
     /**
      * Launching the question window to prompt the player with a question and store the answer
      * they chose.
      */
     public void ask() {
-
+        // set the Question Dialog.
         myPromptLabel = new JLabel();
         myPromptLabel.setText(myPrompt);
         myPromptLabel.setFont(new Font(
@@ -65,10 +61,12 @@ public class QuestionDialog {
 
         buttonPanel.setLayout(new GridLayout(2,2));
 
+        // loop through the Array Answer List.
         for (String answer : myAnswers) {
             JButton button = new JButton(answer);
             button.setFont(new Font(
                     "Arial", Font.BOLD, 20));
+            // add the action listener for buttons.
             button.addActionListener(e -> {
                 myChosenAnswer = answer;
                 buttonPanel.getTopLevelAncestor().setVisible(false); // Hide the dialog

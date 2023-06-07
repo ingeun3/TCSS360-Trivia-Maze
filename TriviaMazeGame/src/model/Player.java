@@ -101,7 +101,7 @@ public class Player {
 	}
 
 	public void movePlayer(Point thePoint) {
-		myMaze.setArray(thePoint);
+		myMaze.setPlayerLocation(thePoint);
 		myPlayerLocation = thePoint;
 	}
 

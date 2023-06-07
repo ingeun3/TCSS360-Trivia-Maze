@@ -7,23 +7,60 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * Class to display level button, current level and moves.
+ * @author Kevin Truong, Ingeun Hwang, Khin Win.
+ */
 public class NorthPanel extends JPanel {
+
+    /**
+     * Constant to display move prompt.
+     */
     private static final String MOVE_PROMPT = "Remaining Moves: ";
+
+    /**
+     * Constant to display level prompt.
+     */
     private static final String LEVEL_PROMPT = "Level ";
 
+    /**
+     * Singleton instance of NorthPanel.
+     */
     private static NorthPanel myInstance;
     ;
+
+    /**
+     * Button to go to stage.
+     */
     private JButton myStageButton;
 
-
+    /**
+     * Label for current level.
+     */
     private JLabel myLevel;
+
+    /**
+     * Label for remaining moves.
+     */
     private JLabel myMoves;
 
+    /**
+     * Retro font.
+     */
     private Font myFont;
 
+    /**
+     * Flag to check if stage button is clicked.
+     */
     private boolean myStageButtonClicked;
 
-    private NorthPanel(String theLevel, String theMoves) {
+
+    /**
+     * Private constructor to prevent multiple instantiation.
+     * @param theLevel the current level.
+     * @param theMoves the moves.
+     */
+    private NorthPanel(final String theLevel, final String theMoves) {
         try {
             InputStream is = getClass().getResourceAsStream("smalle.ttf");
             myFont = Font.createFont(Font.TRUETYPE_FONT, is);
@@ -38,7 +75,6 @@ public class NorthPanel extends JPanel {
         myStageButton = new JButton("Stage");
         myStageButton.setFont(myFont.deriveFont(Font.PLAIN, 20));
         myStageButton.setBackground(Color.black);
-        //
         myStageButton.setOpaque(true);
         myStageButton.setBorderPainted(false);
         myStageButton.setForeground(Color.WHITE);
@@ -62,18 +98,13 @@ public class NorthPanel extends JPanel {
         start();
     }
 
-    // Theme
-    // Qiestions
-    // Maps
-    // Equation move
-
-    // Change song
-    // shuffle the question
-    // save and load the game
-    // change end message when complete all levels
-
-
-    public static NorthPanel getInstance(String theLevel, String theMoves) {
+    /**
+     * Singleton instance maker.
+     * @param theLevel the current level.
+     * @param theMoves the moves.
+     * @return Singleton instance of NorthPanel.
+     */
+    public static NorthPanel getInstance(final String theLevel, final String theMoves) {
         if (myInstance == null) {
             synchronized (NorthPanel.class) {
                 if (myInstance == null) {
@@ -84,6 +115,9 @@ public class NorthPanel extends JPanel {
         return myInstance;
     }
 
+    /**
+     * Adds listener to stage button.
+     */
     public void start() {
         myStageButton.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent theEvent) {
@@ -92,17 +126,32 @@ public class NorthPanel extends JPanel {
 
         });
     }
+
+    /**
+     * Getter to return instance.
+     * @return NorthPanel instance.
+     */
     public static NorthPanel getInstance() {
         return myInstance;
     }
 
+
+    /**
+     * Method to reassign flag of if stage button was clicked.
+     * @return boolean the new value.
+     */
     public boolean stageButton() {
         boolean flag = myStageButtonClicked;
         myStageButtonClicked = false;
         return flag;
     }
 
-    public void setLevel(int theLevel) {
+
+    /**
+     * Setter to display correct level label.
+     * @param theLevel the level to display.
+     */
+    public void setLevel(final int theLevel) {
         if(theLevel <= 1) {
             myLevel.setText("TUTORIAL");
         } else  {
@@ -110,7 +159,11 @@ public class NorthPanel extends JPanel {
         }
     }
 
-    public void setMoves(int theMoves) {
+    /**
+     * Setter to display the correct remaining number of moves.
+     * @param theMoves
+     */
+    public void setMoves(final int theMoves) {
         myMoves.setText(MOVE_PROMPT + theMoves);
     }
 }
