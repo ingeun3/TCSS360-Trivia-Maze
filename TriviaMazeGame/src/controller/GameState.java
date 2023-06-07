@@ -22,7 +22,7 @@ public class GameState implements Serializable {
      * @param theCompletedLevel The Player completed Level.
      * @param theCurrentLevel   The Player Current Level.
      */
-    public GameState(final int theCompletedLevel, final int theCurrentLevel) {
+    public GameState(int theCompletedLevel, int theCurrentLevel) {
         myCompletedLevel = theCompletedLevel;
         myCurrentLevel = theCurrentLevel;
     }
