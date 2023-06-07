@@ -7,33 +7,34 @@ package model;
  *
  */
 import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-
 import javax.sound.sampled.*;
-import javax.swing.*;
 
+// This class creates the sound.
 public class Sound {
 
+    /** Initialized the myClip. */
+    Clip myClip;
 
-    Clip clip;
-    public Sound(String songName) {
+    /**
+     *
+     * @param theSongName passed the current Sound file Name.
+     */
+    public Sound(final String theSongName) {
         try {
-            File titleSound = new File(songName);
-
+            File titleSound = new File(theSongName);
             if (titleSound.exists()) {
                 AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(titleSound);
-                clip = AudioSystem.getClip();
-                clip.open(audioInputStream);
+                myClip = AudioSystem.getClip();
+                myClip.open(audioInputStream);
                 FloatControl gainControl =
-                        (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-                if (songName == "Title Sound.wav") {
+                        (FloatControl) myClip.getControl(FloatControl.Type.MASTER_GAIN);
+                if (theSongName == "Title Sound.wav") {
                     gainControl.setValue(-30.0f);
                 } else {
                     gainControl.setValue(-20.0f);
                 }
 
-                clip.start();
+                myClip.start();
 
             } else {
                 System.out.println("Failed to load audio file.");
@@ -43,14 +44,24 @@ public class Sound {
         }
     }
 
+    /**
+     * This method play the sound.
+     */
     public void play() {
-        clip.start();
-    }
-    public void loop() {
-        clip.loop(clip.LOOP_CONTINUOUSLY);
+        myClip.start();
     }
 
+    /**
+     * This method loops the sound.
+     */
+    public void loop() {
+        myClip.loop(myClip.LOOP_CONTINUOUSLY);
+    }
+
+    /**
+     * This method stop the sound.
+     */
     public void stop() {
-        clip.stop();
+        myClip.stop();
     }
 }

@@ -208,14 +208,14 @@ public class GameLogic implements KeyListener {
                 myCheatKeyCount = 0;  // set the cheat code to zero.
             }
         } else if (code == KeyEvent.VK_N) { // This is for presentation purpose.
-        pressedKeyCode = KeyEvent.VK_N; // If Player presses "n" five times, we will set player move to "10"
+            pressedKeyCode = KeyEvent.VK_N; // If Player presses "n" five times, we will set player move to "10"
             myFinishCheatCode++;
             if(myFinishCheatCode >= 5) {
                 myPlayer.setMyMove(10);
                 myNorthPanel.setMoves(myPlayer.getMyMove());
             }
 
-         }
+        }
     }
 
     /**
