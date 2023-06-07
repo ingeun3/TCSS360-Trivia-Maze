@@ -56,9 +56,6 @@ public class GameLogic implements KeyListener {
 
     private int myCurrentQuestion;
 
-    /** Initialized the Question Array Size . */
-    private final int mySize;
-
     /** Initialized the myPoint for Player Location. */
     private Point myPoint;
 
@@ -125,7 +122,6 @@ public class GameLogic implements KeyListener {
         myQuestions = new ArrayList<>();
         myDataSource = new SQLiteDataSource();
         myQnA = new HashMap<String, String[]>();
-        mySize = myQuestions.size();
         myNorthPanel = NorthPanel.getInstance();
         myMaze = theMaze;
         myPlayer = thePlayer;
@@ -166,7 +162,7 @@ public class GameLogic implements KeyListener {
             counter++;
         }
         // get a random number for question.
-        myCurrentQuestion = getRandomNumber(mySize);
+        myCurrentQuestion = getRandomNumber(myQuestions.size());
         // Clone the Question to avoid encapsulation and add the question in the question pane.
         myQuestionPane = new QuestionDialog(myQ[myCurrentQuestion], myQnA.get(myQ[myCurrentQuestion]).clone());
     }
@@ -212,14 +208,14 @@ public class GameLogic implements KeyListener {
                 myCheatKeyCount = 0;  // set the cheat code to zero.
             }
         } else if (code == KeyEvent.VK_N) { // This is for presentation purpose.
-        pressedKeyCode = KeyEvent.VK_N; // If Player presses "n" five times, we will set player move to "10"
+            pressedKeyCode = KeyEvent.VK_N; // If Player presses "n" five times, we will set player move to "10"
             myFinishCheatCode++;
             if(myFinishCheatCode >= 5) {
                 myPlayer.setMyMove(10);
                 myNorthPanel.setMoves(myPlayer.getMyMove());
             }
 
-         }
+        }
     }
 
     /**
@@ -390,7 +386,7 @@ public class GameLogic implements KeyListener {
             // check player chooses right answer or not.
             isRightAnswer(myQuestionPane.getChoice());
             // Prepare for next question.
-            myCurrentQuestion = getRandomNumber(mySize);
+            myCurrentQuestion = getRandomNumber(myQuestions.size());
             myQuestionPane = new QuestionDialog(myQ[myCurrentQuestion],
                     myQnA.get(myQ[myCurrentQuestion]).clone());
         }

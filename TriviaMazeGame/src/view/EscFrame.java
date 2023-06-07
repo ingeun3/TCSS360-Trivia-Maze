@@ -4,7 +4,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
+/*
  * This EscFrame object is a JFrame that will appear when Player pressed 'Esc' key.
  * @author Kevin Truong, Ingeun Hwang, Khin Win
  */

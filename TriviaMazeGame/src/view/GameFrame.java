@@ -3,7 +3,7 @@ package view;
 import java.awt.*;
 import javax.swing.*;
 
-/**
+/*
  * The main JFrame that will display the game.
  * @author Kevin Truong, Ingeun Hwang, Khin Win
  */

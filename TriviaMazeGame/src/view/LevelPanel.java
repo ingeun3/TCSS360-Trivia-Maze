@@ -131,7 +131,6 @@ public class LevelPanel extends JPanel {
         });
         myLevel0.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent theEvent) {
-                System.out.println("2");
                 myPanelNumber = 1;
             }
         });

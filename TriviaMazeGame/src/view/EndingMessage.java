@@ -5,7 +5,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
+/*
  * This EndingMessage object is a JFrame that will appear when ending condition for the game is met.
  * @author Kevin Truong, Ingeun Hwang, Khin Win
  */
@@ -132,10 +132,11 @@ public class EndingMessage extends JFrame {
 
     /**
      * Sets the optionSelectedListener to the button that Player clicked.
-     * @param listener the Listener that will listen for the Player's input.
+     * @param theListener the Listener that will listen for the Player's input.
      */
-    public void setOptionSelectedListener(OptionSelectedListener listener) {
-        this.optionSelectedListener = listener;
+    public void setOptionSelectedListener(final
+                                          OptionSelectedListener theListener) {
+        this.optionSelectedListener = theListener;
     }
 
     /**

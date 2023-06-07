@@ -3,7 +3,7 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
-/**
+/*
  * The GUIMaze object that will visualize the array representation of the map.
  * @author Kevin Truong, Ingeun Hwang, Khin Win
  */
@@ -11,10 +11,6 @@ import java.awt.*;
 public class GUIPlayer {
     private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-    /**
-     * The number of total tiles in the map.
-     */
-    private static int myTileNumber;
     /**
      * The size of each tile.
      */
@@ -61,9 +57,8 @@ public class GUIPlayer {
      * @param theSpawnPoint the starting point of the player.
      * @param theTileNum the Number of Total tiles in the map.
      */
-    public GUIPlayer(Point theSpawnPoint, int theTileNum) {
-        myTileNumber = theTileNum;
-        myTileSize = (int) screenSize.getWidth() / myTileNumber;
+    public GUIPlayer(final Point theSpawnPoint, final int theTileNum) {
+        myTileSize = (int) screenSize.getWidth() / theTileNum;
         myGap = (int) (screenSize.getWidth() - (myTileSize * theTileNum)) / 2;
         myX = (int) theSpawnPoint.getX() * myTileSize + myGap;
         myY = (int) theSpawnPoint.getY() * myTileSize;
@@ -71,36 +66,64 @@ public class GUIPlayer {
         myImage = new ImageIcon("up.png");
     }
 
-
-    public void setDirection(String theDirection) {
+    /**
+     * Sets the direction to where the player moved.
+     */
+    public void setDirection(final String theDirection) {
         direction = theDirection;
     }
 
-    public void setY(int theY) {
-        myY = theY;
-    }
-
-    public void setX(int theX) {
+    /**
+     * Sets the X Location of teh Player.
+     * @param theX Location the Player wants to move.
+     */
+    public void setX(final int theX) {
         myX = theX;
     }
 
-    public int getY() {
-        return myY;
+    /**
+     * Sets the Y location of the Player.
+     * @param theY Location the Player wants to move.
+     */
+    public void setY(final int theY) {
+        myY = theY;
     }
 
+    /**
+     * Returns the X Location of the Player.
+     * @return the X Location.
+     */
     public int getX() {
         return myX;
     }
 
+    /**
+     * Returns the Y Location of the Player.
+     * @return the Y Location.
+     */
+    public int getY() {
+        return myY;
+    }
+
+    /**
+     * Returns the total number of tiles.
+     */
     public int getTileSize() {
         return myTileSize;
     }
 
+    /**
+     * Returns the size of the gap on the width if the map doesn't fit perfectly to the computer screen.
+     * @return the size of teh gap.
+     */
     public int getGap() {
         return myGap;
     }
 
-    public Point getsize(){
+    /**
+     * Returns the screen size.
+     */
+    public Point getSize(){
         return new Point(screenSize.width, screenSize.height);
     }
 
@@ -109,23 +132,12 @@ public class GUIPlayer {
      *
      * @param theGraphics the Graphics object to draw on the JPanel.
      */
-
-    //maybe random number generator for multiple direction images so it looks like character is moving
-    public void draw(Graphics2D theGraphics) {
-        ImageIcon image = null;
+    public void draw(final Graphics2D theGraphics) {
         switch (direction) {
-            case "up":
-                myImage = up;
-                break;
-            case "down":
-                myImage = down;
-                break;
-            case "left":
-                myImage = left;
-                break;
-            case "right":
-                myImage = right;
-                break;
+            case "up" -> myImage = up;
+            case "down" -> myImage = down;
+            case "left" -> myImage = left;
+            case "right" -> myImage = right;
         }
         theGraphics.drawImage(myImage.getImage(), myX, myY, myTileSize , myTileSize, null);
     }
