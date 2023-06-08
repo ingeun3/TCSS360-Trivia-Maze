@@ -189,6 +189,7 @@ public class GameLoop implements Serializable {
         if (myCurrentCenterPanel == 0) {
             if(myTitlePanel.restartGame()) {
                 myCompletedLevel = 0;
+                save();
             }
             myLevelInterface = new LevelPanel(myCompletedLevel);
             myTitle = false;
